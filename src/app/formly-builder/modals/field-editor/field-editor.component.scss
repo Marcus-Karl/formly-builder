@@ -1,0 +1,57 @@
+
+:host {
+  height: calc(100% + 48px);
+  width: calc(100% + 48px);
+  min-width: 375px;
+  margin: -24px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.header-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  color: white;
+  padding: 12px 24px;
+}
+
+:host ::ng-deep {
+  .field-content {
+    display: flex;
+    height: calc(100% - 128px);
+    width: 100%;
+    box-sizing: border-box;
+
+    > formly-field {
+      height: 100%;
+      width: 100%;
+      box-sizing: border-box;
+
+      > tab-form > mat-tab-group {
+        height: 100%;
+        width: 100%;
+        box-sizing: border-box;
+      }
+    }
+  }
+}
+
+.buttons {
+  padding: 1em 24px 12px 24px;
+  flex-wrap: nowrap;
+  margin-top: auto;
+	justify-content: space-between;
+}
+
+.svg-icon {
+  width: 3em;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  display: flex;
+}

@@ -1,0 +1,9 @@
+
+:host {
+  display: block;
+  padding-top: 1em;
+}
+
+:host ::ng-deep p {
+  margin: 0;
+}

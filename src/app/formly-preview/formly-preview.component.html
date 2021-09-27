@@ -1,0 +1,16 @@
+<div class="display-form">
+  <form [formGroup]="form" (ngSubmit)="onSubmit(model)">
+
+    <div *ngIf="isFormLoading" class="loader-container">
+      <div class="center-self">
+        <mat-spinner></mat-spinner>
+      </div>
+    </div>
+
+    <formly-form *ngIf="!isFormLoading" [form]="form" [fields]="fields" [model]="model" [options]="options"></formly-form>
+
+    <button type="submit" [style.display]="'none'">
+      <div translate>Submit</div>
+    </button>
+  </form>
+</div>

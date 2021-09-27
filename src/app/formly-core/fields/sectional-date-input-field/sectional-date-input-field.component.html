@@ -1,0 +1,52 @@
+<div *ngIf="!to.encapsulateLabel">
+  <label [id]="field.id + '_label'" class="body-text">
+    {{ to.label | tokens: to }} {{ to.required ? '*' : '' }}
+  </label>
+</div>
+
+<mat-form-field
+  #matFormField
+  class="input-field"
+  [appearance]="to.encapsulateLabel && to.appearance ? to.appearance : 'standard'"
+  [floatLabel]="to.floatLabel || 'always'"
+  [ngClass]="{ 'no-label': !to.encapsulateLabel, 'mat-form-field-invalid': formControl.invalid && (formControl.dirty || formControl.touched) }">
+
+  <mat-label *ngIf="to.encapsulateLabel" class="body-text">
+    {{ to.label | tokens: to }}
+  </mat-label>
+
+  <custom-date-input
+    [id]="!to.encapsulateLabel && field.id"
+    [describedby]="!to.encapsulateLabel && field.id + '_label'"
+    [formControl]="formControl">
+  </custom-date-input>
+
+  <input
+    type="hidden"
+    autocomplete="off"
+    [value]="dateViewModel"
+    [matDatepicker]="picker"
+    (dateChange)="dateChange($event)" />
+
+  <mat-datepicker #picker></mat-datepicker>
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+</mat-form-field>
+
+<div class="errors-and-hints">
+  <!-- This should remain hidden as its built from Formly's error states and will not pipe to tokens -->
+  <formly-validation-message #validationMessage [field]="field" [style.display]="'none'"></formly-validation-message>
+
+  <mat-error *ngIf="validationMessage.errorMessage && formControl?.touched" class="body-text error-text">
+    <ng-container *ngIf="validationMessage.errorMessage | isArray; else stringErrorMessage">
+      <ng-container *ngFor="let errorMessage of validationMessage.errorMessage; let last = last;">
+        {{ errorMessage }}<br *ngIf="!last">
+      </ng-container>
+    </ng-container>
+
+    <ng-template #stringErrorMessage>
+      {{ validationMessage.errorMessage | tokens: to }}
+    </ng-template>
+  </mat-error>
+
+  <mat-hint *ngIf="to.hint && !(validationMessage.errorMessage && formControl?.touched)" class="body-text">{{ to.hint | tokens: to }}</mat-hint>
+</div>

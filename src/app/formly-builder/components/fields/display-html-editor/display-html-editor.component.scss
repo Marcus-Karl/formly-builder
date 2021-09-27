@@ -1,0 +1,38 @@
+
+:host {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  overflow-x: auto;
+}
+
+:host ::ng-deep {
+  .NgxEditor {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+  }
+
+  .NgxEditor__Content {
+    min-height: 20em;
+    height: calc(100% - (36px + 1em));
+    box-sizing: border-box;
+  }
+}
+
+.editor-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  min-width: max(680px, 100%);
+
+  > ngx-editor {
+    height: calc(100% - 36px);
+    width: 100%;
+  }
+
+  > ngx-editor-menu {
+    min-width: 680px
+  }
+}

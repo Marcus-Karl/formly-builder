@@ -1,0 +1,82 @@
+<div #emptyAnchor></div>
+
+<div class="app-background-color-default" cdkDrag cdkDragBoundary=".cdk-overlay-container" cdkDragRootElement=".cdk-overlay-pane">
+  <div class="header-content mat-card-title row" cdkDragHandle>
+    <div *ngIf="categoryLabel">{{ categoryLabel }}</div>
+
+    <div class="svg-icon">
+      <button type="button" mat-icon-button (click)="toggleSize()">
+        <div class="center-content flex">
+          <mat-icon *ngIf="!isFullScreen">fullscreen</mat-icon>
+          <mat-icon *ngIf="isFullScreen">close_fullscreen</mat-icon>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="!categorySelectionComplete && categoryField; else editField">
+  <div class="pad flex column center-content" [ngClass]="categoryField.className || ''">
+    <div class="body-text bold">
+      {{ categoryField.templateOptions?.label }} {{ categoryField.templateOptions?.required ? '*' : '' }}
+    </div>
+
+    <mat-button-toggle-group
+      cdkFocusInitial
+      [id]="categoryField.id"
+      [formlyAttributes]="categoryField"
+      [formControl]="categoryField.formControl"
+      [tabindex]="categoryField.templateOptions?.tabindex || 0"
+      [aria-label]="categoryField.templateOptions?.label"
+      [vertical]="true">
+
+      <mat-button-toggle *ngFor="let option of selectOptions$ | async" [value]="option.value" [disabled]="option.disabled">
+        {{ option.label }}
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <div class="margin-top-2">
+      <button type="button" mat-raised-button color="primary" [disabled]="categoryField.formControl?.invalid" (click)="onSelectedCategory()">
+        <div translate>
+          Continue
+        </div>
+      </button>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #editField>
+  <div class="field-content">
+    <formly-field [field]="field"></formly-field>
+  </div>
+</ng-template>
+
+<div class="flex row buttons" *ngIf="!field.formControl?.disabled; else showCloseOnly">
+  <button type="button" mat-button (click)="resetAndClose()">
+    <div class="center flex row">
+      <mat-icon class="material-icons-outlined margin-right-half" [inline]="true">undo</mat-icon>
+      <div translate>Revert & Close</div>
+    </div>
+  </button>
+
+  <div class="align-end pad-left" [hidden]="!categorySelectionComplete">
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="field.formControl?.invalid"
+      (click)="updateAndClose()"
+      cdkFocusInitial>
+      <div translate>Save & Close</div>
+    </button>
+  </div>
+</div>
+
+<ng-template #showCloseOnly>
+  <div class="flex row buttons">
+    <div class="align-end pad-left">
+      <button mat-raised-button color="primary" (click)="dialogRef.close()" cdkFocusInitial>
+        <div translate>Close</div>
+      </button>
+    </div>
+  </div>
+</ng-template>

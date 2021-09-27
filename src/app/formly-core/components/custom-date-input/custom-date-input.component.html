@@ -1,0 +1,60 @@
+<div role="group"
+  class="custom-date-input-container"
+  [formGroup]="formGroup"
+  [attr.aria-describedby]="ariaDescribedBy || _formField?._labelId"
+  (focusin)="onFocusIn($event)"
+  (focusout)="onFocusOut($event)">
+
+  <ng-container *ngFor="let part of dateParts; let index = index; let last = last;">
+    <ng-container [ngSwitch]="part">
+      <ng-container *ngSwitchCase="'yyyy'">
+        <input 
+          #year
+          class="custom-date-input-element"
+          maxLength="4"
+          formControlName="year"
+          [style.width]="'50px'"
+          [placeholder]="'yyyy' | translate"
+          [attr.aria-label]="'Year' | translate"
+          (keydown)="keyPress($event, year, index, 9999, 0)"
+          (keyup)="keyUp($event, year, index, 9999, 4)"
+          (blur)="onBlur(formGroup.controls.year, 9999, 0, 4, false)"
+          (paste)="onPaste($event)" />
+
+        <div #hiddenInput class="hide-element" translate>0000</div>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'mm'">
+        <input 
+          #month
+          class="custom-date-input-element"
+          maxLength="2"
+          formControlName="month"
+          [style.width]="'27px'"
+          [placeholder]="'mm' | translate"
+          [attr.aria-label]="'Month' | translate"
+          (keydown)="keyPress($event, month, index, 12, 0)"
+          (keyup)="keyUp($event, month, index, 12)"
+          (blur)="onBlur(formGroup.controls.month, 12)"
+          (paste)="onPaste($event)" />
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'dd'">
+        <input
+          #day
+          class="custom-date-input-element"
+          maxLength="2"
+          formControlName="day"
+          [style.width]="'27px'"
+          [placeholder]="'dd' | translate"
+          [attr.aria-label]="'Day' | translate"
+          (keydown)="keyPress($event, day, index, 31, 0)"
+          (keyup)="keyUp($event, day, index, 31)"
+          (blur)="onBlur(formGroup.controls.day, 31)"
+          (paste)="onPaste($event)" />
+      </ng-container>
+    </ng-container>
+
+    <span class="custom-date-input-spacer" *ngIf="!last">{{ datePartDelimeter }}</span>
+  </ng-container>
+</div>

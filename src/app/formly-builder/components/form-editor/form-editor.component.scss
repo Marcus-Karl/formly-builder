@@ -1,0 +1,83 @@
+
+:host ::ng-deep .mat-expansion-panel-content {
+  @media screen and (max-width: 960px) {
+    padding: 0.5em 0.25em;
+  }
+}
+
+:host ::ng-deep .mat-expansion-panel-body {
+  @media screen and (max-width: 960px) {
+    padding: 0;
+  }
+}
+
+.header-contents,
+.mat-expansion-panel-header {
+  height: 4.5em !important;
+}
+
+.page-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.form-pages {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.page-summary {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+  .summary-row {
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+  }
+
+  .row-label {
+    font-weight: bold;
+    margin-right: 0.5em;
+    flex-wrap: nowrap;
+  }
+}
+
+/* Animate items as they're being sorted. */
+.cdk-drop-list-dragging .cdk-drag {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Animate an item that has been dropped. */
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.remove-disable-shading {
+  color: black;
+}
+
+.top-buttons {
+  font-weight: bold;
+  display: flex;
+  margin-left: auto;
+  margin-top: 0.5em;
+}
+
+.custom-expansion-panel:not(:last-child) {
+  margin-bottom: 0.25em !important;
+}

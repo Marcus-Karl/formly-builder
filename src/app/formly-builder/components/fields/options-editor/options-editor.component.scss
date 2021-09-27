@@ -1,0 +1,51 @@
+
+:host {
+  display: flex;
+  flex-direction: column;
+  padding: 0 1em;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.top-buttons {
+  font-weight: bold;
+  display: flex;
+  margin-left: auto;
+  margin-top: 0.5em;
+}
+
+.mat-column-select {
+  overflow: initial;
+}
+
+table {
+  width: 100%;
+
+  .mat-header-row {
+    padding: 0 0 0 0.5rem;
+  }
+
+  .mat-row {
+    cursor: pointer;
+  }
+
+  .mat-row:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .mat-header-cell {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: black;
+    text-align: left;
+  }
+
+  .table-cell {
+    padding: 5px;
+  }
+
+  .body-cell {
+    min-width: 0;
+  }
+}

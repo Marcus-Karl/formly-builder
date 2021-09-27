@@ -1,0 +1,93 @@
+<!-- Desktop back button -->
+<div class="page-button-wrapper desktop">
+  <div class="page-button" [ngStyle]="{ 'visibility': selectedIndex === 0 ? 'hidden' : 'unset'}">
+    <button type="button" class="mat-button-base mat-primary" [ngClass]="to.useSmallButtons ? 'mat-mini-fab ' : 'mat-fab '" (click)="decrementPageFromIndex(selectedIndex - 1)">
+      <div class="button-content" [matTooltip]="getPreviousPageName(selectedIndex) | tokens: to">
+        <mat-icon>arrow_back</mat-icon>
+      </div>
+    </button>
+
+    <div *ngIf="selectedIndex !== 0 && isPrecedingPageInvalid(selectedIndex - 1, true)" matTooltipClass="use-new-line" class="page-form-error-icon"
+      matTooltip="{{ 'Errors on page(s): {pages}' | translate: { pages: getPrecedingPageNamesInError(selectedIndex) } | tokens: to }}">
+
+      <mat-icon class="error-state material-icons">warning</mat-icon>
+    </div>
+  </div>
+</div>
+
+<mat-tab-group [selectedIndex]="selectedIndex" (selectedIndexChange)="changePage($event)" [disablePagination]="to.disablePagination || false">
+  <mat-tab *ngFor="let page of field.fieldGroup; let index = index">
+    <div class="title" [style.display]="page.templateOptions?.hideLabel ? 'none' : ''">{{ page.templateOptions?.label | tokens: to }}</div>
+
+    <formly-field [field]="page" *ngIf="selectedIndex === index" [ngClass]="page.templateOptions?.classes"></formly-field>
+  </mat-tab>
+</mat-tab-group>
+
+<!-- Desktop forward button -->
+<div class="forward-button-wrapper desktop">
+  <div class="page-button">
+    <button *ngIf="hasForwardPage(selectedIndex)" type="button" [disabled]="to.linear && isPrecedingPageInvalid(selectedIndex)" (click)="incrementPageFromIndex(selectedIndex + 1)"
+      class="mat-button-base mat-primary" [ngClass]="{ 'mat-mini-fab': to.useSmallButtons, 'mat-fab': !to.useSmallButtons, 'mat-button-disabled': to.linear && isPrecedingPageInvalid(selectedIndex) }">
+
+      <div class="button-content" [matTooltip]="getNextPageName(selectedIndex) | tokens: to">
+        <mat-icon>arrow_forward</mat-icon>
+      </div>
+    </button>
+
+    <div *ngIf="isSubsequentPageInvalid(selectedIndex + 1, true)" matTooltipClass="use-new-line" class="page-form-error-icon"
+      matTooltip="{{ 'Errors on page(s): {pages}' | translate: { pages: getSubsequentPageNamesInError(selectedIndex + 1) } | tokens: to }}">
+
+      <mat-icon class="error-state material-icons">warning</mat-icon>
+    </div>
+  </div>
+
+  <button *ngIf="!to.hideSubmit && !hasForwardPage(selectedIndex)" type="submit" [disabled]="form.invalid"
+    class="mat-button-base mat-primary" [ngClass]="{ 'mat-mini-fab': to.useSmallButtons, 'mat-fab': !to.useSmallButtons, 'mat-button-disabled': form.invalid }">
+
+    <div class="button-content" [matTooltip]="'Submit' | translate">
+      <mat-icon>done</mat-icon>
+    </div>
+  </button>
+</div>
+
+<!-- Mobile buttons -->
+<div class="mobile">
+  <div class="page-button-wrapper">
+    <div class="page-button" [ngStyle]="{ 'visibility': selectedIndex === 0 ? 'hidden' : 'unset'}">
+      <button type="button" mat-icon-button color="primary" (click)="decrementPageFromIndex(selectedIndex - 1)">
+        <div class="button-content" [matTooltip]="getPreviousPageName(selectedIndex) | tokens: to">
+          <mat-icon>arrow_back</mat-icon>
+        </div>
+      </button>
+
+      <div *ngIf="selectedIndex !== 0 && isPrecedingPageInvalid(selectedIndex - 1, true)" matTooltipClass="use-new-line" class="page-form-error-icon"
+        matTooltip="{{ 'Errors on page(s): {pages}' | translate: { pages: getPrecedingPageNamesInError(selectedIndex) } | tokens: to }}">
+
+        <mat-icon class="error-state material-icons">warning</mat-icon>
+      </div>
+    </div>
+  </div>
+
+  <div class="forward-button-wrapper">
+    <div class="page-button">
+      <div *ngIf="isSubsequentPageInvalid(selectedIndex + 1, true)" matTooltipClass="use-new-line" class="page-form-error-icon"
+        matTooltip="{{ 'Errors on page(s): {pages}' | translate: { pages: getSubsequentPageNamesInError(selectedIndex + 1) } | tokens: to }}">
+
+        <mat-icon class="error-state material-icons">warning</mat-icon>
+      </div>
+
+      <button *ngIf="hasForwardPage(selectedIndex)" type="button" mat-icon-button color="primary" [disabled]="to.linear && isPrecedingPageInvalid(selectedIndex)"
+        (click)="incrementPageFromIndex(selectedIndex + 1)">
+        <div class="button-content" [matTooltip]="getNextPageName(selectedIndex) | tokens: to">
+          <mat-icon>arrow_forward</mat-icon>
+        </div>
+      </button>
+    </div>
+
+    <button *ngIf="!to.hideSubmit && !hasForwardPage(selectedIndex)" type="submit" mat-icon-button color="primary" [disabled]="form.invalid">
+      <div class="button-content" [matTooltip]="'Submit' | translate">
+        <mat-icon>done</mat-icon>
+      </div>
+    </button>
+  </div>
+</div>

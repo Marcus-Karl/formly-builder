@@ -1,0 +1,84 @@
+<div *ngIf="!to?.encapsulateLabel">
+  <label [for]="field.id" class="body-text">
+    {{ to?.label | tokens: to }} {{ to?.required ? '*' : '' }}
+  </label>
+</div>
+
+<mat-form-field
+  class="input-field"
+  [appearance]="to.encapsulateLabel && to.appearance ? to.appearance : 'standard'"
+  [floatLabel]="to.floatLabel || 'always'"
+  [ngClass]="{ 'no-label': !to.encapsulateLabel }">
+
+  <mat-label *ngIf="to.encapsulateLabel" class="body-text">
+    {{ to.label | tokens: to }}
+  </mat-label>
+
+  <input matInput
+    #currencyinput
+    type="text"
+    autocomplete="off"
+    (keydown)="keyPress($event)"
+    (paste)="onPaste($event)"
+    (keyup)="keyUp($event)"
+    (change)="keyUp($event); formatCurrencyInput();"
+    (click)="formatCurrencyInput()"
+    (blur)="formatCurrencyInput()"
+    [id]="field.id"
+    [spellcheck]="true"
+    [placeholder]="to.placeholder | tokens: to"
+    [formlyAttributes]="field"
+    [tabindex]="to.tabindex || 0" />
+
+    <div class="prefix" matPrefix>
+      <mat-select
+        *ngIf="currencySelection"
+        [id]="field.id"
+        [aria-label]="currencySelection.templateOptions.label | tokens: currencySelection.templateOptions"
+        [formControl]="currencySelection.formControl"
+        [formlyAttributes]="currencySelection"
+        [disableOptionCentering]="true"
+        [placeholder]="currencySelection.templateOptions.placeholder | tokens: currencySelection.templateOptions"
+        [required]="currencySelection.templateOptions.required"
+        [tabindex]="currencySelection.templateOptions.tabindex || 0"
+        [typeaheadDebounceInterval]="currencySelection.templateOptions.typeaheadDebounceInterval">
+
+        <ng-container *ngFor="let item of currencyOptions | sortOptions">
+          <mat-option class="mat-option-wrap" [value]="item.value" [disabled]="item.disabled">
+            {{ item.label }}
+          </mat-option>
+        </ng-container>
+      </mat-select>
+
+      <div *ngIf="prefixSymbol">
+        {{ prefixSymbol }}
+      </div>
+
+      <div *ngIf="suffixSymbol" class="suffix" [style.transform]="'translate(' + (hiddeninput.clientWidth + 17) + 'px, 0)'">
+        {{ suffixSymbol }}
+      </div>
+
+    </div>
+</mat-form-field>
+
+<!-- This div is used to gather input from currencyinput and get the total width (only needed for offsetting the currency suffix) -->
+<div #hiddeninput class="hide-element">{{ amountField?.formControl?.value || '' }}</div>
+
+<div class="errors-and-hints">
+  <!-- This should remain hidden as its built from Formly's error states and will not pipe to tokens -->
+  <formly-validation-message #validationMessage [field]="field" [style.display]="'none'"></formly-validation-message>
+
+  <mat-error *ngIf="validationMessage.errorMessage && formControl?.touched" class="body-text error-text">
+    <ng-container *ngIf="validationMessage.errorMessage | isArray; else stringErrorMessage">
+      <ng-container *ngFor="let errorMessage of validationMessage.errorMessage; let last = last;">
+        {{ errorMessage }}<br *ngIf="!last">
+      </ng-container>
+    </ng-container>
+
+    <ng-template #stringErrorMessage>
+      {{ validationMessage.errorMessage | tokens: to }}
+    </ng-template>
+  </mat-error>
+
+  <mat-hint *ngIf="to?.hint && !(validationMessage.errorMessage && formControl?.touched)" class="body-text">{{ to?.hint | tokens: to }}</mat-hint>
+</div>

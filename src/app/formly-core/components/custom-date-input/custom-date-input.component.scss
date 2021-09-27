@@ -1,0 +1,19 @@
+
+.custom-date-input-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.custom-date-input-element {
+  border: none;
+  background: none;
+  outline: none;
+  font: inherit;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.custom-date-input-spacer {
+  padding: 0 0.25em;
+}

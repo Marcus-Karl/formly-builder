@@ -1,0 +1,71 @@
+<div *ngIf="!to.encapsulateLabel">
+  <!-- This label should not have a for property as the mat-select builds an internal input for the select dropdown that we cannot map to --->
+  <label class="body-text">
+    {{ to.label | tokens: to }} {{ to.required ? '*' : '' }}
+  </label>
+</div>
+
+<mat-form-field
+  class="select-dropdown-field"
+  [ngClass]="{ 'no-label': !to.encapsulateLabel }"
+  [appearance]="to.encapsulateLabel && to.appearance ? to.appearance : 'standard'"
+  [floatLabel]="to.floatLabel || 'always'">
+
+  <mat-label *ngIf="to.encapsulateLabel" class="body-text">
+    {{ to.label | tokens: to }}
+  </mat-label>
+
+  <mat-select
+    [id]="field.id"
+    [aria-label]="to.label | tokens: to"
+    [compareWith]="to.compareWith"
+    [disableOptionCentering]="to.disableOptionCentering"
+    [errorStateMatcher]="errorStateMatcher"
+    [formControl]="formControl"
+    [formlyAttributes]="field"
+    [multiple]="to.multiple"
+    [placeholder]="to.placeholder | tokens: to"
+    [required]="to.required"
+    [tabindex]="to.tabindex || 0"
+    [typeaheadDebounceInterval]="to.typeaheadDebounceInterval"
+    (selectionChange)="selectionChange($event)">
+
+    <mat-select-trigger *ngIf="to.multiple && to.abbreviateSelection"
+      matTooltipClass="use-new-line"
+      matTooltip="{{ getSelectedOptionsTooltip() | tokens: to }}">
+      {{ getAbbreviatedSelectionLabel() | tokens: to }}
+    </mat-select-trigger>
+
+    <ng-container *ngFor="let option of selectOptions$ | async | sortOptions">
+      <mat-optgroup *ngIf="option.group" [label]="option.label" [disabled]="option.disabled">
+        <mat-option class="mat-option-wrap" *ngFor="let groupItem of option.group | sortOptions" [value]="groupItem[valueProp]" [disabled]="groupItem.disabled">
+          {{ groupItem[labelProp] }}
+        </mat-option>
+      </mat-optgroup>
+
+      <mat-option class="mat-option-wrap" *ngIf="!option.group" [value]="option[valueProp]" [disabled]="option.disabled">
+        {{ option[labelProp] }}
+      </mat-option>
+    </ng-container>
+
+  </mat-select>
+</mat-form-field>
+
+<div class="errors-and-hints">
+  <!-- This should remain hidden as its built from Formly's error states and will not pipe to tokens -->
+  <formly-validation-message #validationMessage [field]="field" [style.display]="'none'"></formly-validation-message>
+
+  <mat-error *ngIf="validationMessage.errorMessage && formControl.touched" class="body-text error-text">
+    <ng-container *ngIf="validationMessage.errorMessage | isArray; else stringErrorMessage">
+      <ng-container *ngFor="let errorMessage of validationMessage.errorMessage; let last = last;">
+        {{ errorMessage }}<br *ngIf="!last">
+      </ng-container>
+    </ng-container>
+
+    <ng-template #stringErrorMessage>
+      {{ validationMessage.errorMessage | tokens: to }}
+    </ng-template>
+  </mat-error>
+
+  <mat-hint *ngIf="to.hint && !(validationMessage.errorMessage && formControl.touched)" class="body-text">{{ to.hint | tokens: to }}</mat-hint>
+</div>

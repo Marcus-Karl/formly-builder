@@ -1,0 +1,46 @@
+<div *ngIf="!to?.encapsulateLabel">
+  <label [for]="field.id" class="body-text">
+    {{ to?.label | tokens: to }} {{ to?.required ? '*' : '' }}
+  </label>
+</div>
+
+<mat-form-field
+  class="input-field"
+  [appearance]="to.encapsulateLabel && to.appearance ? to.appearance : 'standard'"
+  [floatLabel]="to.floatLabel || 'always'"
+  [ngClass]="{ 'no-label': !to.encapsulateLabel }">
+
+  <mat-label *ngIf="to.encapsulateLabel" class="body-text">
+    {{ to.label | tokens: to }}
+  </mat-label>
+
+  <input matInput
+    autocomplete="off"
+    [id]="field.id"
+    [type]="'number'"
+    [spellcheck]="true"
+    [maxlength]="to.maxlength || 256"
+    [placeholder]="to.placeholder | tokens: to"
+    [formControl]="formControl"
+    [formlyAttributes]="field"
+    [tabindex]="to.tabindex || 0" />
+</mat-form-field>
+
+<div class="errors-and-hints">
+  <!-- This should remain hidden as its built from Formly's error states and will not pipe to tokens -->
+  <formly-validation-message #validationMessage [field]="field" [style.display]="'none'"></formly-validation-message>
+
+  <mat-error *ngIf="validationMessage.errorMessage && formControl?.touched" class="body-text error-text">
+    <ng-container *ngIf="validationMessage.errorMessage | isArray; else stringErrorMessage">
+      <ng-container *ngFor="let errorMessage of validationMessage.errorMessage; let last = last;">
+        {{ errorMessage }}<br *ngIf="!last">
+      </ng-container>
+    </ng-container>
+
+    <ng-template #stringErrorMessage>
+      {{ validationMessage.errorMessage | tokens: to }}
+    </ng-template>
+  </mat-error>
+
+  <mat-hint *ngIf="to?.hint && !(validationMessage.errorMessage && formControl?.touched)" class="body-text">{{ to?.hint | tokens: to }}</mat-hint>
+</div>

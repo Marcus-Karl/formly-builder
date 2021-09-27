@@ -1,0 +1,51 @@
+<mat-tab-group [selectedIndex]="selectedIndex" (selectedIndexChange)="changePage($event)">
+  <!-- Pagination will not be updated on resize. See: https://github.com/angular/components/issues/22384 -->
+
+  <ng-container *ngFor="let page of field.fieldGroup; let first = first; let index = index;">
+    <mat-tab [disabled]="!first && isPrecedingPageInvalid(index - 1)"  [aria-labelledby]="page.hide ? 'hidden' : ''">
+
+      <ng-template mat-tab-label>
+        <div class="mat-tab-label-content" #labelcontent>
+          <ng-container *ngIf="page.formControl?.touched && page.formControl?.invalid; else defaultlabel">
+            <mat-icon class="margin-right-half error-state material-icons">warning</mat-icon>
+          </ng-container>
+
+          <ng-template #defaultlabel>
+            <ng-container *ngIf="to.pageStates && to.pageStates[page.templateOptions?.pageState] as state">
+              <mat-icon class="margin-right-half" [ngClass]="state.class" [ngStyle]="{ 'opacity': index === selectedIndex ? '1' : '0.6' }">
+                {{ state.icon }}
+              </mat-icon>
+            </ng-container>
+          </ng-template>
+
+          <span [ngStyle]="{ 'opacity': index === selectedIndex ? '1' : '0.6' }">
+            {{ page.templateOptions?.label | tokens: to }}
+          </span>
+        </div>
+      </ng-template>
+
+      <formly-field [field]="page" *ngIf="selectedIndex === index" [ngClass]="page.templateOptions?.classes"></formly-field>
+
+    </mat-tab>
+  </ng-container>
+
+</mat-tab-group>
+
+<div class="form-controls-wrapper" *ngIf="!to.hideButtons">
+  <div class="form-controls">
+    <div class="margin-right-2">
+      <button *ngIf="selectedIndex !== 0 && hasBackPage(selectedIndex)" type="button" mat-raised-button color="primary" (click)="decrementPageFromIndex(selectedIndex - 1)">
+        <div translate>Back</div>
+      </button>
+    </div>
+
+    <button *ngIf="hasForwardPage(selectedIndex)" type="button" mat-raised-button color="primary" [disabled]="to.linear && isPrecedingPageInvalid(selectedIndex)"
+      (click)="incrementPageFromIndex(selectedIndex + 1)">
+      <div translate>Continue</div>
+    </button>
+
+    <button *ngIf="!to.hideSubmit && !hasForwardPage(selectedIndex)" type="submit" mat-raised-button color="primary" [disabled]="form.invalid">
+      <div translate>Submit</div>
+    </button>
+  </div>
+</div>

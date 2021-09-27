@@ -1,0 +1,30 @@
+
+:host {
+  display: block;
+  padding-top: 1em;
+}
+
+:host ::ng-deep .mat-form-field-infix {
+  width: unset !important;
+}
+
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0 0 0.75em 0;
+}
+
+:host ::ng-deep mat-form-field mat-label {
+  font-size: 21px !important;
+}
+
+.textarea-wrapper {
+  width: unset;
+  max-width: 100%;
+}
+
+.textarea {
+  width: 45em;
+  resize: both !important;
+  padding-top: 0.75em;
+  min-width: 300px;
+  max-width: 100%;
+}

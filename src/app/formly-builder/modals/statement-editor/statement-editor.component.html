@@ -1,0 +1,54 @@
+<div #emptyAnchor></div>
+
+<div class="app-background-color-default" cdkDrag cdkDragBoundary=".cdk-overlay-container" cdkDragRootElement=".cdk-overlay-pane">
+  <div class="header-content mat-card-title row" cdkDragHandle>
+    <div *ngIf="label">{{ label }}</div>
+
+    <div class="svg-icon">
+      <button type="button" mat-icon-button (click)="toggleSize()">
+        <div class="center-content flex">
+          <mat-icon *ngIf="!isFullScreen">fullscreen</mat-icon>
+          <mat-icon *ngIf="isFullScreen">close_fullscreen</mat-icon>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="statement">
+  <div class="center-content">
+    <formly-field class="operator-selection" *ngIf="operator" [field]="operator"></formly-field>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="comparison-selections pad-top-half">
+    <formly-field *ngIf="leftHandSide" [field]="leftHandSide"></formly-field>
+
+    <div class="subtitle-filled pad-left pad-right">
+      {{ label ?? ('Select Operator' | translate) }}
+    </div>
+
+    <formly-field *ngIf="rightHandSide" [field]="rightHandSide"></formly-field>
+  </div>
+</div>
+
+<div class="flex row buttons" >
+  <button type="button" mat-button (click)="resetAndClose()">
+    <div class="center flex row">
+      <mat-icon class="material-icons-outlined margin-right-half" [inline]="true">undo</mat-icon>
+      <div translate>Revert & Close</div>
+    </div>
+  </button>
+
+  <div class="align-end pad-left">
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="field.formControl?.invalid"
+      (click)="updateAndClose()"
+      cdkFocusInitial>
+      <div translate>Save & Close</div>
+    </button>
+  </div>
+</div>

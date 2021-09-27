@@ -1,0 +1,44 @@
+
+.top-buttons {
+  font-weight: bold;
+  display: flex;
+  margin-left: auto;
+}
+
+.tokens {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.token-info {
+  height: 5em;
+  width: calc(100% - 3em);
+  box-sizing: border-box;
+}
+
+.display-summary {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  white-space: normal;
+  word-wrap: break-word;
+  word-break: break-word;
+
+  .label {
+    font-weight: bold;
+    margin-right: 0.5em;
+    white-space: nowrap;
+  }
+}
+
+.svg-icon {
+  width: 3em;
+  margin-left: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}

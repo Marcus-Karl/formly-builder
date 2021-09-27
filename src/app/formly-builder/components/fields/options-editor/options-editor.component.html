@@ -1,0 +1,87 @@
+<div class="flex fill-width">
+  <div class="top-buttons center-content body-text" [style.margin-left]="'auto'">
+    <button type="button" mat-button (click)="add()" [disabled]="!disableReordering || formControl.disabled">
+      <div class="center-content flex">
+        <mat-icon>add</mat-icon>
+        <div class="pad-left-half" translate>
+          Add Option
+        </div>
+      </div>
+    </button>
+
+    <div class="margin-left toggle-mode">
+      <button type="button" mat-button [disabled]="!field.fieldGroup?.length || formControl.disabled" (click)="disableReordering = !disableReordering;">
+        {{ disableReordering ? ('Reorder Options' | translate) : ('Edit Options' | translate) }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="field.fieldGroup?.length; else noOptions">
+  <table #optionsTable mat-table [dataSource]="field.fieldGroup || []" class="fill-width margin-bottom" cdkDropList (cdkDropListDropped)="drop($event)">
+
+    <ng-container matColumnDef="value">
+      <th mat-header-cell *matHeaderCellDef class="table-cell" [style.width]="'30%'" translate>Key / Value</th>
+      <td mat-cell *matCellDef="let row" class="body-cell table-cell">
+
+        <div [ngStyle]="!selection.isSelected(row) && { 'display': 'none' } || {}">
+          <formly-field [field]="getField(row, 'value')"></formly-field>
+        </div>
+
+        <div [matTooltip]="row.model?.value" [matTooltipDisabled]="row.model?.value?.length < 30" matTooltipClass="mat-tooltip-content"
+          [ngStyle]="selection.isSelected(row) && { 'display': 'none' } || {}">
+          {{ row.model?.value  | truncate:30:false:'...' }}
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="label">
+      <th mat-header-cell *matHeaderCellDef class="table-cell" translate>Label</th>
+      <td mat-cell *matCellDef="let row" class="body-cell table-cell">
+
+        <div [ngStyle]="!selection.isSelected(row) && { 'display': 'none' } || {}">
+          <formly-field [field]="getField(row, 'label')"></formly-field>
+        </div>
+
+        <div [matTooltip]="row.model?.label" [matTooltipDisabled]="row.model?.label?.length < 60" matTooltipClass="mat-tooltip-content"
+          [ngStyle]="selection.isSelected(row) && { 'display': 'none' } || {}">
+          {{ row.model?.label  | truncate:60:false:'...' }}
+        </div>
+
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef style="width: 5em;" class="table-cell" translate>Edit</th>
+      <td mat-cell *matCellDef="let row">
+
+        <div *ngIf="!disableReordering; else editIcons" cdkDragHandle>
+          <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+            <path d="M0 0h24v24H0z" fill="none"></path>
+          </svg>
+        </div>
+
+        <ng-template #editIcons>
+          <button type="button" mat-icon-button [aria-label]="'Edit' | translate" (click)="selection.toggle(row)" [disabled]="formControl.disabled">
+            <div class="center-content flex">
+              <mat-icon *ngIf="!selection.isSelected(row)">edit</mat-icon>
+              <mat-icon *ngIf="selection.isSelected(row)">done</mat-icon>
+            </div>
+          </button>
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" cdkDrag [cdkDragDisabled]="disableReordering"></tr>
+  </table>
+</div>
+
+<ng-template #noOptions>
+  <div class="center-content flex fill">
+    <div class="title" translate>
+      No Options Configured
+    </div>
+  </div>
+</ng-template>

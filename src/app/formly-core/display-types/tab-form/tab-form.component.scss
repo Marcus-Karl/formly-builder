@@ -1,0 +1,39 @@
+
+:host ::ng-deep .mat-tab-group {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+
+  .mat-tab-body-wrapper {
+    height: 100%;
+    width: 100%;
+
+    .mat-tab-body-content {
+      overflow: auto !important;
+    }
+  }
+}
+
+:host ::ng-deep mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label {
+  opacity: 1 !important;
+}
+
+:host ::ng-deep .mat-tab-label[aria-labelledby='hidden'] {
+  display: none;
+}
+
+.form-controls-wrapper {
+  margin-top: auto;
+  display: flex;
+
+  .form-controls {
+    display: flex;
+    flex-direction: row;
+    margin: 1em 0 0 auto;
+  }
+}
+
+.error-state {
+  background-color: transparent !important;
+  color: #b00020 !important;
+}

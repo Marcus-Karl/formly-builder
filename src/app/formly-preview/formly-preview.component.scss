@@ -1,0 +1,40 @@
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  flex-direction: column;
+}
+
+.display-form {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  overflow-y: auto;
+  box-sizing: border-box;
+
+  @media screen and (max-width: 960px) {
+    padding: 0;
+  }
+
+  form {
+    background-color: white;
+    padding: 1em;
+    box-sizing: border-box;
+
+    @media screen and (max-width: 960px) {
+      padding: 0.5em;
+    }
+  }
+}
+
+.submit-button {
+  margin-left: auto;
+}

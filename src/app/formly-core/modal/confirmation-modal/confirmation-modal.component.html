@@ -1,0 +1,19 @@
+<div class="title margin-bottom" [innerHTML]="modalData.header | keepHtml" mat-dialog-title></div>
+
+<mat-dialog-content class="mat-typography">
+  <span class="body-text" [innerHTML]="modalData.body | keepHtml"></span>
+</mat-dialog-content>
+
+<mat-dialog-actions class="flex">
+  <div class="margin-left-auto flex-row">
+    <div class="margin-right">
+      <button type="button" *ngIf="!!modalData.secondaryActionText" mat-button [mat-dialog-close]="modalData.secondaryActionText">
+        {{ modalData.secondaryActionText }}
+      </button>
+    </div>
+
+    <button mat-raised-button color="primary" [mat-dialog-close]="modalData.primaryActionText" cdkFocusInitial>
+      {{ modalData.primaryActionText }}
+    </button>
+  </div>
+</mat-dialog-actions>

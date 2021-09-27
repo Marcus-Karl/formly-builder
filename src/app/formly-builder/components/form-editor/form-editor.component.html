@@ -1,0 +1,64 @@
+<div class="flex fill-width">
+  <div class="top-buttons center-content body-text" [style.margin-left]="'auto'">
+    <button type="button" mat-button (click)="add()" [disabled]="reorderEnabled">
+      <div class="center-content flex">
+        <mat-icon>add</mat-icon>
+
+        <div class="pad-left-half" translate>
+          Add Page
+        </div>
+      </div>
+    </button>
+
+    <div class="margin-left-2">
+      <button type="button" mat-button [disabled]="!field.fieldGroup?.length" (click)="reorderEnabled = !reorderEnabled; reorderEnabled ? accordion && accordion.closeAll() : null;">
+        {{ reorderEnabled ? ('Edit Pages' | translate) : ('Reorder Pages' | translate) }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<div
+  class="form-pages"
+  cdkDropList
+  [cdkDropListDisabled]="!reorderEnabled"
+  (cdkDropListDropped)="dropPage($event)"
+  [cdkDropListAutoScrollStep]="5">
+
+  <mat-accordion #accordian multi>
+
+    <mat-expansion-panel
+      class="custom-expansion-panel"
+      cdkDrag
+      cdkDragLockAxis="y"
+      *ngFor="let page of field.fieldGroup"
+      [id]="page.id"
+      [disabled]="reorderEnabled"
+      [ngStyle]="reorderEnabled && { 'cursor': 'move' } || {}">
+
+      <mat-expansion-panel-header [ngClass]="{ 'remove-disable-shading': reorderEnabled }">
+        <div class="fill center-content header-contents">
+
+          <mat-panel-title class="page-summary subtitle-filled">
+            <div class="summary-row">
+              <div translate class="row-label">Position</div>{{ page.model?._order }}
+            </div>
+
+            <div class="summary-row" [matTooltip]="page.model?._referenceId">
+              <div class="row-label" translate>Label</div>{{ page.model?.settings?.pageLabel | truncate: 150 }}
+            </div>
+          </mat-panel-title>
+
+        </div>
+      </mat-expansion-panel-header>
+
+      <ng-template matExpansionPanelContent>
+        <div class="pad-half">
+          <formly-field [field]="page"></formly-field>
+        </div>
+      </ng-template>
+
+    </mat-expansion-panel>
+
+  </mat-accordion>
+</div>

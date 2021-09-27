@@ -1,0 +1,19 @@
+<div class="flex fill-width">
+  <div class="top-buttons center-content" [style.margin-left]="'auto'">
+    <button type="button" mat-button (click)="add()" [disabled]="field.fieldGroup && field.fieldGroup.length > 0">
+      <div class="center-content flex">
+        <mat-icon>add</mat-icon>
+
+        <div class="pad-left-half" translate>
+          Add Statement
+        </div>
+      </div>
+    </button>
+  </div>
+</div>
+
+<div class="statement">
+  <formly-field *ngIf="leftHandSide" [field]="leftHandSide"></formly-field>
+  <formly-field *ngIf="operator" [field]="operator"></formly-field>
+  <formly-field *ngIf="rightHandSide" [field]="rightHandSide"></formly-field>
+</div>

@@ -1,0 +1,75 @@
+<div *ngIf="!to.encapsulateLabel">
+  <label [for]="field.id" class="body-text">
+    {{ to.label | tokens: to }} {{ to.required ? '*' : '' }}
+  </label>
+</div>
+
+<mat-form-field
+  class="select-dropdown-field"
+  [ngClass]="{ 'no-label': !to.encapsulateLabel }"
+  [appearance]="to.encapsulateLabel && to.appearance ? to.appearance : 'standard'"
+  [floatLabel]="to.floatLabel || 'always'">
+
+  <mat-label *ngIf="to.encapsulateLabel" [for]="field.id" class="body-text">
+    {{ to.label | tokens: to }}
+  </mat-label>
+
+  <input matInput
+    type="text"
+    autocomplete="off"
+    #autocompleteinput
+    [id]="field.id"
+    [attr.aria-label]="to.autoComplete.label | tokens: to"
+    [placeholder]="to.placeholder | tokens: to"
+    [formControl]="formControl"
+    [formlyAttributes]="field"
+    [tabindex]="to.tabindex || 0"
+    [matAutocomplete]="auto" />
+
+  <button *ngIf="formControl.value" matSuffix mat-icon-button [aria-label]="'Clear Selection' | translate" [style.max-height]="'34px'"
+    (click)="$event.stopPropagation(); autoCompleteTrigger?.openPanel(); formControl.setValue(null); autocompleteinput.focus()">
+    <mat-icon [inline]="true">close</mat-icon>
+  </button>
+
+  <mat-autocomplete
+    #auto="matAutocomplete"
+    [aria-labelledby]="field.id"
+    [autoActiveFirstOption]="to.autoActiveFirstOption"
+    [classList]="to.autoComplete.className || ''"
+    [disableRipple]="to.disableRipple"
+    [displayWith]="getDisplayLabel"
+    (optionSelected)="selectionChange($event)">
+
+    <ng-container *ngFor="let item of filteredSelectOptions$ | async | sortOptions">
+      <mat-optgroup *ngIf="item.group" [label]="item.label" [disabled]="item.disabled">
+        <mat-option class="mat-option-wrap" *ngFor="let groupItem of item.group | sortOptions" [value]="groupItem[valueProp]" [disabled]="groupItem.disabled">
+          {{ groupItem[labelProp] }}
+        </mat-option>
+      </mat-optgroup>
+
+      <mat-option class="mat-option-wrap" *ngIf="!item.group" [value]="item[valueProp]" [disabled]="item.disabled">
+        {{ item[labelProp] }}
+      </mat-option>
+    </ng-container>
+
+  </mat-autocomplete>
+</mat-form-field>
+
+<div class="errors-and-hints">
+  <!-- This should remain hidden as its built from Formly's error states and will not pipe to tokens -->
+  <formly-validation-message #validationMessage [field]="field" [style.display]="'none'"></formly-validation-message>
+
+  <mat-error *ngIf="validationMessage.errorMessage && formControl.touched" class="body-text error-text">
+    <ng-container *ngIf="validationMessage.errorMessage | isArray; else stringErrorMessage">
+      <ng-container *ngFor="let errorMessage of validationMessage.errorMessage; let last = last;">
+        {{ errorMessage }}<br *ngIf="!last">
+      </ng-container>
+    </ng-container>
+
+    <ng-template #stringErrorMessage>
+      {{ validationMessage.errorMessage | tokens: to }}
+    </ng-template>
+  </mat-error>
+
+  <mat-hint *ngIf="to.hint && !(validationMessage.errorMessage && formControl.touched)" class="body-text">{{ to.hint | tokens: to }}</mat-hint>
+</div>

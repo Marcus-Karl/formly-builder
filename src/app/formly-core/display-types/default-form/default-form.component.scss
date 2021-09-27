@@ -1,0 +1,17 @@
+
+.previous-form-option {
+  line-height: 1.5rem !important;
+  padding: 0.5rem 1rem 0.5rem 1rem !important;
+}
+
+.form-actions {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+
+  .button-wrapper {
+    margin-left: auto;
+    display: flex;
+    flex-direction: row;
+  }
+}
