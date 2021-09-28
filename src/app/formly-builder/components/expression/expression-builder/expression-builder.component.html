@@ -1,33 +1,15 @@
 <div class="body-text">{{ to.label }}</div>
 
-<div *ngIf="field.fieldGroup?.length === 0; else graphArea" class="flex fill-width">
+<div class="flex fill-width">
   <div class="top-buttons center-content" [style.margin-left]="'auto'">
     <button type="button" mat-button (click)="add()">
       <div class="center-content flex">
         <mat-icon>add</mat-icon>
 
         <div class="pad-left-half" translate>
-          Add Statement
+          Add Rule
         </div>
       </div>
     </button>
   </div>
 </div>
-
-<ng-template #graphArea>
-  <app-graph *ngIf="showGraph"
-    class="center-content graph-wrapper"
-    [clusters]="clusters"
-    [edges]="edges"
-    [nodes]="nodes"
-    [graphConfiguration]="graphConfiguration"
-    [updateGraph$]="updateGraph$">
-  </app-graph>
-
-  <div class="center-content flex">
-    <button type="button" mat-button (click)="showGraph ? showGraph = false : buildGraphParts()">
-      <div [hidden]="showGraph" class="body-text bold" translate>Display Graph</div>
-      <div [hidden]="!showGraph" class="body-text bold" translate>Hide Graph</div>
-    </button>
-  </div>
-</ng-template>

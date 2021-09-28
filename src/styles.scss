@@ -411,6 +411,7 @@ mat-hint:focus {
 }
 
 .resizable-overlay .mat-dialog-container {
+  height: unset;
   min-width: 375px;
   min-height: 375px;
   resize: both;

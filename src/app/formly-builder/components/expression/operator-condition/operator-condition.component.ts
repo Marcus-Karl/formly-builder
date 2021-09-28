@@ -3,18 +3,18 @@ import { FieldArrayType, FormlyFieldConfig } from '@ngx-formly/core';
 import { FunctionHelpers } from 'src/app/formly-builder/helpers/base.helper';
 
 @Component({
-  selector: 'operator-statement',
-  templateUrl: './operator-statement.component.html',
-  styleUrls: ['./operator-statement.component.scss']
+  selector: 'operator-condition',
+  templateUrl: './operator-condition.component.html',
+  styleUrls: ['./operator-condition.component.scss']
 })
-export class OperatorStatementComponent extends FieldArrayType implements OnInit {
+export class OperatorConditionComponent extends FieldArrayType implements OnInit {
 
   public leftHandSide: FormlyFieldConfig | undefined;
   public operator: FormlyFieldConfig | undefined;
   public rightHandSide: FormlyFieldConfig | undefined;
 
   ngOnInit() {
-    this._setStatementFields();
+    this._setFields();
   }
 
   add(i?: number, initialModel?: any, markAsDirty?: any) {
@@ -36,11 +36,11 @@ export class OperatorStatementComponent extends FieldArrayType implements OnInit
       newField.model['_referenceId'] = FunctionHelpers.generateId();
     }
 
-    this._setStatementFields();
+    this._setFields();
   }
 
-  private _setStatementFields() {
-    if (this.field.fieldGroup && this.field.fieldGroup?.length > 0) {
+  private _setFields() {
+    if (this.field.fieldGroup?.length) {
       this.leftHandSide = this.field.fieldGroup[0].fieldGroup?.find(x => x.key === 'leftHandSide');
       this.operator = this.field.fieldGroup[0].fieldGroup?.find(x => x.key === 'operator');
       this.rightHandSide = this.field.fieldGroup[0].fieldGroup?.find(x => x.key === 'rightHandSide');

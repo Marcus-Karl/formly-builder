@@ -199,8 +199,7 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
           },
           'hideExpression': {
             'type': 'array',
-            'title': 'Create statement to conditionally hide this page',
-            'maxItems': 1,
+            'title': 'Create rule to conditionally hide this page',
             'widget': {
               'formlyConfig': {
                 'defaultValue': [],
@@ -209,7 +208,7 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
               }
             },
             'items': {
-              '$ref': '#/definitions/expression/baseStatement'
+              '$ref': '#/definitions/expression/baseCondition'
             }
           }
         },
@@ -439,8 +438,7 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
       'types': {
         'hideExpression': {
           'type': 'array',
-          'title': 'Create statement to conditionally hide this field',
-          'maxItems': 1,
+          'title': 'Create rule to conditionally hide this field',
           'widget': {
             'formlyConfig': {
               'defaultValue': [],
@@ -448,12 +446,12 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
             }
           },
           'items': {
-            '$ref': '#/definitions/expression/baseStatement'
+            '$ref': '#/definitions/expression/baseCondition'
           }
         },
         'validationExpressions': {
           'type': 'array',
-          'title': 'Create statements to validate user entries',
+          'title': 'Create rule to validate user entries',
           'widget': {
             'formlyConfig': {
               'defaultValue': [],
@@ -462,7 +460,7 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
             }
           },
           'items': {
-            '$ref': '#/definitions/expression/baseStatement'
+            '$ref': '#/definitions/expression/baseCondition'
           }
         },
         'category': {
@@ -624,7 +622,7 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
       'fields': {
         'returnResult': {
           'type': 'array',
-          'title': 'Create statement to return result',
+          'title': 'Create condition to return result',
           'maxItems': 1,
           'widget': {
             'formlyConfig': {
@@ -634,7 +632,7 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
             }
           },
           'items': {
-            '$ref': '#/definitions/expression/baseStatement'
+            '$ref': '#/definitions/expression/baseCondition'
           }
         },
         'category': {
@@ -726,21 +724,20 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
       }
     },
     'expression': {
-      'nestedStatement': {
+      'nestedCondition': {
         'type': 'array',
-        'maxItems': 1,
         'widget': {
           'formlyConfig': {
             'defaultValue': [],
-            'type': 'operator-statement',
-            'hideExpression': 'field.parent.model.comparisonAgainst !== \'statement\''
+            'type': 'operator-condition',
+            'hideExpression': 'field.parent.model.comparisonAgainst !== \'condition\''
           }
         },
         'items': {
-          '$ref': '#/definitions/expression/baseStatement'
+          '$ref': '#/definitions/expression/baseCondition'
         }
       },
-      'baseStatement': {
+      'baseCondition': {
         'type': 'object',
         'widget': {
           'formlyConfig': {
@@ -779,8 +776,8 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
           'predefined': {
             '$ref': '#/definitions/expression/predefined'
           },
-          'statement': {
-            '$ref': '#/definitions/expression/nestedStatement'
+          'condition': {
+            '$ref': '#/definitions/expression/nestedCondition'
           },
           'token': {
             '$ref': '#/definitions/expression/token'

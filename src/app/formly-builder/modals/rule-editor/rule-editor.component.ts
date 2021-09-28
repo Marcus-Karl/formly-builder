@@ -3,11 +3,11 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 
 @Component({
-  selector: 'statement-editor',
-  templateUrl: './statement-editor.component.html',
-  styleUrls: ['./statement-editor.component.scss']
+  selector: 'rule-editor',
+  templateUrl: './rule-editor.component.html',
+  styleUrls: ['./rule-editor.component.scss']
 })
-export class StatementEditorComponent implements AfterViewInit {
+export class RuleEditorComponent implements AfterViewInit {
   @ViewChild('emptyAnchor') emptyAnchor: ElementRef<HTMLDivElement> | undefined;
   public cdkContainer: HTMLElement | undefined;
 
@@ -21,10 +21,10 @@ export class StatementEditorComponent implements AfterViewInit {
   private _savedDialogHeight = '';
   private _savedDialogWidth = '';
 
-  constructor(public dialogRef: MatDialogRef<StatementEditorComponent>, @Inject(MAT_DIALOG_DATA) public field: FormlyFieldConfig) {
+  constructor(public dialogRef: MatDialogRef<RuleEditorComponent>, @Inject(MAT_DIALOG_DATA) public field: FormlyFieldConfig) {
     this.isFullScreen = false;
 
-    this._setStatementFields();
+    this._setFields();
   }
 
   ngAfterViewInit() {
@@ -71,7 +71,7 @@ export class StatementEditorComponent implements AfterViewInit {
     this.isFullScreen = !this.isFullScreen;
   }
 
-  private _setStatementFields() {
+  private _setFields() {
     if (this.field.fieldGroup?.length) {
       this.leftHandSide = this.field.fieldGroup.find(x => x.key === 'leftHandSide');
       this.operator = this.field.fieldGroup.find(x => x.key === 'operator');

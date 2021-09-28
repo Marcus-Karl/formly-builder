@@ -307,8 +307,8 @@ const DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION: FormBuilderSelectionOption =
     },
     {
       type: SelectionOptionType.StatementComparisonType,
-      key: 'statement',
-      label: 'Another Statement'
+      key: 'condition',
+      label: 'Another Condition'
     },
     {
       type: SelectionOptionType.StatementComparisonType,

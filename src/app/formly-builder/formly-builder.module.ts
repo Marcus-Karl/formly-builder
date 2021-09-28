@@ -18,7 +18,6 @@ import { FormlyBuilderRoutes } from './formly-builder.routes';
 
 import { validNameValidator } from './helpers/validators/valid-field-name.helper';
 
-import { AppGraphModule } from './components/app-graph/app-graph.module';
 import { DisplayHtmlEditorComponent } from './components/fields/display-html-editor/display-html-editor.component';
 import { FieldEditorComponent } from './modals/field-editor/field-editor.component';
 import { FormlyBuilderComponent } from './formly-builder.component';
@@ -28,8 +27,8 @@ import { PageFieldsComponent } from './components/fields/page-fields/page-fields
 import { TokenEditorComponent } from './components/tokens/token-editor/token-editor.component';
 import { TokenPageComponent } from './components/tokens/token-page/token-page.component';
 import { ExpressionBuilderComponent } from './components/expression/expression-builder/expression-builder.component';
-import { OperatorStatementComponent } from './components/expression/operator-statement/operator-statement.component';
-import { StatementEditorComponent } from './modals/statement-editor/statement-editor.component';
+import { OperatorConditionComponent } from './components/expression/operator-condition/operator-condition.component';
+import { RuleEditorComponent } from './modals/rule-editor/rule-editor.component';
 
 @NgModule({
   declarations: [
@@ -38,10 +37,10 @@ import { StatementEditorComponent } from './modals/statement-editor/statement-ed
     FieldEditorComponent,
     FormEditorComponent,
     FormlyBuilderComponent,
-    OperatorStatementComponent,
+    OperatorConditionComponent,
     OptionsEditorComponent,
     PageFieldsComponent,
-    StatementEditorComponent,
+    RuleEditorComponent,
     TokenEditorComponent,
     TokenPageComponent,
   ],
@@ -49,7 +48,6 @@ import { StatementEditorComponent } from './modals/statement-editor/statement-ed
     FormlyBuilderComponent
   ],
   imports: [
-    AppGraphModule,
     FormlyCoreModule,
     DragDropModule,
     MatButtonToggleModule,
@@ -67,7 +65,7 @@ import { StatementEditorComponent } from './modals/statement-editor/statement-ed
         { name: 'display-html-editor', component: DisplayHtmlEditorComponent },
         { name: 'expression-builder', component: ExpressionBuilderComponent },
         { name: 'form-editor', component: FormEditorComponent },
-        { name: 'operator-statement', component: OperatorStatementComponent },
+        { name: 'operator-condition', component: OperatorConditionComponent },
         { name: 'options-editor', component: OptionsEditorComponent },
         { name: 'page-fields', component: PageFieldsComponent },
         { name: 'token-editor', component: TokenEditorComponent },

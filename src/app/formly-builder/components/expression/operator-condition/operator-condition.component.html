@@ -5,14 +5,14 @@
         <mat-icon>add</mat-icon>
 
         <div class="pad-left-half" translate>
-          Add Statement
+          Add Condition
         </div>
       </div>
     </button>
   </div>
 </div>
 
-<div class="statement">
+<div class="condition">
   <formly-field *ngIf="leftHandSide" [field]="leftHandSide"></formly-field>
   <formly-field *ngIf="operator" [field]="operator"></formly-field>
   <formly-field *ngIf="rightHandSide" [field]="rightHandSide"></formly-field>
