@@ -41,7 +41,7 @@
 
           <mat-panel-title class="page-summary subtitle-filled">
             <div class="summary-row">
-              <div translate class="row-label">Position</div>{{ page.model?._order }}
+              <div class="row-label" translate>Position</div>{{ page.model?._order }}
             </div>
 
             <div class="summary-row" [matTooltip]="page.model?._referenceId">
@@ -61,4 +61,23 @@
     </mat-expansion-panel>
 
   </mat-accordion>
+</div>
+
+<div class="errors-and-hints">
+  <!-- This should remain hidden as its built from Formly's error states and will not pipe to tokens -->
+  <formly-validation-message #validationMessage [field]="field" [style.display]="'none'"></formly-validation-message>
+
+  <mat-error *ngIf="validationMessage.errorMessage && formControl.touched" class="body-text error-text">
+    <ng-container *ngIf="validationMessage.errorMessage | isArray; else stringErrorMessage">
+      <ng-container *ngFor="let errorMessage of validationMessage.errorMessage; let last = last;">
+        {{ errorMessage }}<br *ngIf="!last">
+      </ng-container>
+    </ng-container>
+
+    <ng-template #stringErrorMessage>
+      {{ validationMessage.errorMessage | tokens: to }}
+    </ng-template>
+  </mat-error>
+
+  <mat-hint *ngIf="to.hint && !(validationMessage.errorMessage && formControl.touched)" class="body-text">{{ to.hint | tokens: to }}</mat-hint>
 </div>

@@ -52,13 +52,11 @@ import { IsArrayPipe } from './pipes/is-array.pipe';
 import { CustomMatIcons } from './services/custom-mat-icons.service';
 import { SelectAutoCompleteFieldComponent } from './fields/select-autocomplete-field/select-autocomplete-field.component';
 import { DateInputFieldComponent } from './fields/date-input-field/date-input-field.component';
-import { NestedTabularArraySummaryFieldComponent } from './fields/nested-tabular-array-summary-field/nested-tabular-array-summary-field.component';
 import { ConfirmationModalComponent } from './modal/confirmation-modal/confirmation-modal.component';
 import { ShowFormModalComponent } from './modal/show-form-modal/show-form-modal.component';
 import { OverlayService } from './services/overlay.service';
 import { InnerFormContainerComponent } from './display-types/inner-form-container/inner-form-container.component';
 import { ExpansionPanelArrayFieldComponent } from './fields/expansion-panel-array-field/expansion-panel-array-field.component';
-import { SectionalDateInputFieldComponent } from './fields/sectional-date-input-field/sectional-date-input-field.component';
 import { CustomDateInputComponent } from './components/custom-date-input/custom-date-input.component';
 
 @NgModule({
@@ -100,9 +98,7 @@ import { CustomDateInputComponent } from './components/custom-date-input/custom-
         { name: 'display-html', component: DisplayHtmlComponent },
         { name: 'currency-input-field', component: CurrencyInputFieldComponent },
         { name: 'date-input-field', component: DateInputFieldComponent },
-        { name: 'sectional-date-input-field', component: SectionalDateInputFieldComponent },
         { name: 'expansion-panel-array-field', component: ExpansionPanelArrayFieldComponent },
-        { name: 'nested-tabular-array-summary-field', component: NestedTabularArraySummaryFieldComponent },
         { name: 'number-input-field', component: NumberInputFieldComponent },
         { name: 'select-autocomplete-field', component: SelectAutoCompleteFieldComponent },
         { name: 'select-dropdown-field', component: SelectDropDownFieldComponent },
@@ -146,10 +142,8 @@ import { CustomDateInputComponent } from './components/custom-date-input/custom-
     DisplayHtmlComponent,
     CurrencyInputFieldComponent,
     ExpansionPanelArrayFieldComponent,
-    NestedTabularArraySummaryFieldComponent,
     NumberInputFieldComponent,
     TextInputComponentField,
-    SectionalDateInputFieldComponent,
     SelectAutoCompleteFieldComponent,
     SelectDropDownFieldComponent,
     TextBoxFieldComponent,

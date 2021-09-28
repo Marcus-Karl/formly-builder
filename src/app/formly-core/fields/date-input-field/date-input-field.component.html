@@ -1,10 +1,11 @@
 <div *ngIf="!to.encapsulateLabel">
-  <label [for]="field.id" class="body-text">
+  <label [id]="field.id + '_label'" class="body-text">
     {{ to.label | tokens: to }} {{ to.required ? '*' : '' }}
   </label>
 </div>
 
 <mat-form-field
+  #matFormField
   class="input-field"
   [appearance]="to.encapsulateLabel && to.appearance ? to.appearance : 'standard'"
   [floatLabel]="to.floatLabel || 'always'"
@@ -14,19 +15,11 @@
     {{ to.label | tokens: to }}
   </mat-label>
 
-  <input matInput
-    #dateInput
-    autocomplete="off"
-    spellcheck="false"
-    [id]="field.id"
-    [type]="to.type || 'text'"
-    [placeholder]="to.placeholder | tokens: to"
-    [formlyAttributes]="field"
-    [tabindex]="to.tabindex || 0"
-    (input)="formatDate(dateInput.value)"
-    (keyup)="formatDate(dateInput.value)"
-    (blur)="performValidation()"
-    (paste)="onPaste($event)" />
+  <custom-date-input
+    [id]="!to.encapsulateLabel && field.id"
+    [describedby]="!to.encapsulateLabel && field.id + '_label'"
+    [formControl]="formControl">
+  </custom-date-input>
 
   <input
     type="hidden"

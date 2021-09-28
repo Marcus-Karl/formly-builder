@@ -99,7 +99,7 @@ export abstract class AbstractBaseFormControlsComponent extends FieldType implem
     if (nextPage) {
       let currentPage = this.field.fieldGroup[this.selectedIndex];
 
-      if (currentPage?.formControl) {
+      if (currentPage?.formControl && index > this.selectedIndex) {
         currentPage.formControl.markAsTouched();
       }
 

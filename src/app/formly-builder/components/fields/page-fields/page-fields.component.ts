@@ -3,11 +3,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { FieldArrayType, FormlyFieldConfig } from '@ngx-formly/core';
+import { TranslateService } from '@ngx-translate/core';
 
 import { FormlyBuilderService } from 'src/app/formly-builder/formly-builder.service';
 import { FunctionHelpers } from 'src/app/formly-builder/helpers/base.helper';
 
 import { FieldEditorComponent } from 'src/app/formly-builder/modals/field-editor/field-editor.component';
+import { ConfirmationModalComponent } from 'src/app/formly-core/modal/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalData } from 'src/app/formly-core/models/confirmation-modal-data';
 
 @Component({
   selector: 'page-fields',
@@ -22,7 +25,7 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
 
   private _categories: any[] | undefined;
 
-  constructor(private dialog: MatDialog, private formlyBuilderService: FormlyBuilderService) {
+  constructor(private dialog: MatDialog, private formlyBuilderService: FormlyBuilderService, private translateService: TranslateService) {
     super();
   }
 
@@ -95,6 +98,40 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
       newField.model['_referenceId'] = FunctionHelpers.generateId();
 
       this.edit(newField);
+    }
+  }
+
+  confirmRemoval(formField: FormlyFieldConfig) {
+    if (!Array.isArray(this.field.fieldGroup)) {
+      return;
+    }
+
+    let index = this.field.fieldGroup.findIndex(x => x.id === formField?.id);
+
+    if (index > -1) {
+      let header = this.translateService.instant('Confirmation');
+      let body = this.translateService.instant('Are you sure you want to remove this field?');
+      let primaryButtonText = this.translateService.instant('No');
+      let removeText = this.translateService.instant('Yes, Remove');
+
+      let data = new ConfirmationModalData(header, body, primaryButtonText, removeText);
+
+      this.dialog.open(ConfirmationModalComponent, {
+        data: data,
+        disableClose: data.disableClose,
+        maxWidth: '100vw',
+        maxHeight: '100vh'
+      }).afterClosed().subscribe((action: string) => {
+        if (action === removeText) {
+          super.remove(index);
+
+          this.field.fieldGroup
+            ?.filter(field => field.model)
+            .forEach((field: FormlyFieldConfig, index: number) => field.model['_order'] = index + 1);
+
+          this.renderChanges();
+        }
+      });
     }
   }
 

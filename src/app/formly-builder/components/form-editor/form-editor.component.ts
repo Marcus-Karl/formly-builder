@@ -23,7 +23,9 @@ export class FormEditorComponent extends FieldArrayType implements OnInit {
   }
 
   ngOnInit() {
-    if (this.field.fieldGroup) {
+    this.formlyBuilderService.registerMajorFormSections(this.field);
+
+    if (this.field.fieldGroup?.length) {
       for (let page of this.field.fieldGroup) {
         this.formlyBuilderService.registerDropId(page);
       }

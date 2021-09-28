@@ -27,7 +27,7 @@
         <div class="fill center-content">
           <mat-panel-title class="page-summary subtitle-filled">
             <div class="summary-row" *ngFor="let column of to.columns">
-              <div translate class="row-label">{{ column.label }}</div>{{ getValue(page.model.fields, column.path) }}
+              <div class="row-label">{{ column.label }}</div>{{ getValue(page.model.fields, column.path) }}
             </div>
           </mat-panel-title>
 
