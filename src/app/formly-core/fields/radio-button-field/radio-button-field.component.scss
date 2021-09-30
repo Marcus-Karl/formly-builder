@@ -15,11 +15,11 @@
   margin-inline: 0;
   padding-block: 0;
 
-  mat-radio-button {
+  .mat-radio-button-wrap {
     padding-left: 1em;
   }
 
-  mat-radio-button:not(:last-child) {
+  .mat-radio-button-wrap:not(:last-child) {
     padding-bottom: 0.5em;
   }
 }

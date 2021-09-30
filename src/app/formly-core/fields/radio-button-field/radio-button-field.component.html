@@ -4,19 +4,18 @@
   [id]="field.id"
   [formControl]="formControl"
   [formlyAttributes]="field"
-  [required]="to.required"
-  [tabindex]="to.tabindex || 0">
+  [required]="to.required">
 
   <fieldset class="fieldset" [ngClass]="to.classes">
     <legend class="body-text">
       {{ to.label | tokens: to }} {{ to.required ? '*' : '' }}
     </legend>
 
-      <ng-container *ngFor="let option of selectOptions$ | async | sortOptions">
-        <mat-radio-button class="mat-option-wrap" [value]="option[valueProp]" [disabled]="option.disabled">
-          {{ option[labelProp] }}
-        </mat-radio-button>
-      </ng-container>
+    <ng-container *ngFor="let option of selectOptions$ | async | sortOptions">
+      <mat-radio-button class="mat-radio-button-wrap" [value]="option[valueProp]" [disabled]="option.disabled" [ngClass]="option.classes">
+        {{ option[labelProp] }}
+      </mat-radio-button>
+    </ng-container>
   </fieldset>
 </mat-radio-group>
 

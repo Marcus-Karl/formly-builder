@@ -37,13 +37,13 @@
     </mat-select-trigger>
 
     <ng-container *ngFor="let option of selectOptions$ | async | sortOptions">
-      <mat-optgroup *ngIf="option.group" [label]="option.label" [disabled]="option.disabled">
-        <mat-option class="mat-option-wrap" *ngFor="let groupItem of option.group | sortOptions" [value]="groupItem[valueProp]" [disabled]="groupItem.disabled">
+      <mat-optgroup *ngIf="option.group" [label]="option.label" [disabled]="option.disabled" [ngClass]="option.classes">
+        <mat-option class="mat-option-wrap" *ngFor="let groupItem of option.group | sortOptions" [value]="groupItem[valueProp]" [disabled]="groupItem.disabled" [ngClass]="groupItem.classes">
           {{ groupItem[labelProp] }}
         </mat-option>
       </mat-optgroup>
 
-      <mat-option class="mat-option-wrap" *ngIf="!option.group" [value]="option[valueProp]" [disabled]="option.disabled">
+      <mat-option class="mat-option-wrap" *ngIf="!option.group" [value]="option[valueProp]" [disabled]="option.disabled" [ngClass]="option.classes">
         {{ option[labelProp] }}
       </mat-option>
     </ng-container>

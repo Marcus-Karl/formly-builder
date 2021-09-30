@@ -1,8 +1,6 @@
-<div *ngIf="!to.encapsulateLabel">
-  <label [id]="field.id + '_label'" class="body-text">
-    {{ to.label | tokens: to }} {{ to.required ? '*' : '' }}
-  </label>
-</div>
+<label [id]="field.id + '_label'" class="body-text label">
+  {{ to.label | tokens: to }} {{ to.required ? '*' : '' }}
+</label>
 
 <mat-form-field
   #matFormField
@@ -10,10 +8,6 @@
   [appearance]="to.encapsulateLabel && to.appearance ? to.appearance : 'standard'"
   [floatLabel]="to.floatLabel || 'always'"
   [ngClass]="{ 'no-label': !to.encapsulateLabel, 'mat-form-field-invalid': formControl.invalid && (formControl.dirty || formControl.touched) }">
-
-  <mat-label *ngIf="to.encapsulateLabel" class="body-text">
-    {{ to.label | tokens: to }}
-  </mat-label>
 
   <custom-date-input
     [id]="!to.encapsulateLabel && field.id"

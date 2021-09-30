@@ -1090,7 +1090,7 @@ const getFieldValues = () => ({
       'widget': {
         'formlyConfig': {
           'type': 'radio-button-field',
-          // 'defaultValue': 'group2_option1',
+          'defaultValue': 'group2_option1',
           'templateOptions': {
             'required': true,
             'classes': ['flex', 'column'],
@@ -1109,7 +1109,7 @@ const getFieldValues = () => ({
           },
           'expressionProperties': {
             'templateOptions.options': 'field.templateOptions._options.filter(x => !(model?.someNumber == 25 && x.value == \'email\')) || []',
-            // 'model.selectOption': 'Array.isArray(model?.selectOption) ? field.templateOptions.options.filter(x => model.selectOption.includes(x.value)).map(x => x.value) : model?.selectOption && field.templateOptions.options.find(x => x.value == model.selectOption) ? model.selectOption : undefined'
+            // 'model.radioOption': 'Array.isArray(model?.radioOption) ? field.templateOptions.options.filter(x => model.radioOption.includes(x.value)).map(x => x.value) : model?.radioOption && field.templateOptions.options.find(x => x.value == model.radioOption) ? model.radioOption : undefined'
           }
         }
       }

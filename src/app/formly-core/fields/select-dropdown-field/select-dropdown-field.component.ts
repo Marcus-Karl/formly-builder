@@ -162,7 +162,8 @@ export class SelectDropDownFieldComponent extends FieldType implements OnInit, O
         options.push({
           label: option[this.groupProp],
           group: groups[option[this.groupProp]],
-          _order: option._order
+          _order: option._order,
+          classes: option.classes
         });
       }
     });

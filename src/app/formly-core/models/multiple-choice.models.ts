@@ -5,5 +5,6 @@ export interface SelectOption {
   group?: SelectOption[];
   disabled?: boolean;
   _order: number;
+  classes?: any;
   [key: string]: any;
 }
