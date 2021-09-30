@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
 
@@ -108,14 +108,14 @@ export abstract class AbstractBaseFormControlsComponent extends FieldType implem
   }
 
   visitedPageHasError(page: FormlyFieldConfig) {
-    let pageControls = ((page.formControl as any)?.controls || {}) as AbstractControl[];
+    let pageControls = (page.formControl as FormGroup)?.controls || {};
 
     return this.options?.formState.formHistory?.find((x: any) => x.name === page.key)
       && Object.values(pageControls).filter(x => x.touched && x.invalid).length;
   }
 
   getPageState(page: FormlyFieldConfig) {
-    let pageControls = ((page.formControl as any)?.controls || {}) as AbstractControl[];
+    let pageControls = (page.formControl as FormGroup)?.controls || {};
 
     if (Object.values(pageControls).filter(x => x.touched && x.invalid).length) {
       return 'page-error';

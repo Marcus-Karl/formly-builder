@@ -81,7 +81,7 @@ export const addRulesToRulesEngine = (engine: Engine, rules: RuleProperties[] | 
     try {
       const rule = new Rule(json);
       engine.addRule(rule);
-    } catch (err) {
+    } catch (err: any) {
       console.log(err, err.stack);
       success = false;
     }

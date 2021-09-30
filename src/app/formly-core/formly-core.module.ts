@@ -58,6 +58,7 @@ import { OverlayService } from './services/overlay.service';
 import { InnerFormContainerComponent } from './display-types/inner-form-container/inner-form-container.component';
 import { ExpansionPanelArrayFieldComponent } from './fields/expansion-panel-array-field/expansion-panel-array-field.component';
 import { CustomDateInputComponent } from './components/custom-date-input/custom-date-input.component';
+import { RadioButtonFieldComponent } from './fields/radio-button-field/radio-button-field.component';
 
 @NgModule({
   imports: [
@@ -95,11 +96,12 @@ import { CustomDateInputComponent } from './components/custom-date-input/custom-
       },
       types: [
         // Custom Form Fields
-        { name: 'display-html', component: DisplayHtmlComponent },
         { name: 'currency-input-field', component: CurrencyInputFieldComponent },
         { name: 'date-input-field', component: DateInputFieldComponent },
+        { name: 'display-html', component: DisplayHtmlComponent },
         { name: 'expansion-panel-array-field', component: ExpansionPanelArrayFieldComponent },
         { name: 'number-input-field', component: NumberInputFieldComponent },
+        { name: 'radio-button-field', component: RadioButtonFieldComponent },
         { name: 'select-autocomplete-field', component: SelectAutoCompleteFieldComponent },
         { name: 'select-dropdown-field', component: SelectDropDownFieldComponent },
         { name: 'text-input-field', component: TextInputComponentField },
@@ -139,14 +141,16 @@ import { CustomDateInputComponent } from './components/custom-date-input/custom-
     TruncatePipe,
 
     // Adapted Form Fields
-    DisplayHtmlComponent,
     CurrencyInputFieldComponent,
+    DateInputFieldComponent,
+    DisplayHtmlComponent,
     ExpansionPanelArrayFieldComponent,
     NumberInputFieldComponent,
-    TextInputComponentField,
+    RadioButtonFieldComponent,
     SelectAutoCompleteFieldComponent,
     SelectDropDownFieldComponent,
     TextBoxFieldComponent,
+    TextInputComponentField,
 
     // Wrappers
     DefaultWrapperComponent,
@@ -160,12 +164,13 @@ import { CustomDateInputComponent } from './components/custom-date-input/custom-
     // Json Schema Field Types
     ObjectTypeComponent,
     ArrayTypeComponent,
-    DateInputFieldComponent,
 
     // Modals
     ConfirmationModalComponent,
     ShowFormModalComponent,
     InnerFormContainerComponent,
+
+    // Misc
     CustomDateInputComponent
   ],
   exports: [

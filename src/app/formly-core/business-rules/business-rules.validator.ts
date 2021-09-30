@@ -2,10 +2,10 @@ import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldValidatorFn } from '@ngx-formly/core/lib/services/formly.config';
 import { Engine, EngineResult } from 'json-rules-engine';
+
 import { evaluateFactsWithEngine } from '../business-rules/default-engine.rules';
 
-export const validateBusinessRule: FieldValidatorFn = (control: AbstractControl, field: FormlyFieldConfig, options: { [id: string]: any; } = {}): Promise<ValidationErrors | null> => {
-  return new Promise(async (resolve, reject) => {
+export const validateBusinessRule: FieldValidatorFn = async (control: AbstractControl, field: FormlyFieldConfig, options: { [id: string]: any; } = {}) => {
     let errors: { [id: string]: any } = {};
 
     if (field.templateOptions && field.templateOptions['_fieldBusinessRuleEngine']) {
@@ -29,17 +29,15 @@ export const validateBusinessRule: FieldValidatorFn = (control: AbstractControl,
         }
       } catch (err) {
         console.error(err);
-
-        reject(err);
+        throw err;
       }
     }
 
     if (Object.keys(errors).length) {
-      resolve({ 'business-rules': errors })
-    } else {
-      resolve(null); 
+      return { 'business-rules': errors } as ValidationErrors;
     }
-  });
+
+    return null;
 }
 
 const evaluteFieldChangeResult = (control: AbstractControl, field: FormlyFieldConfig, type: string, result: boolean) => {

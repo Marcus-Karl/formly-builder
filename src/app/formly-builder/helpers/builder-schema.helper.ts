@@ -203,8 +203,7 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
             'widget': {
               'formlyConfig': {
                 'defaultValue': [],
-                'type': 'expression-builder',
-                'hide': true
+                'type': 'expression-builder'
               }
             },
             'items': {

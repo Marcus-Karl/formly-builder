@@ -662,6 +662,9 @@ const getFieldValues = () => ({
         'dateField': {
           '$ref': '#/definitions/dateField'
         },
+        'radioOption': {
+          '$ref': '#/definitions/radioOption'
+        },
         'someNumber': {
           '$ref': '#/definitions/someNumber'
         },
@@ -785,47 +788,7 @@ const getFieldValues = () => ({
           'type': 'text-input-field',
           'templateOptions': {
             'placeholder': 'my@email.com',
-            'hint': 'Enter an email',
-            'businessRules': [
-              {
-                'conditions': {
-                  'any': [
-                    {
-                      'fact': 'mainModel',
-                      'operator': 'equal',
-                      'value': '35',
-                      'path': '$.page1.someNumber'
-                    }
-                  ]
-                },
-                'event': {
-                  'type': 'required',
-                  'params': {
-                    'result': true,
-                    'message': 'Some failure text'
-                  }
-                }
-              },
-              {
-                'conditions': {
-                  'any': [
-                    {
-                      'fact': 'mainModel',
-                      'operator': 'lessThan',
-                      'value': 23,
-                      'path': '$.page1.someNumber'
-                    }
-                  ]
-                },
-                'event': {
-                  'type': 'test-two',
-                  'params': {
-                    'result': true,
-                    'message': 'Some failure text-two'
-                  }
-                }
-              }
-            ]
+            'hint': 'Enter an email'
           }
         }
       }
@@ -1076,7 +1039,77 @@ const getFieldValues = () => ({
                 'expression': 'value == to.numberNot',
                 'message': '${value} is not allowed, because it is ${to.numberNot}',
               }
-            }
+            },
+            'businessRules': [
+              {
+                'conditions': {
+                  'any': [
+                    {
+                      'fact': 'mainModel',
+                      'operator': 'equal',
+                      'value': '35',
+                      'path': '$.page1.someNumber'
+                    }
+                  ]
+                },
+                'event': {
+                  'type': 'required',
+                  'params': {
+                    'result': true,
+                    'message': 'Some failure text'
+                  }
+                }
+              },
+              {
+                'conditions': {
+                  'any': [
+                    {
+                      'fact': 'mainModel',
+                      'operator': 'lessThan',
+                      'value': 23,
+                      'path': '$.page1.someNumber'
+                    }
+                  ]
+                },
+                'event': {
+                  'type': 'test-two',
+                  'params': {
+                    'result': true,
+                    'message': 'Some failure text-two'
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    'radioOption': {
+      'title': 'My radio options',
+      'type': 'string',
+      'widget': {
+        'formlyConfig': {
+          'type': 'radio-button-field',
+          // 'defaultValue': 'group2_option1',
+          'templateOptions': {
+            'required': true,
+            'classes': ['flex', 'column'],
+            'options': [
+              { 'value': 'email', 'label': 'Email' },
+              { 'value': 'number', 'label': 'Number' },
+              { 'value': 'tel', 'label': 'Telephone' },
+              { 'group': 'Group A', 'value': 'group1_option1', 'label': 'Group 1 First Option' },
+              { 'group': 'Group A', 'value': 'group1_option2', 'label': 'Group 1 Second Option' },
+              { 'group': 'Group A', 'value': 'group1_option3', 'label': 'Group 1 Third Option' },
+              { 'group': 'Group 2', 'value': 'group2_option1', 'label': 'Group 2 First Option' },
+              { 'group': 'Group 2', 'value': 'group2_option2', 'label': 'Group 2 Second Option' },
+              { 'group': 'Group 2', 'value': 'group2_option3', 'label': 'Group 2 Third Option' },
+              { 'value': 'text', 'label': 'Text' },
+            ]
+          },
+          'expressionProperties': {
+            'templateOptions.options': 'field.templateOptions._options.filter(x => !(model?.someNumber == 25 && x.value == \'email\')) || []',
+            // 'model.selectOption': 'Array.isArray(model?.selectOption) ? field.templateOptions.options.filter(x => model.selectOption.includes(x.value)).map(x => x.value) : model?.selectOption && field.templateOptions.options.find(x => x.value == model.selectOption) ? model.selectOption : undefined'
           }
         }
       }
@@ -1119,7 +1152,7 @@ const getFieldValues = () => ({
           'type': 'display-html',
           'templateOptions': {
             'html': 'This is my text to show!<br>The date is ${token.bday}<br>The date time is ${token.hearing}<br>The reason entered is ${token.reasonText}<br>My Function output: ${token.myFunction}',
-            'className': 'fill-green',
+            'classes': 'fill-green',
           }
         }
       }

@@ -1,0 +1,25 @@
+
+:host {
+  display: block;
+  padding-top: 1em;
+}
+
+.radio-group {
+  display: flex;
+  padding-bottom: 1.5em;
+}
+
+.fieldset {
+  border: 0;
+  padding-inline: 0;
+  margin-inline: 0;
+  padding-block: 0;
+
+  mat-radio-button {
+    padding-left: 1em;
+  }
+
+  mat-radio-button:not(:last-child) {
+    padding-bottom: 0.5em;
+  }
+}
