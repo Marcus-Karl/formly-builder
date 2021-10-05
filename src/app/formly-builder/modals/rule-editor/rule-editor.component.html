@@ -17,19 +17,19 @@
 
 <div class="condition">
   <div class="center-content">
-    <formly-field class="operator-selection" *ngIf="operator" [field]="operator"></formly-field>
+    <formly-field class="operator-selection" *ngIf="operator" [field]="operator" [ngClass]="operator.templateOptions?.classes"></formly-field>
   </div>
 
   <mat-divider></mat-divider>
 
   <div class="comparison-selections pad-top-half">
-    <formly-field *ngIf="leftHandSide" [field]="leftHandSide"></formly-field>
+    <formly-field *ngIf="leftHandSide" [field]="leftHandSide" [ngClass]="leftHandSide.templateOptions?.classes"></formly-field>
 
     <div class="subtitle-filled pad-left pad-right">
       {{ label ?? ('Select Operator' | translate) }}
     </div>
 
-    <formly-field *ngIf="rightHandSide" [field]="rightHandSide"></formly-field>
+    <formly-field *ngIf="rightHandSide" [field]="rightHandSide" [ngClass]="rightHandSide.templateOptions?.classes"></formly-field>
   </div>
 </div>
 

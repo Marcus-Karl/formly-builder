@@ -47,7 +47,7 @@
 
 <ng-template #editField>
   <div class="field-content">
-    <formly-field [field]="field"></formly-field>
+    <formly-field [field]="field" [ngClass]="field.templateOptions?.classes"></formly-field>
   </div>
 </ng-template>
 

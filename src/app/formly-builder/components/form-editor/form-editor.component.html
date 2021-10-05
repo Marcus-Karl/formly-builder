@@ -22,7 +22,7 @@
   class="form-pages"
   cdkDropList
   [cdkDropListDisabled]="!reorderEnabled"
-  (cdkDropListDropped)="dropPage($event)"
+  (cdkDropListDropped)="reorderPage($event)"
   [cdkDropListAutoScrollStep]="5">
 
   <mat-accordion #accordian multi>
@@ -59,7 +59,7 @@
 
       <ng-template matExpansionPanelContent>
         <div class="pad-half">
-          <formly-field [field]="page"></formly-field>
+          <formly-field [field]="page" [ngClass]="page.templateOptions?.classes"></formly-field>
         </div>
       </ng-template>
 

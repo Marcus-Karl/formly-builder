@@ -1,6 +1,6 @@
 <div class="flex fill-width">
   <div class="top-buttons center-content" [style.margin-left]="'auto'">
-    <button type="button" mat-button (click)="add()" [disabled]="field.fieldGroup && field.fieldGroup.length > 0">
+    <button type="button" mat-button (click)="add()" [disabled]="field.fieldGroup?.length">
       <div class="center-content flex">
         <mat-icon>add</mat-icon>
 
@@ -13,7 +13,7 @@
 </div>
 
 <div class="condition">
-  <formly-field *ngIf="leftHandSide" [field]="leftHandSide"></formly-field>
-  <formly-field *ngIf="operator" [field]="operator"></formly-field>
-  <formly-field *ngIf="rightHandSide" [field]="rightHandSide"></formly-field>
+  <formly-field *ngIf="leftHandSide" [field]="leftHandSide" [ngClass]="leftHandSide.templateOptions?.classes"></formly-field>
+  <formly-field *ngIf="operator" [field]="operator" [ngClass]="operator.templateOptions?.classes"></formly-field>
+  <formly-field *ngIf="rightHandSide" [field]="rightHandSide" [ngClass]="rightHandSide.templateOptions?.classes"></formly-field>
 </div>

@@ -32,7 +32,7 @@ export class FormEditorComponent extends FieldArrayType implements OnInit {
     }
   }
 
-  dropPage(event: CdkDragDrop<any[]>) {
+  reorderPage(event: CdkDragDrop<any[]>) {
     if (!this.field.fieldGroup) {
       return;
     }

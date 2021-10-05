@@ -97,7 +97,15 @@ export const getAllFieldInformation = (formState: any) => {
   return Object.values(fields);
 }
 
-export const generateId = () => uuidv4().replace(/-/g, '')
+export const generateId = () => {
+  let id = uuidv4().replace(/-/g, '');
+
+  if (/[\d]/.test(id[0])) {
+    id = 'ghijklmnopqrstuvwxyz'[Math.floor(Math.random() * 19)] + id;
+  }
+
+  return id;
+}
 
 export class FunctionReferences {
   private _formState: any;
