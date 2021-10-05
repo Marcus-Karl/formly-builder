@@ -108,7 +108,7 @@ export class TokenPageComponent extends FieldArrayType {
         fieldReference.templateOptions = {};
       }
 
-      let selectableOptions = FunctionHelpers.getAllFieldInformation(this.options?.formState);
+      let selectableOptions = FunctionHelpers.getAllFieldInformation(this.options?.formState).filter(x => x.category !== 'display-content-field');
 
       fieldReference.templateOptions['options'] = selectableOptions;
 

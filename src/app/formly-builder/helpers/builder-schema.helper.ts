@@ -597,7 +597,10 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
             'tokenSubType': {
               '$ref': '#/definitions/token/fields/tokenSubType'
             }
-          }
+          },
+          'required': [
+            'tokenName'
+          ]
         },
         'advanced': {
           'type': 'object',
@@ -669,10 +672,10 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
               'templateOptions': {
                 'options': []
               },
+              'expressionProperties': {
+                'templateOptions.required': 'field.parent.parent.model.category === \'answer-based\''
+              },
               'hideExpression': 'field.parent.parent.model.category !== \'answer-based\'',
-              'validators': {
-                'validation': ['valid-name']
-              }
             }
           }
         },
@@ -700,9 +703,9 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
               'type': 'input',
               'defaultValue': '',
               'expressionProperties': {
-                'model.tokenType': 'field.options.formState.builder.functions.getFieldTypeForReference(field.options.formState, model.fieldReference)',
+                'model.tokenType': 'field.options.formState.builder.functions.getFieldTypeForReference(field.options.formState, model.fieldReference) || \'\'',
               },
-              'hideExpression': 'true'
+              'hideExpression': 'field.parent.parent.model.category === \'answer-based\''
             }
           }
         },
@@ -714,7 +717,7 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
               'type': 'input',
               'defaultValue': '',
               'expressionProperties': {
-                'model.tokenSubType': 'field.options.formState.builder.functions.getFieldSubTypeForReference(field.options.formState, model.fieldReference)',
+                'model.tokenSubType': 'field.options.formState.builder.functions.getFieldSubTypeForReference(field.options.formState, model.fieldReference) || \'\'',
               },
               'hideExpression': 'true'
             }

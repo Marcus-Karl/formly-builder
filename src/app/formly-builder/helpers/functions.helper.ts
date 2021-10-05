@@ -1,17 +1,19 @@
 import { v4 as uuidv4 } from 'uuid';
 
 export interface FieldInformation {
-  referenceId: string;
   category: string;
+  group: string;
   label: string;
-  type: string;
+  referenceId: string;
   subType: string;
+  type: string;
+  value: string;
 }
 
 export interface PageInformation {
+  fields: FieldInformation[];
   label: string;
   referenceId: string;
-  fields: FieldInformation[];
 }
 
 export interface PagesInformation {
@@ -38,10 +40,12 @@ export const refreshPagesInformation = (formState: any | undefined | null) => {
       pageModel.fields?.filter((field: any) => field.basic && field._referenceId).forEach((field: any) => {
         let fieldInformation: FieldInformation = {
           category: field.category,
+          group: pageModel.settings.pageLabel,
           label: field.basic.label,
           type: field.basic.type,
           subType: field.basic.subType,
-          referenceId: field._referenceId
+          referenceId: field._referenceId,
+          value: field._referenceId,
         };
 
         pageInformation.fields.push(fieldInformation);
