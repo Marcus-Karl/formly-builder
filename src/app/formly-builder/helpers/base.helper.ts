@@ -13,14 +13,14 @@ export * as FormStateHelpers from './functions.helper';
 export const createBuilderFormState = (mainModel: any = {}): BuilderFormState => {
   let formState: BuilderFormState = {
     builder: {
-      get functions() { return new FunctionReferences(this) },
+      functions: {} as FunctionReferences,
       options: {
         fieldCategories: [] as SelectionOption[],
         fieldSubTypes: [] as SelectionOption[],
         fieldTypes: [] as SelectionOption[],
         formTypes: [] as SelectionOption[],
-        statementComparisonOperators: [] as SelectionOption[],
-        statementComparisonTypes: [] as SelectionOption[],
+        comparisonOperators: [] as SelectionOption[],
+        comparisonTypes: [] as SelectionOption[],
         tokenCategories: [] as SelectionOption[],
         tokenTypes: [] as SelectionOption[],
       },
@@ -28,6 +28,8 @@ export const createBuilderFormState = (mainModel: any = {}): BuilderFormState =>
     },
     mainModel: mainModel
   };
+
+  formState.builder.functions = new FunctionReferences(formState);
 
   return formState;
 }
@@ -46,8 +48,8 @@ export const jsonBuilderSchema = (formState: BuilderFormState, selectionOptionsM
   options['fieldSubTypes'] = optionsMap[SelectionOptionType.FieldSubType];
   options['fieldTypes'] = optionsMap[SelectionOptionType.FieldType];
   options['formTypes'] = optionsMap[SelectionOptionType.Form];
-  options['statementComparisonOperators'] = optionsMap[SelectionOptionType.StatementComparisonOperator];
-  options['statementComparisonTypes'] = optionsMap[SelectionOptionType.StatementComparisonType];
+  options['comparisonOperators'] = optionsMap[SelectionOptionType.ComparisonOperator];
+  options['comparisonTypes'] = optionsMap[SelectionOptionType.ComparisonType];
   options['tokenCategories'] = optionsMap[SelectionOptionType.TokenCategory];
   options['tokenTypes'] = optionsMap[SelectionOptionType.TokenType];
 

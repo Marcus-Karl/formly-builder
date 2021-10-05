@@ -21,37 +21,39 @@ export interface PagesInformation {
 }
 
 export const refreshPagesInformation = (formState: any | undefined | null) => {
-  if (formState?.builder && formState.mainModel?.form?.pages) {
-    formState.builder.pagesInformation = {};
+  if (!formState?.builder || !formState.mainModel?.form?.pages) {
+    return;
+  }
 
-    let pagesInformation = formState.builder.pagesInformation as PagesInformation;
+  formState.builder.pagesInformation = {};
 
-    let modelPages = formState.mainModel.form.pages as any[];
+  let pagesInformation: PagesInformation = formState.builder.pagesInformation;
 
-    modelPages.filter(pageModel => pageModel._referenceId).forEach((pageModel: any) => {
-      let pageInformation: PageInformation = {
-        label: pageModel.settings.pageLabel,
-        referenceId: pageModel._referenceId,
-        fields: []
+  let modelPages = formState.mainModel.form.pages as any[];
+
+  modelPages.filter(pageModel => pageModel._referenceId).forEach((pageModel: any) => {
+    let pageInformation: PageInformation = {
+      label: pageModel.settings.pageLabel,
+      referenceId: pageModel._referenceId,
+      fields: []
+    };
+
+    pagesInformation[pageInformation.referenceId] = pageInformation;
+
+    pageModel.fields?.filter((field: any) => field.basic && field._referenceId).forEach((field: any) => {
+      let fieldInformation: FieldInformation = {
+        category: field.category,
+        group: pageModel.settings.pageLabel,
+        label: field.basic.label,
+        type: field.basic.type,
+        subType: field.basic.subType,
+        referenceId: field._referenceId,
+        value: field._referenceId,
       };
 
-      pagesInformation[pageInformation.referenceId] = pageInformation;
-
-      pageModel.fields?.filter((field: any) => field.basic && field._referenceId).forEach((field: any) => {
-        let fieldInformation: FieldInformation = {
-          category: field.category,
-          group: pageModel.settings.pageLabel,
-          label: field.basic.label,
-          type: field.basic.type,
-          subType: field.basic.subType,
-          referenceId: field._referenceId,
-          value: field._referenceId,
-        };
-
-        pageInformation.fields.push(fieldInformation);
-      });
+      pageInformation.fields.push(fieldInformation);
     });
-  }
+  });
 }
 
 export const getFieldForReference = (fieldReference: string, formState: any) => {

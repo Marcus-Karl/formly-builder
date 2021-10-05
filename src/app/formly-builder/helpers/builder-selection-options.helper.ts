@@ -5,8 +5,8 @@ export enum SelectionOptionType {
   FieldType = 'FieldType',
   FieldSubType = 'FieldSubType',
   Form = 'Form',
-  StatementComparisonOperator = 'StatementComparisonOperator',
-  StatementComparisonType = 'ComparisonType',
+  ComparisonOperator = 'ComparisonOperator',
+  ComparisonType = 'ComparisonType',
   TokenCategory = 'TokenCategory',
   TokenType = 'TokenType'
 }
@@ -122,7 +122,12 @@ const DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION: FormBuilderSelectionOption =
         {
           type: SelectionOptionType.FieldType,
           key: 'select-dropdown-field',
-          label: 'Dropdown Field'
+          label: 'Dropdown Select Field'
+        },
+        {
+          type: SelectionOptionType.FieldType,
+          key: 'radio-button-field',
+          label: 'Radio Buttons Field'
         }
       ]
     },
@@ -201,122 +206,127 @@ const DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION: FormBuilderSelectionOption =
     {
       key: '',
       label: 'Operators',
-      type: SelectionOptionType.StatementComparisonOperator,
+      type: SelectionOptionType.ComparisonOperator,
       values: [
         {
           key: '>',
           label: '> (Greater Than)',
           group: 'Comparison Operators',
-          type: SelectionOptionType.StatementComparisonOperator,
+          type: SelectionOptionType.ComparisonOperator,
         },
         {
           key: '>=',
           label: '>= (Greater Than or Equal)',
           group: 'Comparison Operators',
-          type: SelectionOptionType.StatementComparisonOperator,
+          type: SelectionOptionType.ComparisonOperator,
         },
         {
           key: '<',
           label: '< (Less Than)',
           group: 'Comparison Operators',
-          type: SelectionOptionType.StatementComparisonOperator,
+          type: SelectionOptionType.ComparisonOperator,
         },
         {
           key: '<=',
           label: '<= (Less Than or Equal)',
           group: 'Comparison Operators',
-          type: SelectionOptionType.StatementComparisonOperator,
+          type: SelectionOptionType.ComparisonOperator,
         },
         {
           key: '==',
           label: '== (Equal)',
           group: 'Comparison Operators',
-          type: SelectionOptionType.StatementComparisonOperator,
+          type: SelectionOptionType.ComparisonOperator,
         },
         {
           key: '!=',
           label: '!= (Not Equal)',
           group: 'Comparison Operators',
-          type: SelectionOptionType.StatementComparisonOperator,
+          type: SelectionOptionType.ComparisonOperator,
         },
         {
           key: '&&',
           label: '&& (And)',
           group: 'Logical Operators',
-          type: SelectionOptionType.StatementComparisonOperator
+          type: SelectionOptionType.ComparisonOperator
         },
         {
           key: '||',
           label: '|| (Or)',
           group: 'Logical Operators',
-          type: SelectionOptionType.StatementComparisonOperator
+          type: SelectionOptionType.ComparisonOperator
         },
         {
           key: '!',
           label: '! (Not)',
           group: 'Logical Operators',
-          type: SelectionOptionType.StatementComparisonOperator
+          type: SelectionOptionType.ComparisonOperator
         },
         {
           key: 'in',
           label: 'In (Value Is In)',
           group: 'Relational Operator',
-          type: SelectionOptionType.StatementComparisonOperator
+          type: SelectionOptionType.ComparisonOperator
         },
         {
           key: 'notin',
           label: 'Not In (Value Is Not In)',
           group: 'Relational Operator',
-          type: SelectionOptionType.StatementComparisonOperator
+          type: SelectionOptionType.ComparisonOperator
         },
         {
           key: 'between_exclusive',
           label: 'Between Exclusive (Between But Not Equal To)',
           group: 'Relational Operator',
-          type: SelectionOptionType.StatementComparisonOperator
+          type: SelectionOptionType.ComparisonOperator
         },
         {
           key: 'between_inclusive',
           label: 'Between Inclusive (Between Or Equal To)',
           group: 'Relational Operator',
-          type: SelectionOptionType.StatementComparisonOperator
+          type: SelectionOptionType.ComparisonOperator
         },
         {
           key: 'match',
           label: 'Matches (Regex Pattern)',
           group: 'Relational Operator',
-          type: SelectionOptionType.StatementComparisonOperator
+          type: SelectionOptionType.ComparisonOperator
         },
         {
           key: 'not_match',
           label: 'Not Match (Regex Pattern)',
           group: 'Relational Operator',
-          type: SelectionOptionType.StatementComparisonOperator
+          type: SelectionOptionType.ComparisonOperator
         }
       ]
     },
     {
-      type: SelectionOptionType.StatementComparisonType,
+      type: SelectionOptionType.ComparisonType,
       key: 'thisItemValue',
       label: 'This Items Value'
     },
     {
-      type: SelectionOptionType.StatementComparisonType,
+      type: SelectionOptionType.ComparisonType,
       key: 'differentFieldAnswer',
       label: 'Different Field Answer'
     },
     {
-      type: SelectionOptionType.StatementComparisonType,
+      type: SelectionOptionType.ComparisonType,
+      key: 'listOfItems',
+      label: 'List of Items'
+    },
+    {
+      type: SelectionOptionType.ComparisonType,
       key: 'condition',
       label: 'Another Condition'
     },
     {
-      type: SelectionOptionType.StatementComparisonType,
+      type: SelectionOptionType.ComparisonType,
       key: 'predefined',
       label: 'Predefined Value'
     },
     {
-      type: SelectionOptionType.StatementComparisonType,
+      type: SelectionOptionType.ComparisonType,
       key: 'token',
       label: 'Token Value'
     }
@@ -329,8 +339,8 @@ export const DEFAULT_SELECTION_OPTIONS_MAP: { [key in SelectionOptionType]: Sele
   [SelectionOptionType.FieldType]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.FieldType),
   [SelectionOptionType.FieldSubType]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.FieldSubType),
   [SelectionOptionType.Form]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.Form),
-  [SelectionOptionType.StatementComparisonOperator]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.StatementComparisonOperator),
-  [SelectionOptionType.StatementComparisonType]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.StatementComparisonType),
+  [SelectionOptionType.ComparisonOperator]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.ComparisonOperator),
+  [SelectionOptionType.ComparisonType]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.ComparisonType),
   [SelectionOptionType.TokenCategory]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.TokenCategory),
   [SelectionOptionType.TokenType]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.TokenType),
 }

@@ -47,9 +47,7 @@ const getPageSchemas = (form: any, model: any) => {
     return;
   }
 
-  let pages = model as any[];
-
-  for (const page of pages) {
+  for (const page of model) {
     buildPage(form, page);
   }
 }
@@ -59,9 +57,7 @@ const getFieldSchema = (form: any, model: any) => {
     return;
   }
 
-  let fields = model;
-
-  for (const field of fields) {
+  for (const field of model) {
     buildFieldSchema(form, field);
   }
 }

@@ -13,14 +13,12 @@ import { ConvertModel, createBuilderFormState, jsonBuilderSchema } from './helpe
 export class FormlyBuilderComponent implements OnInit {
 
   public isFormLoading: boolean;
-
-  public model: { [key: string]: any } = {};
-  public fields: FormlyFieldConfig[];
-
-  public form: FormGroup;
-  public options: FormlyFormOptions;
-
   public schemaDef: any;
+
+  public fields: FormlyFieldConfig[];
+  public form: FormGroup;
+  public model: { [key: string]: any } = {};
+  public options: FormlyFormOptions;
 
   constructor(private formlyJsonschema: FormlyJsonschema) {
     this.isFormLoading = true;
@@ -36,8 +34,6 @@ export class FormlyBuilderComponent implements OnInit {
 
     let field = this.formlyJsonschema.toFieldConfig(json as any);
 
-    console.log(field);
-
     this.fields = [field];
   }
 
@@ -47,11 +43,8 @@ export class FormlyBuilderComponent implements OnInit {
 
   onSubmit(model: any) {
     console.log(`Called onSubmit!`);
-
     console.log(JSON.stringify(model));
-
     console.log(model);
-
     console.warn('Building schema!');
 
     let schema = ConvertModel.toJsonSchema(model);

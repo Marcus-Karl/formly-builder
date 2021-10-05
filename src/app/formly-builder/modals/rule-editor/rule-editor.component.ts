@@ -2,6 +2,9 @@ import { AfterViewInit, Component, ElementRef, Inject, ViewChild } from '@angula
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 
+import { SelectionOption } from '../../helpers/builder-selection-options.helper';
+import { BuilderFormState } from '../../helpers/form-state.helper';
+
 @Component({
   selector: 'rule-editor',
   templateUrl: './rule-editor.component.html',
@@ -17,6 +20,7 @@ export class RuleEditorComponent implements AfterViewInit {
 
   public isFullScreen: boolean;
   public label = '';
+  public leftSideComparisonAgainst = '';
 
   private _savedDialogHeight = '';
   private _savedDialogWidth = '';
@@ -25,6 +29,10 @@ export class RuleEditorComponent implements AfterViewInit {
     this.isFullScreen = false;
 
     this._setFields();
+
+    if (this.field.options?.formState) {
+      (this.field.options.formState as BuilderFormState).builder.functions.refreshPagesInformation();
+    }
   }
 
   ngAfterViewInit() {
@@ -72,14 +80,54 @@ export class RuleEditorComponent implements AfterViewInit {
   }
 
   private _setFields() {
-    if (this.field.fieldGroup?.length) {
-      this.leftHandSide = this.field.fieldGroup.find(x => x.key === 'leftHandSide');
-      this.operator = this.field.fieldGroup.find(x => x.key === 'operator');
-      this.rightHandSide = this.field.fieldGroup.find(x => x.key === 'rightHandSide');
-
-      this.operator?.formControl?.valueChanges.subscribe(value => {
-        this.label = (this.operator?.templateOptions?.options as any[])?.find(x => x.value === value)?.label;
-      });
+    if (!this.field.fieldGroup?.length) {
+      return;
     }
+
+    this.leftHandSide = this.field.fieldGroup.find(x => x.key === 'leftHandSide');
+    this.operator = this.field.fieldGroup.find(x => x.key === 'operator');
+    this.rightHandSide = this.field.fieldGroup.find(x => x.key === 'rightHandSide');
+
+    this.operator?.formControl?.valueChanges.subscribe(value => {
+      this.label = (this.operator?.templateOptions?.options as any[])?.find(x => x.value === value)?.label;
+    });
+
+    if (!this.leftHandSide?.fieldGroup?.length) {
+      return;
+    }
+
+    let comparisonAgainst = this.leftHandSide.fieldGroup.find(x => x.key === 'comparisonAgainst');
+
+    if (!comparisonAgainst?.formControl) {
+      return;
+    }
+
+    if (comparisonAgainst.templateOptions && Array.isArray(comparisonAgainst.templateOptions.options)) {
+      comparisonAgainst.templateOptions.options = comparisonAgainst.templateOptions.options.filter((x: SelectionOption) => ['thisItemValue', 'differentFieldAnswer', 'token'].includes(x.value));
+    }
+
+    this.leftSideComparisonAgainst = this.leftHandSide.model?.comparisonAgainst;
+
+    comparisonAgainst.formControl.valueChanges.subscribe(value => {
+      if (this.leftSideComparisonAgainst !== value && this.leftHandSide?.fieldGroup?.length) {
+        if (value === 'differentFieldAnswer') {
+          let differentFieldAnswer = this.leftHandSide.fieldGroup.find(x => x.key === 'differentFieldAnswer');
+
+          if (differentFieldAnswer?.templateOptions && this.field.options?.formState) {
+            let options = (this.field.options.formState as BuilderFormState).builder.functions.getAllFieldInformation();
+
+            differentFieldAnswer.templateOptions['options'] = options.filter(x => x.category !== 'display-content-field');
+          }
+        } else if (value === 'token') {
+          let tokenField = this.leftHandSide.fieldGroup.find(x => x.key === 'token');
+
+          if (tokenField?.templateOptions && tokenField.options?.formState) {
+            tokenField.templateOptions['options'] = (tokenField.options.formState as BuilderFormState).builder.functions.getAllFieldInformation();
+          }
+        }
+      }
+
+      this.leftSideComparisonAgainst = value;
+    });
   }
 }

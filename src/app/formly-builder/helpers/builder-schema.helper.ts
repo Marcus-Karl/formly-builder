@@ -778,6 +778,12 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
           'predefined': {
             '$ref': '#/definitions/expression/predefined'
           },
+          'listOfItems': {
+            '$ref': '#/definitions/expression/listOfItems'
+          },
+          'differentFieldAnswer': {
+            '$ref': '#/definitions/expression/differentFieldAnswer'
+          },
           'condition': {
             '$ref': '#/definitions/expression/nestedCondition'
           },
@@ -797,7 +803,7 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
             'type': 'select',
             'defaultValue': '',
             'templateOptions': {
-              'options': selectionOptionsMap[SelectionOptionType.StatementComparisonOperator]
+              'options': selectionOptionsMap[SelectionOptionType.ComparisonOperator]
             }
           }
         }
@@ -810,7 +816,7 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
             'type': 'select',
             'defaultValue': '',
             'templateOptions': {
-              'options': selectionOptionsMap[SelectionOptionType.StatementComparisonType]
+              'options': selectionOptionsMap[SelectionOptionType.ComparisonType]
             }
           }
         }
@@ -823,9 +829,23 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
             'type': 'select',
             'defaultValue': '',
             'templateOptions': {
-              'options': selectionOptionsMap[SelectionOptionType.StatementComparisonType]
+              'options': []
             },
             'hideExpression': 'model.comparisonAgainst !== \'token\''
+          }
+        }
+      },
+      'differentFieldAnswer': {
+        'type': 'string',
+        'title': 'Select Field',
+        'widget': {
+          'formlyConfig': {
+            'type': 'select',
+            'defaultValue': '',
+            'templateOptions': {
+              'options': []
+            },
+            'hideExpression': 'model.comparisonAgainst !== \'differentFieldAnswer\''
           }
         }
       },
@@ -838,6 +858,20 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
             'defaultValue': '',
             'hideExpression': 'model.comparisonAgainst !== \'predefined\''
           }
+        }
+      },
+      'listOfItems': {
+        'type': 'array',
+        'title': 'List of Items',
+        'widget': {
+          'formlyConfig': {
+            'type': 'expression-builder',
+            'defaultValue': [],
+            'hideExpression': 'model.comparisonAgainst !== \'listOfItems\''
+          }
+        },
+        'items': {
+          '$ref': '#/definitions/expression/baseCondition'
         }
       }
     }
