@@ -7,9 +7,7 @@
   [required]="to.required">
 
   <fieldset class="fieldset" [ngClass]="to.classes">
-    <legend class="body-text">
-      {{ to.label | tokens: to }} {{ to.required ? '*' : '' }}
-    </legend>
+    <legend class="body-text" [innerHTML]="to.label + (to.required ? ' *' : '') | tokens: to | keepHtml"></legend>
 
     <ng-container *ngFor="let option of selectOptions$ | async | sortOptions">
       <mat-radio-button class="mat-radio-button-wrap" [value]="option[valueProp]" [disabled]="option.disabled" [ngClass]="option.classes">

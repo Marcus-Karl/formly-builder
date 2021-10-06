@@ -1,7 +1,7 @@
 <div role="group"
   class="custom-date-input-container"
   [formGroup]="formGroup"
-  [attr.aria-describedby]="ariaDescribedBy || _formField?._labelId"
+  [attr.aria-describedby]="describedBy || _formField?._labelId"
   (focusin)="onFocusIn($event)"
   (focusout)="onFocusOut($event)">
 

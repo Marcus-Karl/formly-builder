@@ -1,8 +1,6 @@
 <div *ngIf="!to.encapsulateLabel">
   <!-- This label should not have a for property as the mat-select builds an internal input for the select dropdown that we cannot map to --->
-  <label class="body-text">
-    {{ to.label | tokens: to }} {{ to.required ? '*' : '' }}
-  </label>
+  <label class="body-text" [innerHTML]="to.label + (to.required ? ' *' : '') | tokens: to | keepHtml"></label>
 </div>
 
 <mat-form-field

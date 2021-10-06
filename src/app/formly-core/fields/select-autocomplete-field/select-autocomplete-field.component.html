@@ -1,7 +1,5 @@
 <div *ngIf="!to.encapsulateLabel">
-  <label [for]="field.id" class="body-text">
-    {{ to.label | tokens: to }} {{ to.required ? '*' : '' }}
-  </label>
+  <label [for]="field.id" class="body-text" [innerHTML]="to.label + (to.required ? ' *' : '') | tokens: to | keepHtml"></label>
 </div>
 
 <mat-form-field

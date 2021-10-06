@@ -24,7 +24,7 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
   @ViewChild('month') public monthInput: ElementRef<HTMLInputElement> | undefined;
   @ViewChild('day') public dayInput: ElementRef<HTMLInputElement> | undefined;
 
-  @Input('describedby') public ariaDescribedBy: string = '';
+  @Input() public describedBy: string | undefined;
   @Input() public id: string = `custom-date-input-${CustomDateInputComponent.nextId++}`;
 
   @Input()
@@ -251,9 +251,11 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
     let selectionEnd = input.selectionEnd || 0;
 
     if (isRightArrow && selectionStart === (input.value || '').length && selectionStart === selectionEnd) {
-      this.autoFocusNext(index);
-    } else if (isValidKeypress && !modifiedSelectionString && selectionStart === 0 && selectionStart === selectionEnd && (isBackspace || isLeftArrow)) {
-      this.autoFocusNext(index, isBackspace || isLeftArrow);
+      this.autoFocusNext(index, false, true);
+    } else if (isValidKeypress && selectionStart === 0 && selectionStart === selectionEnd && (isBackspace || isLeftArrow)) {
+      this.autoFocusNext(index, true);
+
+      return false;
     }
 
     return isValidKeypress;
@@ -340,7 +342,7 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
     return modifiedSelectionString;
   }
 
-  private autoFocusNext(index: number, isBackspace: boolean = false): void {
+  private autoFocusNext(index: number, isBackspace: boolean = false, isRightArrow: boolean = false): void {
     let nextElement: HTMLInputElement | undefined;
 
     let nextPart = this.dateParts[isBackspace ? index - 1 : index + 1] || '';
@@ -361,8 +363,11 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
 
     if (nextElement) {
       nextElement.focus();
-      let position = isBackspace ? (nextElement.value || '').length : 0;
-      setTimeout(() => nextElement?.setSelectionRange(position, position), 0);
+
+      let endPosition = isRightArrow ? 0 : (nextElement.value || '').length;
+      let startPosition = isBackspace ? endPosition : 0;
+
+      setTimeout(() => nextElement?.setSelectionRange(startPosition, endPosition), 0);
     }
   }
 

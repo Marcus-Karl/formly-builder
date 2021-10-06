@@ -1,17 +1,13 @@
-<label [id]="field.id + '_label'" class="body-text label">
-  {{ to.label | tokens: to }} {{ to.required ? '*' : '' }}
-</label>
+<label [id]="field.id + '_label'" class="body-text label" [innerHTML]="to.label + (to.required ? ' *' : '') | tokens: to | keepHtml"></label>
 
 <mat-form-field
-  #matFormField
   class="input-field"
-  [appearance]="to.encapsulateLabel && to.appearance ? to.appearance : 'standard'"
-  [floatLabel]="to.floatLabel || 'always'"
-  [ngClass]="{ 'no-label': !to.encapsulateLabel, 'mat-form-field-invalid': formControl.invalid && (formControl.dirty || formControl.touched) }">
+  [appearance]="to.appearance || 'standard'"
+  [ngClass]="{ 'mat-form-field-invalid': formControl.invalid && (formControl.dirty || formControl.touched) }">
 
   <custom-date-input
-    [id]="!to.encapsulateLabel && field.id"
-    [describedby]="!to.encapsulateLabel && field.id + '_label'"
+    [id]="field.id"
+    [describedBy]="field.id + '_label'"
     [formControl]="formControl">
   </custom-date-input>
 

@@ -1,8 +1,6 @@
 
 <div *ngIf="!field.templateOptions?.label">
-  <label class="body-text">
-    {{ field.templateOptions?.label | tokens: field.templateOptions }} {{ field.templateOptions?.required ? '*' : '' }}
-  </label>
+  <label [for]="field.id" class="body-text" [innerHTML]="to.label + (to.required ? ' *' : '') | tokens: to | keepHtml"></label>
 </div>
 
 <div class="flex fill-width" *ngIf="to.showAddButton">
