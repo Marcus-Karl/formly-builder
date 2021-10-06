@@ -39,8 +39,12 @@
 }
 
 @media screen and (max-width: 959px) {
-  .condition .comparison-selections {
-    flex-direction: column;
+  .condition {
+    padding: 0.5em;
+
+    .comparison-selections {
+      flex-direction: column;
+    }
   }
 }
 
