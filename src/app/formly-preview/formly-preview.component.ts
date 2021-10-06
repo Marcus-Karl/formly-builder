@@ -1048,7 +1048,7 @@ const getFieldValues = () => ({
                     {
                       'fact': 'mainModel',
                       'operator': 'equal',
-                      'value': '35',
+                      'value': 35,
                       'path': '$.page1.someNumber'
                     }
                   ]
@@ -1095,6 +1095,7 @@ const getFieldValues = () => ({
           'templateOptions': {
             'required': true,
             'classes': ['flex', 'column'],
+            'help': 'some more test text',
             'options': [
               { 'value': 'email', 'label': 'Email' },
               { 'value': 'number', 'label': 'Number' },
