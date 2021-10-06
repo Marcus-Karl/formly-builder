@@ -788,7 +788,8 @@ const getFieldValues = () => ({
           'type': 'text-input-field',
           'templateOptions': {
             'placeholder': 'my@email.com',
-            'hint': 'Enter an email'
+            'hint': 'Enter an email',
+            'help': 'This would be some help content to show a party',
           }
         }
       }

@@ -7,7 +7,10 @@
   [required]="to.required">
 
   <fieldset class="fieldset" [ngClass]="to.classes">
-    <legend class="body-text" [innerHTML]="to.label + (to.required ? ' *' : '') | tokens: to | keepHtml"></legend>
+    <legend class="body-text">
+      <div [innerHTML]="to.label + (to.required ? ' *' : '') | tokens: to | keepHtml"></div>
+      <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="to.help" matTooltipClass="mat-tooltip-content">help</mat-icon>
+    </legend>
 
     <ng-container *ngFor="let option of selectOptions$ | async | sortOptions">
       <mat-radio-button class="mat-radio-button-wrap" [value]="option[valueProp]" [disabled]="option.disabled" [ngClass]="option.classes">

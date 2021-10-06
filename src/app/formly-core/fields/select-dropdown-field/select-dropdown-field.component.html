@@ -1,6 +1,8 @@
-<div *ngIf="!to.encapsulateLabel">
+<div *ngIf="!to.encapsulateLabel" class="flex body-text">
   <!-- This label should not have a for property as the mat-select builds an internal input for the select dropdown that we cannot map to --->
-  <label class="body-text" [innerHTML]="to.label + (to.required ? ' *' : '') | tokens: to | keepHtml"></label>
+  <label [innerHTML]="to.label + (to.required ? ' *' : '') | tokens: to | keepHtml"></label>
+
+  <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="to.help" matTooltipClass="mat-tooltip-content">help</mat-icon>
 </div>
 
 <mat-form-field

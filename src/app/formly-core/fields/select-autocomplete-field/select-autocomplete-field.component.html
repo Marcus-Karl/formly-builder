@@ -1,5 +1,7 @@
-<div *ngIf="!to.encapsulateLabel">
-  <label [for]="field.id" class="body-text" [innerHTML]="to.label + (to.required ? ' *' : '') | tokens: to | keepHtml"></label>
+<div *ngIf="!to.encapsulateLabel" class="flex body-text">
+  <label [for]="field.id" [innerHTML]="to.label + (to.required ? ' *' : '') | tokens: to | keepHtml"></label>
+
+  <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="to.help" matTooltipClass="mat-tooltip-content">help</mat-icon>
 </div>
 
 <mat-form-field
