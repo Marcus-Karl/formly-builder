@@ -12,7 +12,7 @@
 
     <div class="margin-left-2">
       <button type="button" mat-button [disabled]="!field.fieldGroup?.length" (click)="reorderEnabled = !reorderEnabled; reorderEnabled ? accordion && accordion.closeAll() : null;">
-        {{ reorderEnabled ? ('Edit Pages' | translate) : ('Reorder Pages' | translate) }}
+        {{ reorderEnabled ? ('Edit Pages' | translate) : ('Edit Form' | translate) }}
       </button>
     </div>
   </div>
@@ -53,6 +53,14 @@
               <mat-icon>error</mat-icon>
               {{ page.content }}
             </div>
+          </div>
+
+          <div *ngIf="reorderEnabled" class="center-content">
+            <button type="button" mat-icon-button (click)="confirmRemoval(page)">
+              <div class="center-content flex">
+                <mat-icon>delete</mat-icon>
+              </div>
+            </button>
           </div>
         </div>
       </mat-expansion-panel-header>

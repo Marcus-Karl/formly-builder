@@ -1,9 +1,13 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatAccordion } from '@angular/material/expansion';
 import { FieldArrayType, FormlyFieldConfig } from '@ngx-formly/core';
+import { TranslateService } from '@ngx-translate/core';
 
 import { FormlyBuilderService } from 'src/app/formly-builder/formly-builder.service';
+import { ConfirmationModalComponent } from 'src/app/formly-core/modal/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalData } from 'src/app/formly-core/models/confirmation-modal-data';
 import { FunctionHelpers } from '../../helpers/base.helper';
 import { PageFieldsComponent } from '../fields/page-fields/page-fields.component';
 
@@ -18,7 +22,7 @@ export class FormEditorComponent extends FieldArrayType implements OnInit {
 
   public reorderEnabled = false;
 
-  constructor(private formlyBuilderService: FormlyBuilderService) {
+  constructor(private dialog: MatDialog, private formlyBuilderService: FormlyBuilderService, private translateService: TranslateService) {
     super();
   }
 
@@ -54,6 +58,42 @@ export class FormEditorComponent extends FieldArrayType implements OnInit {
       newPage.model['_referenceId'] = FunctionHelpers.generateId();
 
       this.formlyBuilderService.registerDropId(newPage);
+    }
+  }
+
+  confirmRemoval(formField: FormlyFieldConfig) {
+    if (!Array.isArray(this.field.fieldGroup)) {
+      return;
+    }
+
+    let index = this.field.fieldGroup.findIndex(x => x.id === formField?.id);
+
+    if (index > -1) {
+      let header = this.translateService.instant('Confirmation');
+      let body = this.translateService.instant('Are you sure you want to remove this page?');
+      let secondaryButtonText = this.translateService.instant('No');
+      let removeText = this.translateService.instant('Yes');
+
+      let data = new ConfirmationModalData(header, body, removeText, secondaryButtonText);
+
+      this.dialog.open(ConfirmationModalComponent, {
+        data: data,
+        disableClose: data.disableClose,
+        maxWidth: '100vw',
+        maxHeight: '100vh'
+      }).afterClosed().subscribe((action: string) => {
+        if (action === removeText) {
+          super.remove(index);
+
+          this.field.fieldGroup
+            ?.filter(field => field.model)
+            .forEach((field: FormlyFieldConfig, index: number) => field.model['_order'] = index + 1);
+
+          if (!this.field?.fieldGroup?.length) {
+            this.reorderEnabled = false;
+          }
+        }
+      });
     }
   }
 }

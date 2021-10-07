@@ -111,10 +111,10 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
     if (index > -1) {
       let header = this.translateService.instant('Confirmation');
       let body = this.translateService.instant('Are you sure you want to remove this field?');
-      let primaryButtonText = this.translateService.instant('No');
-      let removeText = this.translateService.instant('Yes, Remove');
+      let secondaryButtonText = this.translateService.instant('No');
+      let removeText = this.translateService.instant('Yes');
 
-      let data = new ConfirmationModalData(header, body, primaryButtonText, removeText);
+      let data = new ConfirmationModalData(header, body, removeText, secondaryButtonText);
 
       this.dialog.open(ConfirmationModalComponent, {
         data: data,
