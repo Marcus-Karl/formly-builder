@@ -7,19 +7,21 @@ export enum SelectionOptionType {
   Form = 'Form',
   ComparisonOperator = 'ComparisonOperator',
   ComparisonType = 'ComparisonType',
+  HideComparisonSource = 'HideComparisonSource',
+  HideComparisonAgainst = 'HideComparisonAgainst',
   TokenCategory = 'TokenCategory',
   TokenType = 'TokenType'
 }
 
 export interface SelectionOption {
-  category: string | null;
+  category: string | string[] | null;
   group: string | null;
   label: string;
   value: string;
 }
 
 export interface FormBuilderSelectionOption {
-  category?: string;
+  category?: string | string[];
   group?: string;
   key: string;
   label: string;
@@ -40,7 +42,7 @@ const buildObject = (parent: FormBuilderSelectionOption | null, item: FormBuilde
 
   if (item.type === type) {
     itemsToReturn.push({
-      category: parent?.key || null,
+      category: item.category || parent?.key || null,
       group: item.group || null,
       value: item.key,
       label: item.label,
@@ -59,6 +61,7 @@ const DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION: FormBuilderSelectionOption =
       key: 'display-content-field',
       label: 'Display Content',
       type: SelectionOptionType.FieldCategory,
+      category: 'display',
       values: [
         {
           type: SelectionOptionType.FieldType,
@@ -78,7 +81,7 @@ const DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION: FormBuilderSelectionOption =
           type: SelectionOptionType.FieldType,
         },
         {
-          key: 'text-input-field',
+          key: 'date-input-field',
           label: 'Date',
           type: SelectionOptionType.FieldType,
         },
@@ -127,7 +130,7 @@ const DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION: FormBuilderSelectionOption =
         {
           type: SelectionOptionType.FieldType,
           key: 'radio-button-field',
-          label: 'Radio Buttons Field'
+          label: 'Radio Button Field'
         }
       ]
     },
@@ -213,36 +216,72 @@ const DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION: FormBuilderSelectionOption =
           label: '> (Greater Than)',
           group: 'Comparison Operators',
           type: SelectionOptionType.ComparisonOperator,
+          category: [
+            'field',
+            'predefined',
+            'currency-input-field',
+            'number-input-field'
+          ]
         },
         {
           key: '>=',
           label: '>= (Greater Than or Equal)',
           group: 'Comparison Operators',
           type: SelectionOptionType.ComparisonOperator,
+          category: [
+            'field',
+            'predefined',
+            'currency-input-field',
+            'number-input-field'
+          ]
         },
         {
           key: '<',
           label: '< (Less Than)',
           group: 'Comparison Operators',
           type: SelectionOptionType.ComparisonOperator,
+          category: [
+            'field',
+            'predefined',
+            'currency-input-field',
+            'number-input-field'
+          ]
         },
         {
           key: '<=',
           label: '<= (Less Than or Equal)',
           group: 'Comparison Operators',
           type: SelectionOptionType.ComparisonOperator,
+          category: [
+            'field',
+            'predefined',
+            'currency-input-field',
+            'number-input-field'
+          ]
         },
         {
           key: '==',
           label: '== (Equal)',
           group: 'Comparison Operators',
           type: SelectionOptionType.ComparisonOperator,
+          category: [
+            'field',
+            'predefined',
+            'currency-input-field',
+            'number-input-field'
+          ]
         },
         {
           key: '!=',
           label: '!= (Not Equal)',
           group: 'Comparison Operators',
           type: SelectionOptionType.ComparisonOperator,
+          category: [
+            'field',
+            'predefined',
+            'currency-input-field',
+            'number-input-field'
+          ]
         },
         {
           key: '&&',
@@ -266,37 +305,69 @@ const DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION: FormBuilderSelectionOption =
           key: 'in',
           label: 'In (Value Is In)',
           group: 'Relational Operator',
-          type: SelectionOptionType.ComparisonOperator
+          type: SelectionOptionType.ComparisonOperator,
+          category: [
+            'field',
+            'multiple-choice-field',
+            'currency-input-field'
+          ]
         },
         {
           key: 'notin',
           label: 'Not In (Value Is Not In)',
           group: 'Relational Operator',
-          type: SelectionOptionType.ComparisonOperator
+          type: SelectionOptionType.ComparisonOperator,
+          category: [
+            'field',
+            'multiple-choice-field',
+            'currency-input-field'
+          ]
         },
         {
           key: 'between_exclusive',
           label: 'Between Exclusive (Between But Not Equal To)',
           group: 'Relational Operator',
-          type: SelectionOptionType.ComparisonOperator
+          type: SelectionOptionType.ComparisonOperator,
+          category: [
+            'field',
+            'currency-input-field',
+            'number-input-field'
+          ]
         },
         {
           key: 'between_inclusive',
           label: 'Between Inclusive (Between Or Equal To)',
           group: 'Relational Operator',
-          type: SelectionOptionType.ComparisonOperator
+          type: SelectionOptionType.ComparisonOperator,
+          category: [
+            'field',
+            'currency-input-field',
+            'number-input-field'
+          ]
         },
         {
           key: 'match',
           label: 'Matches (Regex Pattern)',
           group: 'Relational Operator',
-          type: SelectionOptionType.ComparisonOperator
+          type: SelectionOptionType.ComparisonOperator,
+          category: [
+            'field',
+            'predefined',
+            'free-response-field',
+            'text-input-field'
+          ]
         },
         {
           key: 'not_match',
           label: 'Not Match (Regex Pattern)',
           group: 'Relational Operator',
-          type: SelectionOptionType.ComparisonOperator
+          type: SelectionOptionType.ComparisonOperator,
+          category: [
+            'field',
+            'predefined',
+            'free-response-field',
+            'text-input-field'
+          ]
         }
       ]
     },
@@ -329,6 +400,30 @@ const DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION: FormBuilderSelectionOption =
       type: SelectionOptionType.ComparisonType,
       key: 'token',
       label: 'Token Value'
+    },
+    {
+      type: SelectionOptionType.HideComparisonSource,
+      key: 'field',
+      label: 'Different Field Answer',
+      category: 'field'
+    },
+    {
+      type: SelectionOptionType.HideComparisonSource,
+      key: 'token',
+      label: 'Token Value',
+      category: 'token'
+    },
+    {
+      type: SelectionOptionType.HideComparisonAgainst,
+      key: 'options',
+      label: 'List of Options',
+      category: 'options'
+    },
+    {
+      type: SelectionOptionType.HideComparisonAgainst,
+      key: 'predefined',
+      label: 'Value',
+      category: 'predefined'
     }
   ]
 }
@@ -341,6 +436,8 @@ export const DEFAULT_SELECTION_OPTIONS_MAP: { [key in SelectionOptionType]: Sele
   [SelectionOptionType.Form]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.Form),
   [SelectionOptionType.ComparisonOperator]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.ComparisonOperator),
   [SelectionOptionType.ComparisonType]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.ComparisonType),
+  [SelectionOptionType.HideComparisonSource]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.HideComparisonSource),
+  [SelectionOptionType.HideComparisonAgainst]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.HideComparisonAgainst),
   [SelectionOptionType.TokenCategory]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.TokenCategory),
   [SelectionOptionType.TokenType]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.TokenType),
 }

@@ -21,6 +21,8 @@ export const createBuilderFormState = (mainModel: any = {}): BuilderFormState =>
         formTypes: [] as SelectionOption[],
         comparisonOperators: [] as SelectionOption[],
         comparisonTypes: [] as SelectionOption[],
+        hideComparisonSource: [] as SelectionOption[],
+        hideComparisonAgainst: [] as SelectionOption[],
         tokenCategories: [] as SelectionOption[],
         tokenTypes: [] as SelectionOption[],
       },
@@ -50,6 +52,8 @@ export const jsonBuilderSchema = (formState: BuilderFormState, selectionOptionsM
   options['formTypes'] = optionsMap[SelectionOptionType.Form];
   options['comparisonOperators'] = optionsMap[SelectionOptionType.ComparisonOperator];
   options['comparisonTypes'] = optionsMap[SelectionOptionType.ComparisonType];
+  options['hideComparisonSource'] = optionsMap[SelectionOptionType.HideComparisonSource];
+  options['hideComparisonAgainst'] = optionsMap[SelectionOptionType.HideComparisonAgainst];
   options['tokenCategories'] = optionsMap[SelectionOptionType.TokenCategory];
   options['tokenTypes'] = optionsMap[SelectionOptionType.TokenType];
 

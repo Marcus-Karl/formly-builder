@@ -4,7 +4,7 @@ import { FieldArrayType, FormlyFieldConfig } from '@ngx-formly/core';
 import { Subject } from 'rxjs';
 
 import { FunctionHelpers } from 'src/app/formly-builder/helpers/base.helper';
-import { RuleEditorComponent } from 'src/app/formly-builder/modals/rule-editor/rule-editor.component';
+import { HideRuleEditorComponent } from 'src/app/formly-builder/modals/hide-rule-editor/hide-rule-editor.component';
 
 @Component({
   selector: 'expression-builder',
@@ -43,7 +43,7 @@ export class ExpressionBuilderComponent extends FieldArrayType {
   }
 
   edit(formField: FormlyFieldConfig) {
-    this.dialog.open(RuleEditorComponent, {
+    this.dialog.open(HideRuleEditorComponent, {
       data: formField,
       disableClose: true,
       maxWidth: '100vw',

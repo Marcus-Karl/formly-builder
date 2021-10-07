@@ -445,7 +445,7 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
             }
           },
           'items': {
-            '$ref': '#/definitions/expression/baseCondition'
+            '$ref': '#/definitions/expression/hideRule'
           }
         },
         'validationExpressions': {
@@ -795,6 +795,183 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
           'operator'
         ]
       },
+      'hideRule': {
+        'type': 'object',
+        'widget': {
+          'formlyConfig': {
+            'defaultValue': {}
+          }
+        },
+        'properties': {
+          'source': {
+            '$ref': '#/definitions/expression/hideSource'
+          },
+          'operator': {
+            '$ref': '#/definitions/expression/operator'
+          },
+          'against': {
+            '$ref': '#/definitions/expression/hideAgainst'
+          }
+        },
+        'required': [
+          'source'
+        ]
+      },
+      'hideSource': {
+        'type': 'object',
+        'title': 'Compare Against',
+        'widget': {
+          'formlyConfig': {
+            'defaultValue': {}
+          }
+        },
+        'properties': {
+          'selection': {
+            '$ref': '#/definitions/expression/hideComparisonSource'
+          },
+          'field': {
+            '$ref': '#/definitions/expression/hideFieldSelection'
+          },
+          'token': {
+            '$ref': '#/definitions/expression/hideTokenSelection'
+          }
+        },
+        'required': [
+          'selection'
+        ]
+      },
+      'hideAgainst': {
+        'type': 'object',
+        'title': 'Compare Against',
+        'widget': {
+          'formlyConfig': {
+            'defaultValue': {}
+          }
+        },
+        'properties': {
+          'selection': {
+            '$ref': '#/definitions/expression/hideAgainstComparison'
+          },
+          'predefined': {
+            '$ref': '#/definitions/expression/hideAgainstPredefined'
+          },
+          'options': {
+            '$ref': '#/definitions/expression/hideAgainstSelections'
+          }
+        },
+        'required': [
+          'selection'
+        ]
+      },
+      'hideComparisonSource': {
+        'type': 'string',
+        'title': 'Hide Source Selection',
+        'widget': {
+          'formlyConfig': {
+            'type': 'select',
+            'defaultValue': '',
+            'templateOptions': {
+              'options': selectionOptionsMap[SelectionOptionType.HideComparisonSource]
+            }
+          }
+        }
+      },
+      'hideAgainstComparison': {
+        'type': 'string',
+        'title': 'Hide Against ',
+        'widget': {
+          'formlyConfig': {
+            'type': 'select',
+            'defaultValue': '',
+            'templateOptions': {
+              'options': selectionOptionsMap[SelectionOptionType.HideComparisonAgainst]
+            }
+          }
+        }
+      },
+      'hideFieldSelection': {
+        'type': 'string',
+        'title': 'Select Field',
+        'widget': {
+          'formlyConfig': {
+            'type': 'select',
+            'defaultValue': '',
+            'templateOptions': {
+              'hideOptions': selectionOptionsMap[SelectionOptionType.HideComparisonSource].filter(x => Array.isArray(x.category) ? x.category.includes('field') : x.category === 'field')
+            },
+            'expressionProperties': {
+              'templateOptions.required': '!!field?.templateOptions?.hideOptions.find(x => x.value === model.selection)'
+            },
+            'hideExpression': '!field?.templateOptions?.hideOptions.find(x => x.value === model.selection)'
+          }
+        }
+      },
+      'hideTokenSelection': {
+        'type': 'string',
+        'title': 'Select Token',
+        'widget': {
+          'formlyConfig': {
+            'type': 'select',
+            'defaultValue': '',
+            'templateOptions': {
+              'hideOptions': selectionOptionsMap[SelectionOptionType.HideComparisonSource].filter(x => Array.isArray(x.category) ? x.category.includes('token') : x.category === 'token')
+            },
+            'expressionProperties': {
+              'templateOptions.required': '!!field?.templateOptions?.hideOptions.find(x => x.value === model.selection)'
+            },
+            'hideExpression': '!field?.templateOptions?.hideOptions.find(x => x.value === model.selection)'
+          }
+        }
+      },
+      'hideAgainstPredefined': {
+        'type': 'string',
+        'title': 'Predefined',
+        'widget': {
+          'formlyConfig': {
+            'type': 'input',
+            'defaultValue': '',
+            'templateOptions': {
+              'hideOptions': selectionOptionsMap[SelectionOptionType.HideComparisonAgainst].filter(x => Array.isArray(x.category) ? x.category.includes('predefined') : x.category === 'predefined')
+            },
+            'expressionProperties': {
+              'templateOptions.required': '!!field?.templateOptions?.hideOptions.find(x => x.value === model.selection)'
+            },
+            'hideExpression': '!field?.templateOptions?.hideOptions.find(x => x.value === model.selection)'
+          }
+        }
+      },
+      'hideAgainstSelections': {
+        'type': 'string',
+        'title': 'List of Items',
+        'widget': {
+          'formlyConfig': {
+            'type': 'select',
+            'defaultValue': '',
+            'templateOptions': {
+              'options': selectionOptionsMap[SelectionOptionType.HideComparisonAgainst],
+              'hideOptions': selectionOptionsMap[SelectionOptionType.HideComparisonAgainst].filter(x => Array.isArray(x.category) ? x.category.includes('options') : x.category === 'options')
+            },
+            'expressionProperties': {
+              'templateOptions.required': '!!field?.templateOptions?.hideOptions.find(x => x.value === model.selection)'
+            },
+            'hideExpression': '!field?.templateOptions?.hideOptions.find(x => x.value === model.selection)'
+          }
+        }
+      },
+      'options': {
+        'type': 'array',
+        'title': 'List of Items',
+        'widget': {
+          'formlyConfig': {
+            'type': 'expression-builder',
+            'defaultValue': [],
+            'hideExpression': 'model.against !== \'options\''
+          }
+        },
+        'items': {
+          '$ref': '#/definitions/expression/baseCondition'
+        }
+      },
       'operator': {
         'type': 'string',
         'title': 'Operator',
@@ -851,7 +1028,7 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
       },
       'predefined': {
         'type': 'string',
-        'title': 'Predefined Value',
+        'title': 'Predefined',
         'widget': {
           'formlyConfig': {
             'type': 'input',

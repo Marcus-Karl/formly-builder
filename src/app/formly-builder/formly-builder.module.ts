@@ -29,6 +29,7 @@ import { TokenPageComponent } from './components/tokens/token-page/token-page.co
 import { ExpressionBuilderComponent } from './components/expression/expression-builder/expression-builder.component';
 import { OperatorConditionComponent } from './components/expression/operator-condition/operator-condition.component';
 import { RuleEditorComponent } from './modals/rule-editor/rule-editor.component';
+import { HideRuleEditorComponent } from './modals/hide-rule-editor/hide-rule-editor.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { RuleEditorComponent } from './modals/rule-editor/rule-editor.component'
     RuleEditorComponent,
     TokenEditorComponent,
     TokenPageComponent,
+    HideRuleEditorComponent,
   ],
   exports: [
     FormlyBuilderComponent
