@@ -6,7 +6,7 @@
 
 <mat-form-field
   class="input-field"
-  [appearance]="to.appearance || 'standard'"
+  [appearance]="to.appearance || 'fill'"
   [ngClass]="{ 'mat-form-field-invalid': formControl.invalid && (formControl.dirty || formControl.touched) }">
 
   <custom-date-input

@@ -5,23 +5,13 @@
   padding-top: 1em;
 }
 
-:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
-  padding: 0 0 0.75em 0;
-}
-
-:host ::ng-deep .mat-form-field-flex .mat-form-field-infix {
-  width: unset;
-}
-
 :host ::ng-deep mat-form-field .mat-form-field-wrapper .mat-form-field-flex {
+  padding: 0 0.75em 0 !important;
   align-items: end;
-} 
-
-:host ::ng-deep mat-form-field.mat-form-field-appearance-standard .mat-form-field-wrapper .mat-form-field-flex {
-  padding-top: 0 !important;
 
   .mat-form-field-infix {
-    border-top: 0.6666666667em !important;
+    width: unset;
+    border-top: 0.5em solid transparent !important;
   }
 }
 

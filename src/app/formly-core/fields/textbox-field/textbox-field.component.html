@@ -5,8 +5,9 @@
 </div>
 
 <mat-form-field class="textarea-wrapper"
-  [appearance]="to.appearance || 'outline'"
-  [floatLabel]="to.floatLabel || 'always'">
+  [appearance]="to.appearance || 'fill'"
+  [floatLabel]="to.floatLabel || 'always'"
+  [ngClass]="{ 'no-label': !to.encapsulateLabel }">
 
   <mat-label *ngIf="to.encapsulateLabel" class="body-text">
     {{ to.label | tokens: to }}
