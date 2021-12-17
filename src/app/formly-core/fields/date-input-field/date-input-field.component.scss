@@ -6,8 +6,8 @@
 }
 
 :host ::ng-deep mat-form-field .mat-form-field-wrapper .mat-form-field-flex {
-  padding: 0 0.75em 0 !important;
-  align-items: end;
+  padding: 0 0.75em !important;
+  align-items: center;
 
   .mat-form-field-infix {
     width: unset;
