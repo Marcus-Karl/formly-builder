@@ -1122,7 +1122,7 @@ const getFieldValues = () => ({
       'widget': {
         'formlyConfig': {
           'type': 'select-dropdown-field',
-          'defaultValue': 'group1_option1',
+          'defaultValue': ['group1_option1'],
           'templateOptions': {
             'placeholder': 'Enter selection',
             'multiple': true,

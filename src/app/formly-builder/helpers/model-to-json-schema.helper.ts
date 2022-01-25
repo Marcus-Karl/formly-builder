@@ -208,9 +208,14 @@ const buildDataEntryField = (page: any, model: any) => {
   let field = parseJson(schema);
 
   if (field?.widget?.formlyConfig?.templateOptions?.options?.length) {
-    let options = field.widget.formlyConfig.templateOptions.options as any[];
+    const to = field.widget.formlyConfig.templateOptions;
+    let options = to.options as any[];
 
     field['oneOf'] = options.map(x => ({ 'title': x['label'] || null, 'const': x['value'] || null }));
+
+    if (to.multiple && field.widget.formlyConfig?.defaultValue && !Array.isArray(field.widget.formlyConfig.defaultValue)) {
+      field.widget.formlyConfig['defaultValue'] = [ extra['defaultValue'] ];
+    }
   }
 
   if (field?.widget?.formlyConfig?.templateOptions?.required && Array.isArray(page['required'])) {
