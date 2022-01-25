@@ -116,7 +116,7 @@ const getModel = () => ({
         ],
         'settings': {
           'hideExpression': [],
-          'pageLabel': 'How you\'re doing'
+          'label': 'How you\'re doing'
         },
         '_order': 1,
         '_referenceId': '7140fa2886b447259cab768fc2112427'
@@ -139,7 +139,7 @@ const getModel = () => ({
         ],
         'settings': {
           'hideExpression': [],
-          'pageLabel': 'About Us'
+          'label': 'About Us'
         },
         '_order': 2,
         '_referenceId': '8f33a72acece46e9bab4428c33e48362'
@@ -148,7 +148,7 @@ const getModel = () => ({
     'tokens': [],
     'settings': {
       'formType': 'tab-form',
-      'formLabel': 'Some form name'
+      'label': 'Some form name'
     }
   }
 });

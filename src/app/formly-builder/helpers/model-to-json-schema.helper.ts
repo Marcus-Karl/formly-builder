@@ -16,17 +16,17 @@ export const toJsonSchema = (model: any) => {
 /**
  * STEPPER
  */
-const getNextStep = (form: any, model: any) => {
+const getNextStep = (obj: any, model: any) => {
   if (model['form']) {
-    getFormSchema(form, model['form']);
+    getFormSchema(obj, model['form']);
   }
 
   if (model['pages']) {
-    getPageSchemas(form, model['pages']);
+    getPageSchemas(obj, model['pages']);
   }
 
   if (model['fields']) {
-    getFieldSchema(form, model['fields']);
+    getFieldSchema(obj, model['fields']);
   }
 }
 
@@ -34,31 +34,31 @@ const getNextStep = (form: any, model: any) => {
 /**
  * SECTION BUILDER
  */
-const getFormSchema = (form: any, model: any) => {
+const getFormSchema = (obj: any, model: any) => {
   if (!model['settings']) {
     return;
   }
 
-  buildForm(form, model);
+  buildForm(obj, model);
 }
 
-const getPageSchemas = (form: any, model: any) => {
+const getPageSchemas = (obj: any, model: any) => {
   if (!Array.isArray(model)) {
     return;
   }
 
   for (const page of model) {
-    buildPage(form, page);
+    buildPage(obj, page);
   }
 }
 
-const getFieldSchema = (form: any, model: any) => {
+const getFieldSchema = (obj: any, model: any) => {
   if (!Array.isArray(model)) {
     return;
   }
 
   for (const field of model) {
-    buildFieldSchema(form, field);
+    buildFieldSchema(obj, field);
   }
 }
 
@@ -97,19 +97,24 @@ const buildForm = (form: any, model: any) => {
       model['_referenceId'] = FunctionHelpers.generateId();
     }
 
-    form[settings['name'] || model['_referenceId']] = displayForm;
+    if (form['properties']) {
+      form['properties'][settings['name'] || model['_referenceId']] = displayForm;
+    } else {
+      form[settings['name'] || model['_referenceId']] = displayForm;
+    }
   } else {
     Object.assign(form, displayForm);
   }
 
-  getNextStep(displayForm['properties'], model);
+  getNextStep(displayForm, model);
 }
 
 const buildPage = (form: any, model: any) => {
-  if (!model['settings']) {
+  if (!model['settings'] || !form['properties']) {
     return;
   }
 
+  let formProperties = form['properties'];
   let settings = model['settings'];
 
   let templateOptions = [
@@ -139,9 +144,9 @@ const buildPage = (form: any, model: any) => {
 
   let page = parseJson(schema);
 
-  form[settings['name'] || model['_referenceId']] = page;
+  formProperties[settings['name'] || model['_referenceId']] = page;
 
-  getNextStep(page['properties'], model);
+  getNextStep(page, model);
 }
 
 const buildFieldSchema = (form: any, model: any) => {
@@ -156,10 +161,12 @@ const buildFieldSchema = (form: any, model: any) => {
   }
 }
 
-const buildDataEntryField = (form: any, model: any) => {
-  if (!model['basic']) {
+const buildDataEntryField = (page: any, model: any) => {
+  if (!model['basic'] || !page['properties']) {
     return;
   }
+
+  let pageProperties = page['properties'];
 
   let settings = model['basic'];
 
@@ -192,10 +199,21 @@ const buildDataEntryField = (form: any, model: any) => {
 
   let field = parseJson(schema);
 
-  form[settings['name'] || model['_referenceId']] = field;
+  if (field?.widget?.formlyConfig?.templateOptions?.options?.length) {
+    let options = field.widget.formlyConfig.templateOptions.options as any[];
+
+    field['oneOf'] = options.map(x => ({ 'title': x['label'] || null, 'const': x['value'] || null }));
+  }
+
+  pageProperties[settings['name'] || model['_referenceId']] = field;
 }
 
-const buildDisplayField = (form: any, model: any) => {
+const buildDisplayField = (page: any, model: any) => {
+  if (!page['properties']) {
+    return;
+  }
+
+  let pageProperties = page['properties'];
   let settings = model['basic'] || {};
 
   let templateOptions = [
@@ -227,7 +245,7 @@ const buildDisplayField = (form: any, model: any) => {
 
   let field = parseJson(schema);
 
-  form[settings['name'] || model['_referenceId']] = field;
+  pageProperties[settings['name'] || model['_referenceId']] = field;
 }
 
 

@@ -356,6 +356,7 @@ html, body {
 .mat-tooltip-content {
   max-width: unset;
   word-break: break-word;
+  white-space: pre-line;
 }
 
 .href-link {

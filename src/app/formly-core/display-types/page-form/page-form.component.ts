@@ -27,7 +27,7 @@ export class PageFormComponent extends AbstractBaseFormControlsComponent {
 
     if (this.field.fieldGroup?.length) {
       for (let i = index; i < this.field.fieldGroup?.length; i++) {
-        if (this.field.fieldGroup && this.field.fieldGroup[i].formControl?.invalid) {
+        if (this.field.fieldGroup[i].formControl?.invalid) {
           formsInError += this.field.fieldGroup[i].templateOptions?.label + '\n';
         }
       }

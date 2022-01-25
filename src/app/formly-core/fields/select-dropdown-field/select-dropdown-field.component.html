@@ -8,7 +8,7 @@
 <mat-form-field
   class="select-dropdown-field"
   [ngClass]="{ 'no-label': !to.encapsulateLabel }"
-  [appearance]="to.encapsulateLabel && to.appearance ? to.appearance : 'fill'"
+  [appearance]="to.encapsulateLabel && to.appearance ? to.appearance : 'outline'"
   [floatLabel]="to.floatLabel || 'always'">
 
   <mat-label *ngIf="to.encapsulateLabel" class="body-text">

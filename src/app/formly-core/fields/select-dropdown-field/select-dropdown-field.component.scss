@@ -4,19 +4,16 @@
   padding-top: 1em;
 }
 
-:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
-  padding: 0 0 0.75em 0;
-}
-
 :host ::ng-deep mat-form-field mat-label {
   font-size: 21px !important;
 }
 
-:host ::ng-deep mat-form-field.no-label.mat-form-field-appearance-standard .mat-form-field-wrapper .mat-form-field-flex {
-  padding-top: 0 !important;
+:host ::ng-deep mat-form-field.no-label .mat-form-field-wrapper .mat-form-field-flex {
+  padding: 0 0.75em !important;
 
   .mat-form-field-infix {
-    border-top: 0.6666666667em !important;
+    border-top: 0.5em solid transparent !important;
+    padding-top: 0.75em;
   }
 }
 

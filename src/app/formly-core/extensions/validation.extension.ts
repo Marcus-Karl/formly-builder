@@ -99,7 +99,7 @@ export class ValidationExtension {
   setupMinimumNumber(f: FormlyFieldConfig) {
     if (!f.validators.minimumNumber) {
       f.validators['minimumNumber'] = {
-        expression: (control: AbstractControl, field: FormlyFieldConfig, options: { [id: string]: any } = {}) => !(control.value < field.templateOptions?.minimumNumber),
+        expression: (control: AbstractControl, field: FormlyFieldConfig, options: { [id: string]: any } = {}) => !(control.value < field.templateOptions?.minimumNumber) && !field.formControl?.pristine,
         message: (error: ValidationErrors, field: FormlyFieldConfig) => ValidationExtension.TRANSLATE.instant(
           translateMarker('{value} is less than the mimimum value of {minimumNumber}'),
           { value: field.formControl?.value, minimumNumber: field.templateOptions?.minimumNumber }
@@ -111,7 +111,7 @@ export class ValidationExtension {
   setupMaximumNumber(f: FormlyFieldConfig) {
     if (!f.validators.maximumNumber) {
       f.validators['maximumNumber'] = {
-        expression: (control: AbstractControl, field: FormlyFieldConfig, options: { [id: string]: any } = {}) => !(control.value > field.templateOptions?.maximumNumber),
+        expression: (control: AbstractControl, field: FormlyFieldConfig, options: { [id: string]: any } = {}) => !(control.value > field.templateOptions?.maximumNumber) && !field.formControl?.pristine,
         message: (control: AbstractControl, field: FormlyFieldConfig) => ValidationExtension.TRANSLATE.instant(
           translateMarker('{value} is greater than the maximum value of {maximumNumber}'),
           { value: control.value, maximumNumber: field.templateOptions?.maximumNumber }

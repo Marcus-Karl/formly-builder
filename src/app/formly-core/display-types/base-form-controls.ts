@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
 
@@ -100,7 +100,11 @@ export abstract class AbstractBaseFormControlsComponent extends FieldType implem
       let currentPage = this.field.fieldGroup[this.selectedIndex];
 
       if (currentPage?.formControl && index > this.selectedIndex) {
-        currentPage.formControl.markAsTouched();
+        currentPage.fieldGroup?.forEach(x => {
+          if (!x.hide && x.templateOptions?.required) {
+            x.formControl?.markAsTouched();
+          }
+        })
       }
 
       this.selectedIndex = index;

@@ -32,15 +32,7 @@ export class StepperFormComponent extends AbstractBaseFormControlsComponent impl
     super.ngOnDestroy();
   }
 
-  getPageState(page: FormlyFieldConfig) {
-    return super.getPageState(page);
-  }
-
   getPageFormControl(page: FormlyFieldConfig) {
     return page.formControl as AbstractControl;
-  }
-
-  getPageStates() {
-    return this.to.pageStates as { [key: string]: { class: string, icon: string } };
   }
 }
