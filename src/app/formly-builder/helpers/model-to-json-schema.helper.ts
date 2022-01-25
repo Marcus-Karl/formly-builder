@@ -97,6 +97,10 @@ const buildForm = (form: any, model: any) => {
       model['_referenceId'] = FunctionHelpers.generateId();
     }
 
+    if (displayForm?.widget?.formlyConfig?.templateOptions?.required && Array.isArray(form['required'])) {
+      form['required'].push(settings['name'] || model['_referenceId']);
+    }
+
     if (form['properties']) {
       form['properties'][settings['name'] || model['_referenceId']] = displayForm;
     } else {
@@ -143,6 +147,10 @@ const buildPage = (form: any, model: any) => {
   }
 
   let page = parseJson(schema);
+
+  if (page?.widget?.formlyConfig?.templateOptions?.required && Array.isArray(form['required'])) {
+    form['required'].push(settings['name'] || model['_referenceId']);
+  }
 
   formProperties[settings['name'] || model['_referenceId']] = page;
 
@@ -203,6 +211,10 @@ const buildDataEntryField = (page: any, model: any) => {
     let options = field.widget.formlyConfig.templateOptions.options as any[];
 
     field['oneOf'] = options.map(x => ({ 'title': x['label'] || null, 'const': x['value'] || null }));
+  }
+
+  if (field?.widget?.formlyConfig?.templateOptions?.required && Array.isArray(page['required'])) {
+    page['required'].push(settings['name'] || model['_referenceId']);
   }
 
   pageProperties[settings['name'] || model['_referenceId']] = field;

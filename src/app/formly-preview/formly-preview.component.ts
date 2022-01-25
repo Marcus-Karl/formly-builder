@@ -716,13 +716,13 @@ const getFieldValues = () => ({
         'someNumber': {
           '$ref': '#/definitions/someNumber'
         },
-        'selectOption': {
-          '$ref': '#/definitions/selectOption'
+        'selectAutoCompleteOption': {
+          '$ref': '#/definitions/selectAutoCompleteOption'
         }
       },
       'required': [
         'someNumber',
-        'selectOption'
+        'selectAutoCompleteOption'
       ]
     },
     'page4': {
@@ -1121,11 +1121,40 @@ const getFieldValues = () => ({
       'type': 'string',
       'widget': {
         'formlyConfig': {
+          'type': 'select-dropdown-field',
+          'defaultValue': 'group1_option1',
+          'templateOptions': {
+            'placeholder': 'Enter selection',
+            'multiple': true,
+            'options': [
+              { 'value': 'email', 'label': 'Email' },
+              { 'value': 'number', 'label': 'Number' },
+              { 'value': 'tel', 'label': 'Telephone' },
+              { 'group': 'Group A', 'value': 'group1_option1', 'label': 'Group 1 First Option' },
+              { 'group': 'Group A', 'value': 'group1_option2', 'label': 'Group 1 Second Option' },
+              { 'group': 'Group A', 'value': 'group1_option3', 'label': 'Group 1 Third Option' },
+              { 'group': 'Group 2', 'value': 'group2_option1', 'label': 'Group 2 First Option' },
+              { 'group': 'Group 2', 'value': 'group2_option2', 'label': 'Group 2 Second Option' },
+              { 'group': 'Group 2', 'value': 'group2_option3', 'label': 'Group 2 Third Option' },
+              { 'value': 'text', 'label': 'Text' },
+            ]
+          },
+          'expressionProperties': {
+            'templateOptions.options': 'field.templateOptions._options.filter(x => !(model?.someNumber == 25 && x.value == \'email\')) || []',
+            // 'model.selectOption': 'Array.isArray(model?.selectOption) ? field.templateOptions.options.filter(x => model.selectOption.includes(x.value)).map(x => x.value) : model?.selectOption && field.templateOptions.options.find(x => x.value == model.selectOption) ? model.selectOption : undefined'
+          }
+        }
+      }
+    },
+    'selectAutoCompleteOption': {
+      'title': 'My selectable options',
+      'type': 'string',
+      'widget': {
+        'formlyConfig': {
           'type': 'select-autocomplete-field',
           'defaultValue': 'group2_option1',
           'templateOptions': {
             'placeholder': 'Enter selection',
-            'autoComplete': true,
             'options': [
               { 'value': 'email', 'label': 'Email' },
               { 'value': 'number', 'label': 'Number' },

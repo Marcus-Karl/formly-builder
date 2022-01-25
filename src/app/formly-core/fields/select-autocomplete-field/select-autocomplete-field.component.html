@@ -19,7 +19,7 @@
     autocomplete="off"
     #autocompleteinput
     [id]="field.id"
-    [attr.aria-label]="to.autoComplete.label | tokens: to"
+    [attr.aria-label]="to.label | tokens: to"
     [placeholder]="to.placeholder | tokens: to"
     [formControl]="formControl"
     [formlyAttributes]="field"
@@ -35,7 +35,7 @@
     #auto="matAutocomplete"
     [aria-labelledby]="field.id"
     [autoActiveFirstOption]="to.autoActiveFirstOption"
-    [classList]="to.autoComplete.className || ''"
+    [classList]="to.autoCompleteClasses || ''"
     [disableRipple]="to.disableRipple"
     [displayWith]="getDisplayLabel"
     (optionSelected)="selectionChange($event)">
