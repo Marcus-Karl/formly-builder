@@ -1,16 +1,12 @@
 
 
-import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { AbstractControl } from '@angular/forms';
 import { FormlyFieldConfig, FormlyTemplateOptions } from '@ngx-formly/core';
 import { TranslateService } from '@ngx-translate/core';
-import { marker as translateMarker } from '@biesbjerg/ngx-translate-extract-marker';
+import { Observable } from 'rxjs';
 
 export class ValidationExtension {
-  private static TRANSLATE: TranslateService;
-
-  constructor(translate: TranslateService) {
-    ValidationExtension.TRANSLATE = translate;
-  }
+  constructor() {}
 
   prePopulate(field: FormlyFieldConfig) {
     const to = field.templateOptions || {};
@@ -99,11 +95,8 @@ export class ValidationExtension {
   setupMinimumNumber(f: FormlyFieldConfig) {
     if (!f.validators.minimumNumber) {
       f.validators['minimumNumber'] = {
-        expression: (control: AbstractControl, field: FormlyFieldConfig, options: { [id: string]: any } = {}) => !(control.value < field.templateOptions?.minimumNumber) && !field.formControl?.pristine,
-        message: (error: ValidationErrors, field: FormlyFieldConfig) => ValidationExtension.TRANSLATE.instant(
-          translateMarker('{value} is less than the mimimum value of {minimumNumber}'),
-          { value: field.formControl?.value, minimumNumber: field.templateOptions?.minimumNumber }
-        )
+        expression: (control: AbstractControl, field: FormlyFieldConfig, options: { [id: string]: any } = {}) => (control.value >= field.templateOptions?.minimumNumber && !field.formControl?.pristine) || ((control.value || '') + '').length == 0,
+        message: f.validation?.messages && f.validation?.messages['minimumNumber']
       };
     }
   }
@@ -111,12 +104,38 @@ export class ValidationExtension {
   setupMaximumNumber(f: FormlyFieldConfig) {
     if (!f.validators.maximumNumber) {
       f.validators['maximumNumber'] = {
-        expression: (control: AbstractControl, field: FormlyFieldConfig, options: { [id: string]: any } = {}) => !(control.value > field.templateOptions?.maximumNumber) && !field.formControl?.pristine,
-        message: (control: AbstractControl, field: FormlyFieldConfig) => ValidationExtension.TRANSLATE.instant(
-          translateMarker('{value} is greater than the maximum value of {maximumNumber}'),
-          { value: control.value, maximumNumber: field.templateOptions?.maximumNumber }
-        )
+        expression: (control: AbstractControl, field: FormlyFieldConfig, options: { [id: string]: any } = {}) => (control.value <= field.templateOptions?.maximumNumber && !field.formControl?.pristine) || ((control.value || '') + '').length == 0,
+        message: f.validation?.messages && f.validation?.messages['maximumNumber']
       };
     }
+  }
+
+  static getValidationMessages(translate: TranslateService) {
+    return [
+      {
+        name: 'required',
+        message: (error: any, field: FormlyFieldConfig) => translate.instant('FORMLY_CORE.VALIDATIONS.REQUIRED_FIELD')
+      },
+      {
+        name: 'minimumNumber',
+        message: (error: any, field: FormlyFieldConfig): Observable<string> => translate.instant(
+          'FORMLY_CORE.VALIDATIONS.MINIMUM_NUMBER',
+          { value: field.formControl?.value, minimumNumber: field.templateOptions?.minimumNumber }
+        )
+      },
+      {
+        name: 'maximumNumber',
+        message: (error: any, field: FormlyFieldConfig): Observable<string> => translate.instant(
+          'FORMLY_CORE.VALIDATIONS.MAXIMUM_NUMBER',
+          { value: field.formControl?.value, maximumNumber: field.templateOptions?.maximumNumber }
+        )
+      },
+      {
+        name: 'business-rules',
+        message: (errors: any, field: FormlyFieldConfig) => {
+          return Object.values(errors || {});
+        }
+      }
+    ]
   }
 }

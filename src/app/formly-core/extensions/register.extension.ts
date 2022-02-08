@@ -1,33 +1,20 @@
 import { ValidationErrors } from '@angular/forms';
-import { FormlyFieldConfig } from '@ngx-formly/core';
+import { ConfigOption, FormlyFieldConfig } from '@ngx-formly/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable } from 'rxjs';
 
 import { DateTimeService } from '../services/date-time.service';
 
 import { BusinessRulesSetupExtension } from './business-rules.extention';
 import { GenericSetupExtension } from './generic-setup.extention';
 import { TokenExtension } from './token.extension';
+import { TranslateExtension } from './translation.extension';
 import { ValidationExtension } from './validation.extension';
 
 export const registerExtensions = (dateTimeService: DateTimeService, translate: TranslateService) => {
 
-  let extenstionConfig = {
-    validationMessages: [
-      {
-        name: 'required',
-        message: () => translate.instant('This field is required.')
-      },
-      {
-        name: 'business-rules',
-        message: (errors: ValidationErrors, field: FormlyFieldConfig) => {
-          if (errors) {
-            return Object.values(errors);
-          }
-
-          return null;
-        }
-      }
-    ],
+  let extenstionConfig: ConfigOption = {
+    validationMessages: ValidationExtension.getValidationMessages(translate),
     extensions: [
       {
         name: 'generic-setup',
@@ -35,7 +22,7 @@ export const registerExtensions = (dateTimeService: DateTimeService, translate: 
       },
       {
         name: 'validations',
-        extension: new ValidationExtension(translate)
+        extension: new ValidationExtension()
       },
       {
         name: 'tokens',
@@ -44,6 +31,10 @@ export const registerExtensions = (dateTimeService: DateTimeService, translate: 
       {
         name: 'business-rules-setup',
         extension: new BusinessRulesSetupExtension()
+      },
+      {
+        name: 'translate-extension',
+        extension: new TranslateExtension(translate)
       }
     ],
   };

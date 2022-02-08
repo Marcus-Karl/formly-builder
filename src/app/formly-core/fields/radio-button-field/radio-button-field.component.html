@@ -8,8 +8,9 @@
 
   <fieldset class="fieldset" [ngClass]="to.classes">
     <legend class="flex body-text">
-      <div [innerHTML]="to.label + (to.required ? ' *' : '') | tokens: to | keepHtml"></div>
-      <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="to.help" matTooltipClass="mat-tooltip-content">help</mat-icon>
+      <div [innerHTML]="((to._translationBaseKey + '.label') | translate) + (to.required ? ' *' : '') | tokens: to | keepHtml"></div>
+
+      <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="(to._translationBaseKey + '.help') | translate | tokens: to" matTooltipClass="mat-tooltip-content">help</mat-icon>
     </legend>
 
     <ng-container *ngFor="let option of selectOptions$ | async | sortOptions">
@@ -20,21 +21,4 @@
   </fieldset>
 </mat-radio-group>
 
-<div class="errors-and-hints">
-  <!-- This should remain hidden as its built from Formly's error states and will not pipe to tokens -->
-  <formly-validation-message #validationMessage [field]="field" [style.display]="'none'"></formly-validation-message>
-
-  <mat-error *ngIf="validationMessage.errorMessage && formControl.touched" class="body-text error-text">
-    <ng-container *ngIf="validationMessage.errorMessage | isArray; else stringErrorMessage">
-      <ng-container *ngFor="let errorMessage of validationMessage.errorMessage; let last = last;">
-        {{ errorMessage }}<br *ngIf="!last">
-      </ng-container>
-    </ng-container>
-
-    <ng-template #stringErrorMessage>
-      {{ validationMessage.errorMessage | tokens: to }}
-    </ng-template>
-  </mat-error>
-
-  <mat-hint *ngIf="to.hint && !(validationMessage.errorMessage && formControl.touched)" class="body-text">{{ to.hint | tokens: to }}</mat-hint>
-</div>
+<errors-and-hints [field]="field"></errors-and-hints>

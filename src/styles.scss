@@ -443,21 +443,10 @@ mat-hint:focus {
   box-sizing: border-box;
 }
 
-.errors-and-hints {
-  margin-top: -1.34em;
-  min-height: calc(1em + 8px);
-}
-
 .hide-element {
   transform: translate(-150vw, 0);
   display: inline-block;
   position: absolute;
-}
-
-.error-text {
-  letter-spacing: 0.4pt;
-  color: #b00020 !important;
-  font-size: 16px !important;
 }
 
 .error {

@@ -26,7 +26,7 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { FormlyModule, FORMLY_CONFIG } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader, MissingTranslationHandler, TranslateService } from '@ngx-translate/core';
 
 import { DisplayHtmlComponent } from './fields/display-html/display-html.component';
 import { SelectDropDownFieldComponent } from './fields/select-dropdown-field/select-dropdown-field.component';
@@ -59,6 +59,7 @@ import { InnerFormContainerComponent } from './display-types/inner-form-containe
 import { ExpansionPanelArrayFieldComponent } from './fields/expansion-panel-array-field/expansion-panel-array-field.component';
 import { CustomDateInputComponent } from './components/custom-date-input/custom-date-input.component';
 import { RadioButtonFieldComponent } from './fields/radio-button-field/radio-button-field.component';
+import { ErrorsAndHintsComponent } from './components/errors-and-hints/errors-and-hints.component';
 
 @NgModule({
   imports: [
@@ -171,10 +172,12 @@ import { RadioButtonFieldComponent } from './fields/radio-button-field/radio-but
     InnerFormContainerComponent,
 
     // Misc
-    CustomDateInputComponent
+    CustomDateInputComponent,
+    ErrorsAndHintsComponent
   ],
   exports: [
     CommonModule,
+    ErrorsAndHintsComponent,
     FormlyModule,
     FormlyMaterialModule,
     MatButtonModule,

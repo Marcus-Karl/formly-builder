@@ -1,7 +1,7 @@
 <div *ngIf="!to.encapsulateLabel" class="flex body-text">
-  <label [for]="field.id" [innerHTML]="to.label + (to.required ? ' *' : '') | tokens: to | keepHtml"></label>
+  <label [for]="field.id" [innerHTML]="((to._translationBaseKey + '.label') | translate) + (to.required ? ' *' : '') | tokens: to | keepHtml"></label>
 
-  <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="to.help" matTooltipClass="mat-tooltip-content">help</mat-icon>
+  <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="(to._translationBaseKey + '.help') | translate | tokens: to" matTooltipClass="mat-tooltip-content">help</mat-icon>
 </div>
 
 <mat-form-field
@@ -11,7 +11,7 @@
   [floatLabel]="to.floatLabel || 'always'">
 
   <mat-label *ngIf="to.encapsulateLabel" [for]="field.id" class="body-text">
-    {{ to.label | tokens: to }}
+    {{ (to._translationBaseKey + '.label') | translate | tokens: to }}
   </mat-label>
 
   <input matInput
@@ -19,8 +19,8 @@
     autocomplete="off"
     #autocompleteinput
     [id]="field.id"
-    [attr.aria-label]="to.label | tokens: to"
-    [placeholder]="to.placeholder | tokens: to"
+    [attr.aria-label]="(to._translationBaseKey + '.label') | translate | tokens: to"
+    [placeholder]="(to._translationBaseKey + '.placeholder') | translate | tokens: to"
     [formControl]="formControl"
     [formlyAttributes]="field"
     [tabindex]="to.tabindex || 0"
@@ -55,21 +55,4 @@
   </mat-autocomplete>
 </mat-form-field>
 
-<div class="errors-and-hints">
-  <!-- This should remain hidden as its built from Formly's error states and will not pipe to tokens -->
-  <formly-validation-message #validationMessage [field]="field" [style.display]="'none'"></formly-validation-message>
-
-  <mat-error *ngIf="validationMessage.errorMessage && formControl.touched" class="body-text error-text">
-    <ng-container *ngIf="validationMessage.errorMessage | isArray; else stringErrorMessage">
-      <ng-container *ngFor="let errorMessage of validationMessage.errorMessage; let last = last;">
-        {{ errorMessage }}<br *ngIf="!last">
-      </ng-container>
-    </ng-container>
-
-    <ng-template #stringErrorMessage>
-      {{ validationMessage.errorMessage | tokens: to }}
-    </ng-template>
-  </mat-error>
-
-  <mat-hint *ngIf="to.hint && !(validationMessage.errorMessage && formControl.touched)" class="body-text">{{ to.hint | tokens: to }}</mat-hint>
-</div>
+<errors-and-hints [field]="field"></errors-and-hints>

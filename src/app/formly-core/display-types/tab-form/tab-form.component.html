@@ -19,7 +19,7 @@
           </ng-template>
 
           <span [ngStyle]="{ 'opacity': index === selectedIndex ? '1' : '0.6' }">
-            {{ page.templateOptions?.label | tokens: to }}
+            {{ (page.templateOptions._translationBaseKey + '.label') | translate | tokens: to }}
           </span>
         </div>
       </ng-template>
@@ -35,17 +35,17 @@
   <div class="form-controls">
     <div class="margin-right-2">
       <button *ngIf="selectedIndex !== 0 && hasBackPage(selectedIndex)" type="button" mat-raised-button color="primary" (click)="decrementPageFromIndex(selectedIndex - 1)">
-        <div translate>Back</div>
+        <div translate>FORMLY_CORE.BASE_LABEL.BACK</div>
       </button>
     </div>
 
     <button *ngIf="hasForwardPage(selectedIndex)" type="button" mat-raised-button color="primary" [disabled]="to.linear && isPrecedingPageInvalid(selectedIndex)"
       (click)="incrementPageFromIndex(selectedIndex + 1)">
-      <div translate>Continue</div>
+      <div translate>FORMLY_CORE.BASE_LABEL.CONTINUE</div>
     </button>
 
     <button *ngIf="!to.hideSubmit && !hasForwardPage(selectedIndex)" type="submit" mat-raised-button color="primary" [disabled]="form.invalid">
-      <div translate>Submit</div>
+      <div translate>FORMLY_CORE.BASE_LABEL.BACK</div>
     </button>
   </div>
 </div>

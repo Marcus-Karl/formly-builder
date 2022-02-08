@@ -1,12 +1,14 @@
 <ng-container *ngFor="let page of field.fieldGroup; let index = index; let last = last;">
   <ng-contaier *ngIf="page.key === options?.formState.currentPage">
-    <div class="title">{{ page.templateOptions?.label | tokens: to }}</div>
+    <div class="title">{{ (page.templateOptions._translationBaseKey + '.label') | translate | tokens: to }}</div>
 
     <formly-field [field]="page" [ngClass]="page.templateOptions?.classes"></formly-field>
 
     <div class="form-actions center">
       <mat-form-field *ngIf="this.options?.formState.formHistory?.length > 1">
-        <mat-label translate>Navigate to Page</mat-label>
+        <mat-label>
+          <div translate>FORMLY_CORE.DISPLAY_FORM.NAVIGATE_TO_PAGE</div>
+        </mat-label>
 
         <mat-select [formControl]="pageHistory" disableOptionCentering="true">
           <mat-option *ngFor="let form of options?.formState.formHistory" [value]="form.name" class="previous-form-option mat-option-wrap">
@@ -24,11 +26,11 @@
 
         <div>
           <button *ngIf="!last" type="button" mat-raised-button color="primary" [disabled]="page.formControl?.invalid" (click)="changePage(index + 1)">
-            <div translate>Continue</div>
+            <div translate>FORMLY_CORE.BASE_LABEL.CONTINUE</div>
           </button>
 
           <button *ngIf="last" type="submit" mat-raised-button color="primary" [disabled]="!form.valid">
-            <div translate>Submit</div>
+            <div translate>FORMLY_CORE.DISPLAY_FORM.SUBMIT</div>
           </button>
         </div>
       </div>

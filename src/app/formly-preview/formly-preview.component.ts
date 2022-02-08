@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
+import { FormlyFieldConfig, FormlyFormBuilder, FormlyFormOptions } from '@ngx-formly/core';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { Subscription } from 'rxjs';
 
@@ -37,7 +37,8 @@ export class FormlyPreviewComponent implements OnDestroy, OnInit {
           type: 'function',
           value: '{ return `${token?.reasonText}` === \'Hello!\' ? \'Its hello!\' : `Its not hello, its instead: ${token.reasonText}`; }'
         }
-      }
+      },
+      changeMap: {}
     }
   };
 
@@ -45,7 +46,7 @@ export class FormlyPreviewComponent implements OnDestroy, OnInit {
 
   private _subscriptions: Array<Subscription>;
 
-  constructor(private formlyJsonschema: FormlyJsonschema) {
+  constructor(private formlyJsonschema: FormlyJsonschema, private formlyBuilder: FormlyFormBuilder) {
     this._subscriptions = [];
 
     this.form = new FormGroup({});
@@ -62,6 +63,8 @@ export class FormlyPreviewComponent implements OnDestroy, OnInit {
     console.log(jsonSchema);
 
     this.fields = [jsonSchema];
+
+    this.formlyBuilder.buildForm(this.form, this.fields, this.model, this.options);
   }
 
   ngOnInit() {
@@ -70,6 +73,16 @@ export class FormlyPreviewComponent implements OnDestroy, OnInit {
 
   ngOnDestroy() {
     this._subscriptions.forEach(x => x.unsubscribe());
+
+    if (this.options.formState?.changeMap) {
+      Object.values(this.options.formState?.changeMap || {}).forEach((x: any) => {
+        if (x.unsubscribe) {
+          x.unsubscribe();
+        }
+      });
+
+      this.options.formState.changeMap = {};
+    }
   }
 
   onSubmit(model: any) {

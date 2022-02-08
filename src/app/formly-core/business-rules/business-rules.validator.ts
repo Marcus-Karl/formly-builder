@@ -6,38 +6,38 @@ import { Engine, EngineResult } from 'json-rules-engine';
 import { evaluateFactsWithEngine } from '../business-rules/default-engine.rules';
 
 export const validateBusinessRule: FieldValidatorFn = async (control: AbstractControl, field: FormlyFieldConfig, options: { [id: string]: any; } = {}) => {
-    let errors: { [id: string]: any } = {};
+  let errors: { [id: string]: any } = {};
 
-    if (field.templateOptions && field.templateOptions['_fieldBusinessRuleEngine']) {
-      let fieldRuleEngine = field.templateOptions['_fieldBusinessRuleEngine'] as Engine;
+  if (field.templateOptions && field.templateOptions['_fieldBusinessRuleEngine']) {
+    let fieldRuleEngine = field.templateOptions['_fieldBusinessRuleEngine'] as Engine;
 
-      try {
-        let engineResult: EngineResult = await evaluateFactsWithEngine(fieldRuleEngine, field.options?.formState.mainModel || {});
+    try {
+      let engineResult: EngineResult = await evaluateFactsWithEngine(fieldRuleEngine, field.options?.formState.mainModel || {});
 
-        for (let event of engineResult.failureEvents || []) {
-          let result = event.params ? !event.params.result : false;
+      for (let event of engineResult.failureEvents || []) {
+        let result = event.params ? !event.params.result : false;
 
-          evaluteFieldChangeResult(control, field, event.type, result);
-        }
-
-        for (let event of engineResult.events || []) {
-          let result = event.params ? event.params.result : false;
-
-          if (!evaluteFieldChangeResult(control, field, event.type, result)) {
-            errors[event.type] = event.params?.message || '';
-          }
-        }
-      } catch (err) {
-        console.error(err);
-        throw err;
+        evaluteFieldChangeResult(control, field, event.type, result);
       }
-    }
 
-    if (Object.keys(errors).length) {
-      return { 'business-rules': errors } as ValidationErrors;
-    }
+      for (let event of engineResult.events || []) {
+        let result = event.params ? event.params.result : false;
 
-    return null;
+        if (!evaluteFieldChangeResult(control, field, event.type, result)) {
+          errors[event.type] = event.params?.message || '';
+        }
+      }
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  }
+
+  if (Object.keys(errors).length) {
+    return { 'business-rules': errors } as ValidationErrors;
+  }
+
+  return null;
 }
 
 const evaluteFieldChangeResult = (control: AbstractControl, field: FormlyFieldConfig, type: string, result: boolean) => {

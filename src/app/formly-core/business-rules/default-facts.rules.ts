@@ -1,8 +1,7 @@
 import { Engine, Rule, RuleProperties } from 'json-rules-engine';
 import { getEngine } from './default-engine.rules';
-import { marker as translateMarker } from '@biesbjerg/ngx-translate-extract-marker';
 
-export const INVALID_BUSINESS_RULE = translateMarker('One or more rules are invalid');
+export const INVALID_BUSINESS_RULE = 'FORMLY_CORE.BUSINESS_RULE.INVALID_RULE';
 
 export const addDefaultFacts = (engine: Engine) => {
   engine.addFact('containsAtLeastOneParams', (params, almanac) => {

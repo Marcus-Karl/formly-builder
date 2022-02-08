@@ -1,0 +1,31 @@
+{
+  "FORMLY_CORE": {
+    "BASE_LABEL": {
+      "BACK": "Back",
+      "CONTINUE": "Continue",
+      "SUBMIT": "Submit"
+    },
+    "DISPLAY_FORM": {
+      "ERRORS_ON_PAGES": "Errors on page(s): {{pages}}",
+      "NAVIGATE_TO_PAGE": "Navigate to Page"
+    },
+    "BUSINESS_RULE": {
+      "INVALID_RULE": "One or more rules are invalid"
+    },
+    "VALIDATIONS": {
+      "REQUIRED_FIELD": "This field is required",
+      "MINIMUM_NUMBER": "{{value}} is less than the mimimum value of {{minimumNumber}}",
+      "MAXIMUM_NUMBER": "{{value}} is greater than the maximum value of {{maximumNumber}}"
+    },
+    "FIELDS": {
+      "DATE_INPUT_FIELD": {
+        "YYYY": "yyyy",
+        "MM": "mm",
+        "DD": "dd",
+        "YEAR": "Year",
+        "MONTH": "Month",
+        "DAY": "Day"
+      }
+    }
+  }
+}

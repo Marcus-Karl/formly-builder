@@ -86,7 +86,7 @@ const buildForm = (form: any, model: any) => {
     "required": []
   }`;
 
-  let displayForm = parseJson(schema);
+  let displayForm = safeParseJson(schema);
 
   if (settings['label']) {
     displayForm['title'] = settings['label'];
@@ -146,7 +146,7 @@ const buildPage = (form: any, model: any) => {
     model['_referenceId'] = FunctionHelpers.generateId();
   }
 
-  let page = parseJson(schema);
+  let page = safeParseJson(schema);
 
   if (page?.widget?.formlyConfig?.templateOptions?.required && Array.isArray(form['required'])) {
     form['required'].push(settings['name'] || model['_referenceId']);
@@ -205,7 +205,7 @@ const buildDataEntryField = (page: any, model: any) => {
     model['_referenceId'] = FunctionHelpers.generateId();
   }
 
-  let field = parseJson(schema);
+  let field = safeParseJson(schema);
 
   if (field?.widget?.formlyConfig?.templateOptions?.options?.length) {
     const to = field.widget.formlyConfig.templateOptions;
@@ -260,7 +260,7 @@ const buildDisplayField = (page: any, model: any) => {
     model['_referenceId'] = FunctionHelpers.generateId();
   }
 
-  let field = parseJson(schema);
+  let field = safeParseJson(schema);
 
   pageProperties[settings['name'] || model['_referenceId']] = field;
 }
@@ -299,7 +299,7 @@ const getKvpStrings = (model: any, ...ignoreKeys: string[]): string[] => {
   return kvpArray;
 }
 
-const parseJson = (string: string) => {
+const safeParseJson = (string: string) => {
   try {
     return JSON.parse(string);
   } catch (e) {

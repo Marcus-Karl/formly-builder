@@ -23,7 +23,6 @@
     "@angular/platform-browser": "~12.2.4",
     "@angular/platform-browser-dynamic": "~12.2.4",
     "@angular/router": "~12.2.4",
-    "@biesbjerg/ngx-translate-extract-marker": "^1.0.0",
     "@ngx-formly/core": "^5.10.23",
     "@ngx-formly/material": "^5.10.23",
     "@ngx-translate/core": "^13.0.0",

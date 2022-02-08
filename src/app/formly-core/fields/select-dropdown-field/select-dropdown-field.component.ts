@@ -4,6 +4,7 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { SelectOption } from '../../models/multiple-choice.models';
 
@@ -60,6 +61,8 @@ export class SelectDropDownFieldComponent extends FieldType implements OnInit, O
   ngOnInit() {
     super.ngOnInit();
 
+    this._subscriptions.push(this.selectOptions$.pipe(tap(options => this._setDefaultOptionsTranslateText(options))).subscribe(() => {}));
+
     if (this.to.options instanceof Observable) {
       this._subscriptions.push(this.to.options.subscribe(this.selectOptions$));
     } else {
@@ -82,7 +85,6 @@ export class SelectDropDownFieldComponent extends FieldType implements OnInit, O
         }));
       }
     }
-
   }
 
   ngOnDestroy() {
@@ -169,5 +171,43 @@ export class SelectDropDownFieldComponent extends FieldType implements OnInit, O
     });
 
     return options;
+  }
+
+  private _setDefaultOptionsTranslateText(options: SelectOption[]) {
+    if (this.translateService.defaultLang && this.translateService.translations && this.translateService.translations[this.translateService.defaultLang] && this.to._translationBaseKey) {
+      let defaultTranslations = this.translateService.translations[this.translateService.defaultLang];
+
+      let translationsRef = this._getNestedObject(this.to._translationBaseKey.split('.'), defaultTranslations);
+
+      if (!translationsRef) {
+        console.error(`Could not locate translation object reference for ${this.to._translationBaseKey}`);
+
+        return;
+      }
+
+      if (!translationsRef['options']) {
+        translationsRef['options'] = {};
+      }
+
+      options?.forEach(option => {
+        translationsRef['options'][option.value || option.label.replace(/^[0-9a-zA-Z]/g, '_')] = option.label;
+      });
+
+      this.translateService.setTranslation(this.translateService.defaultLang, defaultTranslations, true);
+    }
+  }
+
+  private _getNestedObject(path: string[], sourceObj: any): any {
+    if (!path?.length || !sourceObj) {
+      return;
+    }
+
+    if (path.length > 1) {
+      let key = path.shift() || '';
+
+      return this._getNestedObject(path, sourceObj[key]);
+    } else {
+      return sourceObj[path[0]];
+    }
   }
 }
