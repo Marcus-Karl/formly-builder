@@ -9,74 +9,75 @@ export class TranslateExtension implements FormlyExtension {
   }
 
   prePopulate(field: FormlyFieldConfig) {
-    if (TranslateExtension.TRANSLATE) {
-      TranslateExtension.TRANSLATE.onLangChange.subscribe(event => {
-        this.setTranslationsForLanguage(field, event.lang);
-      });
-
-      this.setTranslationsForLanguage(field, TranslateExtension.TRANSLATE.defaultLang, true);
-
-      if (TranslateExtension.TRANSLATE.defaultLang !== TranslateExtension.TRANSLATE.currentLang) {
-        this.setTranslationsForLanguage(field, TranslateExtension.TRANSLATE.currentLang);
-      }
+    if (TranslateExtension.TRANSLATE?.defaultLang) {
+      this.setDefaultTranslations(field);
     }
   }
 
-  setTranslationsForLanguage(field: FormlyFieldConfig, lang: string, initialSetup: boolean = false) {
-    if (!field.templateOptions || !field.templateOptions.label || !lang) {
+  setDefaultTranslations(field: FormlyFieldConfig) {
+    if (!field.templateOptions?.label && !field.templateOptions?.help && !field.templateOptions?.hint && !field.templateOptions?.placeholder) {
       return;
     }
 
-    let translationsRef: any = {};
-
-    if (initialSetup) {
-      translationsRef['label'] = field.templateOptions?.label || '';
-      translationsRef['help'] = field.templateOptions?.help || '';
-      translationsRef['hint'] = field.templateOptions?.hint || '';
-      translationsRef['placeholder'] = field.templateOptions?.placeholder || '';
-    } else if (field.templateOptions?.translations && field.templateOptions?.translations[lang]) {
-      translationsRef = field.templateOptions?.translations[lang];
-    }
+    let translationsRef: any = {
+      label: field.templateOptions?.label || '',
+      help: field.templateOptions?.help || '',
+      hint: field.templateOptions?.hint || '',
+      placeholder: field.templateOptions?.placeholder || ''
+    };
 
     let translationKey = getTranslationKey(field);
 
-    if (!translationsRef) {
-      console.error(`No translations available for ${translationKey} in language ${lang}.`);
-
-      return;
-    }
-
-    if (field.templateOptions && !field.templateOptions?._translationBaseKey) {
+    if (field.templateOptions && !field.templateOptions?._translationKey) {
       let copy = translationKey.slice();
       translationKey.length = 0;
 
       copy.forEach(key => translationKey.push(key.replace(/\./, '_')));
 
-      field.templateOptions._translationBaseKey = translationKey.join('.');
+      field.templateOptions._translationKey = translationKey.join('.');
     }
 
     let translations = translationKey.reverse().reduce((obj, key) => ({ [key]: obj }), translationsRef);
 
-    TranslateExtension.TRANSLATE.setTranslation(lang, translations, true);
+    TranslateExtension.TRANSLATE.setTranslation(TranslateExtension.TRANSLATE.defaultLang, translations, true);
   }
 }
 
 const getTranslationKey = (field: FormlyFieldConfig): string[] => {
-  if (field.templateOptions?._translationBaseKey) {
-    return field.templateOptions._translationBaseKey.split('.');
-  }
-
-  if (!field?.parent) {
-    if (field.templateOptions && !field.templateOptions._translationBaseKey) {
-      field.templateOptions._translationBaseKey = `base_form_key_${new Date().getTime()}`;
-    }
-
-    return [field.templateOptions?._translationBaseKey || `base_form_key_${new Date().getTime()}`];
+  if (field.templateOptions?._translationKey) {
+    return field.templateOptions._translationKey.split('.');
   }
 
   let keySegments = [];
-  keySegments.push(...getTranslationKey(field.parent));
-  keySegments.push(field.templateOptions?._translationBaseKey || field.templateOptions?._referenceId || field.id || field.key);
+  keySegments.push(...getPathTranslationKeys(field));
 
   return keySegments;
+}
+
+const getPathTranslationKeys = (field: FormlyFieldConfig): Array<string> => {
+  if (field?.templateOptions?.translationKey) {
+    return [getTranslationFormKey(field)].concat(field?.templateOptions?.translationKey);
+  }
+
+  if (field.parent) {
+    return getPathTranslationKeys(field.parent).concat(field.templateOptions?.translationKey || field.templateOptions?._referenceId || field.id || field.key || []);
+  } else {
+    return [getTranslationFormKey(field)].concat(field.templateOptions?.translationKey || field.templateOptions?._referenceId || field.id || field.key || []);
+  }
+}
+
+const getTranslationFormKey = (field: FormlyFieldConfig): string => {
+  if (!field?.parent) {
+    if (field.templateOptions && !field.templateOptions.translationFormKey) {
+      if (field.fieldGroup?.length === 1 && field.fieldGroup[0].templateOptions?.translationFormKey) {
+        field.templateOptions.translationFormKey = field.fieldGroup[0].templateOptions?.translationFormKey;
+      } else {
+        field.templateOptions.translationFormKey = `base_form_key_${new Date().getTime()}`;
+      }
+    }
+
+    return field.templateOptions?.translationFormKey;
+  }
+
+  return getTranslationFormKey(field.parent);
 }

@@ -78,7 +78,8 @@ const buildForm = (form: any, model: any) => {
         "templateOptions": {
           "verticalStepper": false,
           "linear": false,
-          "labelPosition": "end"
+          "labelPosition": "end",
+          "_translationFormKey": "${FunctionHelpers.generateId()}"
         }
       }
     },

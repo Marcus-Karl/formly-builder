@@ -182,7 +182,7 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
       }
 
       if (dateTime && !dateTime.isValid && this.ngControl?.control) {
-        this.formGroup.setErrors({ invalidDate: { message: this.translateService.instant('Invalid date') } });
+        this.formGroup.setErrors({ invalidDate: { message: this.translateService.stream('Invalid date') } });
       } else if (this.ngControl?.control?.hasError('invalidDate')) {
         this.formGroup.setErrors({ invalidDate: null });
       }

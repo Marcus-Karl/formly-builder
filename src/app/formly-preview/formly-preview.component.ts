@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormBuilder, FormlyFormOptions } from '@ngx-formly/core';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -46,7 +47,7 @@ export class FormlyPreviewComponent implements OnDestroy, OnInit {
 
   private _subscriptions: Array<Subscription>;
 
-  constructor(private formlyJsonschema: FormlyJsonschema, private formlyBuilder: FormlyFormBuilder) {
+  constructor(private formlyJsonschema: FormlyJsonschema, private formlyBuilder: FormlyFormBuilder, private translateService: TranslateService) {
     this._subscriptions = [];
 
     this.form = new FormGroup({});
@@ -82,6 +83,14 @@ export class FormlyPreviewComponent implements OnDestroy, OnInit {
       });
 
       this.options.formState.changeMap = {};
+
+      // Clear form specific translations on unload
+      if (this.fields?.length && this.fields[0].templateOptions?.translationFormKey && this.translateService.defaultLang) {
+        let emptyTranslationsObject: any = {};
+        emptyTranslationsObject[this.fields[0].templateOptions?.translationFormKey as string] = undefined;
+
+        this.translateService.langs?.forEach(lang => this.translateService.setTranslation(lang, emptyTranslationsObject, true));
+      }
     }
   }
 
@@ -642,6 +651,7 @@ const getFieldValues = () => ({
         'verticalStepper': false,
         'linear': false,
         'labelPosition': 'end',
+        'translationFormKey': 'h1b0026ddab6c487db2025849c61c0f38',
         'pageStates': {
           'party-info': {
             'icon': 'person',

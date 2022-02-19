@@ -4,6 +4,7 @@ import { AbstractControl } from '@angular/forms';
 import { FormlyFieldConfig, FormlyTemplateOptions } from '@ngx-formly/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
+import { marker as translateMarker } from '@biesbjerg/ngx-translate-extract-marker';
 
 export class ValidationExtension {
   constructor() {}
@@ -114,19 +115,19 @@ export class ValidationExtension {
     return [
       {
         name: 'required',
-        message: (error: any, field: FormlyFieldConfig) => translate.instant('FORMLY_CORE.VALIDATIONS.REQUIRED_FIELD')
+        message: (error: any, field: FormlyFieldConfig) => translate.instant(translateMarker('This field is required'))
       },
       {
         name: 'minimumNumber',
         message: (error: any, field: FormlyFieldConfig): Observable<string> => translate.instant(
-          'FORMLY_CORE.VALIDATIONS.MINIMUM_NUMBER',
+          translateMarker('{{value}} is less than the mimimum value of {{minimumNumber}}'),
           { value: field.formControl?.value, minimumNumber: field.templateOptions?.minimumNumber }
         )
       },
       {
         name: 'maximumNumber',
         message: (error: any, field: FormlyFieldConfig): Observable<string> => translate.instant(
-          'FORMLY_CORE.VALIDATIONS.MAXIMUM_NUMBER',
+          translateMarker('{{value}} is greater than the maximum value of {{maximumNumber}}'),
           { value: field.formControl?.value, maximumNumber: field.templateOptions?.maximumNumber }
         )
       },

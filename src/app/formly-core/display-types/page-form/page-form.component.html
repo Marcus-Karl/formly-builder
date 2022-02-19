@@ -16,7 +16,7 @@
       *ngIf="selectedIndex !== 0 && isPrecedingPageInvalid(selectedIndex - 1, true)"
       class="page-form-error-icon"
       matTooltipClass="use-new-line"
-      matTooltip="{{ 'FORMLY_CORE.DISPLAY_FORM.ERRORS_ON_PAGES' | translate: { pages: getPrecedingPageNamesInError(selectedIndex) } | tokens: to }}">
+      matTooltip="{{ 'Errors on page(s): {{pages}}' | translate: { pages: getPrecedingPageNamesInError(selectedIndex) } | tokens: to }}">
 
       <mat-icon class="error-state material-icons">warning</mat-icon>
     </div>
@@ -26,7 +26,7 @@
 <mat-tab-group [selectedIndex]="selectedIndex" (selectedIndexChange)="changePage($event)" [disablePagination]="to.disablePagination || false">
   <mat-tab *ngFor="let page of field.fieldGroup; let index = index">
     <div class="title" [style.display]="page.templateOptions?.hideLabel ? 'none' : ''">
-      {{ (page.templateOptions?._translationBaseKey + '.label') | translate | tokens: to }}
+      {{ (page.templateOptions?._translationKey + '.label') | translate | tokens: to }}
     </div>
 
     <formly-field [field]="page" *ngIf="selectedIndex === index" [ngClass]="page.templateOptions?.classes"></formly-field>
@@ -53,7 +53,7 @@
       *ngIf="isSubsequentPageInvalid(selectedIndex + 1, true)"
       class="page-form-error-icon"
       matTooltipClass="use-new-line"
-      matTooltip="{{ 'FORMLY_CORE.DISPLAY_FORM.ERRORS_ON_PAGES' | translate: { pages: getSubsequentPageNamesInError(selectedIndex + 1) } | tokens: to }}">
+      matTooltip="{{ 'Errors on page(s): {{pages}}' | translate: { pages: getSubsequentPageNamesInError(selectedIndex + 1) } | tokens: to }}">
 
       <mat-icon class="error-state material-icons">warning</mat-icon>
     </div>
@@ -66,7 +66,7 @@
     class="mat-button-base mat-primary"
     [ngClass]="{ 'mat-mini-fab': to.useSmallButtons, 'mat-fab': !to.useSmallButtons, 'mat-button-disabled': form.invalid }">
 
-    <div class="button-content" [matTooltip]="'FORMLY_CORE.DISPLAY_FORM.SUBMIT' | translate">
+    <div class="button-content" [matTooltip]="'Submit' | translate">
       <mat-icon>done</mat-icon>
     </div>
   </button>
@@ -85,7 +85,7 @@
       <div
         *ngIf="selectedIndex !== 0 && isPrecedingPageInvalid(selectedIndex - 1, true)"
         matTooltipClass="use-new-line" class="page-form-error-icon"
-        matTooltip="{{ 'FORMLY_CORE.DISPLAY_FORM.ERRORS_ON_PAGES' | translate: { pages: getPrecedingPageNamesInError(selectedIndex) } | tokens: to }}">
+        matTooltip="{{ 'Errors on page(s): {{pages}}' | translate: { pages: getPrecedingPageNamesInError(selectedIndex) } | tokens: to }}">
 
         <mat-icon class="error-state material-icons">warning</mat-icon>
       </div>
@@ -97,7 +97,7 @@
       <div *ngIf="isSubsequentPageInvalid(selectedIndex + 1, true)"
         matTooltipClass="use-new-line"
         class="page-form-error-icon"
-        matTooltip="{{ 'FORMLY_CORE.DISPLAY_FORM.ERRORS_ON_PAGES' | translate: { pages: getSubsequentPageNamesInError(selectedIndex + 1) } | tokens: to }}">
+        matTooltip="{{ 'Errors on page(s): {{pages}}' | translate: { pages: getSubsequentPageNamesInError(selectedIndex + 1) } | tokens: to }}">
 
         <mat-icon class="error-state material-icons">warning</mat-icon>
       </div>
@@ -123,7 +123,7 @@
       color="primary"
       [disabled]="form.invalid">
 
-      <div class="button-content" [matTooltip]="'FORMLY_CORE.DISPLAY_FORM.SUBMIT' | translate">
+      <div class="button-content" [matTooltip]="'Submit' | translate">
         <mat-icon>done</mat-icon>
       </div>
     </button>

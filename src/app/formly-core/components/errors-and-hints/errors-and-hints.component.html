@@ -8,5 +8,5 @@
 </mat-error>
 
 <mat-hint *ngIf="field?.templateOptions?.hint && !(validationMessage.errorMessage && field?.formControl?.touched)" class="body-text">
-  {{ (field.templateOptions._translationBaseKey + '.hint') | translate | tokens: to }}
+  {{ (field.templateOptions._translationKey + '.hint') | translate | tokens: to }}
 </mat-hint>

@@ -174,13 +174,13 @@ export class SelectDropDownFieldComponent extends FieldType implements OnInit, O
   }
 
   private _setDefaultOptionsTranslateText(options: SelectOption[]) {
-    if (this.translateService.defaultLang && this.translateService.translations && this.translateService.translations[this.translateService.defaultLang] && this.to._translationBaseKey) {
+    if (this.translateService.defaultLang && this.translateService.translations && this.translateService.translations[this.translateService.defaultLang] && this.to._translationFormKey) {
       let defaultTranslations = this.translateService.translations[this.translateService.defaultLang];
 
-      let translationsRef = this._getNestedObject(this.to._translationBaseKey.split('.'), defaultTranslations);
+      let translationsRef = this._getNestedObject(this.to._translationFormKey.split('.'), defaultTranslations);
 
       if (!translationsRef) {
-        console.error(`Could not locate translation object reference for ${this.to._translationBaseKey}`);
+        console.error(`Could not locate translation object reference for ${this.to._translationFormKey}`);
 
         return;
       }

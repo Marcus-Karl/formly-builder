@@ -1,31 +1,59 @@
 {
-  "FORMLY_CORE": {
-    "BASE_LABEL": {
-      "BACK": "Back",
-      "CONTINUE": "Continue",
-      "SUBMIT": "Submit"
-    },
-    "DISPLAY_FORM": {
-      "ERRORS_ON_PAGES": "Errors on page(s): {{pages}}",
-      "NAVIGATE_TO_PAGE": "Navigate to Page"
-    },
-    "BUSINESS_RULE": {
-      "INVALID_RULE": "One or more rules are invalid"
-    },
-    "VALIDATIONS": {
-      "REQUIRED_FIELD": "This field is required",
-      "MINIMUM_NUMBER": "{{value}} is less than the mimimum value of {{minimumNumber}}",
-      "MAXIMUM_NUMBER": "{{value}} is greater than the maximum value of {{maximumNumber}}"
-    },
-    "FIELDS": {
-      "DATE_INPUT_FIELD": {
-        "YYYY": "yyyy",
-        "MM": "mm",
-        "DD": "dd",
-        "YEAR": "Year",
-        "MONTH": "Month",
-        "DAY": "Day"
-      }
-    }
-  }
+	"Add Rule": "Add Rule",
+	"Add Condition": "Add Condition",
+	"Reorder Options": "Reorder Options",
+	"Edit Options": "Edit Options",
+	"Edit": "Edit",
+	"Add Option": "Add Option",
+	"Key / Value": "Key / Value",
+	"Label": "Label",
+	"No Options Configured": "No Options Configured",
+	"Edit Fields": "Edit Fields",
+	"Reorder Fields": "Reorder Fields",
+	"Position": "Position",
+	"Category": "Category",
+	"Type": "Type",
+	"Edit Field Buttons Column": "Edit Field Buttons Column",
+	"Delete, Preview, and Edit buttons": "Delete, Preview, and Edit buttons",
+	"Add Field": "Add Field",
+	"No Fields Configured": "No Fields Configured",
+	"Edit Pages": "Edit Pages",
+	"Edit Form": "Edit Form",
+	"Contains errors": "Contains errors",
+	"Add Page": "Add Page",
+	"Add Token": "Add Token",
+	"Name": "Name",
+	"TOKEN NOT CONFIGURED": "TOKEN NOT CONFIGURED",
+	"Submit": "Submit",
+	"Continue": "Continue",
+	"Revert & Close": "Revert & Close",
+	"Save & Close": "Save & Close",
+	"Close": "Close",
+	"Select Operator": "Select Operator",
+	"yyyy": "yyyy",
+	"Year": "Year",
+	"mm": "mm",
+	"Month": "Month",
+	"dd": "dd",
+	"Day": "Day",
+	"Navigate to Page": "Navigate to Page",
+	"Previous": "Previous",
+	"Errors on page(s): {{pages}}": "Errors on page(s): {{pages}}",
+	"Back": "Back",
+	"Add": "Add",
+	"Remove": "Remove",
+	"Clear Selection": "Clear Selection",
+	"Confirmation": "Confirmation",
+	"Are you sure you want to remove this field?": "Are you sure you want to remove this field?",
+	"No": "No",
+	"Yes": "Yes",
+	"Are you sure you want to remove this page?": "Are you sure you want to remove this page?",
+	"Invalid date": "Invalid date",
+	"This field is required": "This field is required",
+	"{{value}} is less than the mimimum value of {{minimumNumber}}": "{{value}} is less than the mimimum value of {{minimumNumber}}",
+	"{{value}} is greater than the maximum value of {{maximumNumber}}": "{{value}} is greater than the maximum value of {{maximumNumber}}",
+	"Are you sure you want to remove this entry?": "Are you sure you want to remove this entry?",
+	"Yes, Remove": "Yes, Remove",
+	"other": "other",
+	"others": "others"
 }

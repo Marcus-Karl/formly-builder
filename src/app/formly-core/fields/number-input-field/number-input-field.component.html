@@ -1,7 +1,7 @@
 <div *ngIf="!to.encapsulateLabel" class="flex body-text">
-  <label [for]="field.id" [innerHTML]="((to._translationBaseKey + '.label') | translate) + (to.required ? ' *' : '') | tokens: to | keepHtml"></label>
+  <label [for]="field.id" [innerHTML]="((to._translationKey + '.label') | translate) + (to.required ? ' *' : '') | tokens: to | keepHtml"></label>
 
-  <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="(to._translationBaseKey + '.help') | translate | tokens: to" matTooltipClass="mat-tooltip-content">help</mat-icon>
+  <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="(to._translationKey + '.help') | translate | tokens: to" matTooltipClass="mat-tooltip-content">help</mat-icon>
 </div>
 
 <mat-form-field
@@ -11,7 +11,7 @@
   [ngClass]="{ 'no-label': !to.encapsulateLabel }">
 
   <mat-label *ngIf="to.encapsulateLabel" class="body-text">
-    {{ (to._translationBaseKey + '.label') | translate | tokens: to }}
+    {{ (to._translationKey + '.label') | translate | tokens: to }}
   </mat-label>
 
   <input matInput
@@ -20,7 +20,7 @@
     [type]="'number'"
     [spellcheck]="true"
     [maxlength]="to.maxlength || 256"
-    [placeholder]="(to._translationBaseKey + '.placeholder') | translate | tokens: to"
+    [placeholder]="(to._translationKey + '.placeholder') | translate | tokens: to"
     [formControl]="formControl"
     [formlyAttributes]="field"
     [tabindex]="to.tabindex || 0" />

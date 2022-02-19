@@ -19,7 +19,7 @@
           </ng-template>
 
           <span [ngStyle]="{ 'opacity': index === selectedIndex ? '1' : '0.6' }">
-            {{ (page.templateOptions._translationBaseKey + '.label') | translate | tokens: to }}
+            {{ (page.templateOptions._translationKey + '.label') | translate | tokens: to }}
           </span>
         </div>
       </ng-template>
@@ -34,18 +34,30 @@
 <div class="form-controls-wrapper" *ngIf="!to.hideButtons">
   <div class="form-controls">
     <div class="margin-right-2">
-      <button *ngIf="selectedIndex !== 0 && hasBackPage(selectedIndex)" type="button" mat-raised-button color="primary" (click)="decrementPageFromIndex(selectedIndex - 1)">
-        <div translate>FORMLY_CORE.BASE_LABEL.BACK</div>
+      <button *ngIf="selectedIndex !== 0 && hasBackPage(selectedIndex)"
+        mat-raised-button
+        type="button"
+        color="primary"
+        (click)="decrementPageFromIndex(selectedIndex - 1)">
+        <div translate>Back</div>
       </button>
     </div>
 
-    <button *ngIf="hasForwardPage(selectedIndex)" type="button" mat-raised-button color="primary" [disabled]="to.linear && isPrecedingPageInvalid(selectedIndex)"
+    <button *ngIf="hasForwardPage(selectedIndex)"
+      mat-raised-button
+      type="button"
+      color="primary"
+      [disabled]="to.linear && isPrecedingPageInvalid(selectedIndex)"
       (click)="incrementPageFromIndex(selectedIndex + 1)">
-      <div translate>FORMLY_CORE.BASE_LABEL.CONTINUE</div>
+      <div translate>Continue</div>
     </button>
 
-    <button *ngIf="!to.hideSubmit && !hasForwardPage(selectedIndex)" type="submit" mat-raised-button color="primary" [disabled]="form.invalid">
-      <div translate>FORMLY_CORE.BASE_LABEL.BACK</div>
+    <button *ngIf="!to.hideSubmit && !hasForwardPage(selectedIndex)"
+      mat-raised-button
+      type="submit"
+      color="primary"
+      [disabled]="form.invalid">
+      <div translate>Back</div>
     </button>
   </div>
 </div>
