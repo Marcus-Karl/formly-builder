@@ -2,7 +2,6 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { DateAdapter } from '@angular/material/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { FieldType } from '@ngx-formly/material';
-import { DateTime } from 'luxon';
 import { Subscription } from 'rxjs';
 
 import { CustomDateAdapter, DateTimeService } from '../../services/date-time.service';
@@ -22,7 +21,7 @@ export class DateInputFieldComponent extends FieldType implements OnDestroy, OnI
   @ViewChild('monthInput') public monthInput: ElementRef<HTMLInputElement> | undefined;
   @ViewChild('yearInput') public yearInput: ElementRef<HTMLInputElement> | undefined;
 
-  public dateViewModel: DateTime | null | undefined;
+  public dateViewModel: Date | null | undefined;
 
   private _subscriptions: Subscription[] = [];
 
@@ -35,12 +34,12 @@ export class DateInputFieldComponent extends FieldType implements OnDestroy, OnI
 
     this._subscriptions.push(
       this.formControl.valueChanges.subscribe(value => {
-        this.dateViewModel = this.dateTimeService.getDateTimeFromISO(value);
+        this.dateViewModel = this.dateTimeService.getDateFromISO(value);
       })
     );
 
     if (this.formControl.value) {
-      this.dateViewModel = this.dateTimeService.getDateTimeFromISO(this.formControl.value);
+      this.dateViewModel = this.dateTimeService.getDateFromISO(this.formControl.value);
     }
   }
 
@@ -50,11 +49,7 @@ export class DateInputFieldComponent extends FieldType implements OnDestroy, OnI
     super.ngOnDestroy();
   }
 
-  dateChange(dateChange: MatDatepickerInputEvent<DateTime>) {
-    if (dateChange.value?.isValid) {
-      this.formControl.patchValue(dateChange.value.toISO());
-    } else {
-      this.formControl.patchValue(null);
-    }
+  dateChange(dateChange: MatDatepickerInputEvent<Date>) {
+    this.formControl.patchValue(dateChange.value?.toISOString() ?? null);
   }
 }

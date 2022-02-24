@@ -64,9 +64,9 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
       let { value: { year, month, day } } = this.formGroup;
 
       if (year && month && day) {
-        let dateTime = this.dateService.getDateTimeFromParts(year, month, day);
+        let dateTime = this.dateService.getDateFromParts(year, month, day);
 
-        return dateTime.isValid && dateTime.toISO() || null;
+        return dateTime?.toISOString() ?? null;
       }
     }
 
@@ -74,13 +74,12 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
   }
 
   set value(date: string | null) {
-    let dateTime = this.dateService.getDateTimeFromISO(date || '');
-    let { year, month, day } = (dateTime?.isValid && dateTime) || { year: '', month: '', day: '' };
+    let { year, month, day } = this.dateService.formatDateToParts(date);
 
     this.formGroup.setValue({
-      year: this._padLeadingZero(year, 4),
-      month: this._padLeadingZero(month),
-      day: this._padLeadingZero(day)
+      year: this.dateService.padLeadingZero(year, 4),
+      month: this.dateService.padLeadingZero(month),
+      day: this.dateService.padLeadingZero(day)
     });
 
     this.stateChanges.next();
@@ -150,7 +149,7 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
 
     this._subscriptions.push(
       this.dateService.dateFormat$.subscribe(dateFormat => {
-        this.dateFormat = dateFormat.replace(/L/g, 'm');
+        this.dateFormat = dateFormat;
         this.parseDatePartsOrder();
       })
     );
@@ -178,10 +177,10 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
       let { value: { year, month, day } } = this.formGroup;
 
       if (this.ngControl?.control && (year || month || day)) {
-        dateTime = this.dateService.getDateTimeFromParts(year, month, day);
+        dateTime = this.dateService.getDateFromParts(year, month, day);
       }
 
-      if (dateTime && !dateTime.isValid && this.ngControl?.control) {
+      if (dateTime && this.ngControl?.control) {
         this.formGroup.setErrors({ invalidDate: { message: this.translateService.stream('Invalid date') } });
       } else if (this.ngControl?.control?.hasError('invalidDate')) {
         this.formGroup.setErrors({ invalidDate: null });
@@ -228,7 +227,7 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
   }
 
   keyPress(event: KeyboardEvent, input: HTMLInputElement, index: number, max: number, min: number = 1) {
-    let keyPressed = event.key || '';
+    let keyPressed = event.key ?? '';
     let keyPressedLower = keyPressed.toLowerCase();
 
     let isBackspace = keyPressedLower === 'backspace';
@@ -247,10 +246,10 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
 
     let isValidKeypress = !modifiedSelectionString || this.isValidValueInclusive(modifiedSelectionString, max, min);
 
-    let selectionStart = input.selectionStart || 0;
-    let selectionEnd = input.selectionEnd || 0;
+    let selectionStart = input.selectionStart ?? 0;
+    let selectionEnd = input.selectionEnd ?? 0;
 
-    if (isRightArrow && selectionStart === (input.value || '').length && selectionStart === selectionEnd) {
+    if (isRightArrow && selectionStart === (input.value ?? '').length && selectionStart === selectionEnd) {
       this.autoFocusNext(index, false, true);
     } else if (isValidKeypress && selectionStart === 0 && selectionStart === selectionEnd && (isBackspace || isLeftArrow)) {
       this.autoFocusNext(index, true);
@@ -262,9 +261,9 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
   }
 
   keyUp(event: KeyboardEvent, input: HTMLInputElement, index: number, max: number, maxLength: number = 2) {
-    let value: string = input.value || '';
+    let value: string = input.value ?? '';
 
-    let keyPressed = event?.key?.toLowerCase() || '';
+    let keyPressed = event?.key?.toLowerCase() ?? '';
 
     if (this.datePartDelimeter === keyPressed || (this._validKeyInputs.indexOf(keyPressed) > -1 && (value.length >= maxLength || Number(value + '0') > max))) {
       this.autoFocusNext(index);
@@ -272,7 +271,7 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
   }
 
   onBlur(control: AbstractControl, max: number, min: number = 1, maxLength: number = 2, canPad: boolean = true) {
-    let value = control.value as string || '';
+    let value = control.value as string ?? '';
 
     if (Number(value) === 0) {
       control.patchValue('');
@@ -282,7 +281,7 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
   }
 
   onPaste(event: ClipboardEvent) {
-    let pastedData = event.clipboardData?.getData('text') || '';
+    let pastedData = event.clipboardData?.getData('text') ?? '';
 
     if (/^[\d]{1,4}$/.test(pastedData)) {
       return true;
@@ -299,17 +298,15 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
       }
     }
 
-    let dateToParse = pastedParts.join(this.datePartDelimeter);
-    let dateFormatNoPaddingRequired = this.dateService.getDateFormat().replace('dd', 'd').replace('LL', 'L');
-    let dateTime = this.dateService.getDateTime(dateToParse, dateFormatNoPaddingRequired);
+    let parsedDate = this.dateService.parseUserPastedDateToISO(pastedData);
 
-    if (dateTime?.isValid) {
-      let { year, month, day } = dateTime;
+    if (parsedDate) {
+      let { year, month, day } = this.dateService.formatDateToParts(parsedDate);
 
       this.formGroup.setValue({
-        year: this._padLeadingZero(year, 4),
-        month: this._padLeadingZero(month),
-        day: this._padLeadingZero(day)
+        year: this.dateService.padLeadingZero(year, 4),
+        month: this.dateService.padLeadingZero(month),
+        day: this.dateService.padLeadingZero(day)
       });
 
       this.stateChanges.next();
@@ -325,9 +322,9 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
   }
 
   private getModifiedSelectionString(input: HTMLInputElement, keyPressed: string) {
-    let selectionStart = input.selectionStart || 0;
-    let selectionEnd = input.selectionEnd || 0;
-    let fieldValue = input.value as string || '';
+    let selectionStart = input.selectionStart ??0;
+    let selectionEnd = input.selectionEnd ?? 0;
+    let fieldValue = input.value as string ?? '';
 
     let modifiedSelectionString: string;
 
@@ -345,7 +342,7 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
   private autoFocusNext(index: number, isBackspace: boolean = false, isRightArrow: boolean = false): void {
     let nextElement: HTMLInputElement | undefined;
 
-    let nextPart = this.dateParts[isBackspace ? index - 1 : index + 1] || '';
+    let nextPart = this.dateParts[isBackspace ? index - 1 : index + 1] ?? '';
 
     switch (nextPart) {
       case 'yyyy':
@@ -364,14 +361,10 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
     if (nextElement) {
       nextElement.focus();
 
-      let endPosition = isRightArrow ? 0 : (nextElement.value || '').length;
+      let endPosition = isRightArrow ? 0 : (nextElement.value ?? '').length;
       let startPosition = isBackspace ? endPosition : 0;
 
       setTimeout(() => nextElement?.setSelectionRange(startPosition, endPosition), 0);
     }
-  }
-
-  private _padLeadingZero(value: string | number, length: number = 2) {
-    return value ? ('0000' + value).slice(-length) : value;
   }
 }

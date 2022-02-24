@@ -67,9 +67,9 @@ export class TokenExtension {
   private getTokenTypeValue(tokenMap: any, token: any, value: any) {
     switch (token?.type) {
       case 'date':
-        return TokenExtension.DATE_TIME_SERVICE?.formatDateOnlyFromISO(value, token.format);
+        return TokenExtension.DATE_TIME_SERVICE?.formatDateFromISO(value, token.format);
       case 'datetime':
-        return TokenExtension.DATE_TIME_SERVICE?.formatDateTimeFromISO(value, token.format);
+        return TokenExtension.DATE_TIME_SERVICE?.formatDateAndTimeFromISO(value, token.format);
       case 'siteLink':
         return `<a siteLink="${token.url}" class="site-link link">${value}</a>`;
       case 'externalLink':

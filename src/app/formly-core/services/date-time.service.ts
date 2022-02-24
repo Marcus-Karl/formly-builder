@@ -1,10 +1,10 @@
+import { Platform } from '@angular/cdk/platform';
 import { Injectable } from '@angular/core';
-import { LuxonDateAdapter } from '@angular/material-luxon-adapter';
-import { DateTime } from 'luxon';
+import { NativeDateAdapter } from '@angular/material/core';
 import { BehaviorSubject } from 'rxjs';
 
 const DEFAULT_LOCALE = 'en-US';
-const DEFAULT_DATE_TIME_FORMAT = 'LL-dd-yyyy hh:mm:ss';
+const DEFAULT_DATE_TIME_FORMAT = 'mm-dd-yyyy hh:mm:ss';
 
 @Injectable({ providedIn: 'root' })
 export class DateTimeService {
@@ -13,134 +13,149 @@ export class DateTimeService {
   public dateFormat$ = new BehaviorSubject<string>(DEFAULT_DATE_TIME_FORMAT.split(' ')[0]);
   public locale$ = new BehaviorSubject<string>(DEFAULT_LOCALE);
 
-  private _zoneName: string = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
   public getLocale(): string {
     const locale = this.locale$.value || DEFAULT_LOCALE;
 
     return locale.split('_').join('-');
   }
 
-  getDateTime(date: string, format: string = this.getDateFormat()) {
-    let dateTime = DateTime.fromFormat(date, format, { zone: this._zoneName });
+  public parseUserPastedDateToISO(pastedData: string) {
+    let dateParts = Intl.DateTimeFormat().formatToParts();
 
-    return dateTime.isValid && dateTime || null;
-  }
+    let pastedParts = pastedData.split('/');
 
-  getDateTimeFromISO(date: string) {
-    let dateTime = DateTime.fromISO(date, { zone: 'UTC' });
+    if (pastedParts.length < 3) {
+      pastedParts = pastedData.split('-');
 
-    return dateTime.isValid && dateTime || null;
-  }
+      if (pastedParts.length < 3) {
+        let delimeter = dateParts.find(x => x.type === 'literal')?.value;
 
-  getDateTimeFromParts(year: string | number, month: string | number, day: string | number) {
-    let dateTime = DateTime.local(Number(year), Number(month), Number(day), { zone: 'UTC' });
+        pastedParts = pastedData.split(delimeter || '/');
 
-    return dateTime;
-  }
-
-  formatDateOnlyFromISO(date: string, format: string = this.getDateFormat()) {
-    let dateTime = DateTime.fromISO(date, { zone: 'UTC' });
-
-    if (format) {
-      return dateTime.toFormat(format);
+        if (pastedParts.length < 3) {
+          console.error(`Unable to parse date: ${pastedData}`);
+          return;
+        }
+      }
     }
 
-    console.error('formatDateOnlyFromISO() does not have a format');
+    let day;
+    let month;
+    let year;
+    let count = 0;
+
+    for (let i = 0; i < dateParts.length && count < pastedParts.length; i++) {
+      let type = dateParts[i].type;
+
+      switch (type) {
+        case 'year':
+          year = this.padLeadingZero(pastedParts[count++], 4);
+          break;
+        case 'month':
+          month = this.padLeadingZero(pastedParts[count++]);
+          break;
+        case 'day':
+          day = this.padLeadingZero(pastedParts[count++]);
+          break;
+        case 'literal':
+        default:
+          continue;
+      }
+    }
+
+    try {
+      return new Date(`${year}-${month}-${day}`).toISOString();
+    } catch (e) {
+      console.error(`Error parsing date value: ${pastedData}`, e);
+    }
+
+    return null;
+  }
+
+  public formatDateToParts(isoDate: any): { [key: string]: string } {
+    if (!isoDate) {
+      console.error(`Invalid date passed`);
+      return {};
+    }
+
+    let formattedParts: Intl.DateTimeFormatPart[] = [];
+
+    try {
+      formattedParts = Intl.DateTimeFormat('UTC').formatToParts(new Date(isoDate));
+    } catch (e) {
+      console.error(`Error parsing date value: ${isoDate}`, e);
+    }
+
+    return formattedParts.reduce((obj, x) => ({ ...obj, [x.type]: x.value }), {});
+  }
+
+  public getDateFromISO(dateStr: string) {
+    let dateObj;
+
+    try {
+      dateObj = new Date(dateStr);
+    } catch (e) {
+      console.error(`Error parsing date value: ${dateStr}`, e);
+    }
+
+    return dateObj;
+  }
+
+  public getDateFromParts(year: string | number, month: string | number, day: string | number) {
+    let dateObj;
+
+    try {
+      dateObj = new Date(`${this.padLeadingZero(year, 4)}-${this.padLeadingZero(month)}-${this.padLeadingZero(day)}`);
+    } catch (e) {
+      console.error(`Error parsing date value. Year: ${year}, month: ${month}, day: ${day}`, e);
+    }
+
+    return dateObj;
+  }
+
+  public formatDateFromISO(dateStr: string, options?: Intl.DateTimeFormatOptions) {
+    let dateObj = this.getDateFromISO(dateStr);
+
+    return this.formatDate(dateObj, options);
+  }
+
+  public formatDate(dateObj?: Date, options: Intl.DateTimeFormatOptions = { dateStyle: 'short' }) {
+    if (dateObj) {
+      return Intl.DateTimeFormat(this.getLocale(), options).format(dateObj);
+    }
 
     return '';
   }
 
-  formatDateTimeFromISO(date: string, format: string = this.getDateTimeFormat()) {
-    let dateTime = DateTime.fromISO(date, { zone: 'UTC' });
+  public formatDateAndTimeFromISO(dateStr: string, options: Intl.DateTimeFormatOptions = { dateStyle: 'short', timeStyle: 'medium' }) {
+  
+    let dateObj = this.getDateFromISO(dateStr);
 
-    if (format) {
-      return dateTime.toFormat(format);
+    if (dateObj) {
+      return Intl.DateTimeFormat(this.getLocale(), options).format(dateObj).replace(/, /g, ' ');
     }
-
-    console.error('formatDateTimeFromISO() does not have a format');
 
     return '';
   }
 
-  formatDate(date: DateTime) {
-    const format = this.getDateFormat();
-
-    if (format) {
-      return date.toFormat(format);
-    }
-
-    console.error('formatDateTime() does not have a format');
-
-    return '';
-  }
-
-  formatDateFromParts(year: number, month: number, day: number) {
-    const format = this.getDateFormat();
-
-    if (format) {
-      return DateTime.local(year, month, day, { zone: 'UTC' }).toFormat(format);
-    }
-
-    console.error('formatDateTime() does not have a format');
-
-    return '';
-  }
-
-  formatDateTime(date: DateTime) {
-    const format = this.getDateTimeFormat();
-
-    if (format) {
-      return date.toFormat(format);
-    }
-
-    console.error('formatDateTime() does not have a format');
-
-    return '';
-  }
-
-  getDateFormat(): string {
-    if (this.dateFormat$.value) {
-      return this.dateFormat$.value;
-    }
-
-    console.error('getDateFormat() does not have a format');
-
-    return '';
-  }
-
-  getDateTimeFormat(): string {
-    if (this.dateTimeFormat$.value) {
-      return this.dateTimeFormat$.value;
-    }
-
-    console.error('getDateTimeFormat() does not have a format');
-
-    return '';
+  public padLeadingZero(value: string | number, length: number = 2) {
+    return ('0'.repeat(length) + (value ?? '')).slice(-length);
   }
 }
 
-// This custom date adapter allows us to provide a dynamic date format
 @Injectable()
-export class CustomDateAdapter extends LuxonDateAdapter {
-  private dateFormat = '';
+export class CustomDateAdapter extends NativeDateAdapter {
+  constructor(private dateTimeService: DateTimeService, public platform: Platform) {
+    super(dateTimeService.getLocale(), platform);
 
-  constructor(private _dateTimeService: DateTimeService) {
-    super('en-US', { useUtc: true });
-
-    this._dateTimeService.locale$.subscribe(locale => this.setLocale(locale));
-    this._dateTimeService.dateFormat$.subscribe(format => this.dateFormat = format);
+    this.dateTimeService.locale$.subscribe(locale => this.setLocale(locale));
   }
 
-  public format(date: DateTime, displayFormat: string): string {
-    if (!date.isValid) {
-      throw Error('Invalid date');
-    }
-
-    return date.toFormat(this.dateFormat);
+  public format(date: Date, displayFormat: Object): string {
+    return this.dateTimeService.formatDate(date, displayFormat);
   }
 
-  public parse(value: any, parseFormat: string | string[]): DateTime | null {
-    return super.parse(value, this.dateFormat);
+  public parse(value: any): Date | null {
+    return this.dateTimeService.getDateFromISO(value) ?? null;
   }
 }
