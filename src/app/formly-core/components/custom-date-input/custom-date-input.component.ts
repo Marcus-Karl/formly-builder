@@ -74,13 +74,13 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
   }
 
   set value(date: string | null) {
-    let { year, month, day } = this.dateService.formatDateToParts(date);
+    let { year, month, day } = this.dateService.getDateToParts(date);
 
     this.formGroup.setValue({
-      year: this.dateService.padLeadingZero(year, 4),
-      month: this.dateService.padLeadingZero(month),
-      day: this.dateService.padLeadingZero(day)
-    });
+      year: (year?.length && this.dateService.padLeadingZero(year, 4)) ?? null,
+      month: (month?.length && this.dateService.padLeadingZero(month)) ?? null,
+      day: (day?.length && this.dateService.padLeadingZero(day)) ?? null,
+    })
 
     this.stateChanges.next();
   }
@@ -180,7 +180,7 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
         dateTime = this.dateService.getDateFromParts(year, month, day);
       }
 
-      if (dateTime && this.ngControl?.control) {
+      if (!dateTime && this.ngControl?.control) {
         this.formGroup.setErrors({ invalidDate: { message: this.translateService.stream('Invalid date') } });
       } else if (this.ngControl?.control?.hasError('invalidDate')) {
         this.formGroup.setErrors({ invalidDate: null });
@@ -301,7 +301,7 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
     let parsedDate = this.dateService.parseUserPastedDateToISO(pastedData);
 
     if (parsedDate) {
-      let { year, month, day } = this.dateService.formatDateToParts(parsedDate);
+      let { year, month, day } = this.dateService.getDateToParts(parsedDate);
 
       this.formGroup.setValue({
         year: this.dateService.padLeadingZero(year, 4),
