@@ -2,10 +2,9 @@ import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, ViewChild } fr
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { Subscription } from 'rxjs';
+import { FieldInformation, BuilderFormState } from '../../builder-functions/builder-form-state.models';
 
-import { SelectionOption } from '../../helpers/builder-selection-options.helper';
-import { BuilderFormState } from '../../helpers/form-state.helper';
-import { FieldInformation } from '../../helpers/functions.helper';
+import { SelectionOption } from '../../builder-functions/base-schema-selection-options';
 
 @Component({
   selector: 'hide-rule-editor',

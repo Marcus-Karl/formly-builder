@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 
-import { ConvertModel, createBuilderFormState, jsonBuilderSchema } from './helpers/base.helper';
+import { ConvertModel, createBuilderFormState, jsonBuilderSchema } from './builder-functions';
 
 @Component({
   selector: 'formly-form-json-schema-builder',

@@ -1,4 +1,4 @@
-import { SelectionOption, SelectionOptionType } from './builder-selection-options.helper';
+import { SelectionOption, SelectionOptionType } from './builder-functions/base-schema-selection-options';
 
 export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOptionType]: SelectionOption[] }) => ({
   'type': 'object',

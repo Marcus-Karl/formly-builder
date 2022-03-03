@@ -1,24 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-
-export interface FieldInformation {
-  category: string;
-  group: string;
-  label: string;
-  referenceId: string;
-  subType: string;
-  type: string;
-  value: string;
-}
-
-export interface PageInformation {
-  fields: FieldInformation[];
-  label: string;
-  referenceId: string;
-}
-
-export interface PagesInformation {
-  [key: string]: PageInformation;
-}
+import { FieldInformation, PageInformation, PagesInformation } from './builder-form-state.models';
 
 export const refreshPagesInformation = (formState: any | undefined | null) => {
   if (!formState?.builder || !formState.mainModel?.form?.pages) {
@@ -89,7 +70,7 @@ export const getFieldSubTypeForReference = (fieldReference: string, formState: a
   return referencedField?.subType;
 }
 
-export const getAllFieldInformation = (formState: any) => {
+export const getAllFieldInformation = (formState: any): FieldInformation[] => {
   let pages = (formState?.builder?.pagesInformation || {}) as PagesInformation;
   let fields: { [key: string]: FieldInformation } = {};
 

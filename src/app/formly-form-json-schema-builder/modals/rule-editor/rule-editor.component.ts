@@ -3,8 +3,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { Subscription } from 'rxjs';
 
-import { SelectionOption } from '../../helpers/builder-selection-options.helper';
-import { BuilderFormState } from '../../helpers/form-state.helper';
+import { SelectionOption } from '../../builder-functions/base-schema-selection-options';
+import { BuilderFormState } from '../../builder-functions/builder-form-state.models';
 
 @Component({
   selector: 'rule-editor',

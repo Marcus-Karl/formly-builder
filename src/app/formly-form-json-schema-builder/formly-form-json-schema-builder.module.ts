@@ -16,7 +16,7 @@ import { FormlyCoreModule } from 'src/app/formly-form-core/formly-core.module';
 import { FormlyBuilderService } from './formly-form-json-schema-builder.service';
 import { FormlyBuilderRoutes } from './formly-form-json-schema-builder.routes';
 
-import { validNameValidator } from './helpers/validators/valid-field-name.helper';
+import { validNameValidator } from './validators/valid-field-name.builder';
 
 import { DisplayHtmlEditorComponent } from './components/fields/display-html-editor/display-html-editor.component';
 import { FieldEditorComponent } from './modals/field-editor/field-editor.component';

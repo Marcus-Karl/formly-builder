@@ -1,14 +1,13 @@
 
-import { defaultJsonSchema } from './builder-schema.helper';
-import { DEFAULT_SELECTION_OPTIONS_MAP, SelectionOption, SelectionOptionType } from './builder-selection-options.helper';
-import { BuilderFormState } from './form-state.helper';
-import { FunctionReferences, PagesInformation } from './functions.helper';
+import { defaultJsonSchema } from '../formly-form-json-schema-builder.schema';
+import { DEFAULT_SELECTION_OPTIONS_MAP, SelectionOption, SelectionOptionType } from './base-schema-selection-options';
+import { BuilderFormState, PagesInformation } from './builder-form-state.models';
+import { FunctionReferences } from './state-functions';
 
-export * as BuilderFunctions from './functions.helper';
-export * as ConvertModel from './model-to-json-schema.helper';
-export * as FormBuilderSelectOptions from './builder-selection-options.helper';
-export * as FunctionHelpers from './functions.helper';
-export * as FormStateHelpers from './functions.helper';
+export * as BuilderFunctions from './state-functions';
+export * as ConvertModel from './model-to-json-schema-builder';
+export * as FormBuilderSelectOptions from './base-schema-selection-options';
+export * as FunctionHelpers from './state-functions';
 
 export const createBuilderFormState = (mainModel: any = {}): BuilderFormState => {
   let formState: BuilderFormState = {

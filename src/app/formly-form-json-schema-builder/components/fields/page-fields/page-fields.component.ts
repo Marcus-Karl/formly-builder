@@ -6,7 +6,7 @@ import { FieldArrayType, FormlyFieldConfig } from '@ngx-formly/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { FormlyBuilderService } from 'src/app/formly-form-json-schema-builder/formly-form-json-schema-builder.service';
-import { FunctionHelpers } from 'src/app/formly-form-json-schema-builder/helpers/base.helper';
+import { FunctionHelpers } from 'src/app/formly-form-json-schema-builder/builder-functions';
 
 import { FieldEditorComponent } from 'src/app/formly-form-json-schema-builder/modals/field-editor/field-editor.component';
 import { ConfirmationModalComponent } from 'src/app/formly-form-core/modal/confirmation-modal/confirmation-modal.component';

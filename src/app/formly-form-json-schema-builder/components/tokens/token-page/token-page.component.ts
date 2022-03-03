@@ -5,7 +5,7 @@ import { FieldArrayType } from '@ngx-formly/core';
 import { Subscription } from 'rxjs';
 
 import { FieldEditorComponent } from 'src/app/formly-form-json-schema-builder/modals/field-editor/field-editor.component';
-import { FunctionHelpers } from 'src/app/formly-form-json-schema-builder/helpers/base.helper';
+import { FunctionHelpers } from 'src/app/formly-form-json-schema-builder/builder-functions';
 
 @Component({
   selector: 'token-page',

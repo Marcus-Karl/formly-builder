@@ -1,4 +1,4 @@
-import { FunctionHelpers } from './base.helper';
+import { FunctionHelpers } from '.';
 
 export const toJsonSchema = (model: any) => {
   if (!model) {

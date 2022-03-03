@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FieldArrayType, FormlyFieldConfig } from '@ngx-formly/core';
 import { Subject } from 'rxjs';
 
-import { FunctionHelpers } from 'src/app/formly-form-json-schema-builder/helpers/base.helper';
+import { FunctionHelpers } from 'src/app/formly-form-json-schema-builder/builder-functions';
 import { HideRuleEditorComponent } from 'src/app/formly-form-json-schema-builder/modals/hide-rule-editor/hide-rule-editor.component';
 
 @Component({

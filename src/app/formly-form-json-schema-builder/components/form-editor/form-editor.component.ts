@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationModalComponent } from 'src/app/formly-form-core/modal/confirmation-modal/confirmation-modal.component';
 import { ConfirmationModalData } from 'src/app/formly-form-core/models/confirmation-modal-data';
 import { FormlyBuilderService } from 'src/app/formly-form-json-schema-builder/formly-form-json-schema-builder.service';
-import { FunctionHelpers } from '../../helpers/base.helper';
+import { FunctionHelpers } from '../../builder-functions';
 import { PageFieldsComponent } from '../fields/page-fields/page-fields.component';
 
 @Component({
