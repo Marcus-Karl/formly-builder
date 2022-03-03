@@ -14,7 +14,7 @@ export const refreshPagesInformation = (formState: any | undefined | null) => {
 
   modelPages.filter(pageModel => pageModel._referenceId).forEach((pageModel: any) => {
     let pageInformation: PageInformation = {
-      label: pageModel.settings.pageLabel,
+      label: pageModel.settings.label,
       referenceId: pageModel._referenceId,
       fields: []
     };
@@ -24,7 +24,7 @@ export const refreshPagesInformation = (formState: any | undefined | null) => {
     pageModel.fields?.filter((field: any) => field.basic && field._referenceId).forEach((field: any) => {
       let fieldInformation: FieldInformation = {
         category: field.category,
-        group: pageModel.settings.pageLabel,
+        group: pageModel.settings.label,
         label: field.basic.label,
         type: field.basic.type,
         subType: field.basic.subType,

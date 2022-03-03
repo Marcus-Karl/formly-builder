@@ -50,9 +50,6 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
 
         let modelToMove = previousFieldGroup[event.previousIndex].model;
 
-        console.log(`currentIndex: ${event.currentIndex}`);
-        console.log(`previousIndex: ${event.previousIndex}`);
-
         super.add(event.currentIndex, modelToMove, { markAsDirty: true });
 
         event.previousContainer.data.remove(event.previousIndex, { markAsDirty: true });
