@@ -24,11 +24,11 @@ export class FormlyFormBuilderPreviewComponent implements OnDestroy, OnInit {
       formTokens: {
         bday: {
           type: 'date',
-          value: '2021-03-25T13:51:19.000-05:00'
+          value: '2021-03-25'
         },
         hearing: {
           type: 'datetime',
-          value: '2021-04-25T23:54:15.000-05:00'
+          value: '2021-04-25T08:54:15.000-05:00'
         },
         reasonText: {
           type: 'string',

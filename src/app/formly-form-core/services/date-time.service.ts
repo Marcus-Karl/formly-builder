@@ -2,6 +2,7 @@ import { Platform } from '@angular/cdk/platform';
 import { Injectable } from '@angular/core';
 import { NativeDateAdapter } from '@angular/material/core';
 import { BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 const DEFAULT_LOCALE = 'en-US';
 const DEFAULT_DATE_TIME_FORMAT = 'mm-dd-yyyy hh:mm:ss';
@@ -12,6 +13,13 @@ export class DateTimeService {
   public dateTimeFormat$ = new BehaviorSubject<string>(DEFAULT_DATE_TIME_FORMAT);
   public dateFormat$ = new BehaviorSubject<string>(DEFAULT_DATE_TIME_FORMAT.split(' ')[0]);
   public locale$ = new BehaviorSubject<string>(DEFAULT_LOCALE);
+
+  private _dateParts: Intl.DateTimeFormatPart[];
+
+  constructor() {
+    this._dateParts = Intl.DateTimeFormat(this.getLocale()).formatToParts();
+    this.locale$.pipe(tap(locale => this._dateParts = Intl.DateTimeFormat(locale).formatToParts()));
+  }
 
   public getLocale(): string {
     const locale = this.locale$.value || DEFAULT_LOCALE;
@@ -76,7 +84,7 @@ export class DateTimeService {
     return this.formatDateAndTime(dateObj, options);
   }
 
-  public formatDate(dateObj?: Date, options: Intl.DateTimeFormatOptions = { dateStyle: 'short' }) {
+  public formatDate(dateObj?: Date, options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' }) {
     if (dateObj) {
       return Intl.DateTimeFormat(this.getLocale(), options).format(dateObj);
     }
@@ -84,7 +92,7 @@ export class DateTimeService {
     return '';
   }
 
-  public formatDateAndTime(dateObj?: Date, options: Intl.DateTimeFormatOptions = { dateStyle: 'short', timeStyle: 'medium' }) {
+  public formatDateAndTime(dateObj?: Date, options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }) {
     if (dateObj) {
       return Intl.DateTimeFormat(this.getLocale(), options).format(dateObj).replace(/, /g, ' ');
     }
@@ -93,8 +101,6 @@ export class DateTimeService {
   }
 
   public parseUserPastedDateToISO(pastedData: string) {
-    let dateParts = Intl.DateTimeFormat(this.getLocale()).formatToParts();
-
     let pastedParts = pastedData.split('/');
 
     if (pastedParts.length < 3) {
@@ -117,8 +123,8 @@ export class DateTimeService {
     let year: string = '';
     let count = 0;
 
-    for (let i = 0; i < dateParts.length && count < pastedParts.length; i++) {
-      let type = dateParts[i].type;
+    for (let i = 0; i < this._dateParts.length && count < pastedParts.length; i++) {
+      let type = this._dateParts[i].type;
 
       switch (type) {
         case 'year':
