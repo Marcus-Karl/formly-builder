@@ -16,8 +16,8 @@
 
   <input matInput
     autocomplete="off"
+    type="number"
     [id]="field.id"
-    [type]="'number'"
     [spellcheck]="true"
     [maxlength]="to.maxlength || 256"
     [placeholder]="(to._translationKey + '.placeholder') | translate | tokens: to"

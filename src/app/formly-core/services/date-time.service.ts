@@ -19,7 +19,7 @@ export class DateTimeService {
     return locale.split('_').join('-');
   }
 
-  public getDateToParts(isoDate: any): { [key: string]: string } {
+  public getDateParts(isoDate: any, options?: Intl.DateTimeFormatOptions): { [key: string]: string } {
     if (!isoDate) {
       console.error(`Invalid date passed`);
       return {};
@@ -28,7 +28,7 @@ export class DateTimeService {
     let formattedParts: Intl.DateTimeFormatPart[] = [];
 
     try {
-      formattedParts = Intl.DateTimeFormat(this.getLocale()).formatToParts(new Date(isoDate));
+      formattedParts = Intl.DateTimeFormat(this.getLocale(), options).formatToParts(new Date(isoDate));
     } catch (e) {
       console.error(`Error parsing date value: ${isoDate}`, e);
     }
@@ -36,7 +36,7 @@ export class DateTimeService {
     return formattedParts.reduce((obj, x) => ({ ...obj, [x.type]: x.value }), {});
   }
 
-  public getDateFromParts(year: string | number, month: string | number, day: string | number) {
+  public getDateFromParts(year: string | number, month: string | number, day: string | number): Date | undefined {
     let dateObj;
 
     if (!year || !month || !day) {
@@ -45,10 +45,6 @@ export class DateTimeService {
 
     try {
       dateObj = new Date(`${this.padLeadingZero(year, 4)}-${this.padLeadingZero(month)}-${this.padLeadingZero(day)}`);
-
-      // Hack to adjust for offset and prevent date changing when converting from UTC to specific timezone in custom-date-input
-      // Solution needs vetted more
-      dateObj.setMinutes(dateObj.getMinutes() + dateObj.getTimezoneOffset());
     } catch (e) {
       console.error(`Error parsing date value. Year: ${year}, month: ${month}, day: ${day}`, e);
     }
@@ -74,6 +70,12 @@ export class DateTimeService {
     return this.formatDate(dateObj, options);
   }
 
+  public formatDateAndTimeFromISO(dateStr: string, options?: Intl.DateTimeFormatOptions) {
+    let dateObj = this.getDateFromISO(dateStr);
+
+    return this.formatDateAndTime(dateObj, options);
+  }
+
   public formatDate(dateObj?: Date, options: Intl.DateTimeFormatOptions = { dateStyle: 'short' }) {
     if (dateObj) {
       return Intl.DateTimeFormat(this.getLocale(), options).format(dateObj);
@@ -82,9 +84,7 @@ export class DateTimeService {
     return '';
   }
 
-  public formatDateAndTimeFromISO(dateStr: string, options: Intl.DateTimeFormatOptions = { dateStyle: 'short', timeStyle: 'medium' }) {
-    let dateObj = this.getDateFromISO(dateStr);
-
+  public formatDateAndTime(dateObj?: Date, options: Intl.DateTimeFormatOptions = { dateStyle: 'short', timeStyle: 'medium' }) {
     if (dateObj) {
       return Intl.DateTimeFormat(this.getLocale(), options).format(dateObj).replace(/, /g, ' ');
     }
@@ -137,7 +137,7 @@ export class DateTimeService {
     }
 
     try {
-      return this.getDateFromParts(year, month, day);
+      return this.getDateFromParts(year, month, day)?.toISOString() ?? null;
     } catch (e) {
       console.error(`Error parsing date value: ${pastedData}`, e);
     }

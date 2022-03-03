@@ -66,7 +66,7 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
       if (year && month && day) {
         let dateTime = this.dateService.getDateFromParts(year, month, day);
 
-        return dateTime?.toISOString() ?? null;
+        return dateTime?.toISOString().split('T')[0] ?? null;
       }
     }
 
@@ -74,7 +74,7 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
   }
 
   set value(date: string | null) {
-    let { year, month, day } = this.dateService.getDateToParts(date);
+    let { year, month, day } = this.dateService.getDateParts(date?.split('T')[0], { timeZone: 'GMT' });
 
     this.formGroup.setValue({
       year: (year?.length && this.dateService.padLeadingZero(year, 4)) ?? null,
@@ -226,7 +226,7 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
     this.dateParts = this._dateFormat.split(this.datePartDelimeter);
   }
 
-  keyPress(event: KeyboardEvent, input: HTMLInputElement, index: number, max: number, min: number = 1) {
+  keyPress(event: KeyboardEvent, input: HTMLInputElement, index: number, control: AbstractControl, max: number, min: number = 0) {
     let keyPressed = event.key ?? '';
     let keyPressedLower = keyPressed.toLowerCase();
 
@@ -234,10 +234,20 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
     let isDelete = keyPressedLower === 'delete';
     let isLeftArrow = keyPressedLower === 'arrowleft';
     let isRightArrow = keyPressedLower === 'arrowright';
-    let isSpecialKey = isBackspace || isDelete || isLeftArrow || isRightArrow;
+    let isUpArrow = keyPressedLower === 'arrowup';
+    let isDownArrow = keyPressedLower === 'arrowdown';
+    let isSpecialKey = isBackspace || isDelete || isLeftArrow || isRightArrow || isUpArrow || isDownArrow;
 
     if (!isSpecialKey && (event.ctrlKey || keyPressed.length > 1)) {
       return true;
+    } else if ((isUpArrow || isDownArrow) && input?.value?.length && Number.isInteger(Number(input?.value))) {
+      let newValue = Number(input.value) + (isUpArrow ? 1 : -1);
+
+      if (this.isValidValueInclusive(newValue, max, min) && newValue > 0) {
+        control.patchValue(newValue);
+      }
+
+      return false;
     } else if (!isSpecialKey && this._validKeyInputs.indexOf(keyPressed) === -1) {
       return false;
     }
@@ -301,7 +311,7 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
     let parsedDate = this.dateService.parseUserPastedDateToISO(pastedData);
 
     if (parsedDate) {
-      let { year, month, day } = this.dateService.getDateToParts(parsedDate);
+      let { year, month, day } = this.dateService.getDateParts(parsedDate?.split('T')[0]);
 
       this.formGroup.setValue({
         year: this.dateService.padLeadingZero(year, 4),

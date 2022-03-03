@@ -16,7 +16,7 @@
           [style.width]="'50px'"
           [placeholder]="'yyyy' | translate"
           [attr.aria-label]="'Year' | translate"
-          (keydown)="keyPress($event, year, index, 9999, 0)"
+          (keydown)="keyPress($event, year, index, formGroup.controls.year, 9999)"
           (keyup)="keyUp($event, year, index, 9999, 4)"
           (blur)="onBlur(formGroup.controls.year, 9999, 0, 4, false)"
           (paste)="onPaste($event)" />
@@ -33,7 +33,7 @@
           [style.width]="'27px'"
           [placeholder]="'mm' | translate"
           [attr.aria-label]="'Month' | translate"
-          (keydown)="keyPress($event, month, index, 12, 0)"
+          (keydown)="keyPress($event, month, index, formGroup.controls.month, 12)"
           (keyup)="keyUp($event, month, index, 12)"
           (blur)="onBlur(formGroup.controls.month, 12)"
           (paste)="onPaste($event)" />
@@ -48,7 +48,7 @@
           [style.width]="'27px'"
           [placeholder]="'dd' | translate"
           [attr.aria-label]="'Day' | translate"
-          (keydown)="keyPress($event, day, index, 31, 0)"
+          (keydown)="keyPress($event, day, index, formGroup.controls.day, 31)"
           (keyup)="keyUp($event, day, index, 31)"
           (blur)="onBlur(formGroup.controls.day, 31)"
           (paste)="onPaste($event)" />

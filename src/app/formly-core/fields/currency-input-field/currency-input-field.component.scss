@@ -32,6 +32,9 @@ mat-form-field {
   flex-direction: row;
   margin-right: 0.5em;
   align-items: center;
+  height: 50px;
+  box-sizing: border-box;
+  padding: 0.75em 0 1em 0;
 
   mat-select {
     width: 4em;
