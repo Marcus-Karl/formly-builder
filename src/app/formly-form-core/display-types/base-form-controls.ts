@@ -7,14 +7,6 @@ import { FieldType } from '@ngx-formly/material';
 export abstract class AbstractBaseFormControlsComponent extends FieldType implements OnInit, AfterViewInit {
   public selectedIndex = -1;
 
-  postPopulate(field: FormlyFieldConfig) {
-    if (field.templateOptions) {
-      if (field.templateOptions.linear === undefined || field.templateOptions.linear === null) {
-        field.templateOptions['linear'] = true;
-      }
-    }
-  }
-
   ngOnInit() {
     if (this.options && !this.options.formState.formHistory) {
       this.options.formState.formHistory = [];

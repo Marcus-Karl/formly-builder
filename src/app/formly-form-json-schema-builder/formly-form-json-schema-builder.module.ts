@@ -11,7 +11,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { FormlyModule } from '@ngx-formly/core';
 import { NgxEditorModule } from 'ngx-editor';
 
-import { FormlyCoreModule } from 'src/app/formly-form-core/formly-core.module';
+import { FormlyFormCoreModule } from 'src/app/formly-form-core/formly-form-core.module';
 
 import { FormlyBuilderService } from './formly-form-json-schema-builder.service';
 import { FormlyBuilderRoutes } from './formly-form-json-schema-builder.routes';
@@ -20,7 +20,7 @@ import { validNameValidator } from './validators/valid-field-name.builder';
 
 import { DisplayHtmlEditorComponent } from './components/fields/display-html-editor/display-html-editor.component';
 import { FieldEditorComponent } from './modals/field-editor/field-editor.component';
-import { FormlyBuilderComponent } from './formly-form-json-schema-builder.component';
+import { FormlyFormJsonSchemaBuilderComponent } from './formly-form-json-schema-builder.component';
 import { FormEditorComponent } from './components/form-editor/form-editor.component';
 import { OptionsEditorComponent } from './components/fields/options-editor/options-editor.component';
 import { PageFieldsComponent } from './components/fields/page-fields/page-fields.component';
@@ -37,7 +37,7 @@ import { HideRuleEditorComponent } from './modals/hide-rule-editor/hide-rule-edi
     ExpressionBuilderComponent,
     FieldEditorComponent,
     FormEditorComponent,
-    FormlyBuilderComponent,
+    FormlyFormJsonSchemaBuilderComponent,
     OperatorConditionComponent,
     OptionsEditorComponent,
     PageFieldsComponent,
@@ -47,10 +47,10 @@ import { HideRuleEditorComponent } from './modals/hide-rule-editor/hide-rule-edi
     HideRuleEditorComponent,
   ],
   exports: [
-    FormlyBuilderComponent
+    FormlyFormJsonSchemaBuilderComponent
   ],
   imports: [
-    FormlyCoreModule,
+    FormlyFormCoreModule,
     DragDropModule,
     MatButtonToggleModule,
     MatDialogModule,

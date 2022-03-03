@@ -1,12 +1,12 @@
 
 import { defaultJsonSchema } from '../formly-form-json-schema-builder.schema';
-import { DEFAULT_SELECTION_OPTIONS_MAP, SelectionOption, SelectionOptionType } from './base-schema-selection-options';
+import { DEFAULT_SELECTION_OPTIONS_MAP, SelectionOption, SelectionOptionType } from './schema-builder-selection-options';
 import { BuilderFormState, PagesInformation } from './builder-form-state.models';
 import { FunctionReferences } from './state-functions';
 
 export * as BuilderFunctions from './state-functions';
 export * as ConvertModel from './model-to-json-schema-builder';
-export * as FormBuilderSelectOptions from './base-schema-selection-options';
+export * as FormBuilderSelectOptions from './schema-builder-selection-options';
 export * as FunctionHelpers from './state-functions';
 
 export const createBuilderFormState = (mainModel: any = {}): BuilderFormState => {

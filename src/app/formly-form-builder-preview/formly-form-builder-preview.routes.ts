@@ -1,8 +1,8 @@
 import { Routes, RouterModule } from '@angular/router';
-import { FormlyPreviewComponent } from './formly-preview.component';
+import { FormlyFormBuilderPreviewComponent } from './formly-form-builder-preview.component';
 
 const routes: Routes = [
-  { path: '', component: FormlyPreviewComponent, pathMatch: 'full' },
+  { path: '', component: FormlyFormBuilderPreviewComponent, pathMatch: 'full' },
 ];
 
 // Disable for naming convention check

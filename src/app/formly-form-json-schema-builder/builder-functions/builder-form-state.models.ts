@@ -1,4 +1,4 @@
-import { SelectionOption } from './base-schema-selection-options';
+import { SelectionOption } from './schema-builder-selection-options';
 import { FunctionReferences } from './state-functions';
 
 export interface FieldInformation {

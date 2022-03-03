@@ -25,7 +25,7 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { FormlyModule, FORMLY_CONFIG } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
-import { TranslateModule, TranslateLoader, MissingTranslationHandler, TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { DisplayHtmlComponent } from './fields/display-html/display-html.component';
 import { SelectDropDownFieldComponent } from './fields/select-dropdown-field/select-dropdown-field.component';
@@ -47,7 +47,6 @@ import { TruncatePipe } from './pipes/truncate.pipe';
 import { BypassSecurityTrustHtmlPipe } from './pipes/html-sanitizer.pipe';
 import { SortOptionsPipe } from './pipes/sort-options.pipe';
 import { validateBusinessRule } from './business-rules/business-rules.validator';
-import { IsArrayPipe } from './pipes/is-array.pipe';
 import { CustomMatIcons } from './services/custom-mat-icons.service';
 import { SelectAutoCompleteFieldComponent } from './fields/select-autocomplete-field/select-autocomplete-field.component';
 import { DateInputFieldComponent } from './fields/date-input-field/date-input-field.component';
@@ -136,7 +135,6 @@ import { ErrorsAndHintsComponent } from './components/errors-and-hints/errors-an
     // Pipes
     BypassSecurityTrustHtmlPipe,
     FormlyTokenPipe,
-    IsArrayPipe,
     SortOptionsPipe,
     TruncatePipe,
 
@@ -187,7 +185,6 @@ import { ErrorsAndHintsComponent } from './components/errors-and-hints/errors-an
     TruncatePipe,
     BypassSecurityTrustHtmlPipe,
     FormlyTokenPipe,
-    IsArrayPipe,
     SortOptionsPipe,
     TruncatePipe,
   ],
@@ -200,4 +197,4 @@ import { ErrorsAndHintsComponent } from './components/errors-and-hints/errors-an
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class FormlyCoreModule { }
+export class FormlyFormCoreModule { }

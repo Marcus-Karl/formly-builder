@@ -1,8 +1,8 @@
 import { Routes, RouterModule } from '@angular/router';
-import { FormlyBuilderComponent } from './formly-form-json-schema-builder.component';
+import { FormlyFormJsonSchemaBuilderComponent } from './formly-form-json-schema-builder.component';
 
 const routes: Routes = [
-  { path: '', component: FormlyBuilderComponent, pathMatch: 'full' },
+  { path: '', component: FormlyFormJsonSchemaBuilderComponent, pathMatch: 'full' },
 ];
 
 // Disable for naming convention check

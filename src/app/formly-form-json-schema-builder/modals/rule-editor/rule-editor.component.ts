@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { Subscription } from 'rxjs';
 
-import { SelectionOption } from '../../builder-functions/base-schema-selection-options';
+import { SelectionOption } from '../../builder-functions/schema-builder-selection-options';
 import { BuilderFormState } from '../../builder-functions/builder-form-state.models';
 
 @Component({

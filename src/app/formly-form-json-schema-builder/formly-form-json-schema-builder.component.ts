@@ -6,11 +6,11 @@ import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { ConvertModel, createBuilderFormState, jsonBuilderSchema } from './builder-functions';
 
 @Component({
-  selector: 'formly-form-json-schema-builder',
+  selector: 'app-formly-form-json-schema-builder',
   templateUrl: './formly-form-json-schema-builder.component.html',
   styleUrls: ['./formly-form-json-schema-builder.component.scss']
 })
-export class FormlyBuilderComponent implements OnInit {
+export class FormlyFormJsonSchemaBuilderComponent implements OnInit {
 
   public isFormLoading: boolean;
   public schemaDef: any;

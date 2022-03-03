@@ -26,6 +26,14 @@ export class StepperFormComponent extends AbstractBaseFormControlsComponent impl
     );
   }
 
+  postPopulate(field: FormlyFieldConfig) {
+    if (field.templateOptions) {
+      if (field.templateOptions.linear === undefined || field.templateOptions.linear === null) {
+        field.templateOptions['linear'] = true;
+      }
+    }
+  }
+
   ngOnDestroy() {
     this._subscriptions.forEach(x => x.unsubscribe());
 

@@ -4,7 +4,7 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
 import { Subscription } from 'rxjs';
 import { FieldInformation, BuilderFormState } from '../../builder-functions/builder-form-state.models';
 
-import { SelectionOption } from '../../builder-functions/base-schema-selection-options';
+import { SelectionOption } from '../../builder-functions/schema-builder-selection-options';
 
 @Component({
   selector: 'hide-rule-editor',
