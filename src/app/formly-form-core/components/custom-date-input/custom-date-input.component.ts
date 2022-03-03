@@ -311,7 +311,7 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
     let parsedDate = this.dateService.parseUserPastedDateToISO(pastedData);
 
     if (parsedDate) {
-      let { year, month, day } = this.dateService.getDateParts(parsedDate?.split('T')[0]);
+      let { year, month, day } = this.dateService.getDateParts(parsedDate?.split('T')[0], { timeZone: 'GMT' });
 
       this.formGroup.setValue({
         year: this.dateService.padLeadingZero(year, 4),

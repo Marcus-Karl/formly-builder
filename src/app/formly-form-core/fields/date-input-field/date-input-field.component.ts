@@ -50,6 +50,6 @@ export class DateInputFieldComponent extends FieldType implements OnDestroy, OnI
   }
 
   dateChange(dateChange: MatDatepickerInputEvent<Date>) {
-    this.formControl.patchValue(dateChange.value?.toISOString() ?? null);
+    this.formControl.patchValue(dateChange.value?.toISOString().split('T')[0] ?? null);
   }
 }

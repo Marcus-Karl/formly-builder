@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 const DEFAULT_LOCALE = 'en-US';
-const DEFAULT_DATE_TIME_FORMAT = 'mm-dd-yyyy hh:mm:ss';
+const DEFAULT_DATE_TIME_FORMAT = 'mm/dd/yyyy hh:mm:ss';
 
 @Injectable({ providedIn: 'root' })
 export class DateTimeService {
@@ -29,7 +29,6 @@ export class DateTimeService {
 
   public getDateParts(isoDate: any, options?: Intl.DateTimeFormatOptions): { [key: string]: string } {
     if (!isoDate) {
-      console.error(`Invalid date passed`);
       return {};
     }
 
@@ -61,15 +60,35 @@ export class DateTimeService {
   }
 
   public getDateFromISO(dateStr: string) {
-    let dateObj;
+    if (!dateStr) {
+      return null;
+    }
 
     try {
-      dateObj = new Date(dateStr);
+      // This creates a date like 2022-07-15 with UTC time of midnight, eg 2022-07-15T00:00:00.000Z
+      let date = new Date(dateStr.split('T')[0]);
+
+      // Move date to midnight local timezone, eg 2022-07-15T05:00:00.000Z
+      return new Date(date.getTime() + (date.getTimezoneOffset() * 60000));
     } catch (e) {
       console.error(`Error parsing date value: ${dateStr}`, e);
     }
 
-    return dateObj;
+    return null;
+  }
+
+  public getDateTimeFromISO(dateStr: string) {
+    if (!dateStr) {
+      return null;
+    }
+
+    try {
+      return new Date(dateStr);
+    } catch (e) {
+      console.error(`Error parsing date value: ${dateStr}`, e);
+    }
+
+    return null;
   }
 
   public formatDateFromISO(dateStr: string, options?: Intl.DateTimeFormatOptions) {
@@ -79,12 +98,12 @@ export class DateTimeService {
   }
 
   public formatDateAndTimeFromISO(dateStr: string, options?: Intl.DateTimeFormatOptions) {
-    let dateObj = this.getDateFromISO(dateStr);
+    let dateObj = this.getDateTimeFromISO(dateStr);
 
     return this.formatDateAndTime(dateObj, options);
   }
 
-  public formatDate(dateObj?: Date, options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' }) {
+  public formatDate(dateObj: Date | null | undefined, options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' }) {
     if (dateObj) {
       return Intl.DateTimeFormat(this.getLocale(), options).format(dateObj);
     }
@@ -92,7 +111,7 @@ export class DateTimeService {
     return '';
   }
 
-  public formatDateAndTime(dateObj?: Date, options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }) {
+  public formatDateAndTime(dateObj: Date | null | undefined, options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }) {
     if (dateObj) {
       return Intl.DateTimeFormat(this.getLocale(), options).format(dateObj).replace(/, /g, ' ');
     }
