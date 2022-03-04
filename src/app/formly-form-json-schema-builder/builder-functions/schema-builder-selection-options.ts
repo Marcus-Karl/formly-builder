@@ -38,7 +38,7 @@ export const buildSelectionOptions = (item: FormBuilderSelectionOption, type: Se
 const buildObject = (parent: FormBuilderSelectionOption | null, item: FormBuilderSelectionOption, type: SelectionOptionType): SelectionOption[] => {
   let result = item.values?.map(x => buildObject(item, x, type)) as SelectionOption[][];
 
-  let itemsToReturn: SelectionOption[] = ([] as SelectionOption[]).concat(...result || []);
+  let itemsToReturn: SelectionOption[] = ([] as SelectionOption[]).concat(...result ?? []);
 
   if (item.type === type) {
     itemsToReturn.push({
@@ -57,6 +57,19 @@ const DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION: FormBuilderSelectionOption =
   label: 'Base',
   type: SelectionOptionType.Base,
   values: [
+    {
+      key: 'complex-object-field',
+      label: 'Complex Object',
+      type: SelectionOptionType.FieldCategory,
+      category: 'field',
+      values: [
+        {
+          type: SelectionOptionType.FieldType,
+          key: 'complex-object',
+          label: 'Complex Object'
+        }
+      ]
+    },
     {
       key: 'display-content-field',
       label: 'Display Content',
@@ -86,12 +99,12 @@ const DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION: FormBuilderSelectionOption =
           type: SelectionOptionType.FieldType,
         },
         {
-          key: 'text-input-field',
+          key: 'date-time-input-field',
           label: 'Date & Time',
           type: SelectionOptionType.FieldType,
         },
         {
-          key: 'text-input-field',
+          key: 'email-input-field',
           label: 'Email',
           type: SelectionOptionType.FieldType,
         },
@@ -101,7 +114,7 @@ const DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION: FormBuilderSelectionOption =
           type: SelectionOptionType.FieldType,
         },
         {
-          key: 'text-input-field',
+          key: 'phone-input-field',
           label: 'Telephone',
           type: SelectionOptionType.FieldType,
         },
@@ -124,6 +137,11 @@ const DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION: FormBuilderSelectionOption =
       values: [
         {
           type: SelectionOptionType.FieldType,
+          key: 'select-autocomplete-field',
+          label: 'Auto Complete Select Field'
+        },
+        {
+          type: SelectionOptionType.FieldType,
           key: 'select-dropdown-field',
           label: 'Dropdown Select Field'
         },
@@ -136,7 +154,7 @@ const DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION: FormBuilderSelectionOption =
     },
     {
       key: 'form',
-      label: 'Nested Form',
+      label: 'Form Types',
       type: SelectionOptionType.FieldCategory,
       values: [
         {

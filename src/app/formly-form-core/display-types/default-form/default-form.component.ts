@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatSelectChange } from '@angular/material/select';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
 
@@ -22,9 +23,21 @@ export class DefaultFormComponent extends FieldType implements OnInit {
 
   postPopulate(field: FormlyFieldConfig) {
     if (field?.type === 'default-form' && field.templateOptions) {
-      if (field.options && !field.options.formState.formHistory) {
+      if (field.options && !Array.isArray(field.options.formState.formHistory)) {
         field.options.formState.formHistory = [];
       }
+    }
+  }
+
+  navigateToPage(event: MatSelectChange) {
+    if (this.options?.formState.currentPage === event.value) {
+      return;
+    }
+
+    let pageIndex = this.field.fieldGroup?.findIndex(x => x.key === event.value) ?? -1;
+
+    if (pageIndex >= 0) {
+      this.changePage(pageIndex);
     }
   }
 
@@ -41,6 +54,8 @@ export class DefaultFormComponent extends FieldType implements OnInit {
       }
 
       this.options.formState.currentPage = pageKey;
+
+      this.pageHistory.patchValue(pageKey);
     }
   }
 }

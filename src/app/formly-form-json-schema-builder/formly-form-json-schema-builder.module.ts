@@ -18,12 +18,12 @@ import { FormlyBuilderRoutes } from './formly-form-json-schema-builder.routes';
 
 import { validNameValidator } from './validators/valid-field-name.builder';
 
-import { DisplayHtmlEditorComponent } from './components/fields/display-html-editor/display-html-editor.component';
+import { DisplayHtmlEditorComponent } from './components/display-html-editor/display-html-editor.component';
 import { FieldEditorComponent } from './modals/field-editor/field-editor.component';
 import { FormlyFormJsonSchemaBuilderComponent } from './formly-form-json-schema-builder.component';
 import { FormEditorComponent } from './components/form-editor/form-editor.component';
-import { OptionsEditorComponent } from './components/fields/options-editor/options-editor.component';
-import { PageFieldsComponent } from './components/fields/page-fields/page-fields.component';
+import { OptionsEditorComponent } from './components/options-editor/options-editor.component';
+import { PageFieldsComponent } from './components/page-fields/page-fields.component';
 import { TokenEditorComponent } from './components/tokens/token-editor/token-editor.component';
 import { TokenPageComponent } from './components/tokens/token-page/token-page.component';
 import { ExpressionBuilderComponent } from './components/expression/expression-builder/expression-builder.component';

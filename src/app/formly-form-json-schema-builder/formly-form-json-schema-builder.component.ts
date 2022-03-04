@@ -57,98 +57,147 @@ export class FormlyFormJsonSchemaBuilderComponent implements OnInit {
 
 /* eslint-disable @typescript-eslint/naming-convention */
 const getModel = () => ({
-  'form': {
-    'pages': [
+  "form": {
+    "pages": [
       {
-        'fields': [
+        "_order": 1,
+        "_referenceId": "c18df3776db84b1ca9c1cd5951b76ce6",
+        "fields": [
           {
-            'basic': {
-              'type': 'text-input-field',
-              'subType': 'text',
-              'label': 'Whats up?'
+            "category": "display-content-field",
+            "basic": {
+              "name": "",
+              "label": ""
             },
-            'options': [],
-            'extra': {},
-            'edit': '',
-            'advanced': {
-              'hideExpression': [],
-              'validationExpressions': []
+            "complexObject": [],
+            "options": [],
+            "extra": {
+              "defaultValue": "",
+              "placeholder": "",
+              "hint": "",
+              "help": ""
             },
-            '_order': 1,
-            '_referenceId': '7e6df5d65783499dac9efbc79572b8f3',
-            'category': 'free-response-field'
-          },
-          {
-            'basic': {
-              'type': 'select-dropdown-field',
-              'label': 'What is your mood?'
+            "edit": "<h1 style=\"text-align:center\"><strong>Welcome to the Form Creator</strong></h1><p>Please add as many pages and fields as you would like.</p>",
+            "advanced": {
+              "hideExpression": [],
+              "validationExpressions": []
             },
-            'options': [
-              {
-                'value': 'happy',
-                'label': 'Happy',
-                '_order': 1,
-                '_referenceId': 'b35961e1366c49528e1399949d3b2a1e'
-              },
-              {
-                'value': 'meh',
-                'label': 'Meh',
-                '_order': 2,
-                '_referenceId': 'b04f4522ffe54189bd0e42d50d063494'
-              },
-              {
-                'value': 'sad',
-                'label': 'Sad',
-                '_order': 3,
-                '_referenceId': '18ba459f8a224c029a299fbf93999a8e'
-              }
-            ],
-            'extra': {},
-            'edit': '',
-            'advanced': {
-              'hideExpression': [],
-              'validationExpressions': []
-            },
-            '_order': 2,
-            '_referenceId': 'd8b1177eff4c4703a56cfa74cef30e8a',
-            'category': 'multiple-choice-field'
+            "_order": 1,
+            "_referenceId": "l7846782253c949fcbb3035a273371db0",
+            "preview": null
           }
         ],
-        'settings': {
-          'hideExpression': [],
-          'label': 'How you\'re doing'
-        },
-        '_order': 1,
-        '_referenceId': '7140fa2886b447259cab768fc2112427'
+        "settings": {
+          "name": "",
+          "label": "Welcome Page",
+          "hideExpression": []
+        }
       },
       {
-        'fields': [
+        "_order": 2,
+        "_referenceId": "p9067bba8936d4075bcb23f63fa333ee3",
+        "fields": [
           {
-            'basic': {},
-            'options': [],
-            'extra': {},
-            'edit': '<h1 style="text-align:center"><strong>About Us</strong></h1><p>We care about you!</p>',
-            'advanced': {
-              'hideExpression': [],
-              'validationExpressions': []
+            "category": "multiple-choice-field",
+            "basic": {
+              "type": "radio-button-field",
+              "name": "",
+              "label": "Select your mood"
             },
-            '_order': 1,
-            '_referenceId': '114a4c4d204a43a698fd14a2cf667ea8',
-            'category': 'display-content-field'
+            "complexObject": [],
+            "options": [
+              {
+                "value": "sad",
+                "label": "Sad",
+                "_order": 1,
+                "_referenceId": "v5416e736bd054435935bc3795fbb6843"
+              },
+              {
+                "value": "happy",
+                "label": "Happy",
+                "_order": 2,
+                "_referenceId": "u0ea258e700ab4746bee9ec8168732a13"
+              },
+              {
+                "value": "go_away",
+                "label": "Go Away",
+                "_order": 3,
+                "_referenceId": "c2c37ae077374577afd77759dad52b62"
+              }
+            ],
+            "extra": {
+              "defaultValue": "happy",
+              "placeholder": "",
+              "hint": "",
+              "help": ""
+            },
+            "edit": "",
+            "advanced": {
+              "hideExpression": [],
+              "validationExpressions": []
+            },
+            "_order": 1,
+            "_referenceId": "g11b149552537437684aa5c02d8a1d107"
+          },
+          {
+            "category": "free-response-field",
+            "basic": {
+              "type": "text-input-field",
+              "name": "",
+              "label": "What is your name?"
+            },
+            "complexObject": [],
+            "options": [],
+            "extra": {
+              "defaultValue": "",
+              "placeholder": "",
+              "hint": "",
+              "help": ""
+            },
+            "edit": "",
+            "advanced": {
+              "hideExpression": [],
+              "validationExpressions": []
+            },
+            "_order": 2,
+            "_referenceId": "n283e6d579d224a1392fa26009ed15f19"
+          },
+          {
+            "category": "free-response-field",
+            "basic": {
+              "type": "textbox-field",
+              "name": "",
+              "label": "What would you like to tell us?"
+            },
+            "complexObject": [],
+            "options": [],
+            "extra": {
+              "defaultValue": "",
+              "placeholder": "",
+              "hint": "",
+              "help": ""
+            },
+            "edit": "",
+            "advanced": {
+              "hideExpression": [],
+              "validationExpressions": []
+            },
+            "_order": 3,
+            "_referenceId": "q7b3dfa6a31654c9d83021e971200a94c"
           }
         ],
-        'settings': {
-          'hideExpression': [],
-          'label': 'About Us'
-        },
-        '_order': 2,
-        '_referenceId': '8f33a72acece46e9bab4428c33e48362'
+        "settings": {
+          "name": "",
+          "label": "About You",
+          "hideExpression": []
+        }
       }
     ],
-    'tokens': [],
-    'settings': {
-      'formType': 'tab-form',
-      'label': 'Some form name'
+    "tokens": [],
+    "settings": {
+      "formType": "tab-form",
+      "name": "",
+      "label": "My Form Label"
     }
   }
 });

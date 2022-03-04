@@ -46,7 +46,7 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
       this.field.fieldGroup.forEach((field: FormlyFieldConfig, index: number) => field.model['_order'] = index + 1);
     } else {
       try {
-        let previousFieldGroup = event.previousContainer.data.field.fieldGroup || [];
+        let previousFieldGroup = event.previousContainer.data.field.fieldGroup ?? [];
 
         let modelToMove = previousFieldGroup[event.previousIndex].model;
 
@@ -91,8 +91,13 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
     if (this.field.fieldGroup && this.field.fieldGroup[index]) {
       let newField = this.field.fieldGroup[index];
 
-      newField.model['_order'] = index + 1;
-      newField.model['_referenceId'] = FunctionHelpers.generateId();
+      if (!newField.model['_order']) {
+        newField.model['_order'] = index + 1;
+      }
+
+      if (!newField.model['_referenceId']) {
+        newField.model['_referenceId'] = FunctionHelpers.generateId();
+      }
 
       this.edit(newField);
     }

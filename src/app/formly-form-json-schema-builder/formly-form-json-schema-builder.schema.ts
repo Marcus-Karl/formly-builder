@@ -254,6 +254,9 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
           'basic': {
             '$ref': '#/definitions/field/tabs/basic'
           },
+          'complexObject': {
+            '$ref': '#/definitions/field/tabs/complexObject'
+          },
           'options': {
             '$ref': '#/definitions/field/tabs/options'
           },
@@ -272,7 +275,17 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
         },
         'required': [
           'category'
-        ]
+        ],
+        'if': {
+          'category': 'complex-object-field'
+        },
+        'then': {
+          'properties': {
+            'complexObject': {
+              'minItems': 1
+            }
+          }
+        }
       },
       'tabs': {
         'edit-display-content': {
@@ -391,7 +404,7 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
             'formlyConfig': {
               'defaultValue': {},
               'className': 'flex pad',
-              'hideExpression': 'field.parent.model.category === \'display-content-field\'',
+              'hideExpression': '[\'display-content-field\', \'complex-object-field\'].includes(field.parent.model.category)',
               'templateOptions': {
                 'isOptional': true
               }
@@ -432,6 +445,25 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
               '$ref': '#/definitions/field/types/validationExpressions'
             }
           }
+        },
+        'complexObject': {
+          'type': 'array',
+          'title': 'Configured Fields',
+          'minItems': 0,
+          'widget': {
+            'formlyConfig': {
+              'className': 'formly-build-page-form-min-height flex column pad',
+              'type': 'page-fields',
+              'defaultValue': [],
+              'hideExpression': 'field.parent.model.category !== \'complex-object-field\'',
+              'templateOptions': {
+                'hideLabel': true
+              }
+            }
+          },
+          'items': {
+            '$ref': '#/definitions/field/picker'
+          }
         }
       },
       'types': {
@@ -470,7 +502,7 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
               'type': 'select',
               'defaultValue': '',
               'templateOptions': {
-                'options': selectionOptionsMap[SelectionOptionType.FieldCategory]
+                'options': selectionOptionsMap[SelectionOptionType.FieldCategory].filter(x => x.value !== 'form')
               },
               'hideExpression': '!!model.category'
             }
@@ -508,7 +540,7 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
               },
               'expressionProperties': {
                 'templateOptions.options': 'field.templateOptions._options.filter(x => x.category === field.parent.parent.model.category)',
-                'model.type': 'field.templateOptions.options?.find(x => x.value === model.type) ? model.type : undefined',
+                'model.type': 'field.templateOptions.options?.length === 1 ? field.templateOptions.options[0].value : (field.templateOptions.options?.find(x => x.value === model.type) ? model.type : undefined)',
               }
             }
           }
