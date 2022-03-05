@@ -32,7 +32,7 @@ export class FormEditorComponent extends FieldArrayType implements OnInit {
 
     if (this.field.fieldGroup?.length) {
       for (let page of this.field.fieldGroup) {
-        this.formlyBuilderService.registerDropId(page);
+        this.formlyBuilderService.registerPageDropIds(page);
       }
     }
   }
@@ -53,17 +53,17 @@ export class FormEditorComponent extends FieldArrayType implements OnInit {
     super.add(index, initialModel, markAsDirty);
 
     if (this.field.fieldGroup && this.field.fieldGroup[index]) {
-      let newField = this.field.fieldGroup[index];
+      let newPage = this.field.fieldGroup[index];
 
-      if (!newField.model['_order']) {
-        newField.model['_order'] = index + 1;
+      if (!newPage.model['_order']) {
+        newPage.model['_order'] = index + 1;
       }
 
-      if (!newField.model['_referenceId']) {
-        newField.model['_referenceId'] = FunctionHelpers.generateId();
+      if (!newPage.model['_referenceId']) {
+        newPage.model['_referenceId'] = FunctionHelpers.generateId();
       }
 
-      this.formlyBuilderService.registerDropId(newField);
+      this.formlyBuilderService.registerPageDropIds(newPage);
     }
 
     this.addedIndex = index;

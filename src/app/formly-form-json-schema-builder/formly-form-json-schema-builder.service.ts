@@ -44,11 +44,15 @@ export class FormlyBuilderService {
     return this.getRegisteredDropIds();
   }
 
-  registerDropId(page: FormlyFieldConfig) {
+  registerPageDropIds(page: FormlyFieldConfig) {
     let pageDescendantField = this._findFirstDescendantsByKey(page, 'fields');
 
     if (pageDescendantField?.id && !this._pageDropsIds.includes(pageDescendantField.id)) {
       this._pageDropsIds.push(pageDescendantField.id);
+
+      if (page?.id) {
+        this._pageDropsIdsMap[page.id] = pageDescendantField.id;
+      }
     }
   }
 

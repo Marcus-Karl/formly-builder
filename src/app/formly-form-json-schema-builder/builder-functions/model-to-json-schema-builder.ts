@@ -1,4 +1,4 @@
-import { FunctionHelpers } from '.';
+import { FunctionHelpers } from './index';
 
 export const toJsonSchema = (model: any) => {
   if (!model) {
