@@ -4,7 +4,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatTable } from '@angular/material/table';
 import { FieldArrayType, FormlyFieldConfig } from '@ngx-formly/core';
 import { Subscription } from 'rxjs';
-import { FunctionHelpers } from 'src/app/formly-form-json-schema-builder/builder-functions';
+import { FunctionHelpers } from 'src/app/formly-form-json-schema-builder/builder';
 
 @Component({
   selector: 'options-editor',

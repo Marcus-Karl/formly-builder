@@ -9,7 +9,7 @@ export class GenericSetupExtension implements FormlyExtension {
       field.templateOptions = {};
     }
 
-    if (field.templateOptions.options) {
+    if (field.templateOptions.options && !field.templateOptions['_options']) {
       field.templateOptions['_options'] = field.templateOptions.options;
     }
   }

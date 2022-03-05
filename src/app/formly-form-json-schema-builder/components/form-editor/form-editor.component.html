@@ -31,7 +31,8 @@
       class="custom-expansion-panel"
       cdkDrag
       cdkDragLockAxis="y"
-      *ngFor="let page of field.fieldGroup"
+      *ngFor="let page of field.fieldGroup; let i = index;"
+      [expanded]="field.fieldGroup?.length < 2 || addedIndex === i"
       [id]="page.id"
       [disabled]="reorderEnabled"
       [ngStyle]="reorderEnabled && { 'cursor': 'move' } || {}">

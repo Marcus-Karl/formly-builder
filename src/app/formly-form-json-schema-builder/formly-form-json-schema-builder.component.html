@@ -1,17 +1,15 @@
 <div class="display-form" cdkScrollable>
-  <form [formGroup]="form" (ngSubmit)="onSubmit(model)">
+  <form [formGroup]="jsbs.form" (ngSubmit)="onSubmit()">
 
-    <div *ngIf="isFormLoading" class="loader-container">
+    <div *ngIf="!jsbs.isInited; else renderForm" class="loader-container">
       <div class="center-self">
         <mat-spinner></mat-spinner>
       </div>
     </div>
 
-    <formly-form *ngIf="!isFormLoading" [form]="form" [fields]="fields" [model]="model" [options]="options"></formly-form>
-
-    <button type="submit" [style.display]="'none'">
-      <div translate>Submit</div>
-    </button>
+    <ng-template #renderForm>
+      <formly-form [form]="jsbs.form" [fields]="jsbs.fields" [model]="jsbs.model" [options]="jsbs.options"></formly-form>
+    </ng-template>
   </form>
 
   <div *ngIf="schemaDef" style="white-space: pre-line;">

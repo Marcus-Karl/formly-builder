@@ -7,9 +7,9 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { ConfirmationModalComponent } from 'src/app/formly-form-core/modal/confirmation-modal/confirmation-modal.component';
 import { ConfirmationModalData } from 'src/app/formly-form-core/models/confirmation-modal-data';
-import { FormlyBuilderService } from 'src/app/formly-form-json-schema-builder/formly-form-json-schema-builder.service';
-import { FunctionHelpers } from '../../builder-functions';
-import { PageFieldsComponent } from '../fields/page-fields/page-fields.component';
+import { FormlyFormJsonSchemaInternalBuilderService } from 'src/app/formly-form-json-schema-builder/services/formly-form-json-schema-internal-builder.service';
+import { FunctionHelpers } from '../../builder';
+import { PageFieldsComponent } from '../page-fields/page-fields.component';
 
 @Component({
   selector: 'form-editor',
@@ -21,8 +21,9 @@ export class FormEditorComponent extends FieldArrayType implements OnInit {
   @ViewChildren(PageFieldsComponent) pageFieldsComponents: QueryList<PageFieldsComponent> | undefined;
 
   public reorderEnabled = false;
+  public addedIndex?: number;
 
-  constructor(private dialog: MatDialog, private formlyBuilderService: FormlyBuilderService, private translateService: TranslateService) {
+  constructor(private dialog: MatDialog, private formlyBuilderService: FormlyFormJsonSchemaInternalBuilderService, private translateService: TranslateService) {
     super();
   }
 
@@ -31,7 +32,7 @@ export class FormEditorComponent extends FieldArrayType implements OnInit {
 
     if (this.field.fieldGroup?.length) {
       for (let page of this.field.fieldGroup) {
-        this.formlyBuilderService.registerDropId(page);
+        this.formlyBuilderService.registerPageDropIds(page);
       }
     }
   }
@@ -54,11 +55,18 @@ export class FormEditorComponent extends FieldArrayType implements OnInit {
     if (this.field.fieldGroup && this.field.fieldGroup[index]) {
       let newPage = this.field.fieldGroup[index];
 
-      newPage.model['_order'] = index + 1;
-      newPage.model['_referenceId'] = FunctionHelpers.generateId();
+      if (!newPage.model['_order']) {
+        newPage.model['_order'] = index + 1;
+      }
 
-      this.formlyBuilderService.registerDropId(newPage);
+      if (!newPage.model['_referenceId']) {
+        newPage.model['_referenceId'] = FunctionHelpers.generateId();
+      }
+
+      this.formlyBuilderService.registerPageDropIds(newPage);
     }
+
+    this.addedIndex = index;
   }
 
   confirmRemoval(formField: FormlyFieldConfig) {

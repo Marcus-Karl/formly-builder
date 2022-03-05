@@ -3,8 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { Subscription } from 'rxjs';
 
-import { SelectionOption } from '../../builder-functions/schema-builder-selection-options';
-import { BuilderFormState } from '../../builder-functions/builder-form-state.models';
+import { BuilderFormState, FormBuilderSelectionOption } from '../../models/builder-form-state';
 
 @Component({
   selector: 'rule-editor',
@@ -99,7 +98,7 @@ export class RuleEditorComponent implements AfterViewInit, OnDestroy {
       this._subscriptions.push(
         this.operator.formControl.valueChanges.subscribe(value => {
           if (this.operator?.templateOptions && Array.isArray(this.operator?.templateOptions?.options)) {
-            this.label = this.operator.templateOptions.options.find((x: SelectionOption) => x.value === value)?.label || '';
+            this.label = this.operator.templateOptions.options.find((x: FormBuilderSelectionOption) => x.value === value)?.label || '';
           }
         })
       );
@@ -129,7 +128,7 @@ export class RuleEditorComponent implements AfterViewInit, OnDestroy {
         comparisonTypes.push('listOfItems', 'predefined');
       }
 
-      comparisonAgainst.templateOptions.options = comparisonAgainst.templateOptions.options.filter((x: SelectionOption) => comparisonTypes.includes(x.value));
+      comparisonAgainst.templateOptions.options = comparisonAgainst.templateOptions.options.filter((x: FormBuilderSelectionOption) => comparisonTypes.includes(x.value));
     }
 
     if (isLeftSide) {

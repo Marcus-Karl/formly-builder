@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { FieldInformation, PageInformation, PagesInformation } from './builder-form-state.models';
+import { FieldInformation, PageInformation, PagesInformation } from '../models/builder-form-state';
 
 export const refreshPagesInformation = (formState: any | undefined | null) => {
   if (!formState?.builder || !formState.mainModel?.form?.pages) {

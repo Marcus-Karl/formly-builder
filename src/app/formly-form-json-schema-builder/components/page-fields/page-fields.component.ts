@@ -5,8 +5,8 @@ import { MatTable } from '@angular/material/table';
 import { FieldArrayType, FormlyFieldConfig } from '@ngx-formly/core';
 import { TranslateService } from '@ngx-translate/core';
 
-import { FormlyBuilderService } from 'src/app/formly-form-json-schema-builder/formly-form-json-schema-builder.service';
-import { FunctionHelpers } from 'src/app/formly-form-json-schema-builder/builder-functions';
+import { FormlyFormJsonSchemaInternalBuilderService } from 'src/app/formly-form-json-schema-builder/services/formly-form-json-schema-internal-builder.service';
+import { FunctionHelpers } from 'src/app/formly-form-json-schema-builder/builder';
 
 import { FieldEditorComponent } from 'src/app/formly-form-json-schema-builder/modals/field-editor/field-editor.component';
 import { ConfirmationModalComponent } from 'src/app/formly-form-core/modal/confirmation-modal/confirmation-modal.component';
@@ -25,7 +25,7 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
 
   private _categories: any[] | undefined;
 
-  constructor(private dialog: MatDialog, private formlyBuilderService: FormlyBuilderService, private translateService: TranslateService) {
+  constructor(private dialog: MatDialog, private formlyBuilderService: FormlyFormJsonSchemaInternalBuilderService, private translateService: TranslateService) {
     super();
   }
 
@@ -46,7 +46,7 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
       this.field.fieldGroup.forEach((field: FormlyFieldConfig, index: number) => field.model['_order'] = index + 1);
     } else {
       try {
-        let previousFieldGroup = event.previousContainer.data.field.fieldGroup || [];
+        let previousFieldGroup = event.previousContainer.data.field.fieldGroup ?? [];
 
         let modelToMove = previousFieldGroup[event.previousIndex].model;
 
@@ -91,8 +91,13 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
     if (this.field.fieldGroup && this.field.fieldGroup[index]) {
       let newField = this.field.fieldGroup[index];
 
-      newField.model['_order'] = index + 1;
-      newField.model['_referenceId'] = FunctionHelpers.generateId();
+      if (!newField.model['_order']) {
+        newField.model['_order'] = index + 1;
+      }
+
+      if (!newField.model['_referenceId']) {
+        newField.model['_referenceId'] = FunctionHelpers.generateId();
+      }
 
       this.edit(newField);
     }

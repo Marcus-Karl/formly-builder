@@ -26,8 +26,6 @@ export class DisplayHtmlEditorComponent extends FieldType implements OnInit, OnD
     super();
 
     this.editor = new Editor();
-
-    this.editor.valueChanges.subscribe(value => console.log(value));
   }
 
   ngOnInit() {
