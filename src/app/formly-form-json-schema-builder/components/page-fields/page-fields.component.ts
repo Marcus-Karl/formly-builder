@@ -5,8 +5,8 @@ import { MatTable } from '@angular/material/table';
 import { FieldArrayType, FormlyFieldConfig } from '@ngx-formly/core';
 import { TranslateService } from '@ngx-translate/core';
 
-import { FormlyBuilderService } from 'src/app/formly-form-json-schema-builder/formly-form-json-schema-builder.service';
-import { FunctionHelpers } from 'src/app/formly-form-json-schema-builder/builder-functions';
+import { FormlyBuilderInternalService } from 'src/app/formly-form-json-schema-builder/builder/formly-form-json-schema-builder.service';
+import { FunctionHelpers } from 'src/app/formly-form-json-schema-builder/builder';
 
 import { FieldEditorComponent } from 'src/app/formly-form-json-schema-builder/modals/field-editor/field-editor.component';
 import { ConfirmationModalComponent } from 'src/app/formly-form-core/modal/confirmation-modal/confirmation-modal.component';
@@ -25,7 +25,7 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
 
   private _categories: any[] | undefined;
 
-  constructor(private dialog: MatDialog, private formlyBuilderService: FormlyBuilderService, private translateService: TranslateService) {
+  constructor(private dialog: MatDialog, private formlyBuilderService: FormlyBuilderInternalService, private translateService: TranslateService) {
     super();
   }
 

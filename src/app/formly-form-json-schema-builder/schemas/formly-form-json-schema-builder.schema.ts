@@ -1,164 +1,160 @@
-import { SelectionOption, SelectionOptionType } from './builder-functions/schema-builder-selection-options';
+import { SelectionOptionType, SelectionOption } from '../builder/builder-form-state.models';
 
 export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOptionType]: SelectionOption[] }) => ({
   'type': 'object',
   'properties': {
     'form': {
-      '$ref': '#/definitions/form/root-form'
+      '$ref': '#/definitions/root-form'
     },
   },
   'required': [
     'form'
   ],
   'definitions': {
-    'form': {
-      'root-form': {
+    'root-form': {
+      'type': 'object',
+      'widget': {
+        'formlyConfig': {
+          'type': 'stepper-form',
+          'defaultValue': {},
+          'templateOptions': {
+            'linear': false
+          }
+        }
+      },
+      'properties': {
+        'pages': {
+          '$ref': '#/definitions/form-pages'
+        },
+        'tokens': {
+          '$ref': '#/definitions/form-tokens'
+        },
+        'settings': {
+          '$ref': '#/definitions/form-settings'
+        }
+      },
+      'required': [
+        'pages',
+        'settings'
+      ]
+    },
+    'form-pages': {
+      'type': 'array',
+      'title': 'Pages',
+      'minItems': 1,
+      'widget': {
+        'formlyConfig': {
+          'type': 'form-editor',
+          'defaultValue': [],
+          'className': 'pad-bottom flex column',
+        }
+      },
+      'items': {
         'type': 'object',
         'widget': {
           'formlyConfig': {
-            'type': 'stepper-form',
+            'type': 'page-form',
             'defaultValue': {},
             'templateOptions': {
+              'useSmallButtons': true,
+              'hideSubmit': true,
               'linear': false
             }
           }
         },
         'properties': {
-          'pages': {
-            '$ref': '#/definitions/form/tabs/page'
-          },
-          'tokens': {
-            '$ref': '#/definitions/form/tabs/tokens'
+          'fields': {
+            '$ref': '#/definitions/page/fields'
           },
           'settings': {
-            '$ref': '#/definitions/form/tabs/settings'
+            '$ref': '#/definitions/page/settings'
           }
         },
         'required': [
-          'pages',
+          'fields',
           'settings'
         ]
-      },
-      'tabs': {
-        'page': {
-          'type': 'array',
-          'title': 'Pages',
-          'minItems': 1,
+      }
+    },
+    'form-settings': {
+      'type': 'object',
+      'title': 'Settings',
+      'properties': {
+        'formType': {
+          'type': 'string',
+          'title': 'Form Type',
           'widget': {
             'formlyConfig': {
-              'type': 'form-editor',
-              'defaultValue': [],
-              'className': 'pad-bottom flex column',
+              'type': 'select',
+              'defaultValue': '',
+              'templateOptions': {
+                'options': selectionOptionsMap[SelectionOptionType.Form]
+              }
             }
-          },
-          'items': {
-            'type': 'object',
-            'widget': {
-              'formlyConfig': {
-                'type': 'page-form',
-                'defaultValue': {},
-                'templateOptions': {
-                  'useSmallButtons': true,
-                  'hideSubmit': true,
-                  'linear': false
-                }
-              }
-            },
-            'properties': {
-              'fields': {
-                '$ref': '#/definitions/page/fields'
-              },
-              'settings': {
-                '$ref': '#/definitions/page/settings'
-              }
-            },
-            'required': [
-              'fields',
-              'settings'
-            ]
           }
         },
-        'settings': {
-          'type': 'object',
-          'title': 'Settings',
-          'properties': {
-            'formType': {
-              'type': 'string',
-              'title': 'Form Type',
-              'widget': {
-                'formlyConfig': {
-                  'type': 'select',
-                  'defaultValue': '',
-                  'templateOptions': {
-                    'options': selectionOptionsMap[SelectionOptionType.Form]
-                  }
-                }
-              }
-            },
-            'name': {
-              'type': 'string',
-              'title': 'Form Name',
-              'widget': {
-                'formlyConfig': {
-                  'type': 'input',
-                  'defaultValue': '',
-                  'hide': true
-                }
-              }
-            },
-            'label': {
-              'type': 'string',
-              'title': 'Form Label',
-              'widget': {
-                'formlyConfig': {
-                  'type': 'input',
-                  'defaultValue': ''
-                }
-              }
-            }
-          },
-          'required': [
-            'formType',
-            'label'
-          ]
-        },
-        'tokens': {
-          'type': 'array',
-          'title': 'Tokens',
-          'minItems': 0,
+        'name': {
+          'type': 'string',
+          'title': 'Form Name',
           'widget': {
             'formlyConfig': {
-              'type': 'token-page',
-              'defaultValue': []
+              'type': 'input',
+              'defaultValue': '',
+              'hide': true
             }
-          },
-          'items': {
-            'type': 'object',
-            'widget': {
-              'formlyConfig': {
-                'type': 'tab-form',
-                'defaultValue': {},
-                'templateOptions': {
-                  'hideButtons': true
-                }
-              }
-            },
-            'properties': {
-              'category': {
-                '$ref': '#/definitions/token/fields/category'
-              },
-              'basic': {
-                '$ref': '#/definitions/token/tabs/basic'
-              },
-              'advanced': {
-                '$ref': '#/definitions/token/tabs/advanced'
-              }
-            },
-            'required': [
-              'category'
-            ]
+          }
+        },
+        'label': {
+          'type': 'string',
+          'title': 'Form Label',
+          'widget': {
+            'formlyConfig': {
+              'type': 'input',
+              'defaultValue': ''
+            }
           }
         }
+      },
+      'required': [
+        'formType',
+        'label'
+      ]
+    },
+    'form-tokens': {
+      'type': 'array',
+      'title': 'Tokens',
+      'minItems': 0,
+      'widget': {
+        'formlyConfig': {
+          'type': 'token-page',
+          'defaultValue': []
+        }
+      },
+      'items': {
+        'type': 'object',
+        'widget': {
+          'formlyConfig': {
+            'type': 'tab-form',
+            'defaultValue': {},
+            'templateOptions': {
+              'hideButtons': true
+            }
+          }
+        },
+        'properties': {
+          'category': {
+            '$ref': '#/definitions/token/fields/category'
+          },
+          'basic': {
+            '$ref': '#/definitions/token/tabs/basic'
+          },
+          'advanced': {
+            '$ref': '#/definitions/token/tabs/advanced'
+          }
+        },
+        'required': [
+          'category'
+        ]
       }
     },
     'page': {

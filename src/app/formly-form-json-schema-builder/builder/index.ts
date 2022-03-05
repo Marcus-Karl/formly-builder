@@ -1,13 +1,14 @@
 
-import { defaultJsonSchema } from '../formly-form-json-schema-builder.schema';
-import { DEFAULT_SELECTION_OPTIONS_MAP, SelectionOption, SelectionOptionType } from './schema-builder-selection-options';
-import { BuilderFormState, PagesInformation } from './builder-form-state.models';
+import { JSONSchema7 } from 'json-schema';
+import { defaultJsonSchema } from '../schemas/formly-form-json-schema-builder.schema';
+import { DEFAULT_SELECTION_OPTIONS_MAP } from './schema-builder-selection-options';
+import { BuilderFormState, PagesInformation, SelectionOption, SelectionOptionType } from './builder-form-state.models';
 import { FunctionReferences } from './state-functions';
 
 export * as BuilderFunctions from './state-functions';
-export * as ConvertModel from './model-to-json-schema-builder';
 export * as FormBuilderSelectOptions from './schema-builder-selection-options';
 export * as FunctionHelpers from './state-functions';
+export * from './model-to-json-schema-builder';
 
 export const createBuilderFormState = (mainModel: any = {}): BuilderFormState => {
   let formState: BuilderFormState = {
@@ -35,7 +36,7 @@ export const createBuilderFormState = (mainModel: any = {}): BuilderFormState =>
   return formState;
 }
 
-export const jsonBuilderSchema = (formState: BuilderFormState, selectionOptionsMap?: { [key in SelectionOptionType]: SelectionOption[] }) => {
+export const jsonBuilderSchema = (formState: BuilderFormState, selectionOptionsMap?: { [key in SelectionOptionType]: SelectionOption[] }): JSONSchema7 => {
   for (let info in formState.builder.pagesInformation) {
     if (Object.prototype.hasOwnProperty.call(formState.builder.pagesInformation, info)) {
       delete formState.builder.pagesInformation[info];
@@ -43,6 +44,10 @@ export const jsonBuilderSchema = (formState: BuilderFormState, selectionOptionsM
   }
 
   let optionsMap = Object.assign({}, DEFAULT_SELECTION_OPTIONS_MAP);
+
+  if (selectionOptionsMap) {
+    Object.assign(optionsMap, selectionOptionsMap);
+  }
 
   let options = formState.builder.options;
   options['fieldCategories'] = optionsMap[SelectionOptionType.FieldCategory];
@@ -56,9 +61,5 @@ export const jsonBuilderSchema = (formState: BuilderFormState, selectionOptionsM
   options['tokenCategories'] = optionsMap[SelectionOptionType.TokenCategory];
   options['tokenTypes'] = optionsMap[SelectionOptionType.TokenType];
 
-  if (selectionOptionsMap) {
-    Object.assign(optionsMap, selectionOptionsMap);
-  }
-
-  return defaultJsonSchema(optionsMap);
+  return defaultJsonSchema(optionsMap) as JSONSchema7;
 }

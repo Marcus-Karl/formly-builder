@@ -443,11 +443,7 @@ const getFieldValues = () => ({
       'widget': {
         'formlyConfig': {
           'type': 'currency-input-field',
-          'defaultValue': {},
-          'templateOptions': {
-            'type': 'currency',
-            'baseTenMaxDigits': '100000000000'
-          }
+          'defaultValue': {}
         }
       },
       'properties': {

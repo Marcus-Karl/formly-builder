@@ -3,13 +3,13 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { FormlyFormCoreModule } from 'src/app/formly-form-core/formly-form-core.module';
-import { FormlyPreviewRoutesModule } from './formly-form-builder-preview.routes';
+import { FormlyFormBuilderPreviewRoutesModule } from './formly-form-builder-preview.routes';
 
 import { FormlyFormBuilderPreviewComponent } from './formly-form-builder-preview.component';
 
 @NgModule({
   imports: [
-    FormlyPreviewRoutesModule,
+    FormlyFormBuilderPreviewRoutesModule,
     FormlyFormCoreModule,
     MatDividerModule,
     MatProgressSpinnerModule
@@ -22,4 +22,4 @@ import { FormlyFormBuilderPreviewComponent } from './formly-form-builder-preview
   ],
   providers: []
 })
-export class FormlyPreviewModule { }
+export class FormlyFormBuilderPreviewModule { }

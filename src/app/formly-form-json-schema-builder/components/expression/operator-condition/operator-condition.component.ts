@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FieldArrayType, FormlyFieldConfig } from '@ngx-formly/core';
-import { FunctionHelpers } from 'src/app/formly-form-json-schema-builder/builder-functions';
+import { FunctionHelpers } from 'src/app/formly-form-json-schema-builder/builder';
 
 @Component({
   selector: 'operator-condition',

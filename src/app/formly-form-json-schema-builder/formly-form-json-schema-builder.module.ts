@@ -13,7 +13,7 @@ import { NgxEditorModule } from 'ngx-editor';
 
 import { FormlyFormCoreModule } from 'src/app/formly-form-core/formly-form-core.module';
 
-import { FormlyBuilderService } from './formly-form-json-schema-builder.service';
+import { FormlyBuilderInternalService } from './builder/formly-form-json-schema-builder.service';
 import { FormlyBuilderRoutes } from './formly-form-json-schema-builder.routes';
 
 import { validNameValidator } from './validators/valid-field-name.builder';
@@ -30,6 +30,7 @@ import { ExpressionBuilderComponent } from './components/expression/expression-b
 import { OperatorConditionComponent } from './components/expression/operator-condition/operator-condition.component';
 import { RuleEditorComponent } from './modals/rule-editor/rule-editor.component';
 import { HideRuleEditorComponent } from './modals/hide-rule-editor/hide-rule-editor.component';
+import { FormlyFormJsonSchemaBuilderService } from './formly-form-json-schema-builder.service';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { HideRuleEditorComponent } from './modals/hide-rule-editor/hide-rule-edi
     })
   ],
   providers: [
-    FormlyBuilderService
+    FormlyFormJsonSchemaBuilderService,
+    FormlyBuilderInternalService
   ]
 })
-export class FormlyBuilderModule { }
+export class FormlyFormJsonSchemaBuilderModule { }
