@@ -193,13 +193,10 @@ const buildDataEntryField = (page: any, model: any) => {
   }
 
   if (field?.widget?.formlyConfig?.templateOptions?.options?.length) {
-    const to = field.widget.formlyConfig.templateOptions;
-    let options = to.options as any[];
+    // field['oneOf'] = options.map(x => ({ 'title': x['label'] ?? null, 'const': x['value'] ?? null }));
 
-    field['oneOf'] = options.map(x => ({ 'title': x['label'] || null, 'const': x['value'] || null }));
-
-    if (to.multiple && field.widget.formlyConfig?.defaultValue && !Array.isArray(field.widget.formlyConfig.defaultValue)) {
-      field.widget.formlyConfig['defaultValue'] = [extra['defaultValue']];
+    if (field.widget.formlyConfig.templateOptions.multiple && extra['defaultValue'] && !Array.isArray(extra['defaultValue'])) {
+      field.widget.formlyConfig['defaultValue'] = [ extra['defaultValue'] ];
     }
   }
 
@@ -254,27 +251,19 @@ const getOptions = (options: any[]): { [key: string]: Array<{ [key: string]: str
     return {};
   }
 
-  return {
-    'options': options.map(x => ({
-      'label': x['label'],
-      'value': x['value'],
-      ...x['group'] && { 'group': x['group'] },
-      ...x['_order'] && { '_order': x['_order'] },
-      ...x['_referenceId']  && { '_referenceId': x['_referenceId'] }
-    }))
-  };
+  options.forEach(option => Object.keys(option ?? {}).forEach(key => option[key] === undefined && delete option[key]));
+
+  return { options };
 }
 
 const getKvpStrings = (model: any, ...ignoreKeys: string[]): { [key: string]: any } => {
   let items: { [key: string]: any } = {};
 
-  if (model) {
-    Object.keys(model).forEach(key => {
-      if (model[key] && !ignoreKeys.includes(key)) {
-        items[key] = model[key];
-      }
-    });
-  }
+  Object.keys(model ?? {}).forEach(key => {
+    if (model[key] && !ignoreKeys.includes(key)) {
+      items[key] = model[key];
+    }
+  });
 
   return items;
 }
