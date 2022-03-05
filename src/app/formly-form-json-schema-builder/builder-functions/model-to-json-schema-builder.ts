@@ -69,25 +69,24 @@ const getFieldSchema = (obj: any, model: any) => {
 const buildForm = (form: any, model: any) => {
   let settings = model['settings'];
 
-  let schema = `{
-    "type": "object",
-    "widget": {
-      "formlyConfig": {
-        "type": "${settings['formType']}",
-        "defaultValue": {},
-        "templateOptions": {
-          "verticalStepper": false,
-          "linear": false,
-          "labelPosition": "end",
-          "_translationFormKey": "${FunctionHelpers.generateId()}"
+  let displayForm: any = {
+    'type': 'object',
+    'title': settings['label'],
+    'widget': {
+      'formlyConfig': {
+        'type': settings['formType'],
+        'defaultValue': {},
+        'templateOptions': {
+          'verticalStepper': false,
+          'linear': false,
+          'labelPosition': 'end',
+          '_translationFormKey': FunctionHelpers.generateId()
         }
       }
     },
-    "properties": {},
-    "required": []
-  }`;
-
-  let displayForm = safeParseJson(schema);
+    'properties': {},
+    'required': []
+  };
 
   if (settings['label']) {
     displayForm['title'] = settings['label'];
@@ -119,39 +118,33 @@ const buildPage = (form: any, model: any) => {
     return;
   }
 
-  let formProperties = form['properties'];
   let settings = model['settings'];
 
-  let templateOptions = [
-    `"isOptional": false`,
-    ...getKvpStrings(settings, 'label'),
-    model['_order'] ? `"_order": "${model['_order']}"` : null
-  ];
-
-  let schema = `{
-    "type": "object",
-    "title": "${settings['label']}",
-    "widget": {
-      "formlyConfig": {
-        "defaultValue": {},
-        "templateOptions": {
-          ${templateOptions.filter(x => !!x)}
+  let page: any = {
+    'type': 'object',
+    'title': settings['label'],
+    'widget': {
+      'formlyConfig': {
+        'defaultValue': {},
+        'templateOptions': {
+          ...getKvpStrings(model['extra'], 'label'),
+          ...model['_order'] && { '_order': model['_order'] },
         }
       }
     },
-    "properties": {},
-    "required": []
-  }`;
+    'properties': {},
+    'required': []
+  };
 
   if (!model['_referenceId']) {
     model['_referenceId'] = FunctionHelpers.generateId();
   }
 
-  let page = safeParseJson(schema);
-
-  if (page?.widget?.formlyConfig?.templateOptions?.required && Array.isArray(form['required'])) {
+  if (page.widget.formlyConfig.templateOptions.required && Array.isArray(form['required'])) {
     form['required'].push(settings['name'] || model['_referenceId']);
   }
+
+  let formProperties = form['properties'];
 
   formProperties[settings['name'] || model['_referenceId']] = page;
 
@@ -175,38 +168,29 @@ const buildDataEntryField = (page: any, model: any) => {
     return;
   }
 
-  let pageProperties = page['properties'];
-
   let settings = model['basic'];
 
-  let templateOptions = [
-    ...getKvpStrings(model['extra'], 'defaultValue'),
-    getOptions(model['options']),
-    settings['subType'] ? `"type": "${settings['subType']}"` : null,
-    model['_order'] ? `"_order": "${model['_order']}"` : null
-  ];
+  let extra = model['extra'] ?? {};
 
-  let extra = model['extra'] || {};
-
-  let schema = `{
-    "type": "string",
-    "title": "${settings['label']}",
-    "widget": {
-      "formlyConfig": {
-        "type": "${settings['type']}",
-        ${extra['defaultValue'] ? `"defaultValue": "${extra['defaultValue']}",` : ''}
-        "templateOptions": {
-          ${templateOptions.filter(x => !!x)}
+  let field: any = {
+    'type': 'string',
+    'title': settings['label'],
+    'widget': {
+      'formlyConfig': {
+        'type': settings['type'],
+        'defaultValue': extra['defaultValue'] ?? '',
+        'templateOptions': {
+          ...getKvpStrings(model['extra'], 'defaultValue'),
+          ...getOptions(model['options']),
+          ...model['_order'] && { '_order': model['_order'] },
         }
       }
     }
-  }`;
+  };
 
   if (!model['_referenceId']) {
     model['_referenceId'] = FunctionHelpers.generateId();
   }
-
-  let field = safeParseJson(schema);
 
   if (field?.widget?.formlyConfig?.templateOptions?.options?.length) {
     const to = field.widget.formlyConfig.templateOptions;
@@ -215,7 +199,7 @@ const buildDataEntryField = (page: any, model: any) => {
     field['oneOf'] = options.map(x => ({ 'title': x['label'] || null, 'const': x['value'] || null }));
 
     if (to.multiple && field.widget.formlyConfig?.defaultValue && !Array.isArray(field.widget.formlyConfig.defaultValue)) {
-      field.widget.formlyConfig['defaultValue'] = [ extra['defaultValue'] ];
+      field.widget.formlyConfig['defaultValue'] = [extra['defaultValue']];
     }
   }
 
@@ -223,6 +207,7 @@ const buildDataEntryField = (page: any, model: any) => {
     page['required'].push(settings['name'] || model['_referenceId']);
   }
 
+  let pageProperties = page['properties'];
   pageProperties[settings['name'] || model['_referenceId']] = field;
 }
 
@@ -234,34 +219,28 @@ const buildDisplayField = (page: any, model: any) => {
   let pageProperties = page['properties'];
   let settings = model['basic'] || {};
 
-  let templateOptions = [
-    ...getKvpStrings(model['extra'], 'defaultValue'),
-    getOptions(model['options']),
-    model['_order'] ? `"_order": "${model['_order']}"` : null,
-    model['edit'] ? `"html": "${(model['edit'] as string).replace(/"/g, '\\"')}"` : null
-  ];
-
   let extra = model['extra'] || {};
 
-  let schema = `{
-    "type": "null",
-    "title": "${settings['label'] || 'Display Field'}",
-    "widget": {
-      "formlyConfig": {
-        "type": "${settings['type'] || 'display-html'}",
-        ${extra['defaultValue'] ? `"defaultValue": "${extra['defaultValue']}",` : ''}
-        "templateOptions": {
-          ${templateOptions.filter(x => !!x)}
+  let field: any = {
+    'type': 'null',
+    'title': settings['label'] || 'Display Field',
+    'widget': {
+      'formlyConfig': {
+        'type': settings['type'] || 'display-html',
+        'defaultValue': extra['defaultValue'] ?? '',
+        'templateOptions': {
+          'html': model['edit'],
+          ...getKvpStrings(model['extra'], 'defaultValue'),
+          ...getOptions(model['options']),
+          ...model['_order'] && { '_order': model['_order'] },
         }
       }
     }
-  }`;
+  };
 
   if (!model['_referenceId']) {
     model['_referenceId'] = FunctionHelpers.generateId();
   }
-
-  let field = safeParseJson(schema);
 
   pageProperties[settings['name'] || model['_referenceId']] = field;
 }
@@ -270,35 +249,41 @@ const buildDisplayField = (page: any, model: any) => {
 /**
  * HELPERS
  */
-const getOptions = (options: any[]) => {
+const getOptions = (options: any[]): { [key: string]: Array<{ [key: string]: string }> } => {
   if (!options?.length) {
-    return '';
+    return {};
   }
 
-  return `"options": [
-    ${options.map(x => `{
-      "label": "${x['label']}",
-      "value": "${x['value']}",
-      "group": "${x['group'] || ''}",
-      "_order": "${x['_order'] || ''}",
-      "_referenceId": "${x['_referenceId'] || ''}"
-    }`)}
-  ]`;
+  return {
+    'options': options.map(x => ({
+      'label': x['label'],
+      'value': x['value'],
+      ...x['group'] && { 'group': x['group'] },
+      ...x['_order'] && { '_order': x['_order'] },
+      ...x['_referenceId']  && { '_referenceId': x['_referenceId'] }
+    }))
+  };
 }
 
-const getKvpStrings = (model: any, ...ignoreKeys: string[]): string[] => {
-  let kvpArray: string[] = [];
+const getKvpStrings = (model: any, ...ignoreKeys: string[]): { [key: string]: any } => {
+  let items: { [key: string]: any } = {};
 
   if (model) {
     Object.keys(model).forEach(key => {
-      if (model[key] && ignoreKeys.indexOf(key) === -1) {
-        kvpArray.push(`"${key}": "${model[key]}"`);
+      if (model[key] && !ignoreKeys.includes(key)) {
+        items[key] = model[key];
       }
     });
   }
 
-  return kvpArray;
+  return items;
 }
+
+
+
+
+
+
 
 const safeParseJson = (string: string) => {
   try {
