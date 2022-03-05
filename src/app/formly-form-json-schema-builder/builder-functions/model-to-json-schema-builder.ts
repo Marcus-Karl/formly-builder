@@ -70,22 +70,22 @@ const buildForm = (form: any, model: any) => {
   let settings = model['settings'];
 
   let displayForm: any = {
-    'type': 'object',
-    'title': settings['label'],
-    'widget': {
-      'formlyConfig': {
-        'type': settings['formType'],
-        'defaultValue': {},
-        'templateOptions': {
-          'verticalStepper': false,
-          'linear': false,
-          'labelPosition': 'end',
-          '_translationFormKey': FunctionHelpers.generateId()
+    type: 'object',
+    title: settings['label'],
+    widget: {
+      formlyConfig: {
+        type: settings['formType'],
+        defaultValue: {},
+        templateOptions: {
+          verticalStepper: false,
+          linear: false,
+          labelPosition: 'end',
+          _translationFormKey: FunctionHelpers.generateId()
         }
       }
     },
-    'properties': {},
-    'required': []
+    properties: {},
+    required: []
   };
 
   if (settings['label']) {
@@ -121,19 +121,19 @@ const buildPage = (form: any, model: any) => {
   let settings = model['settings'];
 
   let page: any = {
-    'type': 'object',
-    'title': settings['label'],
-    'widget': {
-      'formlyConfig': {
-        'defaultValue': {},
-        'templateOptions': {
+    type: 'object',
+    title: settings['label'],
+    widget: {
+      formlyConfig: {
+        defaultValue: {},
+        templateOptions: {
           ...getKvpStrings(model['extra'], 'label'),
-          ...model['_order'] && { '_order': model['_order'] },
+          ...model['_order'] !== undefined && { _order: model['_order'] },
         }
       }
     },
-    'properties': {},
-    'required': []
+    properties: {},
+    required: []
   };
 
   if (!model['_referenceId']) {
@@ -173,16 +173,16 @@ const buildDataEntryField = (page: any, model: any) => {
   let extra = model['extra'] ?? {};
 
   let field: any = {
-    'type': 'string',
-    'title': settings['label'],
-    'widget': {
-      'formlyConfig': {
-        'type': settings['type'],
-        'defaultValue': extra['defaultValue'] ?? '',
-        'templateOptions': {
-          ...getKvpStrings(model['extra'], 'defaultValue'),
+    type: 'string',
+    title: settings['label'],
+    widget: {
+      formlyConfig: {
+        type: settings['type'],
+        defaultValue: extra['defaultValue'] ?? '',
+        templateOptions: {
+          ...getKvpStrings(extra, 'defaultValue'),
           ...getOptions(model['options']),
-          ...model['_order'] && { '_order': model['_order'] },
+          ...model['_order'] !== undefined && { _order: model['_order'] },
         }
       }
     }
@@ -196,7 +196,7 @@ const buildDataEntryField = (page: any, model: any) => {
     // field['oneOf'] = options.map(x => ({ 'title': x['label'] ?? null, 'const': x['value'] ?? null }));
 
     if (field.widget.formlyConfig.templateOptions.multiple && extra['defaultValue'] && !Array.isArray(extra['defaultValue'])) {
-      field.widget.formlyConfig['defaultValue'] = [ extra['defaultValue'] ];
+      field.widget.formlyConfig['defaultValue'] = [extra['defaultValue']];
     }
   }
 
@@ -214,22 +214,22 @@ const buildDisplayField = (page: any, model: any) => {
   }
 
   let pageProperties = page['properties'];
-  let settings = model['basic'] || {};
+  let settings = model['basic'] ?? {};
 
-  let extra = model['extra'] || {};
+  let extra = model['extra'] ?? {};
 
   let field: any = {
-    'type': 'null',
-    'title': settings['label'] || 'Display Field',
-    'widget': {
-      'formlyConfig': {
-        'type': settings['type'] || 'display-html',
-        'defaultValue': extra['defaultValue'] ?? '',
-        'templateOptions': {
-          'html': model['edit'],
-          ...getKvpStrings(model['extra'], 'defaultValue'),
+    type: 'null',
+    title: settings['label'] || 'Display Field',
+    widget: {
+      formlyConfig: {
+        type: settings['type'] || 'display-html',
+        defaultValue: extra['defaultValue'] ?? '',
+        templateOptions: {
+          html: model['edit'],
+          ...getKvpStrings(extra, 'defaultValue'),
           ...getOptions(model['options']),
-          ...model['_order'] && { '_order': model['_order'] },
+          ...model['_order'] !== undefined && { _order: model['_order'] },
         }
       }
     }

@@ -36,16 +36,16 @@ export const buildSelectionOptions = (item: FormBuilderSelectionOption, type: Se
 }
 
 const buildObject = (parent: FormBuilderSelectionOption | null, item: FormBuilderSelectionOption, type: SelectionOptionType): SelectionOption[] => {
-  let result = item.values?.map(x => buildObject(item, x, type)) as SelectionOption[][];
+  let result = item.values?.map(x => buildObject(item, x, type)) ?? [] as SelectionOption[][];
 
-  let itemsToReturn: SelectionOption[] = ([] as SelectionOption[]).concat(...result ?? []);
+  let itemsToReturn: SelectionOption[] = ([] as SelectionOption[]).concat(...result);
 
   if (item.type === type) {
     itemsToReturn.push({
-      category: item.category || parent?.key || null,
-      group: item.group || null,
+      category: item.category ?? parent?.key ?? null,
+      group: item.group ?? null,
       value: item.key,
-      label: item.label,
+      label: item.label
     });
   }
 
