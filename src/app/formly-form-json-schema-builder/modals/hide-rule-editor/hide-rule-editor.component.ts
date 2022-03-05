@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, ViewChild } fr
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { Subscription } from 'rxjs';
-import { FieldInformation, BuilderFormState, SelectionOption } from '../../builder/builder-form-state.models';
+import { FieldInformation, BuilderFormState, FormBuilderSelectionOption } from '../../models/builder-form-state';
 
 @Component({
   selector: 'hide-rule-editor',
@@ -24,7 +24,7 @@ export class HideRuleEditorComponent implements AfterViewInit, OnDestroy {
   private _savedDialogWidth = '';
   private _subscriptions: Subscription[] = [];
   private _sourceSelectionSubscription: Subscription | undefined;
-  private _sourceSelection: SelectionOption | FieldInformation | undefined;
+  private _sourceSelection: FormBuilderSelectionOption | FieldInformation | undefined;
   private _fieldInformation: FieldInformation[] = [];
 
   constructor(public dialogRef: MatDialogRef<HideRuleEditorComponent>, @Inject(MAT_DIALOG_DATA) public field: FormlyFieldConfig) {
@@ -98,7 +98,7 @@ export class HideRuleEditorComponent implements AfterViewInit, OnDestroy {
       this._subscriptions.push(
         this.operator.formControl.valueChanges.subscribe(value => {
           if (this.operator?.templateOptions && Array.isArray(this.operator?.templateOptions?.options)) {
-            this.label = this.operator.templateOptions.options.find((x: SelectionOption) => x.value === value)?.label || '';
+            this.label = this.operator.templateOptions.options.find((x: FormBuilderSelectionOption) => x.value === value)?.label || '';
           }
         })
       );
@@ -152,7 +152,7 @@ export class HideRuleEditorComponent implements AfterViewInit, OnDestroy {
       return;
     }
 
-    let selections: SelectionOption[];
+    let selections: FormBuilderSelectionOption[];
 
     if (isSource) {
       selections = (this.field.options.formState as BuilderFormState).builder.options.hideComparisonSource || [];
@@ -183,7 +183,7 @@ export class HideRuleEditorComponent implements AfterViewInit, OnDestroy {
     }
 
     let isChoiceArray = Array.isArray(choice);
-    let options: SelectionOption[] | FieldInformation[] = [];
+    let options: FieldInformation[] = [];
 
     if (isChoiceArray ? choice.includes('field') : choice === 'field') {
       let displayFieldsToRemove = (this.field.options.formState as BuilderFormState).builder.options.fieldCategories?.filter(x => x.category === 'display') || [];

@@ -1,12 +1,11 @@
 
 import { JSONSchema7 } from 'json-schema';
 import { defaultJsonSchema } from '../schemas/formly-form-json-schema-builder.schema';
-import { DEFAULT_SELECTION_OPTIONS_MAP } from './schema-builder-selection-options';
-import { BuilderFormState, PagesInformation, SelectionOption, SelectionOptionType } from './builder-form-state.models';
+import { BuilderFormState, PagesInformation, SelectionOptionType, FormBuilderSelectionOption } from '../models/builder-form-state';
+import { getDefaultSelectionOptionsMap } from '../models/default-selection-options';
 import { FunctionReferences } from './state-functions';
 
 export * as BuilderFunctions from './state-functions';
-export * as FormBuilderSelectOptions from './schema-builder-selection-options';
 export * as FunctionHelpers from './state-functions';
 export * from './model-to-json-schema-builder';
 
@@ -15,16 +14,16 @@ export const createBuilderFormState = (mainModel: any = {}): BuilderFormState =>
     builder: {
       functions: {} as FunctionReferences,
       options: {
-        fieldCategories: [] as SelectionOption[],
-        fieldSubTypes: [] as SelectionOption[],
-        fieldTypes: [] as SelectionOption[],
-        formTypes: [] as SelectionOption[],
-        comparisonOperators: [] as SelectionOption[],
-        comparisonTypes: [] as SelectionOption[],
-        hideComparisonSource: [] as SelectionOption[],
-        hideComparisonAgainst: [] as SelectionOption[],
-        tokenCategories: [] as SelectionOption[],
-        tokenTypes: [] as SelectionOption[],
+        fieldCategories: [] as FormBuilderSelectionOption[],
+        fieldSubTypes: [] as FormBuilderSelectionOption[],
+        fieldTypes: [] as FormBuilderSelectionOption[],
+        formTypes: [] as FormBuilderSelectionOption[],
+        comparisonOperators: [] as FormBuilderSelectionOption[],
+        comparisonTypes: [] as FormBuilderSelectionOption[],
+        hideComparisonSource: [] as FormBuilderSelectionOption[],
+        hideComparisonAgainst: [] as FormBuilderSelectionOption[],
+        tokenCategories: [] as FormBuilderSelectionOption[],
+        tokenTypes: [] as FormBuilderSelectionOption[],
       },
       pagesInformation: {} as PagesInformation
     },
@@ -36,14 +35,14 @@ export const createBuilderFormState = (mainModel: any = {}): BuilderFormState =>
   return formState;
 }
 
-export const jsonBuilderSchema = (formState: BuilderFormState, selectionOptionsMap?: { [key in SelectionOptionType]: SelectionOption[] }): JSONSchema7 => {
+export const jsonBuilderSchema = (formState: BuilderFormState, selectionOptionsMap?: { [key in SelectionOptionType]: FormBuilderSelectionOption[] }): JSONSchema7 => {
   for (let info in formState.builder.pagesInformation) {
     if (Object.prototype.hasOwnProperty.call(formState.builder.pagesInformation, info)) {
       delete formState.builder.pagesInformation[info];
     }
   }
 
-  let optionsMap = Object.assign({}, DEFAULT_SELECTION_OPTIONS_MAP);
+  let optionsMap = Object.assign({}, getDefaultSelectionOptionsMap());
 
   if (selectionOptionsMap) {
     Object.assign(optionsMap, selectionOptionsMap);
@@ -62,4 +61,25 @@ export const jsonBuilderSchema = (formState: BuilderFormState, selectionOptionsM
   options['tokenTypes'] = optionsMap[SelectionOptionType.TokenType];
 
   return defaultJsonSchema(optionsMap) as JSONSchema7;
+}
+
+const buildObject = (parent: FormBuilderSelectionOption | null, item: FormBuilderSelectionOption, type: SelectionOptionType): FormBuilderSelectionOption[] => {
+  let result = item.values?.map(x => buildObject(item, x, type)) ?? [] as FormBuilderSelectionOption[][];
+
+  let itemsToReturn: FormBuilderSelectionOption[] = ([] as FormBuilderSelectionOption[]).concat(...result);
+
+  if (item.type === type) {
+    itemsToReturn.push({
+      ...item,
+      category: item.category ?? parent?.value
+    });
+  }
+
+  return itemsToReturn;
+}
+
+export const buildSelectionOptions = (item: FormBuilderSelectionOption, type: SelectionOptionType): FormBuilderSelectionOption[] => {
+  let options = buildObject(null, item, type);
+
+  return options.filter(x => x.value);
 }

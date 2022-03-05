@@ -2,8 +2,10 @@ import { FunctionHelpers } from './index';
 
 export class ConvertModel {
 
-  constructor(config?: any) {
+  private _config: any;
 
+  constructor(config?: any) {
+    this._config = config;
   }
 
   public static toJsonSchema(model: any, config?: any) {
@@ -76,10 +78,15 @@ export class ConvertModel {
   private buildForm = (form: any, model: any) => {
     let settings = model['settings'];
 
+    if (!model['_referenceId']) {
+      model['_referenceId'] = FunctionHelpers.generateId();
+    }
+
     let displayForm: any = {
       type: 'object',
       title: settings['label'],
       widget: {
+        _referenceId: model['_referenceId'],
         formlyConfig: {
           type: settings['formType'],
           defaultValue: {},
@@ -100,10 +107,6 @@ export class ConvertModel {
     }
 
     if (Object.keys(form)?.length) {
-      if (!model['_referenceId']) {
-        model['_referenceId'] = FunctionHelpers.generateId();
-      }
-
       if (displayForm?.widget?.formlyConfig?.templateOptions?.required && Array.isArray(form['required'])) {
         form['required'].push(settings['name'] || model['_referenceId']);
       }
@@ -127,14 +130,19 @@ export class ConvertModel {
 
     let settings = model['settings'];
 
+    if (!model['_referenceId']) {
+      model['_referenceId'] = FunctionHelpers.generateId();
+    }
+
     let page: any = {
       type: 'object',
       title: settings['label'],
       widget: {
+        _referenceId: model['_referenceId'],
         formlyConfig: {
           defaultValue: {},
           templateOptions: {
-            ...this.getKvpStrings(model['extra'], 'label'),
+            ...this.getKvps(model['extra'], 'label'),
             ...model['_order'] !== undefined && { _order: model['_order'] },
           }
         }
@@ -142,10 +150,6 @@ export class ConvertModel {
       properties: {},
       required: []
     };
-
-    if (!model['_referenceId']) {
-      model['_referenceId'] = FunctionHelpers.generateId();
-    }
 
     if (page.widget.formlyConfig.templateOptions.required && Array.isArray(form['required'])) {
       form['required'].push(settings['name'] || model['_referenceId']);
@@ -179,15 +183,20 @@ export class ConvertModel {
 
     let extra = model['extra'] ?? {};
 
+    if (!model['_referenceId']) {
+      model['_referenceId'] = FunctionHelpers.generateId();
+    }
+
     let field: any = {
       type: 'string',
       title: settings['label'],
       widget: {
+        _referenceId: model['_referenceId'],
         formlyConfig: {
           type: settings['type'],
           defaultValue: extra['defaultValue'] ?? '',
           templateOptions: {
-            ...this.getKvpStrings(extra, 'defaultValue'),
+            ...this.getKvps(extra, 'defaultValue'),
             ...this.getOptions(model['options']),
             ...model['_order'] !== undefined && { _order: model['_order'] },
           }
@@ -227,26 +236,27 @@ export class ConvertModel {
 
     let extra = model['extra'] ?? {};
 
+    if (!model['_referenceId']) {
+      model['_referenceId'] = FunctionHelpers.generateId();
+    }
+
     let field: any = {
       type: 'null',
       title: settings['label'] || 'Display Field',
       widget: {
+        _referenceId: model['_referenceId'],
         formlyConfig: {
           type: settings['type'] || 'display-html',
           defaultValue: extra['defaultValue'] ?? '',
           templateOptions: {
             html: model['edit'],
-            ...this.getKvpStrings(extra, 'defaultValue'),
+            ...this.getKvps(extra, 'defaultValue'),
             ...this.getOptions(model['options']),
             ...model['_order'] !== undefined && { _order: model['_order'] },
           }
         }
       }
     };
-
-    if (!model['_referenceId']) {
-      model['_referenceId'] = FunctionHelpers.generateId();
-    }
 
     pageProperties[settings['name'] || model['_referenceId']] = field;
   }
@@ -260,12 +270,18 @@ export class ConvertModel {
       return {};
     }
 
-    options.forEach(option => Object.keys(option ?? {}).forEach(key => option[key] === undefined && delete option[key]));
+    options.forEach(option => {
+      Object.keys(option ?? {}).forEach(key => option[key] === undefined && delete option[key]);
+
+      if (!option['_referenceId']) {
+        option['_referenceId'] = FunctionHelpers.generateId();
+      }
+    });
 
     return { options };
   }
 
-  private getKvpStrings = (model: any, ...ignoreKeys: string[]): { [key: string]: any } => {
+  private getKvps = (model: any, ...ignoreKeys: string[]): { [key: string]: any } => {
     let items: { [key: string]: any } = {};
 
     Object.keys(model ?? {}).forEach(key => {

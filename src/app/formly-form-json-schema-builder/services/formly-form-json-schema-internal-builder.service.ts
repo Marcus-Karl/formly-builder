@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 
 @Injectable({ providedIn: 'root' })
-export class FormlyBuilderInternalService {
+export class FormlyFormJsonSchemaInternalBuilderService {
   private _pageDropsIds: string[];
   private _pageDropsIdsMap: { [key: string]: string };
   private _pageField: FormlyFieldConfig | null;

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormlyFormJsonSchemaBuilderService } from './formly-form-json-schema-builder.service';
+import { FormlyFormJsonSchemaBuilderService } from './services/formly-form-json-schema-builder.service';
 
 @Component({
   selector: 'app-formly-form-json-schema-builder',

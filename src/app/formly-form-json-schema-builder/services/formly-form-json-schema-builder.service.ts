@@ -3,39 +3,44 @@ import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { JSONSchema7 } from 'json-schema';
-import { ConvertModel, createBuilderFormState, jsonBuilderSchema } from './builder';
+import { ConvertModel, createBuilderFormState, jsonBuilderSchema } from '../builder';
 
 @Injectable({ providedIn: 'root' })
 export class FormlyFormJsonSchemaBuilderService {
 
   private _fields?: FormlyFieldConfig[] = [];
-  private _form?: FormGroup = new FormGroup({});
+  private _form: FormGroup = new FormGroup({});
+  private _generatedSchemaConfig: { [key: string]: any } = {};
   private _model?: { [key: string]: any };
   private _options?: FormlyFormOptions;
   private _formlyFromJsonSchema?: JSONSchema7;
   private _initComplete = false;
 
-  get builderSchema(): JSONSchema7 {
+  get builderSchema() {
     return this._formlyFromJsonSchema ?? {};
   }
 
-  get fields(): FormlyFieldConfig[] {
+  get generatedSchemaConfig() {
+    return this._generatedSchemaConfig;
+  }
+
+  get fields() {
     return this._fields ?? [];
   }
 
-  get form(): FormGroup {
-    return this._form ?? new FormGroup({});
+  get form() {
+    return this._form;
   }
 
-  get isInited(): boolean {
+  get isInited() {
     return this._initComplete ?? false;
   }
 
-  get model(): { [key: string]: any } {
+  get model() {
     return this._model ?? {};
   }
 
-  get options(): FormlyFormOptions {
+  get options() {
     return this._options ?? {};
   }
 
@@ -60,7 +65,7 @@ export class FormlyFormJsonSchemaBuilderService {
   }
 
   public getGeneratedSchema() {
-    return ConvertModel.toJsonSchema(this.model);
+    return ConvertModel.toJsonSchema(this.model, this.generatedSchemaConfig);
   }
 }
 

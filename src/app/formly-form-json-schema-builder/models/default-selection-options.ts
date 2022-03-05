@@ -1,13 +1,14 @@
-import { FormBuilderSelectionOption, SelectionOptionType, SelectionOption } from './builder-form-state.models';
+import { buildSelectionOptions } from '../builder';
+import { FormBuilderSelectionOption, SelectionOptionType } from '../models/builder-form-state';
 
 const FREE_RESPONSE_FIELDS: FormBuilderSelectionOption[] = [
   {
-    key: 'free-response-field',
+    value: 'free-response-field',
     label: 'Free Response Field',
     type: SelectionOptionType.FieldCategory,
     values: [
       {
-        key: 'currency-input-field',
+        value: 'currency-input-field',
         label: 'Currency',
         type: SelectionOptionType.FieldType,
         schemaDefaults: {
@@ -33,37 +34,37 @@ const FREE_RESPONSE_FIELDS: FormBuilderSelectionOption[] = [
         }
       },
       {
-        key: 'date-input-field',
+        value: 'date-input-field',
         label: 'Date',
         type: SelectionOptionType.FieldType,
       },
       {
-        key: 'date-time-input-field',
+        value: 'date-time-input-field',
         label: 'Date & Time',
         type: SelectionOptionType.FieldType,
       },
       {
-        key: 'email-input-field',
+        value: 'email-input-field',
         label: 'Email',
         type: SelectionOptionType.FieldType,
       },
       {
-        key: 'number-input-field',
+        value: 'number-input-field',
         label: 'Number',
         type: SelectionOptionType.FieldType,
       },
       {
-        key: 'phone-input-field',
+        value: 'phone-input-field',
         label: 'Telephone',
         type: SelectionOptionType.FieldType,
       },
       {
-        key: 'text-input-field',
+        value: 'text-input-field',
         label: 'Text',
         type: SelectionOptionType.FieldType,
       },
       {
-        key: 'textbox-field',
+        value: 'textbox-field',
         label: 'Textbox',
         type: SelectionOptionType.FieldType,
       }
@@ -73,23 +74,23 @@ const FREE_RESPONSE_FIELDS: FormBuilderSelectionOption[] = [
 
 const MULTIPLE_CHOICE_FIELDS: FormBuilderSelectionOption[] = [
   {
-    key: 'multiple-choice-field',
+    value: 'multiple-choice-field',
     label: 'Multiple Choice Field',
     type: SelectionOptionType.FieldCategory,
     values: [
       {
         type: SelectionOptionType.FieldType,
-        key: 'select-autocomplete-field',
+        value: 'select-autocomplete-field',
         label: 'Auto Complete Select Field'
       },
       {
         type: SelectionOptionType.FieldType,
-        key: 'select-dropdown-field',
+        value: 'select-dropdown-field',
         label: 'Dropdown Select Field'
       },
       {
         type: SelectionOptionType.FieldType,
-        key: 'radio-button-field',
+        value: 'radio-button-field',
         label: 'Radio Button Field'
       }
     ]
@@ -98,27 +99,27 @@ const MULTIPLE_CHOICE_FIELDS: FormBuilderSelectionOption[] = [
 
 const FORM_TYPES: FormBuilderSelectionOption[] = [
   {
-    key: 'form',
+    value: 'form',
     label: 'Form Types',
     type: SelectionOptionType.FieldCategory,
     values: [
       {
-        key: 'default-form',
+        value: 'default-form',
         label: 'Default Form',
         type: SelectionOptionType.Form,
       },
       {
-        key: 'page-form',
+        value: 'page-form',
         label: 'Page Form',
         type: SelectionOptionType.Form,
       },
       {
-        key: 'stepper-form',
+        value: 'stepper-form',
         label: 'Step Form',
         type: SelectionOptionType.Form,
       },
       {
-        key: 'tab-form',
+        value: 'tab-form',
         label: 'Tab Form',
         type: SelectionOptionType.Form,
       }
@@ -128,14 +129,14 @@ const FORM_TYPES: FormBuilderSelectionOption[] = [
 
 const COMPLEX_OBJECT: FormBuilderSelectionOption[] = [
   {
-    key: 'complex-object-field',
+    value: 'complex-object-field',
     label: 'Complex Object',
     type: SelectionOptionType.FieldCategory,
     category: 'field',
     values: [
       {
         type: SelectionOptionType.FieldType,
-        key: 'complex-object',
+        value: 'complex-object',
         label: 'Complex Object'
       }
     ]
@@ -144,14 +145,14 @@ const COMPLEX_OBJECT: FormBuilderSelectionOption[] = [
 
 const DISPLAY_CONTENT: FormBuilderSelectionOption[] = [
   {
-    key: 'display-content-field',
+    value: 'display-content-field',
     label: 'Display Content',
     type: SelectionOptionType.FieldCategory,
     category: 'display',
     values: [
       {
         type: SelectionOptionType.FieldType,
-        key: 'display-html',
+        value: 'display-html',
         label: 'Display Content'
       }
     ]
@@ -160,22 +161,22 @@ const DISPLAY_CONTENT: FormBuilderSelectionOption[] = [
 
 const TOKEN_CATEGORIES: FormBuilderSelectionOption[] = [
   {
-    key: 'answer-based',
+    value: 'answer-based',
     label: 'Answer Based',
     type: SelectionOptionType.TokenCategory
   },
   {
-    key: 'dispute',
+    value: 'dispute',
     label: 'Dispute',
     type: SelectionOptionType.TokenCategory
   },
   {
-    key: 'site',
+    value: 'site',
     label: 'Site Information',
     type: SelectionOptionType.TokenCategory
   },
   {
-    key: 'static',
+    value: 'static',
     label: 'Static',
     type: SelectionOptionType.TokenCategory
   }
@@ -183,27 +184,27 @@ const TOKEN_CATEGORIES: FormBuilderSelectionOption[] = [
 
 const TOKEN_TYPES: FormBuilderSelectionOption[] = [
   {
-    key: 'date',
+    value: 'date',
     label: 'Date',
     type: SelectionOptionType.TokenType
   },
   {
-    key: 'datetime',
+    value: 'datetime',
     label: 'Date & Time',
     type: SelectionOptionType.TokenType
   },
   {
-    key: 'externalLink',
+    value: 'externalLink',
     label: 'External URL',
     type: SelectionOptionType.TokenType
   },
   {
-    key: 'function',
+    value: 'function',
     label: 'Function',
     type: SelectionOptionType.TokenType
   },
   {
-    key: 'siteLink',
+    value: 'siteLink',
     label: 'Page Link',
     type: SelectionOptionType.TokenType
   }
@@ -211,12 +212,12 @@ const TOKEN_TYPES: FormBuilderSelectionOption[] = [
 
 const COMPARISON_OPERATORS: FormBuilderSelectionOption[] = [
   {
-    key: '',
+    value: '',
     label: 'Operators',
     type: SelectionOptionType.ComparisonOperator,
     values: [
       {
-        key: '>',
+        value: '>',
         label: '> (Greater Than)',
         group: 'Comparison Operators',
         type: SelectionOptionType.ComparisonOperator,
@@ -228,7 +229,7 @@ const COMPARISON_OPERATORS: FormBuilderSelectionOption[] = [
         ]
       },
       {
-        key: '>=',
+        value: '>=',
         label: '>= (Greater Than or Equal)',
         group: 'Comparison Operators',
         type: SelectionOptionType.ComparisonOperator,
@@ -240,7 +241,7 @@ const COMPARISON_OPERATORS: FormBuilderSelectionOption[] = [
         ]
       },
       {
-        key: '<',
+        value: '<',
         label: '< (Less Than)',
         group: 'Comparison Operators',
         type: SelectionOptionType.ComparisonOperator,
@@ -252,7 +253,7 @@ const COMPARISON_OPERATORS: FormBuilderSelectionOption[] = [
         ]
       },
       {
-        key: '<=',
+        value: '<=',
         label: '<= (Less Than or Equal)',
         group: 'Comparison Operators',
         type: SelectionOptionType.ComparisonOperator,
@@ -264,7 +265,7 @@ const COMPARISON_OPERATORS: FormBuilderSelectionOption[] = [
         ]
       },
       {
-        key: '==',
+        value: '==',
         label: '== (Equal)',
         group: 'Comparison Operators',
         type: SelectionOptionType.ComparisonOperator,
@@ -276,7 +277,7 @@ const COMPARISON_OPERATORS: FormBuilderSelectionOption[] = [
         ]
       },
       {
-        key: '!=',
+        value: '!=',
         label: '!= (Not Equal)',
         group: 'Comparison Operators',
         type: SelectionOptionType.ComparisonOperator,
@@ -288,25 +289,25 @@ const COMPARISON_OPERATORS: FormBuilderSelectionOption[] = [
         ]
       },
       {
-        key: '&&',
+        value: '&&',
         label: '&& (And)',
         group: 'Logical Operators',
         type: SelectionOptionType.ComparisonOperator
       },
       {
-        key: '||',
+        value: '||',
         label: '|| (Or)',
         group: 'Logical Operators',
         type: SelectionOptionType.ComparisonOperator
       },
       {
-        key: '!',
+        value: '!',
         label: '! (Not)',
         group: 'Logical Operators',
         type: SelectionOptionType.ComparisonOperator
       },
       {
-        key: 'in',
+        value: 'in',
         label: 'In (Value Is In)',
         group: 'Relational Operator',
         type: SelectionOptionType.ComparisonOperator,
@@ -317,7 +318,7 @@ const COMPARISON_OPERATORS: FormBuilderSelectionOption[] = [
         ]
       },
       {
-        key: 'notin',
+        value: 'notin',
         label: 'Not In (Value Is Not In)',
         group: 'Relational Operator',
         type: SelectionOptionType.ComparisonOperator,
@@ -328,7 +329,7 @@ const COMPARISON_OPERATORS: FormBuilderSelectionOption[] = [
         ]
       },
       {
-        key: 'between_exclusive',
+        value: 'between_exclusive',
         label: 'Between Exclusive (Between But Not Equal To)',
         group: 'Relational Operator',
         type: SelectionOptionType.ComparisonOperator,
@@ -339,7 +340,7 @@ const COMPARISON_OPERATORS: FormBuilderSelectionOption[] = [
         ]
       },
       {
-        key: 'between_inclusive',
+        value: 'between_inclusive',
         label: 'Between Inclusive (Between Or Equal To)',
         group: 'Relational Operator',
         type: SelectionOptionType.ComparisonOperator,
@@ -350,7 +351,7 @@ const COMPARISON_OPERATORS: FormBuilderSelectionOption[] = [
         ]
       },
       {
-        key: 'match',
+        value: 'match',
         label: 'Matches (Regex Pattern)',
         group: 'Relational Operator',
         type: SelectionOptionType.ComparisonOperator,
@@ -362,7 +363,7 @@ const COMPARISON_OPERATORS: FormBuilderSelectionOption[] = [
         ]
       },
       {
-        key: 'not_match',
+        value: 'not_match',
         label: 'Not Match (Regex Pattern)',
         group: 'Relational Operator',
         type: SelectionOptionType.ComparisonOperator,
@@ -380,38 +381,38 @@ const COMPARISON_OPERATORS: FormBuilderSelectionOption[] = [
 const COMPARISON_TYPES: FormBuilderSelectionOption[] = [
   {
     type: SelectionOptionType.ComparisonType,
-    key: 'thisItemValue',
+    value: 'thisItemValue',
     label: 'This Items Value'
   },
   {
     type: SelectionOptionType.ComparisonType,
-    key: 'differentFieldAnswer',
+    value: 'differentFieldAnswer',
     label: 'Different Field Answer'
   },
   {
     type: SelectionOptionType.ComparisonType,
-    key: 'listOfItems',
+    value: 'listOfItems',
     label: 'List of Items'
   },
   {
     type: SelectionOptionType.ComparisonType,
-    key: 'condition',
+    value: 'condition',
     label: 'Another Condition'
   },
   {
     type: SelectionOptionType.ComparisonType,
-    key: 'predefined',
+    value: 'predefined',
     label: 'Predefined Value'
   },
   {
     type: SelectionOptionType.ComparisonType,
-    key: 'token',
+    value: 'token',
     label: 'Token Value'
   }
 ]
 
 const DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION: FormBuilderSelectionOption = {
-  key: '',
+  value: '',
   label: 'Base',
   type: SelectionOptionType.Base,
   values: [
@@ -426,55 +427,32 @@ const DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION: FormBuilderSelectionOption =
     ...COMPARISON_TYPES,
     {
       type: SelectionOptionType.HideComparisonSource,
-      key: 'field',
+      value: 'field',
       label: 'Different Field Answer',
       category: 'field'
     },
     {
       type: SelectionOptionType.HideComparisonSource,
-      key: 'token',
+      value: 'token',
       label: 'Token Value',
       category: 'token'
     },
     {
       type: SelectionOptionType.HideComparisonAgainst,
-      key: 'options',
+      value: 'options',
       label: 'List of Options',
       category: 'options'
     },
     {
       type: SelectionOptionType.HideComparisonAgainst,
-      key: 'predefined',
+      value: 'predefined',
       label: 'Value',
       category: 'predefined'
     }
   ]
 }
 
-const buildObject = (parent: FormBuilderSelectionOption | null, item: FormBuilderSelectionOption, type: SelectionOptionType): SelectionOption[] => {
-  let result = item.values?.map(x => buildObject(item, x, type)) ?? [] as SelectionOption[][];
-
-  let itemsToReturn: SelectionOption[] = ([] as SelectionOption[]).concat(...result);
-
-  if (item.type === type) {
-    itemsToReturn.push({
-      category: item.category ?? parent?.key ?? null,
-      group: item.group ?? null,
-      value: item.key,
-      label: item.label
-    });
-  }
-
-  return itemsToReturn;
-}
-
-export const buildSelectionOptions = (item: FormBuilderSelectionOption, type: SelectionOptionType): SelectionOption[] => {
-  let options = buildObject(null, item, type);
-
-  return options.filter(x => x.value);
-}
-
-export const DEFAULT_SELECTION_OPTIONS_MAP: { [key in SelectionOptionType]: SelectionOption[] } = {
+export const getDefaultSelectionOptionsMap = (): { [key in SelectionOptionType]: FormBuilderSelectionOption[] } => ({
   [SelectionOptionType.Base]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.Base),
   [SelectionOptionType.FieldCategory]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.FieldCategory),
   [SelectionOptionType.FieldType]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.FieldType),
@@ -486,4 +464,4 @@ export const DEFAULT_SELECTION_OPTIONS_MAP: { [key in SelectionOptionType]: Sele
   [SelectionOptionType.HideComparisonAgainst]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.HideComparisonAgainst),
   [SelectionOptionType.TokenCategory]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.TokenCategory),
   [SelectionOptionType.TokenType]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.TokenType),
-}
+})

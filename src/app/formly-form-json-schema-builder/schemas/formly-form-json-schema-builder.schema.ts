@@ -1,6 +1,6 @@
-import { SelectionOptionType, SelectionOption } from '../builder/builder-form-state.models';
+import { SelectionOptionType, FormBuilderSelectionOption } from '../models/builder-form-state';
 
-export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOptionType]: SelectionOption[] }) => ({
+export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOptionType]: FormBuilderSelectionOption[] }) => ({
   'type': 'object',
   'properties': {
     'form': {
@@ -178,7 +178,11 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
               'formlyConfig': {
                 'type': 'input',
                 'defaultValue': '',
-                'hide': true
+                'validators': {
+                  'validation': [
+                    'valid-name'
+                  ]
+                }
               }
             }
           },
@@ -510,7 +514,12 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
           'widget': {
             'formlyConfig': {
               'type': 'input',
-              'defaultValue': ''
+              'defaultValue': '',
+              'validators': {
+                'validation': [
+                  'valid-name'
+                ]
+              }
             }
           }
         },
