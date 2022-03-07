@@ -120,6 +120,7 @@ export class ConvertModel {
       widget: {
         ...model['_referenceId'] && { _referenceId: model['_referenceId'] },
         formlyConfig: {
+          _translationFormKey: model['_translationFormKey'] || FunctionHelpers.generateId(),
           ...settings['formType'] && { type: settings['formType'] }
         }
       }
@@ -212,12 +213,7 @@ export class ConvertModel {
     }
 
     let settings = model['basic'];
-
     let extra = model['extra'] ?? {};
-
-    if (!model['_referenceId']) {
-      model['_referenceId'] = FunctionHelpers.generateId();
-    }
 
     let field: any = {
       type: 'string',
@@ -238,6 +234,10 @@ export class ConvertModel {
       _.merge(field, JSON.parse(JSON.stringify(defaultSchema)));
     }
 
+    if (!model['_referenceId']) {
+      model['_referenceId'] = FunctionHelpers.generateId();
+    }
+
     let modelSettings = {
       ...settings['label'] && { title: settings['label'] },
       widget: {
@@ -256,10 +256,6 @@ export class ConvertModel {
     };
 
     _.merge(field, modelSettings);
-
-    if (!model['_referenceId']) {
-      model['_referenceId'] = FunctionHelpers.generateId();
-    }
 
     if (field.widget.formlyConfig.templateOptions.multiple) {
       if (extra['defaultValue']) {

@@ -18,8 +18,8 @@ export abstract class AbstractBaseFormControlsComponent extends FieldType implem
   }
 
   isPrecedingPageInvalid(index: number, includeOptionalPageCheck = false): boolean {
-    if (index === 0) {
-      return this.isPageAtIndexInvalid(index, includeOptionalPageCheck) ;
+    if (index < 1) {
+      return this.isPageAtIndexInvalid(0, includeOptionalPageCheck) ;
     }
 
     return this.isPageAtIndexInvalid(index, includeOptionalPageCheck) || this.isPrecedingPageInvalid(index - 1, includeOptionalPageCheck);
@@ -36,7 +36,7 @@ export abstract class AbstractBaseFormControlsComponent extends FieldType implem
   isPageAtIndexInvalid(index: number, includeOptionalPageCheck: boolean = true, onlyTouchedPages: boolean = false): boolean {
     let page = this.field.fieldGroup && this.field.fieldGroup[index];
 
-    let invalid = (page?.formControl?.invalid || false) && !page.hide && (page.templateOptions?.isOptional ? includeOptionalPageCheck : true);
+    let invalid = (page?.formControl?.invalid ?? false) && !page?.hide && (page?.templateOptions?.isOptional ? includeOptionalPageCheck : true);
 
     if (onlyTouchedPages && !page?.formControl?.touched) {
       invalid = false;
@@ -104,14 +104,14 @@ export abstract class AbstractBaseFormControlsComponent extends FieldType implem
   }
 
   visitedPageHasError(page: FormlyFieldConfig) {
-    let pageControls = (page.formControl as FormGroup)?.controls || {};
+    let pageControls = (page.formControl as FormGroup)?.controls ?? {};
 
     return this.options?.formState.formHistory?.find((x: any) => x.name === page.key)
       && Object.values(pageControls).filter(x => x.touched && x.invalid).length;
   }
 
   getPageState(page: FormlyFieldConfig) {
-    let pageControls = (page.formControl as FormGroup)?.controls || {};
+    let pageControls = (page.formControl as FormGroup)?.controls ?? {};
 
     if (Object.values(pageControls).filter(x => x.touched && x.invalid).length) {
       return 'page-error';

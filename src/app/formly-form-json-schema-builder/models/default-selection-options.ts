@@ -13,6 +13,11 @@ const FREE_RESPONSE_FIELDS: FormBuilderSelectionOption[] = [
         type: SelectionOptionType.FieldType,
         schemaDefaults: {
           type: 'object',
+          widget: {
+            formlyConfig: {
+              defaultValue: {}
+            }
+          },
           properties: {
             amount: {
               title: 'Amount',
@@ -37,7 +42,8 @@ const FREE_RESPONSE_FIELDS: FormBuilderSelectionOption[] = [
                 }
               }
             }
-          }
+          },
+          required: ['amount', 'currency']
         }
       },
       {
@@ -183,7 +189,8 @@ const DISPLAY_CONTENT: FormBuilderSelectionOption[] = [
           title: 'Display Field',
           widget: {
             formlyConfig: {
-              type: 'display-html'
+              type: 'display-html',
+              defaultValue: null
             }
           }
         }
