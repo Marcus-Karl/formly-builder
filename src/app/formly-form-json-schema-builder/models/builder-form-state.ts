@@ -39,7 +39,7 @@ export type PagesInformation = {
 
 export type BuilderFormStateProperties = {
   functions: FunctionReferences;
-  options: { [key: string]: FormBuilderSelectionOption[] };
+  options: { [key in SelectionOptionType]: FormBuilderSelectionOption[] };
   pagesInformation: PagesInformation;
 }
 

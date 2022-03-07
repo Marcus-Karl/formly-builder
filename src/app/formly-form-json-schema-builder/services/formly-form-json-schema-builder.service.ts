@@ -3,7 +3,11 @@ import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { JSONSchema7 } from 'json-schema';
-import { ConvertModel, createBuilderFormState, jsonBuilderSchema } from '../builder';
+import { ConvertModel } from '../builder';
+import { FunctionReferences } from '../builder/state-functions';
+import { BuilderFormState, FormBuilderSelectionOption, PagesInformation, SelectionOptionType } from '../models/builder-form-state';
+import { getDefaultSelectionOptionsMap } from '../models/default-selection-options';
+import { defaultJsonSchema } from '../schemas/formly-form-json-schema-builder.schema';
 
 @Injectable({ providedIn: 'root' })
 export class FormlyFormJsonSchemaBuilderService {
@@ -54,10 +58,10 @@ export class FormlyFormJsonSchemaBuilderService {
 
     this._options = {
       ...this._options,
-      formState: createBuilderFormState(this.model)
+      formState: this._createBuilderFormState(this.model)
     }
 
-    this._formlyFromJsonSchema = jsonBuilderSchema(this.options.formState);
+    this._formlyFromJsonSchema = this.getJsonBuilderSchema(this.options.formState);
 
     this._fields = [this.formlyJsonschema.toFieldConfig(this._formlyFromJsonSchema)];
 
@@ -65,7 +69,46 @@ export class FormlyFormJsonSchemaBuilderService {
   }
 
   public getGeneratedSchema() {
-    return ConvertModel.toJsonSchema(this.model, this.generatedSchemaConfig);
+    return ConvertModel.toJsonSchema(this.model, this.options.formState, this.generatedSchemaConfig);
+  }
+
+  public getJsonBuilderSchema = (formState: BuilderFormState, selectionOptionsMap?: { [key in SelectionOptionType]: FormBuilderSelectionOption[] }): JSONSchema7 => {
+    for (let info in formState.builder.pagesInformation) {
+      if (Object.prototype.hasOwnProperty.call(formState.builder.pagesInformation, info)) {
+        delete formState.builder.pagesInformation[info];
+      }
+    }
+
+    let optionsMap = this._buildSelectionOptionsMap(formState.builder.options, selectionOptionsMap);
+
+    return defaultJsonSchema(optionsMap) as JSONSchema7;
+  }
+
+  private _createBuilderFormState = (mainModel: any = {}): BuilderFormState => {
+    let formState: BuilderFormState = {
+      builder: {
+        functions: {} as FunctionReferences,
+        options: {} as { [key in SelectionOptionType]: FormBuilderSelectionOption[] },
+        pagesInformation: {} as PagesInformation
+      },
+      mainModel: mainModel
+    };
+
+    formState.builder.functions = new FunctionReferences(formState);
+
+    return formState;
+  }
+
+  private _buildSelectionOptionsMap(options: { [key: string]: FormBuilderSelectionOption[] }, selectionOptionsMap?: { [key in SelectionOptionType]: FormBuilderSelectionOption[] }) {
+    let optionsMap = Object.assign({}, getDefaultSelectionOptionsMap());
+
+    if (selectionOptionsMap) {
+      Object.assign(optionsMap, selectionOptionsMap);
+    }
+
+    Object.assign(options, optionsMap);
+
+    return optionsMap;
   }
 }
 

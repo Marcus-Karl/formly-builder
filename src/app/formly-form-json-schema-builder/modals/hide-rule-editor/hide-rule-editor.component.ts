@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, ViewChild } fr
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { Subscription } from 'rxjs';
-import { FieldInformation, BuilderFormState, FormBuilderSelectionOption } from '../../models/builder-form-state';
+import { FieldInformation, BuilderFormState, FormBuilderSelectionOption, SelectionOptionType } from '../../models/builder-form-state';
 
 @Component({
   selector: 'hide-rule-editor',
@@ -155,9 +155,9 @@ export class HideRuleEditorComponent implements AfterViewInit, OnDestroy {
     let selections: FormBuilderSelectionOption[];
 
     if (isSource) {
-      selections = (this.field.options.formState as BuilderFormState).builder.options.hideComparisonSource || [];
+      selections = (this.field.options.formState as BuilderFormState).builder.options[SelectionOptionType.HideComparisonSource] || [];
     } else {
-      selections = (this.field.options.formState as BuilderFormState).builder.options.hideComparisonAgainst || [];
+      selections = (this.field.options.formState as BuilderFormState).builder.options[SelectionOptionType.HideComparisonAgainst] || [];
     }
 
     let choice = selections.find(x => x.value === value)?.category;
@@ -186,7 +186,7 @@ export class HideRuleEditorComponent implements AfterViewInit, OnDestroy {
     let options: FieldInformation[] = [];
 
     if (isChoiceArray ? choice.includes('field') : choice === 'field') {
-      let displayFieldsToRemove = (this.field.options.formState as BuilderFormState).builder.options.fieldCategories?.filter(x => x.category === 'display') || [];
+      let displayFieldsToRemove = (this.field.options.formState as BuilderFormState).builder.options[SelectionOptionType.FieldCategory]?.filter(x => x.category === 'display') || [];
 
       options.push(...this._fieldInformation.filter(x => !displayFieldsToRemove.find(dftr => dftr.value === x.category)));
     }
@@ -232,7 +232,7 @@ export class HideRuleEditorComponent implements AfterViewInit, OnDestroy {
       return;
     }
 
-    let availableOperators = (this.field.options.formState as BuilderFormState).builder.options.comparisonOperators.filter(operator => {
+    let availableOperators = (this.field.options.formState as BuilderFormState).builder.options[SelectionOptionType.ComparisonOperator].filter(operator => {
       if (Array.isArray(operator.category)) {
         return operator.category.includes(sourceSelection.type) || operator.category.includes(sourceSelection.category);
       }

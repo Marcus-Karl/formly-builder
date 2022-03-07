@@ -8,4 +8,3 @@ const routes: Routes = [
 // Disable for naming convention check
 // eslint-disable-next-line
 export const FormlyBuilderRoutes = RouterModule.forChild(routes);
-

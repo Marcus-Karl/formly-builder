@@ -1,21 +1,32 @@
+import { JSONPath } from 'jsonpath-plus';
+import * as _ from 'lodash';
+import { BuilderFormState, SelectionOptionType } from '../models/builder-form-state';
 import { FunctionHelpers } from './index';
 
 export class ConvertModel {
 
   private _config: any;
+  private _formState: BuilderFormState;
 
-  constructor(config?: any) {
+  constructor(formState: BuilderFormState, config?: any) {
+    this._formState = formState;
     this._config = config;
   }
 
-  public static toJsonSchema(model: any, config?: any) {
+  public static toJsonSchema(model: any, formState: BuilderFormState, config: any = {}) {
     if (!model) {
+      return null;
+    }
+
+    if (!formState?.builder?.options) {
+      console.error(`Invalid formState passed to json schema builder.`);
+
       return null;
     }
 
     let form = {};
 
-    new ConvertModel(config).getNextStep(form, model);
+    new ConvertModel(formState, config).getNextStep(form, model);
 
     return form;
   }
@@ -75,7 +86,7 @@ export class ConvertModel {
   /**
    * BUILDERS
    */
-  private buildForm = (form: any, model: any) => {
+  private buildForm = (form: any, model: { [key: string]: any }) => {
     let settings = model['settings'];
 
     if (!model['_referenceId']) {
@@ -84,16 +95,13 @@ export class ConvertModel {
 
     let displayForm: any = {
       type: 'object',
-      title: settings['label'],
+      title: null,
       widget: {
-        _referenceId: model['_referenceId'],
+        _referenceId: null,
         formlyConfig: {
-          type: settings['formType'],
+          type: null,
           defaultValue: {},
           templateOptions: {
-            verticalStepper: false,
-            linear: false,
-            labelPosition: 'end',
             _translationFormKey: FunctionHelpers.generateId()
           }
         }
@@ -101,6 +109,24 @@ export class ConvertModel {
       properties: {},
       required: []
     };
+
+    let defaultSchema = this._getDefaultSchemaForKeyAndType(settings['formType'], SelectionOptionType.Form);
+
+    if (defaultSchema) {
+      _.merge(displayForm, JSON.parse(JSON.stringify(defaultSchema)));
+    }
+
+    let modelSettings = {
+      ...settings['label'] && { title: settings['label'] },
+      widget: {
+        ...model['_referenceId'] && { _referenceId: model['_referenceId'] },
+        formlyConfig: {
+          ...settings['formType'] && { type: settings['formType'] }
+        }
+      }
+    }
+
+    _.merge(displayForm, modelSettings);
 
     if (settings['label']) {
       displayForm['title'] = settings['label'];
@@ -134,22 +160,37 @@ export class ConvertModel {
       model['_referenceId'] = FunctionHelpers.generateId();
     }
 
-    let page: any = {
+    let page = {
       type: 'object',
-      title: settings['label'],
+      title: null,
       widget: {
-        _referenceId: model['_referenceId'],
+        _referenceId: null,
         formlyConfig: {
           defaultValue: {},
           templateOptions: {
-            ...this.getKvps(model['extra'], 'label'),
-            ...model['_order'] !== undefined && { _order: model['_order'] },
+            required: false
           }
         }
       },
       properties: {},
       required: []
     };
+
+    let modelSettings = {
+      ...settings['label'] && { title: settings['label'] },
+      widget: {
+        ...model['_referenceId'] && { _referenceId: model['_referenceId'] },
+        formlyConfig: {
+          ...settings['formType'] && { type: settings['formType'] },
+          templateOptions: {
+            ...this.getKvps(model['extra'], 'label'),
+            ...model['_order'] !== undefined && { _order: model['_order'] }
+          }
+        }
+      }
+    }
+
+    _.merge(page, modelSettings);
 
     if (page.widget.formlyConfig.templateOptions.required && Array.isArray(form['required'])) {
       form['required'].push(settings['name'] || model['_referenceId']);
@@ -167,11 +208,7 @@ export class ConvertModel {
       return;
     }
 
-    if (['free-response-field', 'multiple-choice-field'].includes(model['category'])) {
-      return this.buildDataEntryField(form, model);
-    } else if (['display-content-field'].includes(model['category'])) {
-      return this.buildDisplayField(form, model);
-    }
+    return this.buildDataEntryField(form, model);
   }
 
   private buildDataEntryField = (page: any, model: any) => {
@@ -189,13 +226,32 @@ export class ConvertModel {
 
     let field: any = {
       type: 'string',
-      title: settings['label'],
+      title: null,
       widget: {
-        _referenceId: model['_referenceId'],
+        _referenceId: null,
         formlyConfig: {
-          type: settings['type'],
-          defaultValue: extra['defaultValue'] ?? '',
+          type: null,
+          defaultValue: '',
+          templateOptions: {}
+        }
+      }
+    };
+
+    let defaultSchema = this._getDefaultSchemaForKeyAndType(settings['type'], SelectionOptionType.FieldType, model['category']);
+
+    if (defaultSchema) {
+      _.merge(field, JSON.parse(JSON.stringify(defaultSchema)));
+    }
+
+    let modelSettings = {
+      ...settings['label'] && { title: settings['label'] },
+      widget: {
+        ...model['_referenceId'] && { _referenceId: model['_referenceId'] },
+        formlyConfig: {
+          ...settings['type'] && { type: settings['type'] },
+          ...extra['defaultValue'] && { defaultValue: extra['defaultValue'] },
           templateOptions: {
+            ...model['edit'] && { html: model['edit'] },
             ...this.getKvps(extra, 'defaultValue'),
             ...this.getOptions(model['options']),
             ...model['_order'] !== undefined && { _order: model['_order'] },
@@ -204,13 +260,13 @@ export class ConvertModel {
       }
     };
 
+    _.merge(field, modelSettings);
+
     if (!model['_referenceId']) {
       model['_referenceId'] = FunctionHelpers.generateId();
     }
 
     if (field.widget.formlyConfig.templateOptions.multiple) {
-      field.type = 'array';
-
       if (extra['defaultValue']) {
         field.widget.formlyConfig.defaultValue = Array.isArray(extra['defaultValue']) ? extra['defaultValue'] : [extra['defaultValue']];
       } else {
@@ -223,41 +279,6 @@ export class ConvertModel {
     }
 
     let pageProperties = page['properties'];
-    pageProperties[settings['name'] || model['_referenceId']] = field;
-  }
-
-  private buildDisplayField = (page: any, model: any) => {
-    if (!page['properties']) {
-      return;
-    }
-
-    let pageProperties = page['properties'];
-    let settings = model['basic'] ?? {};
-
-    let extra = model['extra'] ?? {};
-
-    if (!model['_referenceId']) {
-      model['_referenceId'] = FunctionHelpers.generateId();
-    }
-
-    let field: any = {
-      type: 'null',
-      title: settings['label'] || 'Display Field',
-      widget: {
-        _referenceId: model['_referenceId'],
-        formlyConfig: {
-          type: settings['type'] || 'display-html',
-          defaultValue: extra['defaultValue'] ?? '',
-          templateOptions: {
-            html: model['edit'],
-            ...this.getKvps(extra, 'defaultValue'),
-            ...this.getOptions(model['options']),
-            ...model['_order'] !== undefined && { _order: model['_order'] },
-          }
-        }
-      }
-    };
-
     pageProperties[settings['name'] || model['_referenceId']] = field;
   }
 
@@ -291,6 +312,22 @@ export class ConvertModel {
     });
 
     return items;
+  }
+
+  private _getDefaultSchemaForKeyAndType(key: string, type: SelectionOptionType, category?: string) {
+    let options = this._formState.builder.options[type];
+
+    if (!options === undefined) {
+      console.log(`Unable to find SelectionOptionType ${type} in BuilderFormStateProperties options map.`);
+
+      return;
+    }
+
+    if (category) {
+      return options.find(option => option.value === key && option.category === category)?.schemaDefaults;
+    }
+
+    return options.find(option => option.value === key)?.schemaDefaults;
   }
 }
 

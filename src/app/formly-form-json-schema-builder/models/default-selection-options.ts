@@ -24,8 +24,15 @@ const FREE_RESPONSE_FIELDS: FormBuilderSelectionOption[] = [
               widget: {
                 formlyConfig: {
                   type: 'select',
+                  defaultValue: 'USD',
                   templateOptions: {
-                    placeholder: 'Select Currency'
+                    placeholder: 'Select Currency',
+                    options: [
+                      { value: 'USD', label: 'USD' },
+                      { value: 'AUD', label: 'AUD' },
+                      { value: 'GBP', label: 'GBP' },
+                      { value: 'EUR', label: 'EUR' },
+                    ]
                   }
                 }
               }
@@ -37,6 +44,9 @@ const FREE_RESPONSE_FIELDS: FormBuilderSelectionOption[] = [
         value: 'date-input-field',
         label: 'Date',
         type: SelectionOptionType.FieldType,
+        schemaDefaults: {
+          format: 'date'
+        }
       },
       {
         value: 'date-time-input-field',
@@ -52,6 +62,9 @@ const FREE_RESPONSE_FIELDS: FormBuilderSelectionOption[] = [
         value: 'number-input-field',
         label: 'Number',
         type: SelectionOptionType.FieldType,
+        schemaDefaults: {
+          format: 'date'
+        }
       },
       {
         value: 'phone-input-field',
@@ -117,6 +130,17 @@ const FORM_TYPES: FormBuilderSelectionOption[] = [
         value: 'stepper-form',
         label: 'Step Form',
         type: SelectionOptionType.Form,
+        schemaDefaults: {
+          widget: {
+            formlyConfig: {
+              templateOptions: {
+                verticalStepper: false,
+                linear: false,
+                labelPosition: 'end',
+              }
+            }
+          }
+        }
       },
       {
         value: 'tab-form',
@@ -153,7 +177,16 @@ const DISPLAY_CONTENT: FormBuilderSelectionOption[] = [
       {
         type: SelectionOptionType.FieldType,
         value: 'display-html',
-        label: 'Display Content'
+        label: 'Display Content',
+        schemaDefaults: {
+          type: 'null',
+          title: 'Display Field',
+          widget: {
+            formlyConfig: {
+              type: 'display-html'
+            }
+          }
+        }
       }
     ]
   }
