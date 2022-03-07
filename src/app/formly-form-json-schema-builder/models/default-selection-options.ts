@@ -6,7 +6,7 @@ const FREE_RESPONSE_FIELDS: FormBuilderSelectionOption[] = [
     value: 'free-response-field',
     label: 'Free Response Field',
     type: SelectionOptionType.FieldCategory,
-    values: [
+    options: [
       {
         value: 'currency-input-field',
         label: 'Currency',
@@ -90,7 +90,7 @@ const MULTIPLE_CHOICE_FIELDS: FormBuilderSelectionOption[] = [
     value: 'multiple-choice-field',
     label: 'Multiple Choice Field',
     type: SelectionOptionType.FieldCategory,
-    values: [
+    options: [
       {
         type: SelectionOptionType.FieldType,
         value: 'select-autocomplete-field',
@@ -115,7 +115,7 @@ const FORM_TYPES: FormBuilderSelectionOption[] = [
     value: 'form',
     label: 'Form Types',
     type: SelectionOptionType.FieldCategory,
-    values: [
+    options: [
       {
         value: 'default-form',
         label: 'Default Form',
@@ -157,7 +157,7 @@ const COMPLEX_OBJECT: FormBuilderSelectionOption[] = [
     label: 'Complex Object',
     type: SelectionOptionType.FieldCategory,
     category: 'field',
-    values: [
+    options: [
       {
         type: SelectionOptionType.FieldType,
         value: 'complex-object',
@@ -173,7 +173,7 @@ const DISPLAY_CONTENT: FormBuilderSelectionOption[] = [
     label: 'Display Content',
     type: SelectionOptionType.FieldCategory,
     category: 'display',
-    values: [
+    options: [
       {
         type: SelectionOptionType.FieldType,
         value: 'display-html',
@@ -248,7 +248,7 @@ const COMPARISON_OPERATORS: FormBuilderSelectionOption[] = [
     value: '',
     label: 'Operators',
     type: SelectionOptionType.ComparisonOperator,
-    values: [
+    options: [
       {
         value: '>',
         label: '> (Greater Than)',
@@ -448,7 +448,7 @@ const DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION: FormBuilderSelectionOption =
   value: '',
   label: 'Base',
   type: SelectionOptionType.Base,
-  values: [
+  options: [
     ...COMPLEX_OBJECT,
     ...DISPLAY_CONTENT,
     ...FREE_RESPONSE_FIELDS,

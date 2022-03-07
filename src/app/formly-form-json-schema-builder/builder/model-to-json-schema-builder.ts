@@ -1,4 +1,3 @@
-import { JSONPath } from 'jsonpath-plus';
 import * as _ from 'lodash';
 import { BuilderFormState, SelectionOptionType } from '../models/builder-form-state';
 import { FunctionHelpers } from './index';
@@ -127,10 +126,6 @@ export class ConvertModel {
     }
 
     _.merge(displayForm, modelSettings);
-
-    if (settings['label']) {
-      displayForm['title'] = settings['label'];
-    }
 
     if (Object.keys(form)?.length) {
       if (displayForm?.widget?.formlyConfig?.templateOptions?.required && Array.isArray(form['required'])) {

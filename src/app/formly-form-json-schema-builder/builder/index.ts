@@ -6,7 +6,7 @@ export * from './model-to-json-schema-builder';
 
 
 const buildObject = (parent: FormBuilderSelectionOption | null, item: FormBuilderSelectionOption, type: SelectionOptionType): FormBuilderSelectionOption[] => {
-  let result = item.values?.map(x => buildObject(item, x, type)) ?? [] as FormBuilderSelectionOption[][];
+  let result = item.options?.map(x => buildObject(item, x, type)) ?? [] as FormBuilderSelectionOption[][];
 
   let itemsToReturn: FormBuilderSelectionOption[] = ([] as FormBuilderSelectionOption[]).concat(...result);
 
