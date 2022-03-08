@@ -43,12 +43,12 @@
     <ng-container *ngFor="let item of filteredSelectOptions$ | async | sortOptions">
       <mat-optgroup *ngIf="item.group" [label]="item.label" [disabled]="item.disabled">
         <mat-option class="mat-option-wrap" *ngFor="let groupItem of item.group | sortOptions" [value]="groupItem[valueProp]" [disabled]="groupItem.disabled">
-          {{ groupItem[labelProp] }}
+          {{ groupItem[labelProp] | translate | tokens: to }}
         </mat-option>
       </mat-optgroup>
 
       <mat-option class="mat-option-wrap" *ngIf="!item.group" [value]="item[valueProp]" [disabled]="item.disabled">
-        {{ item[labelProp] }}
+        {{ item[labelProp] | translate | tokens: to }}
       </mat-option>
     </ng-container>
 

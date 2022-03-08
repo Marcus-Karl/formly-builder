@@ -4,14 +4,14 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
   'type': 'object',
   'properties': {
     'form': {
-      '$ref': '#/definitions/root-form'
+      '$ref': '#/definitions/rootForm'
     },
   },
   'required': [
     'form'
   ],
   'definitions': {
-    'root-form': {
+    'rootForm': {
       'type': 'object',
       'widget': {
         'formlyConfig': {
@@ -24,13 +24,13 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
       },
       'properties': {
         'pages': {
-          '$ref': '#/definitions/form-pages'
+          '$ref': '#/definitions/formPages'
         },
         'tokens': {
-          '$ref': '#/definitions/form-tokens'
+          '$ref': '#/definitions/formTokens'
         },
         'settings': {
-          '$ref': '#/definitions/form-settings'
+          '$ref': '#/definitions/formSettings'
         }
       },
       'required': [
@@ -38,7 +38,7 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
         'settings'
       ]
     },
-    'form-pages': {
+    'formPages': {
       'type': 'array',
       'title': 'Pages',
       'minItems': 1,
@@ -64,10 +64,10 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
         },
         'properties': {
           'fields': {
-            '$ref': '#/definitions/page/fields'
+            '$ref': '#/definitions/pageFields'
           },
           'settings': {
-            '$ref': '#/definitions/page/settings'
+            '$ref': '#/definitions/pageSettings'
           }
         },
         'required': [
@@ -76,7 +76,7 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
         ]
       }
     },
-    'form-settings': {
+    'formSettings': {
       'type': 'object',
       'title': 'Settings',
       'properties': {
@@ -120,7 +120,7 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
         'label'
       ]
     },
-    'form-tokens': {
+    'formTokens': {
       'type': 'array',
       'title': 'Tokens',
       'minItems': 0,
@@ -157,360 +157,22 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
         ]
       }
     },
-    'page': {
-      'settings': {
-        'type': 'object',
-        'title': 'Page Settings',
-        'widget': {
-          'formlyConfig': {
-            'defaultValue': {},
-            'className': 'formly-build-page-form-min-height flex column',
-            'templateOptions': {
-              'isOptional': true
-            }
-          }
-        },
-        'properties': {
-          'name': {
-            'type': 'string',
-            'title': 'Page Name',
-            'widget': {
-              'formlyConfig': {
-                'type': 'input',
-                'defaultValue': '',
-                'validators': {
-                  'validation': [
-                    'valid-name'
-                  ]
-                }
-              }
-            }
-          },
-          'label': {
-            'type': 'string',
-            'title': 'Page Label',
-            'className': 'margin-top',
-            'widget': {
-              'formlyConfig': {
-                'type': 'input',
-                'defaultValue': ''
-              }
-            }
-          },
-          'hideExpression': {
-            'type': 'array',
-            'title': 'Create rule to conditionally hide this page',
-            'widget': {
-              'formlyConfig': {
-                'defaultValue': [],
-                'type': 'expression-builder'
-              }
-            },
-            'items': {
-              '$ref': '#/definitions/expression/baseCondition'
-            }
-          }
-        },
-        'required': [
-          'label'
-        ]
-      },
-      'fields': {
-        'type': 'array',
-        'title': 'Fields',
-        'minItems': 1,
-        'widget': {
-          'formlyConfig': {
-            'className': 'formly-build-page-form-min-height flex column',
-            'type': 'page-fields',
-            'defaultValue': [],
-            'templateOptions': {
-              'hideLabel': true
-            }
-          }
-        },
-        'items': {
-          '$ref': '#/definitions/field/picker'
-        }
-      }
-    },
-    'field': {
-      'picker': {
-        'type': 'object',
-        'widget': {
-          'formlyConfig': {
-            'type': 'tab-form',
-            'defaultValue': {},
-            'templateOptions': {
-              'hideButtons': true,
-              'linear': false
-            }
-          }
-        },
-        'properties': {
-          'category': {
-            '$ref': '#/definitions/field/types/category'
-          },
-          'basic': {
-            '$ref': '#/definitions/field/tabs/basic'
-          },
-          'complexObject': {
-            '$ref': '#/definitions/field/tabs/complexObject'
-          },
-          'options': {
-            '$ref': '#/definitions/field/tabs/options'
-          },
-          'extra': {
-            '$ref': '#/definitions/field/tabs/extra'
-          },
-          'edit': {
-            '$ref': '#/definitions/field/tabs/edit-display-content'
-          },
-          'preview': {
-            '$ref': '#/definitions/field/tabs/preview-display-content'
-          },
-          'advanced': {
-            '$ref': '#/definitions/field/tabs/advanced'
-          }
-        },
-        'required': [
-          'category'
-        ],
-        'if': {
-          'category': 'complex-object-field'
-        },
-        'then': {
-          'properties': {
-            'complexObject': {
-              'minItems': 1
-            }
+    'pageSettings': {
+      'type': 'object',
+      'title': 'Page Settings',
+      'widget': {
+        'formlyConfig': {
+          'defaultValue': {},
+          'className': 'formly-build-page-form-min-height flex column',
+          'templateOptions': {
+            'isOptional': true
           }
         }
       },
-      'tabs': {
-        'edit-display-content': {
-          'type': 'string',
-          'title': 'Edit Content',
-          'widget': {
-            'formlyConfig': {
-              'type': 'display-html-editor',
-              'defaultValue': '',
-              'className': 'pad-half formly-field fill-height',
-              'hideExpression': 'field.model.category !== \'display-content-field\''
-            }
-          }
-        },
-        'preview-display-content': {
-          'type': 'null',
-          'title': 'Content Preview',
-          'widget': {
-            'formlyConfig': {
-              'type': 'display-html',
-              'className': 'pad-half formly-field',
-              'templateOptions': {
-                'html': ''
-              },
-              'expressionProperties': {
-                'templateOptions.html': 'field.model.edit || \'\''
-              },
-              'hideExpression': 'field.model.category !== \'display-content-field\'',
-            }
-          }
-        },
-        'basic': {
-          'type': 'object',
-          'title': 'Basic Information',
-          'widget': {
-            'formlyConfig': {
-              'defaultValue': {},
-              'className': 'flex pad',
-              'hideExpression': 'field.parent.model.category === \'display-content-field\'',
-              'templateOptions': {
-                'isOptional': true
-              }
-            }
-          },
-          'properties': {
-            'type': {
-              '$ref': '#/definitions/field/types/type'
-            },
-            'subType': {
-              '$ref': '#/definitions/field/types/subType'
-            },
-            'name': {
-              '$ref': '#/definitions/field/types/name'
-            },
-            'label': {
-              '$ref': '#/definitions/field/types/label'
-            }
-          },
-          'required': [
-            'label',
-            'type'
-          ]
-        },
-        'options': {
-          'type': 'array',
-          'title': 'Configure Options',
-          'minItems': 1,
-          'widget': {
-            'formlyConfig': {
-              'type': 'options-editor',
-              'defaultValue': [],
-              'hideExpression': 'field.parent.model.category !== \'multiple-choice-field\'',
-              'templateOptions': {
-                'isOptional': true
-              },
-            }
-          },
-          'items': {
-            'type': 'object',
-            'properties': {
-              'value': {
-                'type': 'string',
-                'widget': {
-                  'formlyConfig': {
-                    'type': 'input',
-                    'defaultValue': '',
-                    'templateOptions': {
-                      'placeholder': 'Enter a name...'
-                    }
-                  }
-                }
-              },
-              'label': {
-                'type': 'string',
-                'widget': {
-                  'formlyConfig': {
-                    'type': 'input',
-                    'defaultValue': '',
-                    'templateOptions': {
-                      'placeholder': 'Enter a label...'
-                    }
-                  }
-                }
-              }
-            },
-            'required': [
-              'value',
-              'label'
-            ]
-          }
-        },
-        'extra': {
-          'type': 'object',
-          'title': 'Extras',
-          'widget': {
-            'formlyConfig': {
-              'defaultValue': {},
-              'className': 'flex pad',
-              'hideExpression': '[\'display-content-field\', \'complex-object-field\'].includes(field.parent.model.category)',
-              'templateOptions': {
-                'isOptional': true
-              }
-            }
-          },
-          'properties': {
-            'defaultValue': {
-              '$ref': '#/definitions/field/types/defaultValue'
-            },
-            'placeholder': {
-              '$ref': '#/definitions/field/types/placeholder'
-            },
-            'hint': {
-              '$ref': '#/definitions/field/types/hint'
-            },
-            'help': {
-              '$ref': '#/definitions/field/types/help'
-            }
-          }
-        },
-        'advanced': {
-          'type': 'object',
-          'title': 'Advanced',
-          'widget': {
-            'formlyConfig': {
-              'defaultValue': {},
-              'className': 'flex pad',
-              'templateOptions': {
-                'isOptional': true
-              }
-            }
-          },
-          'properties': {
-            'hideExpression': {
-              '$ref': '#/definitions/field/types/hideExpression'
-            },
-            'validationExpressions': {
-              '$ref': '#/definitions/field/types/validationExpressions'
-            }
-          }
-        },
-        'complexObject': {
-          'type': 'array',
-          'title': 'Configured Fields',
-          'minItems': 0,
-          'widget': {
-            'formlyConfig': {
-              'className': 'formly-build-page-form-min-height flex column pad',
-              'type': 'page-fields',
-              'defaultValue': [],
-              'hideExpression': 'field.parent.model.category !== \'complex-object-field\'',
-              'templateOptions': {
-                'hideLabel': true
-              }
-            }
-          },
-          'items': {
-            '$ref': '#/definitions/field/picker'
-          }
-        }
-      },
-      'types': {
-        'hideExpression': {
-          'type': 'array',
-          'title': 'Create rule to conditionally hide this field',
-          'widget': {
-            'formlyConfig': {
-              'defaultValue': [],
-              'type': 'expression-builder'
-            }
-          },
-          'items': {
-            '$ref': '#/definitions/expression/hideRule'
-          }
-        },
-        'validationExpressions': {
-          'type': 'array',
-          'title': 'Create rule to validate user entries',
-          'widget': {
-            'formlyConfig': {
-              'defaultValue': [],
-              'type': 'expression-builder',
-              'hideExpression': 'field.parent.parent.model.category === \'display-content-field\'',
-            }
-          },
-          'items': {
-            '$ref': '#/definitions/expression/baseCondition'
-          }
-        },
-        'category': {
-          'type': 'string',
-          'title': 'Select Base Field Type',
-          'widget': {
-            'formlyConfig': {
-              'type': 'select',
-              'defaultValue': '',
-              'templateOptions': {
-                'options': selectionOptionsMap[SelectionOptionType.FieldCategory].filter(x => x.value !== 'form')
-              },
-              'hideExpression': '!!model.category'
-            }
-          }
-        },
+      'properties': {
         'name': {
           'type': 'string',
-          'title': 'Field Name',
+          'title': 'Page Name',
           'widget': {
             'formlyConfig': {
               'type': 'input',
@@ -525,7 +187,8 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
         },
         'label': {
           'type': 'string',
-          'title': 'Field Label',
+          'title': 'Page Label',
+          'className': 'margin-top',
           'widget': {
             'formlyConfig': {
               'type': 'input',
@@ -533,79 +196,412 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
             }
           }
         },
-        'type': {
-          'type': 'string',
-          'title': 'Field Type',
+        'hideExpression': {
+          'type': 'array',
+          'title': 'Create rule to conditionally hide this page',
           'widget': {
             'formlyConfig': {
-              'type': 'select',
-              'defaultValue': '',
-              'templateOptions': {
-                'options': selectionOptionsMap[SelectionOptionType.FieldType]
-              },
-              'expressionProperties': {
-                'templateOptions.options': 'field.templateOptions._options.filter(x => x.category === field.parent.parent.model.category)',
-                'model.type': 'field.templateOptions.options?.length === 1 ? field.templateOptions.options[0].value : (field.templateOptions.options?.find(x => x.value === model.type) ? model.type : undefined)',
+              'defaultValue': [],
+              'type': 'expression-builder'
+            }
+          },
+          'items': {
+            '$ref': '#/definitions/expression/baseCondition'
+          }
+        }
+      },
+      'required': [
+        'label'
+      ]
+    },
+    'pageFields': {
+      'type': 'array',
+      'title': 'Fields',
+      'minItems': 1,
+      'widget': {
+        'formlyConfig': {
+          'className': 'formly-build-page-form-min-height flex column',
+          'type': 'page-fields',
+          'defaultValue': [],
+          'templateOptions': {
+            'hideLabel': true
+          }
+        }
+      },
+      'items': {
+        '$ref': '#/definitions/fieldPicker'
+      }
+    },
+    'fieldPicker': {
+      'type': 'object',
+      'widget': {
+        'formlyConfig': {
+          'type': 'tab-form',
+          'defaultValue': {},
+          'templateOptions': {
+            'hideButtons': true,
+            'linear': false
+          }
+        }
+      },
+      'properties': {
+        'category': {
+          '$ref': '#/definitions/fieldTypes/category'
+        },
+        'basic': {
+          '$ref': '#/definitions/fieldTabs/basic'
+        },
+        'complexObject': {
+          '$ref': '#/definitions/fieldTabs/complexObject'
+        },
+        'options': {
+          '$ref': '#/definitions/fieldTabs/options'
+        },
+        'extra': {
+          '$ref': '#/definitions/fieldTabs/extra'
+        },
+        'edit': {
+          '$ref': '#/definitions/fieldTabs/edit-display-content'
+        },
+        'preview': {
+          '$ref': '#/definitions/fieldTabs/preview-display-content'
+        },
+        'advanced': {
+          '$ref': '#/definitions/fieldTabs/advanced'
+        }
+      },
+      'required': [
+        'category'
+      ],
+      'if': {
+        'category': 'complex-object-field'
+      },
+      'then': {
+        'properties': {
+          'complexObject': {
+            'minItems': 1
+          }
+        }
+      }
+    },
+    'fieldTabs': {
+      'edit-display-content': {
+        'type': 'string',
+        'title': 'Edit Content',
+        'widget': {
+          'formlyConfig': {
+            'type': 'display-html-editor',
+            'defaultValue': '',
+            'className': 'pad-half formly-field fill-height',
+            'hideExpression': 'field.model.category !== \'display-content-field\''
+          }
+        }
+      },
+      'preview-display-content': {
+        'type': 'null',
+        'title': 'Content Preview',
+        'widget': {
+          'formlyConfig': {
+            'type': 'display-html',
+            'className': 'pad-half formly-field',
+            'templateOptions': {
+              'html': ''
+            },
+            'expressionProperties': {
+              'templateOptions.html': 'field.model.edit || \'\''
+            },
+            'hideExpression': 'field.model.category !== \'display-content-field\'',
+          }
+        }
+      },
+      'basic': {
+        'type': 'object',
+        'title': 'Basic Information',
+        'widget': {
+          'formlyConfig': {
+            'defaultValue': {},
+            'className': 'flex pad',
+            'hideExpression': 'field.parent.model.category === \'display-content-field\'',
+            'templateOptions': {
+              'isOptional': true
+            }
+          }
+        },
+        'properties': {
+          'type': {
+            '$ref': '#/definitions/fieldTypes/typeField'
+          },
+          'subType': {
+            '$ref': '#/definitions/fieldTypes/subType'
+          },
+          'name': {
+            '$ref': '#/definitions/fieldTypes/name'
+          },
+          'label': {
+            '$ref': '#/definitions/fieldTypes/label'
+          }
+        },
+        'required': [
+          'label',
+          'type'
+        ]
+      },
+      'options': {
+        'type': 'array',
+        'title': 'Configure Options',
+        'minItems': 1,
+        'widget': {
+          'formlyConfig': {
+            'type': 'options-editor',
+            'defaultValue': [],
+            'hideExpression': 'field.parent.model.category !== \'multiple-choice-field\'',
+            'templateOptions': {
+              'isOptional': true
+            },
+          }
+        },
+        'items': {
+          'type': 'object',
+          'properties': {
+            'value': {
+              'type': 'string',
+              'widget': {
+                'formlyConfig': {
+                  'type': 'input',
+                  'defaultValue': '',
+                  'templateOptions': {
+                    'placeholder': 'Enter a name...'
+                  }
+                }
+              }
+            },
+            'label': {
+              'type': 'string',
+              'widget': {
+                'formlyConfig': {
+                  'type': 'input',
+                  'defaultValue': '',
+                  'templateOptions': {
+                    'placeholder': 'Enter a label...'
+                  }
+                }
               }
             }
-          }
-        },
-        'subType': {
-          'type': 'string',
-          'title': 'Sub Field Type',
-          'widget': {
-            'formlyConfig': {
-              'type': 'select',
-              'defaultValue': '',
-              'templateOptions': {
-                'options': selectionOptionsMap[SelectionOptionType.FieldSubType]
-              },
-              'expressionProperties': {
-                'templateOptions.options': 'field.templateOptions._options.filter(x => x.category === model.type)',
-                'model.subType': 'field.templateOptions.options?.find(x => x.value === field.model.subType) ? field.model.subType : undefined',
-              },
-              'hideExpression': '!field.templateOptions.options?.length',
+          },
+          'required': [
+            'value',
+            'label'
+          ]
+        }
+      },
+      'extra': {
+        'type': 'object',
+        'title': 'Extras',
+        'widget': {
+          'formlyConfig': {
+            'defaultValue': {},
+            'className': 'flex pad',
+            'hideExpression': '[\'display-content-field\', \'complex-object-field\'].includes(field.parent.model.category)',
+            'templateOptions': {
+              'isOptional': true
             }
           }
         },
-        'placeholder': {
-          'type': 'string',
-          'title': 'Placeholder Text',
-          'widget': {
-            'formlyConfig': {
-              'type': 'input',
-              'defaultValue': ''
+        'properties': {
+          'defaultValue': {
+            '$ref': '#/definitions/fieldTypes/defaultValue'
+          },
+          'placeholder': {
+            '$ref': '#/definitions/fieldTypes/placeholder'
+          },
+          'hint': {
+            '$ref': '#/definitions/fieldTypes/hint'
+          },
+          'help': {
+            '$ref': '#/definitions/fieldTypes/help'
+          }
+        }
+      },
+      'advanced': {
+        'type': 'object',
+        'title': 'Advanced',
+        'widget': {
+          'formlyConfig': {
+            'defaultValue': {},
+            'className': 'flex pad',
+            'templateOptions': {
+              'isOptional': true
             }
           }
         },
-        'hint': {
-          'type': 'string',
-          'title': 'Hint Text',
-          'widget': {
-            'formlyConfig': {
-              'type': 'input',
-              'defaultValue': ''
+        'properties': {
+          'hideExpression': {
+            '$ref': '#/definitions/fieldTypes/hideExpression'
+          },
+          'validationExpressions': {
+            '$ref': '#/definitions/fieldTypes/validationExpressions'
+          }
+        }
+      },
+      'complexObject': {
+        'type': 'array',
+        'title': 'Configured Fields',
+        'minItems': 0,
+        'widget': {
+          'formlyConfig': {
+            'className': 'formly-build-page-form-min-height flex column pad',
+            'type': 'page-fields',
+            'defaultValue': [],
+            'hideExpression': 'field.parent.model.category !== \'complex-object-field\'',
+            'templateOptions': {
+              'hideLabel': true
             }
           }
         },
-        'defaultValue': {
-          'type': 'string',
-          'title': 'Default Value',
-          'widget': {
-            'formlyConfig': {
-              'type': 'input',
-              'defaultValue': ''
-            }
+        'items': {
+          '$ref': '#/definitions/fieldPicker'
+        }
+      }
+    },
+    'fieldTypes': {
+      'hideExpression': {
+        'type': 'array',
+        'title': 'Create rule to conditionally hide this field',
+        'widget': {
+          'formlyConfig': {
+            'defaultValue': [],
+            'type': 'expression-builder'
           }
         },
-        'help': {
-          'type': 'string',
-          'title': 'Help Text',
-          'widget': {
-            'formlyConfig': {
-              'type': 'input',
-              'defaultValue': ''
+        'items': {
+          '$ref': '#/definitions/expression/hideRule'
+        }
+      },
+      'validationExpressions': {
+        'type': 'array',
+        'title': 'Create rule to validate user entries',
+        'widget': {
+          'formlyConfig': {
+            'defaultValue': [],
+            'type': 'expression-builder',
+            'hideExpression': 'field.parent.parent.model.category === \'display-content-field\'',
+          }
+        },
+        'items': {
+          '$ref': '#/definitions/expression/baseCondition'
+        }
+      },
+      'category': {
+        'type': 'string',
+        'title': 'Select Base Field Type',
+        'widget': {
+          'formlyConfig': {
+            'type': 'select',
+            'defaultValue': '',
+            'templateOptions': {
+              'options': selectionOptionsMap[SelectionOptionType.FieldCategory].filter(x => x.value !== 'form')
+            },
+            'hideExpression': '!!model.category'
+          }
+        }
+      },
+      'name': {
+        'type': 'string',
+        'title': 'Field Name',
+        'widget': {
+          'formlyConfig': {
+            'type': 'input',
+            'defaultValue': '',
+            'validators': {
+              'validation': [
+                'valid-name'
+              ]
             }
+          }
+        }
+      },
+      'label': {
+        'type': 'string',
+        'title': 'Field Label',
+        'widget': {
+          'formlyConfig': {
+            'type': 'input',
+            'defaultValue': ''
+          }
+        }
+      },
+      'typeField': {
+        'type': 'string',
+        'title': 'Field Type',
+        'widget': {
+          'formlyConfig': {
+            'type': 'select',
+            'defaultValue': '',
+            'templateOptions': {
+              'options': selectionOptionsMap[SelectionOptionType.FieldType]
+            },
+            'expressionProperties': {
+              'templateOptions.options': 'field.templateOptions._options.filter(x => x.category === field.parent.parent.model.category)',
+              'model.type': 'field.templateOptions.options?.length === 1 ? field.templateOptions.options[0].value : (field.templateOptions.options?.find(x => x.value === model.type) ? model.type : undefined)',
+            }
+          }
+        }
+      },
+      'subType': {
+        'type': 'string',
+        'title': 'Sub Field Type',
+        'widget': {
+          'formlyConfig': {
+            'type': 'select',
+            'defaultValue': '',
+            'templateOptions': {
+              'options': selectionOptionsMap[SelectionOptionType.FieldSubType]
+            },
+            'expressionProperties': {
+              'templateOptions.options': 'field.templateOptions._options.filter(x => x.category === model.type)',
+              'model.subType': 'field.templateOptions.options?.find(x => x.value === field.model.subType) ? field.model.subType : undefined',
+            },
+            'hideExpression': '!field.templateOptions.options?.length',
+          }
+        }
+      },
+      'placeholder': {
+        'type': 'string',
+        'title': 'Placeholder Text',
+        'widget': {
+          'formlyConfig': {
+            'type': 'input',
+            'defaultValue': ''
+          }
+        }
+      },
+      'hint': {
+        'type': 'string',
+        'title': 'Hint Text',
+        'widget': {
+          'formlyConfig': {
+            'type': 'input',
+            'defaultValue': ''
+          }
+        }
+      },
+      'defaultValue': {
+        'type': 'string',
+        'title': 'Default Value',
+        'widget': {
+          'formlyConfig': {
+            'type': 'input',
+            'defaultValue': ''
+          }
+        }
+      },
+      'help': {
+        'type': 'string',
+        'title': 'Help Text',
+        'widget': {
+          'formlyConfig': {
+            'type': 'input',
+            'defaultValue': ''
           }
         }
       }

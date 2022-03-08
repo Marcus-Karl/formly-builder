@@ -17,7 +17,7 @@ export class FormlyFormJsonSchemaBuilderService {
   private _generatedSchemaConfig: { [key: string]: any } = {};
   private _model?: { [key: string]: any };
   private _options?: FormlyFormOptions;
-  private _formlyFromJsonSchema?: JSONSchema7;
+  private _formlyFromJsonSchema?: any;
   private _initComplete = false;
 
   get builderSchema() {
@@ -63,7 +63,7 @@ export class FormlyFormJsonSchemaBuilderService {
 
     this._formlyFromJsonSchema = this.getJsonBuilderSchema(this.options.formState);
 
-    this._fields = [this.formlyJsonschema.toFieldConfig(this._formlyFromJsonSchema)];
+    this._fields = [this.formlyJsonschema.toFieldConfig(this._formlyFromJsonSchema as JSONSchema7)];
 
     this._initComplete = true;
   }
@@ -72,7 +72,7 @@ export class FormlyFormJsonSchemaBuilderService {
     return ConvertModel.toJsonSchema(this.model, this.options.formState, this.generatedSchemaConfig);
   }
 
-  public getJsonBuilderSchema = (formState: BuilderFormState, selectionOptionsMap?: { [key in SelectionOptionType]: FormBuilderSelectionOption[] }): JSONSchema7 => {
+  public getJsonBuilderSchema = (formState: BuilderFormState, selectionOptionsMap?: { [key in SelectionOptionType]: FormBuilderSelectionOption[] }) => {
     for (let info in formState.builder.pagesInformation) {
       if (Object.prototype.hasOwnProperty.call(formState.builder.pagesInformation, info)) {
         delete formState.builder.pagesInformation[info];

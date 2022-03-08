@@ -1,19 +1,29 @@
 import { Injectable } from '@angular/core';
-import { FormlyFieldConfig } from '@ngx-formly/core';
+import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
+import { BuilderFormState } from '../models/builder-form-state';
 
 @Injectable({ providedIn: 'root' })
 export class FormlyFormJsonSchemaInternalBuilderService {
+  private _formState: BuilderFormState | null;
+  private _options: FormlyFormOptions | null;
   private _pageDropsIds: string[];
   private _pageDropsIdsMap: { [key: string]: string };
   private _pageField: FormlyFieldConfig | null;
   private _tokenField: FormlyFieldConfig | null;
 
   constructor() {
+    this._formState = null;
+    this._options = null;
     this._pageDropsIds = [];
     this._pageDropsIdsMap = {}
-
     this._pageField = null;
     this._tokenField = null;
+  }
+
+  refreshPageStates() {
+    this._formState?.builder.functions.refreshPagesInformation()
+      .catch(error => console.error(`Error refreshing page state`, error))
+      .finally(() => {});
   }
 
   getPageField() {
@@ -56,6 +66,18 @@ export class FormlyFormJsonSchemaInternalBuilderService {
     }
   }
 
+  removePageDropId(page: FormlyFieldConfig) {
+    if (page?.id) {
+      let index = this._pageDropsIds.findIndex(x => x === this._pageDropsIdsMap[page.id as string]);
+
+      if (index >= 0) {
+        this._pageDropsIds.splice(index, 1);
+      }
+
+      delete this._pageDropsIdsMap[page.id];
+    }
+  }
+
   registerMajorFormSections(field: FormlyFieldConfig) {
     let rootField = this._findFormRoot(field);
 
@@ -66,6 +88,11 @@ export class FormlyFormJsonSchemaInternalBuilderService {
 
     this._pageField = this._findFirstDescendantsByKey(rootField, 'pages');
     this._tokenField = this._findFirstDescendantsByKey(rootField, 'tokens');
+
+    this._options = rootField.options ?? null;
+    this._formState = this._options?.formState;
+
+    this.refreshPageStates();
   }
 
   private _findFirstDescendantsByKey(field: FormlyFieldConfig, key: string): FormlyFieldConfig | null {

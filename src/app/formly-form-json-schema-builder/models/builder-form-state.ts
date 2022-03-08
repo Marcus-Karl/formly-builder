@@ -22,6 +22,7 @@ export type SelectionOption = {
 }
 
 export type FieldInformation = SelectionOption & {
+  name: string | null;
   referenceId: string;
   subType: string;
   type: string;
@@ -30,6 +31,7 @@ export type FieldInformation = SelectionOption & {
 export type PageInformation = {
   fields: FieldInformation[];
   label: string;
+  name: string | null;
   referenceId: string;
 }
 

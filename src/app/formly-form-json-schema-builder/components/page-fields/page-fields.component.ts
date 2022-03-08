@@ -72,6 +72,8 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
       this.options.updateInitialValue();
     }
 
+    this.formlyBuilderService.refreshPageStates();
+
     this.renderChanges();
   }
 
@@ -101,6 +103,8 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
 
       this.edit(newField);
     }
+
+    this.formlyBuilderService.refreshPageStates();
   }
 
   confirmRemoval(formField: FormlyFieldConfig) {
@@ -131,6 +135,8 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
             ?.filter(field => field.model)
             .forEach((field: FormlyFieldConfig, index: number) => field.model['_order'] = index + 1);
 
+          this.formlyBuilderService.refreshPageStates();
+
           this.renderChanges();
         }
       });
@@ -145,7 +151,7 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
       maxHeight: '100vh',
       panelClass: 'resizable-overlay'
     }).afterClosed().subscribe(() => {
-      FunctionHelpers.refreshPagesInformation(this.options?.formState);
+      this.formlyBuilderService.refreshPageStates();
 
       this.table?.renderRows();
     });

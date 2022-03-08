@@ -67,14 +67,16 @@ export class FormEditorComponent extends FieldArrayType implements OnInit {
     }
 
     this.addedIndex = index;
+
+    this.formlyBuilderService.refreshPageStates();
   }
 
-  confirmRemoval(formField: FormlyFieldConfig) {
+  confirmRemoval(page: FormlyFieldConfig) {
     if (!Array.isArray(this.field.fieldGroup)) {
       return;
     }
 
-    let index = this.field.fieldGroup.findIndex(x => x.id === formField?.id);
+    let index = this.field.fieldGroup.findIndex(x => x.id === page?.id);
 
     if (index > -1) {
       let header = this.translateService.instant('Confirmation');
@@ -93,6 +95,8 @@ export class FormEditorComponent extends FieldArrayType implements OnInit {
         if (action === removeText) {
           super.remove(index);
 
+          this.formlyBuilderService.removePageDropId(page);
+
           this.field.fieldGroup
             ?.filter(field => field.model)
             .forEach((field: FormlyFieldConfig, index: number) => field.model['_order'] = index + 1);
@@ -100,6 +104,8 @@ export class FormEditorComponent extends FieldArrayType implements OnInit {
           if (!this.field?.fieldGroup?.length) {
             this.reorderEnabled = false;
           }
+
+          this.formlyBuilderService.refreshPageStates();
         }
       });
     }

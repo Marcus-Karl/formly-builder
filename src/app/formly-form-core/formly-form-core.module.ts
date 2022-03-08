@@ -116,12 +116,12 @@ import { ErrorsAndHintsComponent } from './components/errors-and-hints/errors-an
         // See: https://json-schema.org/understanding-json-schema/reference/type.html
         { name: 'array', component: ArrayTypeComponent },
         { name: 'boolean', extends: 'object' },
-        { name: 'enum', extends: 'object' },
-        { name: 'integer', extends: 'object' },
+        { name: 'enum', extends: 'select', defaultOptions: { wrappers: ['form-field'] } },
+        { name: 'integer', extends: 'number' },
         { name: 'null', extends: 'object' },
-        { name: 'number', extends: 'object' },
+        { name: 'number', extends: 'input', defaultOptions: { templateOptions: { type: 'number' }, wrappers: ['form-field'] } },
         { name: 'object', component: ObjectTypeComponent },
-        { name: 'string', extends: 'object' },
+        { name: 'string', extends: 'input', defaultOptions: { wrappers: ['form-field'] } },
       ],
       wrappers: [
         { name: 'default-wrapper', component: DefaultWrapperComponent },

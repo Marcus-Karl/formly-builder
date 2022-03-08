@@ -58,18 +58,25 @@ const FREE_RESPONSE_FIELDS: FormBuilderSelectionOption[] = [
         value: 'date-time-input-field',
         label: 'Date & Time',
         type: SelectionOptionType.FieldType,
+        schemaDefaults: {
+          format: 'date-time'
+        }
       },
       {
         value: 'email-input-field',
         label: 'Email',
         type: SelectionOptionType.FieldType,
+        schemaDefaults: {
+          format: 'email',
+          pattern: "[A-Za-z0-9._]+@[A-Za-z0-9.-]+\.[A-Za-z0-9]{2,6}$"
+        }
       },
       {
         value: 'number-input-field',
         label: 'Number',
         type: SelectionOptionType.FieldType,
         schemaDefaults: {
-          format: 'date'
+          type: 'number'
         }
       },
       {
@@ -105,7 +112,16 @@ const MULTIPLE_CHOICE_FIELDS: FormBuilderSelectionOption[] = [
       {
         type: SelectionOptionType.FieldType,
         value: 'select-dropdown-field',
-        label: 'Dropdown Select Field'
+        label: 'Dropdown Select Field',
+        schemaDefaults: {
+          widget: {
+            formlyConfig: {
+              templateOptions: {
+                multiple: false
+              }
+            }
+          }
+        }
       },
       {
         type: SelectionOptionType.FieldType,

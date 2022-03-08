@@ -135,14 +135,14 @@ export class SelectDropDownFieldComponent extends FieldType implements OnInit, O
     let selectedOption = this.selectOptions$.value.find(x => x.value === value);
 
     if (selectedOption) {
-      return selectedOption.label || value;
+      return this.translateService.instant(selectedOption.label)|| value;
     }
 
     for (let groupOption of this.selectOptions$.value.filter(x => x.group && x.group.length > 0)) {
       selectedOption = groupOption.group?.find(x => x.value === value);
 
       if (selectedOption) {
-        return selectedOption.label || value;
+        return this.translateService.instant(selectedOption.label) || value;
       }
     }
 

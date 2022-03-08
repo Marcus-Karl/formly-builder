@@ -100,9 +100,7 @@ export class ConvertModel {
         formlyConfig: {
           type: null,
           defaultValue: {},
-          templateOptions: {
-            _translationFormKey: FunctionHelpers.generateId()
-          }
+          templateOptions: {}
         }
       },
       properties: {},
@@ -120,8 +118,10 @@ export class ConvertModel {
       widget: {
         ...model['_referenceId'] && { _referenceId: model['_referenceId'] },
         formlyConfig: {
-          _translationFormKey: model['_translationFormKey'] || FunctionHelpers.generateId(),
-          ...settings['formType'] && { type: settings['formType'] }
+          ...settings['formType'] && { type: settings['formType'] },
+          templateOptions: {
+            _translationFormKey: model['_referenceId'] || FunctionHelpers.generateId(),
+          }
         }
       }
     }
@@ -238,8 +238,11 @@ export class ConvertModel {
       model['_referenceId'] = FunctionHelpers.generateId();
     }
 
+    let options = this.getOptions(model['options']);
+
     let modelSettings = {
       ...settings['label'] && { title: settings['label'] },
+      ...options && { enum: options.map(x => x.value) },
       widget: {
         ...model['_referenceId'] && { _referenceId: model['_referenceId'] },
         formlyConfig: {
@@ -248,7 +251,7 @@ export class ConvertModel {
           templateOptions: {
             ...model['edit'] && { html: model['edit'] },
             ...this.getKvps(extra, 'defaultValue'),
-            ...this.getOptions(model['options']),
+            ...options && { options: options },
             ...model['_order'] !== undefined && { _order: model['_order'] },
           }
         }
@@ -277,9 +280,9 @@ export class ConvertModel {
   /**
    * HELPERS
    */
-  private getOptions = (options: any[]): { [key: string]: Array<{ [key: string]: string }> } => {
+  private getOptions = (options: any[]): Array<{ [key: string]: string }> | null => {
     if (!options?.length) {
-      return {};
+      return null;
     }
 
     options.forEach(option => {
@@ -290,7 +293,7 @@ export class ConvertModel {
       }
     });
 
-    return { options };
+    return options;
   }
 
   private getKvps = (model: any, ...ignoreKeys: string[]): { [key: string]: any } => {

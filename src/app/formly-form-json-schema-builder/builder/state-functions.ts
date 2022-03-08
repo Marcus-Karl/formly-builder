@@ -1,22 +1,19 @@
 import { v4 as uuidv4 } from 'uuid';
 import { FieldInformation, PageInformation, PagesInformation } from '../models/builder-form-state';
 
-export const refreshPagesInformation = (formState: any | undefined | null) => {
+export const refreshPagesInformation = async (formState: any | undefined | null) => {
   if (!formState?.builder || !formState.mainModel?.form?.pages) {
     return;
   }
 
-  formState.builder.pagesInformation = {};
+  let pagesInformation = formState.builder.pagesInformation = {} as { [key: string]: PageInformation };
 
-  let pagesInformation: PagesInformation = formState.builder.pagesInformation;
-
-  let modelPages = formState.mainModel.form.pages as any[];
-
-  modelPages.filter(pageModel => pageModel._referenceId).forEach((pageModel: any) => {
+  (formState.mainModel.form.pages as any[]).filter(pageModel => pageModel._referenceId).forEach((pageModel: any) => {
     let pageInformation: PageInformation = {
       label: pageModel.settings.label,
+      name: pageModel.settings.name || null,
       referenceId: pageModel._referenceId,
-      fields: []
+      fields: [] as FieldInformation[]
     };
 
     pagesInformation[pageInformation.referenceId] = pageInformation;
@@ -24,8 +21,9 @@ export const refreshPagesInformation = (formState: any | undefined | null) => {
     pageModel.fields?.filter((field: any) => field.basic && field._referenceId).forEach((field: any) => {
       let fieldInformation: FieldInformation = {
         category: field.category,
-        group: pageModel.settings.label,
+        group: pageModel.settings.label || pageModel.settings.name || pageInformation.referenceId,
         label: field.basic.label,
+        name: field.basic.name || null,
         type: field.basic.type,
         subType: field.basic.subType,
         referenceId: field._referenceId,
@@ -97,8 +95,8 @@ export class FunctionReferences {
     this._formState = formState;
   }
 
-  refreshPagesInformation(formState: any = this._formState) {
-    return refreshPagesInformation(formState);
+  async refreshPagesInformation(formState: any = this._formState) {
+    return await refreshPagesInformation(formState);
   }
 
   getFieldForReference(fieldReference: string, formState: any = this._formState) {

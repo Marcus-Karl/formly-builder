@@ -15,7 +15,7 @@
 
     <ng-container *ngFor="let option of selectOptions$ | async | sortOptions">
       <mat-radio-button class="mat-radio-button-wrap" [value]="option[valueProp]" [disabled]="option.disabled" [ngClass]="option.classes">
-        {{ option[labelProp] }}
+        {{ option[labelProp] | translate | tokens: to }}
       </mat-radio-button>
     </ng-container>
   </fieldset>
