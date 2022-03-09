@@ -26,8 +26,8 @@
   [cdkDropListData]="this"
   [cdkDropListAutoScrollStep]="5"
   [cdkDropListDisabled]="!reorderEnabled"
-  (cdkDropListDropped)="drop($event)"
-  [cdkDropListConnectedTo]="getConnectedToDropIds()">
+  [cdkDropListConnectedTo]="getConnectedToDropIds()"
+  (cdkDropListDropped)="drop($event)">
 
   <table mat-table [dataSource]="field.fieldGroup || []" class="fill-width">
     <ng-container matColumnDef="_order">
@@ -106,7 +106,15 @@
 <errors-and-hints [field]="field"></errors-and-hints>
 
 <ng-template #noFields>
-  <div class="flex page-fields center-content" translate>
+  <div
+    [id]="field.id"
+    class="flex page-fields center-content"
+    cdkDropList
+    [cdkDropListData]="this"
+    [cdkDropListAutoScrollStep]="5"
+    [cdkDropListConnectedTo]="getConnectedToDropIds()"
+    (cdkDropListDropped)="drop($event)"
+    translate>
     No Fields Configured
   </div>
 </ng-template>

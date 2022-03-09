@@ -1,4 +1,4 @@
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
@@ -41,7 +41,10 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
     }
 
     if (event.previousContainer === event.container) {
-      moveItemInArray(this.field.fieldGroup, event.previousIndex, event.currentIndex);
+      let model = this.field.fieldGroup[event.previousIndex].model;
+
+      super.remove(event.previousIndex);
+      super.add(event.currentIndex, model);
 
       this.field.fieldGroup.forEach((field: FormlyFieldConfig, index: number) => field.model['_order'] = index + 1);
     } else {
@@ -49,9 +52,7 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
         let previousFieldGroup = event.previousContainer.data.field.fieldGroup ?? [];
 
         let modelToMove = previousFieldGroup[event.previousIndex].model;
-
         super.add(event.currentIndex, modelToMove, { markAsDirty: true });
-
         event.previousContainer.data.remove(event.previousIndex, { markAsDirty: true });
 
         previousFieldGroup

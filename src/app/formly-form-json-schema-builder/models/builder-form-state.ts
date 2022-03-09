@@ -25,6 +25,7 @@ export type FieldInformation = SelectionOption & {
   name: string | null;
   referenceId: string;
   subType: string;
+  options: string[];
   type: string;
 }
 

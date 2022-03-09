@@ -20,21 +20,21 @@ export class FormlyFormJsonSchemaInternalBuilderService {
     this._tokenField = null;
   }
 
-  refreshPageStates() {
+  public refreshPageStates() {
     this._formState?.builder.functions.refreshPagesInformation()
       .catch(error => console.error(`Error refreshing page state`, error))
-      .finally(() => {});
+      .finally(() => { });
   }
 
-  getPageField() {
+  public getPageField() {
     return this._pageField;
   }
 
-  getTokenField() {
+  public getTokenField() {
     return this._tokenField;
   }
 
-  getRegisteredDropIdForPage(page: FormlyFieldConfig) {
+  public getRegisteredDropIdForPage(page: FormlyFieldConfig) {
     if (page && this._pageDropsIdsMap[page.id as string]) {
       return this._pageDropsIdsMap[page.id as string];
     }
@@ -42,11 +42,11 @@ export class FormlyFormJsonSchemaInternalBuilderService {
     return '';
   }
 
-  getRegisteredDropIds(...filterIds: string[]) {
+  public getRegisteredDropIds(...filterIds: string[]) {
     return this._pageDropsIds.filter(id => !filterIds.includes(id));
   }
 
-  getRegisteredDropIdsExceptForPage(page?: FormlyFieldConfig) {
+  public getRegisteredDropIdsExceptForPage(page?: FormlyFieldConfig) {
     if (page?.id && this._pageDropsIdsMap[page.id]) {
       return this.getRegisteredDropIds(this._pageDropsIdsMap[page.id]);
     }
@@ -54,8 +54,8 @@ export class FormlyFormJsonSchemaInternalBuilderService {
     return this.getRegisteredDropIds();
   }
 
-  registerPageDropIds(page: FormlyFieldConfig) {
-    let pageDescendantField = this._findFirstDescendantsByKey(page, 'fields');
+  public registerPageDropIds(page: FormlyFieldConfig) {
+    let pageDescendantField = this.findFirstDescendantsByKey(page, 'fields');
 
     if (pageDescendantField?.id && !this._pageDropsIds.includes(pageDescendantField.id)) {
       this._pageDropsIds.push(pageDescendantField.id);
@@ -66,7 +66,7 @@ export class FormlyFormJsonSchemaInternalBuilderService {
     }
   }
 
-  removePageDropId(page: FormlyFieldConfig) {
+  public removePageDropId(page: FormlyFieldConfig) {
     if (page?.id) {
       let index = this._pageDropsIds.findIndex(x => x === this._pageDropsIdsMap[page.id as string]);
 
@@ -78,16 +78,16 @@ export class FormlyFormJsonSchemaInternalBuilderService {
     }
   }
 
-  registerMajorFormSections(field: FormlyFieldConfig) {
-    let rootField = this._findFormRoot(field);
+  public registerMajorFormSections(field: FormlyFieldConfig) {
+    let rootField = this.findFormRoot(field);
 
     if (!rootField) {
       console.error(`Unable to determine form root from field: ${field?.id}`);
       return;
     }
 
-    this._pageField = this._findFirstDescendantsByKey(rootField, 'pages');
-    this._tokenField = this._findFirstDescendantsByKey(rootField, 'tokens');
+    this._pageField = this.findFirstDescendantsByKey(rootField, 'pages');
+    this._tokenField = this.findFirstDescendantsByKey(rootField, 'tokens');
 
     this._options = rootField.options ?? null;
     this._formState = this._options?.formState;
@@ -95,7 +95,7 @@ export class FormlyFormJsonSchemaInternalBuilderService {
     this.refreshPageStates();
   }
 
-  private _findFirstDescendantsByKey(field: FormlyFieldConfig, key: string): FormlyFieldConfig | null {
+  public findFirstDescendantsByKey(field: FormlyFieldConfig, key: string): FormlyFieldConfig | null {
     if (!field?.fieldGroup?.length) {
       return null;
     }
@@ -106,16 +106,46 @@ export class FormlyFormJsonSchemaInternalBuilderService {
       return child;
     }
 
-    let descendants = field.fieldGroup.map(x => this._findFirstDescendantsByKey(x, key)) as FormlyFieldConfig[];
+    let descendants = field.fieldGroup.map(x => this.findFirstDescendantsByKey(x, key)) as FormlyFieldConfig[];
 
     return descendants.find(x => !!x) || null;
   }
 
-  private _findFormRoot(field: FormlyFieldConfig): FormlyFieldConfig {
+  public findAllDescendantsByKey(field: FormlyFieldConfig, key: string): FormlyFieldConfig[] {
+    if (!field?.fieldGroup?.length) {
+      return [];
+    }
+
+    let matches: FormlyFieldConfig[] = [];
+
+    field.fieldGroup.forEach(child => {
+      if (child.key === key) {
+        matches.push(child);
+      }
+
+      matches.push(...this.findAllDescendantsByKey(child, key));
+    });
+
+    return matches;
+  }
+
+  public findFirstAncestoryByType(field: FormlyFieldConfig, type: string): FormlyFieldConfig | undefined {
+    if (field?.type === type) {
+      return field;
+    }
+
+    if (!field?.parent) {
+      return;
+    }
+
+    return this.findFirstAncestoryByType(field.parent, type);
+  }
+
+  public findFormRoot(field: FormlyFieldConfig): FormlyFieldConfig {
     if (!field?.parent) {
       return field;
     }
 
-    return this._findFormRoot(field.parent);
+    return this.findFormRoot(field.parent);
   }
 }

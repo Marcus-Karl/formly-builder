@@ -436,7 +436,7 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
         },
         'properties': {
           'hideExpression': {
-            '$ref': '#/definitions/fieldTypes/hideExpression'
+            '$ref': '#/definitions/fieldTypes/addDependencies'
           },
           'validationExpressions': {
             '$ref': '#/definitions/fieldTypes/validationExpressions'
@@ -464,17 +464,82 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
       }
     },
     'fieldTypes': {
-      'hideExpression': {
+      'addDependencies': {
         'type': 'array',
-        'title': 'Create rule to conditionally hide this field',
+        'title': 'Dependencies',
         'widget': {
           'formlyConfig': {
             'defaultValue': [],
-            'type': 'expression-builder'
+            'type': 'dependency-builder'
           }
         },
         'items': {
-          '$ref': '#/definitions/expression/hideRule'
+          'type': 'object',
+          "properties": {}
+          /*
+          'properties': {
+            'dependencyIf': {
+              'type': 'array',
+              'widget': {
+                'formlyConfig': {
+                  'defaultValue': []
+                }
+              },
+              'items': {
+                'type': 'object',
+                'properties': {
+                  'selection': {
+                    'type': 'string',
+                    'title': 'Select Field (must be multiple choice)',
+                    'widget': {
+                      'formlyConfig': {
+                        'type': 'select',
+                        'defaultValue': '',
+                        'templateOptions': {
+                          'options': []
+                        },
+                        'expressionProperties': {
+                          'model.referenceId': 'model.selection ? model.selection.split(\'_\')[0] : null',
+                          'model.value': 'model.selection ? model.selection.split(\'_\').slice(1).join(\'_\') : null'
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            'dependencyThen': {
+              'type': 'array',
+              'widget': {
+                'formlyConfig': {
+                  'defaultValue': []
+                }
+              },
+              'items': {
+                'type': 'object',
+                'properties': {
+                  'selection': {
+                    'type': 'string',
+                    'title': 'Select Field (must be multiple choice)',
+                    'widget': {
+                      'formlyConfig': {
+                        'type': 'select',
+                        'defaultValue': '',
+                        'templateOptions': {
+                          'options': []
+                        },
+                        'expressionProperties': {
+                          'model.referenceId': 'model.selection ? model.selection.split(\'_\')[0] : null',
+                          'model.value': 'model.selection ? model.selection.split(\'_\')[1] : null'
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          */
         }
       },
       'validationExpressions': {

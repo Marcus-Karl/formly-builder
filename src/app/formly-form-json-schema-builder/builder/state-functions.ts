@@ -28,6 +28,7 @@ export const refreshPagesInformation = async (formState: any | undefined | null)
         subType: field.basic.subType,
         referenceId: field._referenceId,
         value: field._referenceId,
+        options: field.options?.map((option: { value: string, label: string }) => option.value)
       };
 
       pageInformation.fields.push(fieldInformation);

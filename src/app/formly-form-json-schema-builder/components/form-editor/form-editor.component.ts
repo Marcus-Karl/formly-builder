@@ -1,4 +1,4 @@
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatAccordion } from '@angular/material/expansion';
@@ -38,13 +38,18 @@ export class FormEditorComponent extends FieldArrayType implements OnInit {
   }
 
   reorderPage(event: CdkDragDrop<any[]>) {
-    if (!this.field.fieldGroup) {
+    if (!this.field.fieldGroup?.length) {
       return;
     }
 
-    moveItemInArray(this.field.fieldGroup, event.previousIndex, event.currentIndex);
+    let model = this.field.fieldGroup[event.previousIndex].model;
 
-    this.field.fieldGroup.forEach((field: FormlyFieldConfig, index: number) => field.model['_order'] = index + 1);
+    super.remove(event.previousIndex);
+    super.add(event.currentIndex > event.previousIndex ? --event.currentIndex : event.currentIndex, model);
+
+    this.addedIndex = undefined;
+
+    this._setFieldGroupOrder();
   }
 
   add(i?: number, initialModel?: any, markAsDirty?: any) {
@@ -72,6 +77,8 @@ export class FormEditorComponent extends FieldArrayType implements OnInit {
   }
 
   confirmRemoval(page: FormlyFieldConfig) {
+    this.addedIndex = undefined;
+
     if (!Array.isArray(this.field.fieldGroup)) {
       return;
     }
@@ -97,9 +104,7 @@ export class FormEditorComponent extends FieldArrayType implements OnInit {
 
           this.formlyBuilderService.removePageDropId(page);
 
-          this.field.fieldGroup
-            ?.filter(field => field.model)
-            .forEach((field: FormlyFieldConfig, index: number) => field.model['_order'] = index + 1);
+          this._setFieldGroupOrder();
 
           if (!this.field?.fieldGroup?.length) {
             this.reorderEnabled = false;
@@ -109,5 +114,9 @@ export class FormEditorComponent extends FieldArrayType implements OnInit {
         }
       });
     }
+  }
+
+  private _setFieldGroupOrder() {
+    this.field.fieldGroup?.forEach((field: FormlyFieldConfig, index: number) => field.model['_order'] = index + 1);
   }
 }

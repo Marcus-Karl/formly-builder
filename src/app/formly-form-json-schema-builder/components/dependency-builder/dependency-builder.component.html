@@ -1,0 +1,17 @@
+<div class="subheader">{{ to.label }}</div>
+
+<div class="flex fill-width">
+  <div class="top-buttons center-content" [style.margin-left]="'auto'">
+    <button type="button" mat-button (click)="add()" [disabled]="formControl?.disabled">
+      <div class="center-content flex">
+        <mat-icon>add</mat-icon>
+
+        <div class="pad-left-half" translate>
+          Add Dependency
+        </div>
+      </div>
+    </button>
+  </div>
+</div>
+
+<formly-field *ngFor="let f of field.fieldGroup" [field]="f"></formly-field>

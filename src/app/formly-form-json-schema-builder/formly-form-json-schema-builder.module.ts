@@ -31,21 +31,23 @@ import { OperatorConditionComponent } from './components/expression/operator-con
 import { RuleEditorComponent } from './modals/rule-editor/rule-editor.component';
 import { HideRuleEditorComponent } from './modals/hide-rule-editor/hide-rule-editor.component';
 import { FormlyFormJsonSchemaBuilderService } from './services/formly-form-json-schema-builder.service';
+import { DependencyBuilderComponent } from './components/dependency-builder/dependency-builder.component';
 
 @NgModule({
   declarations: [
+    DependencyBuilderComponent,
     DisplayHtmlEditorComponent,
     ExpressionBuilderComponent,
     FieldEditorComponent,
     FormEditorComponent,
     FormlyFormJsonSchemaBuilderComponent,
+    HideRuleEditorComponent,
     OperatorConditionComponent,
     OptionsEditorComponent,
     PageFieldsComponent,
     RuleEditorComponent,
     TokenEditorComponent,
     TokenPageComponent,
-    HideRuleEditorComponent,
   ],
   exports: [
     FormlyFormJsonSchemaBuilderComponent
@@ -65,6 +67,7 @@ import { FormlyFormJsonSchemaBuilderService } from './services/formly-form-json-
     FormlyBuilderRoutes,
     FormlyModule.forChild({
       types: [
+        { name: 'dependency-builder', component: DependencyBuilderComponent },
         { name: 'display-html-editor', component: DisplayHtmlEditorComponent },
         { name: 'expression-builder', component: ExpressionBuilderComponent },
         { name: 'form-editor', component: FormEditorComponent },
