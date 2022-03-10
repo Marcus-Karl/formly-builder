@@ -129,9 +129,14 @@ export class FormlyFormJsonSchemaBuilderService {
 
     if (response.errors?.length) {
       console.error(response.errors);
+
+      return {} as JSONSchema7;
     }
 
-    return response.result ?? {} as JSONSchema7;
+    // Reparse the result to prevent the internal resolver from setting an array 'items' property as read only
+    let schema = JSON.parse(JSON.stringify(response.result));
+
+    return schema as JSONSchema7;
   }
 
   private loadSchema(url: string) {
@@ -144,40 +149,40 @@ export class FormlyFormJsonSchemaBuilderService {
 const getModel = () => ({
   "form": {
     "pages": [
-      /*       {
-              "_order": 1,
-              "_referenceId": "c18df3776db84b1ca9c1cd5951b76ce6",
-              "fields": [
-                {
-                  "category": "display-content-field",
-                  "basic": {
-                    "name": "",
-                    "label": ""
-                  },
-                  "complexObject": [],
-                  "options": [],
-                  "extra": {
-                    "defaultValue": "",
-                    "placeholder": "",
-                    "hint": "",
-                    "help": ""
-                  },
-                  "edit": "<h1 style=\"text-align:center\"><strong>Welcome to the Form Creator</strong></h1><p>Please add as many pages and fields as you would like.</p>",
-                  "advanced": {
-                    "hideExpression": [],
-                    "validationExpressions": []
-                  },
-                  "_order": 1,
-                  "_referenceId": "l7846782253c949fcbb3035a273371db0",
-                  "preview": null
-                }
-              ],
-              "settings": {
-                "name": "",
-                "label": "Welcome Page",
-                "hideExpression": []
-              }
-            }, */
+      {
+        "_order": 1,
+        "_referenceId": "c18df3776db84b1ca9c1cd5951b76ce6",
+        "fields": [
+          {
+            "category": "display-content-field",
+            "basic": {
+              "name": "",
+              "label": ""
+            },
+            "complexObject": [],
+            "options": [],
+            "extra": {
+              "defaultValue": "",
+              "placeholder": "",
+              "hint": "",
+              "help": ""
+            },
+            "edit": "<h1 style=\"text-align:center\"><strong>Welcome to the Form Creator</strong></h1><p>Please add as many pages and fields as you would like.</p>",
+            "advanced": {
+              "hideExpression": [],
+              "validationExpressions": []
+            },
+            "_order": 1,
+            "_referenceId": "l7846782253c949fcbb3035a273371db0",
+            "preview": null
+          }
+        ],
+        "settings": {
+          "name": "",
+          "label": "Welcome Page",
+          "hideExpression": []
+        }
+      },
       {
         "_order": 2,
         "_referenceId": "p9067bba8936d4075bcb23f63fa333ee3",
@@ -280,7 +285,7 @@ const getModel = () => ({
     ],
     "tokens": [],
     "settings": {
-      "formType": "tab-form",
+      "type": "tab-form",
       "name": "",
       "label": "My Form Label"
     }

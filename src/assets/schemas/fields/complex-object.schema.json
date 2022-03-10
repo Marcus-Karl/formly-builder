@@ -14,11 +14,9 @@
       }
     }
   },
-  "items": [
-    {
-      "$ref": "#/definitions/field"
-    }
-  ],
+  "items": {
+    "$ref": "#/definitions/field"
+  },
   "definitions": {
     "field": {
       "type": "object",

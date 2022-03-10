@@ -11,11 +11,9 @@
       "className": "pad-bottom flex column"
     }
   },
-  "items": [
-    {
-      "$ref": "#/definitions/formPage"
-    }
-  ],
+  "items": {
+    "$ref": "#/definitions/formPage"
+  },
   "definitions": {
     "formPage": {
       "type": "object",

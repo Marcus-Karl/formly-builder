@@ -58,6 +58,7 @@ import { ExpansionPanelArrayFieldComponent } from './fields/expansion-panel-arra
 import { CustomDateInputComponent } from './components/custom-date-input/custom-date-input.component';
 import { RadioButtonFieldComponent } from './fields/radio-button-field/radio-button-field.component';
 import { ErrorsAndHintsComponent } from './components/errors-and-hints/errors-and-hints.component';
+import { ToggleButtonFieldComponent } from './fields/toggle-button-field/toggle-button-field.component';
 
 @NgModule({
   imports: [
@@ -105,6 +106,7 @@ import { ErrorsAndHintsComponent } from './components/errors-and-hints/errors-an
         { name: 'select-dropdown-field', component: SelectDropDownFieldComponent },
         { name: 'text-input-field', component: TextInputComponentField },
         { name: 'textbox-field', component: TextBoxFieldComponent },
+        { name: 'toggle-button-field', component: ToggleButtonFieldComponent },
 
         // Custom Form Display Types
         { name: 'default-form', component: DefaultFormComponent },
@@ -170,7 +172,8 @@ import { ErrorsAndHintsComponent } from './components/errors-and-hints/errors-an
 
     // Misc
     CustomDateInputComponent,
-    ErrorsAndHintsComponent
+    ErrorsAndHintsComponent,
+    ToggleButtonFieldComponent
   ],
   exports: [
     CommonModule,

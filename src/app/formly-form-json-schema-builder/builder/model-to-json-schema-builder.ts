@@ -107,7 +107,7 @@ export class ConvertModel {
       required: []
     };
 
-    let defaultSchema = this._getDefaultSchemaForKeyAndType(settings['formType'], SelectionOptionType.Form);
+    let defaultSchema = this._getDefaultSchemaForKeyAndType(settings['type'], SelectionOptionType.Form);
 
     if (defaultSchema) {
       _.merge(displayForm, JSON.parse(JSON.stringify(defaultSchema)));
@@ -118,7 +118,7 @@ export class ConvertModel {
       widget: {
         ...model['_referenceId'] && { _referenceId: model['_referenceId'] },
         formlyConfig: {
-          ...settings['formType'] && { type: settings['formType'] },
+          ...settings['type'] && { type: settings['type'] },
           templateOptions: {
             _translationFormKey: model['_referenceId'] || FunctionHelpers.generateId(),
           }
@@ -177,7 +177,7 @@ export class ConvertModel {
       widget: {
         ...model['_referenceId'] && { _referenceId: model['_referenceId'] },
         formlyConfig: {
-          ...settings['formType'] && { type: settings['formType'] },
+          ...settings['type'] && { type: settings['type'] },
           templateOptions: {
             ...this.getKvps(model['extra'], 'label'),
             ...model['_order'] !== undefined && { _order: model['_order'] }

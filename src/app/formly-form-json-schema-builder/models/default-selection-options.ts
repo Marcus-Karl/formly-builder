@@ -63,7 +63,7 @@ const FREE_RESPONSE_FIELDS: FormBuilderSelectionOption[] = [
         }
       },
       {
-        value: 'email-input-field',
+        value: 'text-input-field',
         label: 'Email',
         type: SelectionOptionType.FieldType,
         schemaDefaults: {
@@ -136,7 +136,7 @@ const FORM_TYPES: FormBuilderSelectionOption[] = [
   {
     value: 'form',
     label: 'Form Types',
-    type: SelectionOptionType.FieldCategory,
+    type: SelectionOptionType.FormCategory,
     options: [
       {
         value: 'default-form',
@@ -514,6 +514,7 @@ export const getDefaultSelectionOptionsMap = (): { [key in SelectionOptionType]:
   [SelectionOptionType.FieldType]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.FieldType),
   [SelectionOptionType.FieldSubType]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.FieldSubType),
   [SelectionOptionType.Form]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.Form),
+  [SelectionOptionType.FormCategory]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.FormCategory),
   [SelectionOptionType.ComparisonOperator]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.ComparisonOperator),
   [SelectionOptionType.ComparisonType]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.ComparisonType),
   [SelectionOptionType.HideComparisonSource]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.HideComparisonSource),

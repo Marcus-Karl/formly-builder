@@ -1,0 +1,21 @@
+
+<div class="body-text bold">
+  {{ to?.label }} {{ to?.required ? '*' : '' }}
+</div>
+
+<mat-button-toggle-group
+  class="input-field"
+  [id]="field.id"
+  [formlyAttributes]="field"
+  [formControl]="formControl"
+  [tabindex]="to?.tabindex || 0"
+  [aria-label]="to?.label"
+  [vertical]="true"
+  [ngClass]="to.classes">
+
+  <mat-button-toggle *ngFor="let option of selectOptions$ | async" [value]="option.value" [disabled]="option.disabled">
+    {{ option.label }}
+  </mat-button-toggle>
+</mat-button-toggle-group>
+
+<errors-and-hints [field]="field"></errors-and-hints>

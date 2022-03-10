@@ -4,28 +4,32 @@
   "type": "object",
   "title": "Settings",
   "properties": {
-    "formType": {
-      "$ref": "#/dependencies/formType"
+    "type": {
+      "$ref": "#/definitions/formType"
     },
     "name": {
-      "$ref": "#/dependencies/name"
+      "$ref": "#/definitions/name"
     },
     "label": {
-      "$ref": "#/dependencies/label"
+      "$ref": "#/definitions/label"
     }
   },
   "required": [
     "formType",
     "label"
   ],
-  "dependencies": {
+  "definitions": {
     "formType": {
       "type": "string",
       "title": "Form Type",
       "widget": {
         "formlyConfig": {
           "type": "select",
-          "defaultValue": ""
+          "defaultValue": "",
+          "wrappers": [
+            "form-selection-options",
+            "form-field"
+          ]
         }
       }
     },

@@ -13,11 +13,9 @@
       }
     }
   },
-  "items": [
-    {
-      "$ref": "#/definitions/option"
-    }
-  ],
+  "items": {
+    "$ref": "#/definitions/option"
+  },
   "definitions": {
     "option": {
       "type": "object",

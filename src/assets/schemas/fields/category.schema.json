@@ -2,18 +2,19 @@
   "$schema": "https://json-schema.org/draft-07/schema#",
   "$id": "/assets/schemas/fields/category",
   "type": "string",
-  "title": "Select Base Field Type",
+  "title": "Select Field Category",
   "widget": {
     "formlyConfig": {
-      "type": "select",
+      "type": "toggle-button-field",
       "defaultValue": "",
       "templateOptions": {
-        "options": []
+        "classes": "center-self",
+        "required": true
       },
       "wrappers": [
         "field-category-selection-options"
       ],
-      "hideExpression": "!!model.category"
+      "hideExpression": "field.templateOptions._selectionComplete"
     }
   }
 }

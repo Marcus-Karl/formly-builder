@@ -14,41 +14,7 @@
       }
     }
   },
-  "items": [
-    {
-      "$ref": "#/definitions/field"
-    }
-  ],
-  "definitions": {
-    "field": {
-      "type": "object",
-      "widget": {
-        "formlyConfig": {
-          "type": "tab-form",
-          "defaultValue": {},
-          "templateOptions": {
-            "hideButtons": true,
-            "linear": false
-          }
-        }
-      },
-      "properties": {
-        "category": {
-          "$ref": "../fields/category.schema.json"
-        },
-        "basic": {
-          "$ref": "../fields/basic.schema.json"
-        },
-        "extra": {
-          "$ref": "../fields/extras.schema.json"
-        },
-        "advanced": {
-          "$ref": "../fields/advanced.schema.json"
-        }
-      },
-      "required": [
-        "category"
-      ]
-    }
+  "items": {
+    "$ref": "../fields/field-picker.schema.json"
   }
 }

@@ -61,7 +61,6 @@ import { FieldTypeSelectionOptionsComponent } from './wrappers/field-type-select
   imports: [
     FormlyFormCoreModule,
     DragDropModule,
-    MatButtonToggleModule,
     MatDialogModule,
     MatDividerModule,
     MatExpansionModule,

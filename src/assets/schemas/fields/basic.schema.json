@@ -39,13 +39,14 @@
         "formlyConfig": {
           "type": "select",
           "defaultValue": "",
-          "templateOptions": {
-            "options": []
-          },
           "expressionProperties": {
-            "templateOptions.options": "field.templateOptions._options.filter(x => x.category === field.parent.parent.model.category)",
+            "templateOptions.options": "field.templateOptions._options?.filter(x => x.category === field.parent.parent.model.category) || []",
             "model.type": "field.templateOptions.options?.length === 1 ? field.templateOptions.options[0].value : (field.templateOptions.options?.find(x => x.value === model.type) ? model.type : undefined)"
-          }
+          },
+          "wrappers": [
+            "field-type-selection-options",
+            "form-field"
+          ]
         }
       }
     },
@@ -56,11 +57,8 @@
         "formlyConfig": {
           "type": "select",
           "defaultValue": "",
-          "templateOptions": {
-            "options": []
-          },
           "expressionProperties": {
-            "templateOptions.options": "field.templateOptions._options.filter(x => x.category === model.type)",
+            "templateOptions.options": "field.templateOptions._options?.filter(x => x.category === model.type) || []",
             "model.subType": "field.templateOptions.options?.find(x => x.value === field.model.subType) ? field.model.subType : undefined"
           },
           "hideExpression": "!field.templateOptions.options?.length"
