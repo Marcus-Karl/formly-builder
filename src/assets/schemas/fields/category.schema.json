@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "/assets/schemas/fields/category",
+  "type": "string",
+  "title": "Select Base Field Type",
+  "widget": {
+    "formlyConfig": {
+      "type": "select",
+      "defaultValue": "",
+      "templateOptions": {
+        "options": []
+      },
+      "wrappers": [
+        "field-category-selection-options"
+      ],
+      "hideExpression": "!!model.category"
+    }
+  }
+}

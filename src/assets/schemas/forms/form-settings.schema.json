@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "/assets/schemas/forms/form-settings",
+  "type": "object",
+  "title": "Settings",
+  "properties": {
+    "formType": {
+      "$ref": "#/dependencies/formType"
+    },
+    "name": {
+      "$ref": "#/dependencies/name"
+    },
+    "label": {
+      "$ref": "#/dependencies/label"
+    }
+  },
+  "required": [
+    "formType",
+    "label"
+  ],
+  "dependencies": {
+    "formType": {
+      "type": "string",
+      "title": "Form Type",
+      "widget": {
+        "formlyConfig": {
+          "type": "select",
+          "defaultValue": ""
+        }
+      }
+    },
+    "name": {
+      "type": "string",
+      "title": "Form Name",
+      "widget": {
+        "formlyConfig": {
+          "type": "input",
+          "defaultValue": "",
+          "hide": true
+        }
+      }
+    },
+    "label": {
+      "type": "string",
+      "title": "Form Label",
+      "widget": {
+        "formlyConfig": {
+          "type": "input",
+          "defaultValue": ""
+        }
+      }
+    }
+  }
+}

@@ -32,6 +32,9 @@ import { RuleEditorComponent } from './modals/rule-editor/rule-editor.component'
 import { HideRuleEditorComponent } from './modals/hide-rule-editor/hide-rule-editor.component';
 import { FormlyFormJsonSchemaBuilderService } from './services/formly-form-json-schema-builder.service';
 import { DependencyBuilderComponent } from './components/dependency-builder/dependency-builder.component';
+import { FormSelectionOptionsComponent } from './wrappers/form-selection-options/form-selection-options.component';
+import { FieldCategorySelectionOptionsComponent } from './wrappers/field-category-selection-options/field-category-selection-options.component';
+import { FieldTypeSelectionOptionsComponent } from './wrappers/field-type-selection-options/field-type-selection-options.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +51,9 @@ import { DependencyBuilderComponent } from './components/dependency-builder/depe
     RuleEditorComponent,
     TokenEditorComponent,
     TokenPageComponent,
+    FormSelectionOptionsComponent,
+    FieldCategorySelectionOptionsComponent,
+    FieldTypeSelectionOptionsComponent,
   ],
   exports: [
     FormlyFormJsonSchemaBuilderComponent
@@ -79,6 +85,11 @@ import { DependencyBuilderComponent } from './components/dependency-builder/depe
       ],
       validators: [
         { name: 'valid-name', validation: validNameValidator }
+      ],
+      wrappers: [
+        { name: 'field-category-selection-options', component: FieldCategorySelectionOptionsComponent },
+        { name: 'field-type-selection-options', component: FieldTypeSelectionOptionsComponent },
+        { name: 'form-selection-options', component: FormSelectionOptionsComponent },
       ]
     })
   ],

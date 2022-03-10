@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "/assets/schemas/fields/options",
+  "type": "array",
+  "title": "Configure Options",
+  "minItems": 1,
+  "widget": {
+    "formlyConfig": {
+      "type": "options-editor",
+      "defaultValue": [],
+      "templateOptions": {
+        "isOptional": true
+      }
+    }
+  },
+  "items": [
+    {
+      "$ref": "#/definitions/option"
+    }
+  ],
+  "definitions": {
+    "option": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "$ref": "#/definitions/value"
+        },
+        "label": {
+          "$ref": "#/definitions/label"
+        }
+      },
+      "required": [
+        "value",
+        "label"
+      ]
+    },
+    "value": {
+      "type": "string",
+      "widget": {
+        "formlyConfig": {
+          "type": "input",
+          "defaultValue": "",
+          "templateOptions": {
+            "placeholder": "Enter a name..."
+          }
+        }
+      }
+    },
+    "label": {
+      "type": "string",
+      "widget": {
+        "formlyConfig": {
+          "type": "input",
+          "defaultValue": "",
+          "templateOptions": {
+            "placeholder": "Enter a label..."
+          }
+        }
+      }
+    }
+  }
+}
