@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormlyFieldConfig } from '@ngx-formly/core';
+import { BuilderFormState, SelectionOptionType } from '../../models/builder-form-state';
 
 @Component({
   selector: 'field-editor',
@@ -41,13 +42,17 @@ export class FieldEditorComponent implements AfterViewInit {
   onSelectedCategory() {
     let category = this.categoryField?.formControl?.value;
 
-    if (!this.categoryField?.templateOptions) {
-      return;
+    let builderFormState: BuilderFormState = this.field.options?.formState;
+
+    if (builderFormState?.builder.options[SelectionOptionType.FieldCategory]) {
+      this.categoryLabel = builderFormState?.builder.options[SelectionOptionType.FieldCategory].find((x: any) => x.value === category)?.label ?? '';
     }
 
-    this.categoryLabel = (this.categoryField?.templateOptions?.options as any[])?.find((x: any) => x.value === category)?.label;
+    if (this.categoryLabel && this.categoryField) {
+      if (!this.categoryField.templateOptions) {
+        this.categoryField.templateOptions = {}
+      }
 
-    if (this.categoryLabel) {
       this.categorySelectionComplete = true;
       this.categoryField.templateOptions._selectionComplete = true;
     }

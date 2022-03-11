@@ -26,10 +26,9 @@
         "formlyConfig": {
           "type": "select",
           "defaultValue": "",
-          "wrappers": [
-            "form-selection-options",
-            "form-field"
-          ]
+          "expressionProperties": {
+            "templateOptions.options": "field.options?.formState?.builder?.options['Form'] || []"
+          }
         }
       }
     },

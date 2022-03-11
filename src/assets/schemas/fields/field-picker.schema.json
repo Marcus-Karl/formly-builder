@@ -28,8 +28,5 @@
   },
   "required": [
     "category"
-  ],
-  "dependencies": {
-    "category": {}
-  }
+  ]
 }

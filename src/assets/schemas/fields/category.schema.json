@@ -11,9 +11,9 @@
         "classes": "center-self",
         "required": true
       },
-      "wrappers": [
-        "field-category-selection-options"
-      ],
+      "expressionProperties": {
+        "templateOptions.options": "field.options?.formState?.builder?.options['FieldCategory'] || []"
+      },
       "hideExpression": "field.templateOptions._selectionComplete"
     }
   }
