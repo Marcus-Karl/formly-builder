@@ -11,6 +11,7 @@ import { FunctionHelpers } from 'src/app/formly-form-json-schema-builder/builder
 import { FieldEditorComponent } from 'src/app/formly-form-json-schema-builder/modals/field-editor/field-editor.component';
 import { ConfirmationModalComponent } from 'src/app/formly-form-core/modal/confirmation-modal/confirmation-modal.component';
 import { ConfirmationModalData } from 'src/app/formly-form-core/models/confirmation-modal-data';
+import { BuilderFormState, SelectionOptionType } from '../../models/builder-form-state';
 
 @Component({
   selector: 'page-fields',
@@ -30,9 +31,7 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
   }
 
   ngOnInit() {
-    if (!this._categories) {
-      this._getCategories(this.field);
-    }
+    this._setCategories();
   }
 
   drop(event: CdkDragDrop<PageFieldsComponent>) {
@@ -86,10 +85,6 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
     let index = (i === undefined || i === null) ? this.field.fieldGroup?.length || 0 : i;
 
     super.add(index, initialModel, markAsDirty);
-
-    if (!this._categories) {
-      this._getCategories(this.field);
-    }
 
     if (this.field.fieldGroup && this.field.fieldGroup[index]) {
       let newField = this.field.fieldGroup[index];
@@ -186,14 +181,11 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
     return this.formlyBuilderService.getRegisteredDropIds(this.field.id as string);
   }
 
-  private _getCategories(field: FormlyFieldConfig) {
-    if (field.fieldGroup?.length) {
+  private _setCategories() {
+    let builderFormState: BuilderFormState = this.options?.formState;
 
-      let categoryField = field.fieldGroup[0]?.fieldGroup?.find(x => x.key === 'category');
-
-      if (categoryField?.templateOptions) {
-        this._categories = categoryField.templateOptions.options as any;
-      }
+    if (builderFormState?.builder.options[SelectionOptionType.FieldCategory]?.length) {
+      this._categories = builderFormState?.builder.options[SelectionOptionType.FieldCategory];
     }
   }
 }

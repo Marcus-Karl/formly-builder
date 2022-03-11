@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "/assets/schemas/fields/field-picker",
+  "type": "object",
+  "widget": {
+    "formlyConfig": {
+      "defaultValue": {}
+    }
+  },
+  "properties": {
+    "category": {
+      "$ref": "category.schema.json"
+    }
+  },
+  "required": [
+    "category"
+  ],
+  "dependencies": {
+    "category": {
+      "oneOf": [
+        {
+          "widget": {
+            "formlyConfig": {
+              "type": "tab-form",
+              "defaultValue": {},
+              "templateOptions": {
+                "hideButtons": true,
+                "linear": false
+              }
+            }
+          },
+          "properties": {
+            "category": {
+              "const": "free-response-field"
+            },
+            "basic": {
+              "$ref": "basic.schema.json"
+            },
+            "extra": {
+              "$ref": "extras.schema.json"
+            }
+          }
+        },
+        {
+          "widget": {
+            "formlyConfig": {
+              "type": "tab-form",
+              "defaultValue": {},
+              "templateOptions": {
+                "hideButtons": true,
+                "linear": false
+              }
+            }
+          },
+          "properties": {
+            "category": {
+              "const": "multiple-choice-field"
+            },
+            "basic": {
+              "$ref": "basic.schema.json"
+            },
+            "options": {
+              "$ref": "options.schema.json"
+            },
+            "extra": {
+              "$ref": "extras.schema.json"
+            }
+          }
+        },
+        {
+          "widget": {
+            "formlyConfig": {
+              "type": "tab-form",
+              "defaultValue": {},
+              "templateOptions": {
+                "hideButtons": true,
+                "linear": false
+              }
+            }
+          },
+          "properties": {
+            "category": {
+              "const": "display-content-field"
+            },
+            "basic": {
+              "$ref": "basic.schema.json"
+            },
+            "edit": {
+              "$ref": "edit-display-content.schema.json"
+            },
+            "preview": {
+              "$ref": "preview-display-content.schema.json"
+            }
+          }
+        },
+        {
+          "widget": {
+            "formlyConfig": {
+              "type": "tab-form",
+              "defaultValue": {},
+              "templateOptions": {
+                "hideButtons": true,
+                "linear": false
+              }
+            }
+          },
+          "properties": {
+            "category": {
+              "const": "complex-object-field"
+            },
+            "basic": {
+              "$ref": "basic.schema.json"
+            },
+            "complexObject": {
+              "$ref": "complex-object.schema.json"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

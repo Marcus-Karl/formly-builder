@@ -1,13 +1,14 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
+import { Resolver } from '@stoplight/json-ref-resolver';
 import { JSONSchema7 } from 'json-schema';
 import { ConvertModel } from '../builder';
 import { FunctionReferences } from '../builder/state-functions';
 import { BuilderFormState, FormBuilderSelectionOption, PagesInformation, SelectionOptionType } from '../models/builder-form-state';
 import { getDefaultSelectionOptionsMap } from '../models/default-selection-options';
-import { defaultJsonSchema } from '../schemas/formly-form-json-schema-builder.schema';
 
 @Injectable({ providedIn: 'root' })
 export class FormlyFormJsonSchemaBuilderService {
@@ -48,40 +49,36 @@ export class FormlyFormJsonSchemaBuilderService {
     return this._options ?? {};
   }
 
-  constructor(private formlyJsonschema: FormlyJsonschema) {
-    this.init();
+  constructor(private formlyJsonschema: FormlyJsonschema, private httpClient: HttpClient) {
+    this.init().finally(() => { });
   }
 
-  public init() {
+  public async init(selectionOptionsMap?: { [key in SelectionOptionType]: FormBuilderSelectionOption[] }) {
     this._model = getModel();
     this._form = new FormGroup({});
 
-    this._options = {
-      ...this._options,
-      formState: this._createBuilderFormState(this.model)
+    try {
+      this._options = {
+        ...this._options,
+        formState: this._createBuilderFormState(this.model)
+      }
+
+      this._buildSelectionOptionsMap(this._options.formState.builder.options, selectionOptionsMap);
+
+      this._formlyFromJsonSchema = await this.getDefaultSchema();
+
+      console.log(this._formlyFromJsonSchema);
+
+      this._fields = [this.formlyJsonschema.toFieldConfig(this._formlyFromJsonSchema as JSONSchema7)];
+    } catch (e) {
+      console.error(`error building config`, e);
     }
-
-    this._formlyFromJsonSchema = this.getJsonBuilderSchema(this.options.formState);
-
-    this._fields = [this.formlyJsonschema.toFieldConfig(this._formlyFromJsonSchema as JSONSchema7)];
 
     this._initComplete = true;
   }
 
   public getGeneratedSchema() {
     return ConvertModel.toJsonSchema(this.model, this.options.formState, this.generatedSchemaConfig);
-  }
-
-  public getJsonBuilderSchema = (formState: BuilderFormState, selectionOptionsMap?: { [key in SelectionOptionType]: FormBuilderSelectionOption[] }) => {
-    for (let info in formState.builder.pagesInformation) {
-      if (Object.prototype.hasOwnProperty.call(formState.builder.pagesInformation, info)) {
-        delete formState.builder.pagesInformation[info];
-      }
-    }
-
-    let optionsMap = this._buildSelectionOptionsMap(formState.builder.options, selectionOptionsMap);
-
-    return defaultJsonSchema(optionsMap) as JSONSchema7;
   }
 
   private _createBuilderFormState = (mainModel: any = {}): BuilderFormState => {
@@ -109,6 +106,41 @@ export class FormlyFormJsonSchemaBuilderService {
     Object.assign(options, optionsMap);
 
     return optionsMap;
+  }
+
+  private async getDefaultSchema() {
+    let rootSchema = await this.loadSchema('json-schema-builder.schema.json').toPromise();
+
+    let resolver = new Resolver({
+      resolvers: {
+        http: {
+          resolve: async (ref: URI, ctx: any) => this.loadSchema(String(ref)).toPromise()
+        },
+        https: {
+          resolve: async (ref: URI, ctx: any) => this.loadSchema(String(ref)).toPromise()
+        },
+        file: {
+          resolve: async (ref: URI, ctx: any) => this.loadSchema(String(ref)).toPromise()
+        }
+      }
+    });
+
+    let response = await resolver.resolve(rootSchema);
+
+    if (response.errors?.length) {
+      console.error(response.errors);
+
+      return {} as JSONSchema7;
+    }
+
+    // Reparse the result to prevent the internal resolver from setting an array 'items' property as read only
+    let schema = JSON.parse(JSON.stringify(response.result));
+
+    return schema as JSONSchema7;
+  }
+
+  private loadSchema(url: string) {
+    return this.httpClient.get<JSONSchema7>(`/assets/schemas/${url}`);
   }
 }
 
@@ -253,7 +285,7 @@ const getModel = () => ({
     ],
     "tokens": [],
     "settings": {
-      "formType": "tab-form",
+      "type": "tab-form",
       "name": "",
       "label": "My Form Label"
     }

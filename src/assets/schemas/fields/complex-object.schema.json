@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "/assets/schemas/fields/complex-object",
+  "type": "array",
+  "title": "Configure Fields",
+  "minItems": 0,
+  "widget": {
+    "formlyConfig": {
+      "className": "formly-build-page-form-min-height flex column pad",
+      "type": "page-fields",
+      "defaultValue": [],
+      "templateOptions": {
+        "hideLabel": false
+      }
+    }
+  },
+  "items": {
+    "$ref": "#/definitions/field"
+  },
+  "definitions": {
+    "field": {
+      "type": "object",
+      "widget": {
+        "formlyConfig": {
+          "type": "tab-form",
+          "defaultValue": {},
+          "templateOptions": {
+            "hideButtons": true,
+            "linear": false
+          }
+        }
+      },
+      "properties": {
+        "category": {
+          "$ref": "category.schema.json"
+        },
+        "basic": {
+          "$ref": "basic.schema.json"
+        },
+        "extra": {
+          "$ref": "extras.schema.json"
+        },
+        "advanced": {
+          "$ref": "advanced.schema.json"
+        }
+      },
+      "required": [
+        "category"
+      ]
+    }
+  }
+}

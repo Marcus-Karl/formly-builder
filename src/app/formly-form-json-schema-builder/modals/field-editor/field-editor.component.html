@@ -16,24 +16,8 @@
 </div>
 
 <ng-container *ngIf="!categorySelectionComplete && categoryField; else editField">
-  <div class="pad flex column center-content" [ngClass]="categoryField.className || ''">
-    <div class="body-text bold">
-      {{ categoryField.templateOptions?.label }} {{ categoryField.templateOptions?.required ? '*' : '' }}
-    </div>
-
-    <mat-button-toggle-group
-      cdkFocusInitial
-      [id]="categoryField.id"
-      [formlyAttributes]="categoryField"
-      [formControl]="categoryField.formControl"
-      [tabindex]="categoryField.templateOptions?.tabindex || 0"
-      [aria-label]="categoryField.templateOptions?.label"
-      [vertical]="true">
-
-      <mat-button-toggle *ngFor="let option of selectOptions$ | async" [value]="option.value" [disabled]="option.disabled">
-        {{ option.label }}
-      </mat-button-toggle>
-    </mat-button-toggle-group>
+  <div class="center-content column">
+    <formly-field [field]="categoryField" class="center-content" [ngClass]="categoryField.templateOptions?.className"></formly-field>
 
     <div class="margin-top-2">
       <button type="button" mat-raised-button color="primary" [disabled]="categoryField.formControl?.invalid" (click)="onSelectedCategory()">
@@ -62,8 +46,7 @@
       mat-raised-button
       color="primary"
       [disabled]="field.formControl?.invalid"
-      (click)="updateAndClose()"
-      cdkFocusInitial>
+      (click)="updateAndClose()">
       <div translate>Save & Close</div>
     </button>
   </div>

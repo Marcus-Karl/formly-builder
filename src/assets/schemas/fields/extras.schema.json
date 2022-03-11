@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "/assets/schemas/fields/extras",
+  "type": "object",
+  "title": "Extras",
+  "widget": {
+    "formlyConfig": {
+      "defaultValue": {},
+      "className": "flex pad",
+      "templateOptions": {
+        "isOptional": true
+      }
+    }
+  },
+  "properties": {
+    "defaultValue": {
+      "$ref": "#/definitions/defaultValue"
+    },
+    "placeholder": {
+      "$ref": "#/definitions/placeholder"
+    },
+    "hint": {
+      "$ref": "#/definitions/hint"
+    },
+    "help": {
+      "$ref": "#/definitions/help"
+    }
+  },
+  "definitions": {
+    "defaultValue": {
+      "type": "string",
+      "title": "Default Value",
+      "widget": {
+        "formlyConfig": {
+          "type": "input",
+          "defaultValue": ""
+        }
+      }
+    },
+    "placeholder": {
+      "type": "string",
+      "title": "Placeholder Text",
+      "widget": {
+        "formlyConfig": {
+          "type": "input",
+          "defaultValue": ""
+        }
+      }
+    },
+    "hint": {
+      "type": "string",
+      "title": "Hint Text",
+      "widget": {
+        "formlyConfig": {
+          "type": "input",
+          "defaultValue": ""
+        }
+      }
+    },
+    "help": {
+      "type": "string",
+      "title": "Help Text",
+      "widget": {
+        "formlyConfig": {
+          "type": "input",
+          "defaultValue": ""
+        }
+      }
+    }
+  }
+}

@@ -15,6 +15,7 @@
 	"Contains errors": "Contains errors",
 	"Remove": "Remove",
 	"Clear Selection": "Clear Selection",
+	"Add {{label}}": "Add {{label}}",
 	"Add Dependency": "Add Dependency",
 	"Add Rule": "Add Rule",
 	"Add Condition": "Add Condition",

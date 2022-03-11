@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "/assets/schemas/fields/advanced",
+  "type": "object",
+  "title": "Advanced",
+  "widget": {
+    "formlyConfig": {
+      "defaultValue": {},
+      "className": "flex pad",
+      "templateOptions": {
+        "isOptional": true
+      }
+    }
+  },
+  "properties": {}
+}

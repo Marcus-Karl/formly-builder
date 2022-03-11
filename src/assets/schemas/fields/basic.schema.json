@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "/assets/schemas/fields/basic",
+  "type": "object",
+  "title": "Basic Information",
+  "widget": {
+    "formlyConfig": {
+      "defaultValue": {},
+      "className": "flex pad",
+      "hideExpression": "field.parent.model.category === 'display-content-field'",
+      "templateOptions": {
+        "isOptional": true
+      }
+    }
+  },
+  "properties": {
+    "type": {
+      "$ref": "#/definitions/typeField"
+    },
+    "subType": {
+      "$ref": "#/definitions/subType"
+    },
+    "name": {
+      "$ref": "#/definitions/name"
+    },
+    "label": {
+      "$ref": "#/definitions/label"
+    }
+  },
+  "required": [
+    "label",
+    "type"
+  ],
+  "definitions": {
+    "typeField": {
+      "type": "string",
+      "title": "Field Type",
+      "widget": {
+        "formlyConfig": {
+          "type": "select",
+          "defaultValue": "",
+          "expressionProperties": {
+            "templateOptions.options": "field.options?.formState?.builder?.options['FieldType'].filter(x => x.category === field.parent.parent.model.category) || []",
+            "model.type": "field.templateOptions.options?.length === 1 ? field.templateOptions.options[0].value : (field.templateOptions.options?.find(x => x.value === model.type) ? model.type : undefined)"
+          }
+        }
+      }
+    },
+    "subType": {
+      "type": "string",
+      "title": "Sub Field Type",
+      "widget": {
+        "formlyConfig": {
+          "type": "select",
+          "defaultValue": "",
+          "expressionProperties": {
+            "templateOptions.options": "field.options?.formState?.builder?.options['FieldSubType'].filter(x => x.category === model.type) || []",
+            "model.subType": "field.templateOptions.options?.find(x => x.value === field.model.subType) ? field.model.subType : undefined"
+          },
+          "hideExpression": "!field.templateOptions.options?.length"
+        }
+      }
+    },
+    "name": {
+      "type": "string",
+      "title": "Field Name",
+      "widget": {
+        "formlyConfig": {
+          "type": "input",
+          "defaultValue": "",
+          "validators": {
+            "validation": [
+              "valid-name"
+            ]
+          }
+        }
+      }
+    },
+    "label": {
+      "type": "string",
+      "title": "Field Label",
+      "widget": {
+        "formlyConfig": {
+          "type": "input",
+          "defaultValue": ""
+        }
+      }
+    }
+  }
+}

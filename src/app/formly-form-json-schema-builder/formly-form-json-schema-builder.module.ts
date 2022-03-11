@@ -55,7 +55,6 @@ import { DependencyBuilderComponent } from './components/dependency-builder/depe
   imports: [
     FormlyFormCoreModule,
     DragDropModule,
-    MatButtonToggleModule,
     MatDialogModule,
     MatDividerModule,
     MatExpansionModule,

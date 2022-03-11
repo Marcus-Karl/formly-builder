@@ -58,6 +58,7 @@ import { ExpansionPanelArrayFieldComponent } from './fields/expansion-panel-arra
 import { CustomDateInputComponent } from './components/custom-date-input/custom-date-input.component';
 import { RadioButtonFieldComponent } from './fields/radio-button-field/radio-button-field.component';
 import { ErrorsAndHintsComponent } from './components/errors-and-hints/errors-and-hints.component';
+import { ToggleButtonFieldComponent } from './fields/toggle-button-field/toggle-button-field.component';
 
 @NgModule({
   imports: [
@@ -105,6 +106,7 @@ import { ErrorsAndHintsComponent } from './components/errors-and-hints/errors-an
         { name: 'select-dropdown-field', component: SelectDropDownFieldComponent },
         { name: 'text-input-field', component: TextInputComponentField },
         { name: 'textbox-field', component: TextBoxFieldComponent },
+        { name: 'toggle-button-field', component: ToggleButtonFieldComponent },
 
         // Custom Form Display Types
         { name: 'default-form', component: DefaultFormComponent },
@@ -115,6 +117,7 @@ import { ErrorsAndHintsComponent } from './components/errors-and-hints/errors-an
         // Base Schema support types
         // See: https://json-schema.org/understanding-json-schema/reference/type.html
         { name: 'array', component: ArrayTypeComponent },
+        { name: 'multischema', extends: 'array' },
         { name: 'boolean', extends: 'object' },
         { name: 'enum', extends: 'select', defaultOptions: { wrappers: ['form-field'] } },
         { name: 'integer', extends: 'number' },
@@ -122,6 +125,8 @@ import { ErrorsAndHintsComponent } from './components/errors-and-hints/errors-an
         { name: 'number', extends: 'input', defaultOptions: { templateOptions: { type: 'number' }, wrappers: ['form-field'] } },
         { name: 'object', component: ObjectTypeComponent },
         { name: 'string', extends: 'input', defaultOptions: { wrappers: ['form-field'] } },
+
+        { name: 'email-input-field', extends: 'text-input-field' }
       ],
       wrappers: [
         { name: 'default-wrapper', component: DefaultWrapperComponent },
@@ -170,7 +175,8 @@ import { ErrorsAndHintsComponent } from './components/errors-and-hints/errors-an
 
     // Misc
     CustomDateInputComponent,
-    ErrorsAndHintsComponent
+    ErrorsAndHintsComponent,
+    ToggleButtonFieldComponent
   ],
   exports: [
     CommonModule,

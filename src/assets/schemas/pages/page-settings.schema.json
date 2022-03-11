@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "/assets/schemas/pages/page-settings",
+  "type": "object",
+  "title": "Page Settings",
+  "widget": {
+    "formlyConfig": {
+      "defaultValue": {},
+      "className": "formly-build-page-form-min-height flex column",
+      "templateOptions": {
+        "isOptional": true
+      }
+    }
+  },
+  "properties": {
+    "name": {
+      "$ref": "#/definitions/name"
+    },
+    "label": {
+      "$ref": "#/definitions/label"
+    }
+  },
+  "required": [
+    "label"
+  ],
+  "definitions": {
+    "name": {
+      "type": "string",
+      "title": "Page Name",
+      "widget": {
+        "formlyConfig": {
+          "type": "input",
+          "defaultValue": "",
+          "validators": {
+            "validation": [
+              "valid-name"
+            ]
+          }
+        }
+      }
+    },
+    "label": {
+      "type": "string",
+      "title": "Page Label",
+      "className": "margin-top",
+      "widget": {
+        "formlyConfig": {
+          "type": "input",
+          "defaultValue": ""
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "/assets/schemas/forms/form-settings",
+  "type": "array",
+  "title": "Pages",
+  "minItems": 1,
+  "widget": {
+    "formlyConfig": {
+      "type": "form-editor",
+      "defaultValue": [],
+      "className": "pad-bottom flex column"
+    }
+  },
+  "items": {
+    "$ref": "#/definitions/formPage"
+  },
+  "definitions": {
+    "formPage": {
+      "type": "object",
+      "widget": {
+        "formlyConfig": {
+          "type": "page-form",
+          "defaultValue": {},
+          "templateOptions": {
+            "useSmallButtons": true,
+            "hideSubmit": true,
+            "linear": false
+          }
+        }
+      },
+      "properties": {
+        "fields": {
+          "$ref": "../pages/page-fields.schema.json"
+        },
+        "settings": {
+          "$ref": "../pages/page-settings.schema.json"
+        }
+      },
+      "required": [
+        "fields",
+        "settings"
+      ]
+    }
+  }
+}
