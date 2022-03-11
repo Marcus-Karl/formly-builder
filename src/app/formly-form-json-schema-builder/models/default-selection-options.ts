@@ -63,7 +63,7 @@ const FREE_RESPONSE_FIELDS: FormBuilderSelectionOption[] = [
         }
       },
       {
-        value: 'text-input-field',
+        value: 'email-input-field',
         label: 'Email',
         type: SelectionOptionType.FieldType,
         schemaDefaults: {

@@ -12,8 +12,7 @@
       },
       "expressionProperties": {
         "templateOptions.html": "field.model.edit || ''"
-      },
-      "hideExpression": "field.model.category !== 'display-content-field'"
+      }
     }
   }
 }

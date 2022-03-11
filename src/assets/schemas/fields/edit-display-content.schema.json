@@ -7,8 +7,7 @@
     "formlyConfig": {
       "type": "display-html-editor",
       "defaultValue": "",
-      "className": "pad-half formly-field fill-height",
-      "hideExpression": "field.model.category !== 'display-content-field'"
+      "className": "pad-half formly-field fill-height"
     }
   }
 }

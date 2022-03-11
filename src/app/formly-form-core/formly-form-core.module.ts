@@ -117,6 +117,7 @@ import { ToggleButtonFieldComponent } from './fields/toggle-button-field/toggle-
         // Base Schema support types
         // See: https://json-schema.org/understanding-json-schema/reference/type.html
         { name: 'array', component: ArrayTypeComponent },
+        { name: 'multischema', extends: 'array' },
         { name: 'boolean', extends: 'object' },
         { name: 'enum', extends: 'select', defaultOptions: { wrappers: ['form-field'] } },
         { name: 'integer', extends: 'number' },
@@ -124,6 +125,8 @@ import { ToggleButtonFieldComponent } from './fields/toggle-button-field/toggle-
         { name: 'number', extends: 'input', defaultOptions: { templateOptions: { type: 'number' }, wrappers: ['form-field'] } },
         { name: 'object', component: ObjectTypeComponent },
         { name: 'string', extends: 'input', defaultOptions: { wrappers: ['form-field'] } },
+
+        { name: 'email-input-field', extends: 'text-input-field' }
       ],
       wrappers: [
         { name: 'default-wrapper', component: DefaultWrapperComponent },

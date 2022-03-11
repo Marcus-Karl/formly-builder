@@ -7,7 +7,6 @@
     "formlyConfig": {
       "defaultValue": {},
       "className": "flex pad",
-      "hideExpression": "['display-content-field', 'complex-object-field'].includes(field.parent.model.category)",
       "templateOptions": {
         "isOptional": true
       }
