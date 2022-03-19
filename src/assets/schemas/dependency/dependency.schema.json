@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "/assets/schemas/dependency/dependency",
+  "type": "array",
+  "title": "Dependencies",
+  "widget": {
+    "formlyConfig": {
+      "defaultValue": []
+    }
+  },
+  "items": {
+    "title": "Select One",
+    "type": "object",
+    "oneOf": [
+      {
+        "$ref": "#/definitions/all-of"
+      },
+      {
+        "$ref": "#/definitions/any-of"
+      },
+      {
+        "$ref": "#/definitions/one-of"
+      },
+      {
+        "$ref": "#/definitions/inner-dependency"
+      }
+    ]
+  },
+  "definitions": {
+    "inner-dependency": {
+      "type": "object",
+      "title": "Inner Dependencies",
+      "widget": {
+        "formlyConfig": {
+          "defaultValue": []
+        }
+      },
+      "properties": {
+        "inner": {
+          "type": "array",
+          "widget": {
+            "formlyConfig": {
+              "defaultValue": []
+            }
+          },
+          "items": {
+            "type": "object",
+            "oneOf": [
+              {
+                "$ref": "#/definitions/all-of"
+              },
+              {
+                "$ref": "#/definitions/any-of"
+              },
+              {
+                "$ref": "#/definitions/one-of"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "all-of": {
+      "type": "object",
+      "title": "Match All",
+      "widget": {
+        "formlyConfig": {
+          "defaultValue": {}
+        }
+      },
+      "properties": {
+        "type": {
+          "default": "allOf",
+          "const": "allOf"
+        },
+        "entry": {
+          "title": "Enter Value",
+          "type": "string"
+        }
+      }
+    },
+    "any-of": {
+      "type": "object",
+      "title": "Match Any",
+      "widget": {
+        "formlyConfig": {
+          "defaultValue": {}
+        }
+      },
+      "properties": {
+        "type": {
+          "default": "anyOf",
+          "const": "anyOf"
+        },
+        "entry": {
+          "title": "Enter Value",
+          "type": "string"
+        }
+      }
+    },
+    "one-of": {
+      "type": "object",
+      "title": "Match One",
+      "widget": {
+        "formlyConfig": {
+          "defaultValue": {}
+        }
+      },
+      "properties": {
+        "type": {
+          "default": "oneOf",
+          "const": "oneOf"
+        },
+        "entry": {
+          "title": "Enter Value",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

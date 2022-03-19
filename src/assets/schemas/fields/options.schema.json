@@ -14,47 +14,36 @@
     }
   },
   "items": {
-    "$ref": "#/definitions/option"
-  },
-  "definitions": {
-    "option": {
-      "type": "object",
-      "properties": {
-        "value": {
-          "$ref": "#/definitions/value"
-        },
-        "label": {
-          "$ref": "#/definitions/label"
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "string",
+        "widget": {
+          "formlyConfig": {
+            "type": "input",
+            "defaultValue": "",
+            "templateOptions": {
+              "placeholder": "Enter a name..."
+            }
+          }
         }
       },
-      "required": [
-        "value",
-        "label"
-      ]
-    },
-    "value": {
-      "type": "string",
-      "widget": {
-        "formlyConfig": {
-          "type": "input",
-          "defaultValue": "",
-          "templateOptions": {
-            "placeholder": "Enter a name..."
+      "label": {
+        "type": "string",
+        "widget": {
+          "formlyConfig": {
+            "type": "input",
+            "defaultValue": "",
+            "templateOptions": {
+              "placeholder": "Enter a label..."
+            }
           }
         }
       }
     },
-    "label": {
-      "type": "string",
-      "widget": {
-        "formlyConfig": {
-          "type": "input",
-          "defaultValue": "",
-          "templateOptions": {
-            "placeholder": "Enter a label..."
-          }
-        }
-      }
-    }
+    "required": [
+      "value",
+      "label"
+    ]
   }
 }

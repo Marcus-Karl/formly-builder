@@ -5,21 +5,6 @@
   "title": "Settings",
   "properties": {
     "type": {
-      "$ref": "#/definitions/formType"
-    },
-    "name": {
-      "$ref": "#/definitions/name"
-    },
-    "label": {
-      "$ref": "#/definitions/label"
-    }
-  },
-  "required": [
-    "formType",
-    "label"
-  ],
-  "definitions": {
-    "formType": {
       "type": "string",
       "title": "Form Type",
       "widget": {
@@ -53,5 +38,9 @@
         }
       }
     }
-  }
+  },
+  "required": [
+    "formType",
+    "label"
+  ]
 }

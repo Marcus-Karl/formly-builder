@@ -4,11 +4,6 @@
   "type": "object",
   "properties": {
     "form": {
-      "$ref": "#/definitions/form"
-    }
-  },
-  "definitions": {
-    "form": {
       "type": "object",
       "widget": {
         "formlyConfig": {
@@ -34,6 +29,11 @@
         "pages",
         "settings"
       ]
+    }
+  },
+  "definitions": {
+    "dependency": {
+      "$ref": "dependency/dependency.schema.json"
     }
   }
 }

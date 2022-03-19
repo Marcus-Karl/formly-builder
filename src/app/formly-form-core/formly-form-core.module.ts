@@ -59,6 +59,7 @@ import { CustomDateInputComponent } from './components/custom-date-input/custom-
 import { RadioButtonFieldComponent } from './fields/radio-button-field/radio-button-field.component';
 import { ErrorsAndHintsComponent } from './components/errors-and-hints/errors-and-hints.component';
 import { ToggleButtonFieldComponent } from './fields/toggle-button-field/toggle-button-field.component';
+import { MultischemaTypeComponent } from './schema-types/multischema-type/multischema-type.component';
 
 @NgModule({
   imports: [
@@ -117,7 +118,7 @@ import { ToggleButtonFieldComponent } from './fields/toggle-button-field/toggle-
         // Base Schema support types
         // See: https://json-schema.org/understanding-json-schema/reference/type.html
         { name: 'array', component: ArrayTypeComponent },
-        { name: 'multischema', extends: 'array' },
+        { name: 'multischema', component: MultischemaTypeComponent },
         { name: 'boolean', extends: 'object' },
         { name: 'enum', extends: 'select', defaultOptions: { wrappers: ['form-field'] } },
         { name: 'integer', extends: 'number' },
@@ -176,7 +177,8 @@ import { ToggleButtonFieldComponent } from './fields/toggle-button-field/toggle-
     // Misc
     CustomDateInputComponent,
     ErrorsAndHintsComponent,
-    ToggleButtonFieldComponent
+    ToggleButtonFieldComponent,
+    MultischemaTypeComponent
   ],
   exports: [
     CommonModule,

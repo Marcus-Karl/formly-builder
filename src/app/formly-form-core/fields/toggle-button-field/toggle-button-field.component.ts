@@ -33,7 +33,7 @@ export class ToggleButtonFieldComponent extends FieldType implements OnDestroy, 
 
     let groupProp = this.to?.groupProp || 'group';
 
-    flatOptions?.map((option: SelectOption) => {
+    flatOptions?.forEach((option: SelectOption) => {
       if (!option[groupProp]) {
         options.push(option);
       } else if (groups[option[groupProp]]) {

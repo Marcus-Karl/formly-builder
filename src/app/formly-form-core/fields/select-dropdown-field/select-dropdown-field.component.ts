@@ -153,7 +153,7 @@ export class SelectDropDownFieldComponent extends FieldType implements OnInit, O
     let options: SelectOption[] = [];
     let groups: { [key: string]: SelectOption[] } = {};
 
-    rawOptions?.map((option: SelectOption) => {
+    rawOptions?.forEach((option: SelectOption) => {
       if (!option[this.groupProp]) {
         options.push(option);
       } else if (groups[option[this.groupProp]]) {

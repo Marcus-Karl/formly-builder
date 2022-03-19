@@ -15,38 +15,33 @@
     }
   },
   "items": {
-    "$ref": "#/definitions/field"
-  },
-  "definitions": {
-    "field": {
-      "type": "object",
-      "widget": {
-        "formlyConfig": {
-          "type": "tab-form",
-          "defaultValue": {},
-          "templateOptions": {
-            "hideButtons": true,
-            "linear": false
-          }
+    "type": "object",
+    "widget": {
+      "formlyConfig": {
+        "type": "tab-form",
+        "defaultValue": {},
+        "templateOptions": {
+          "hideButtons": true,
+          "linear": false
         }
+      }
+    },
+    "properties": {
+      "category": {
+        "$ref": "category.schema.json"
       },
-      "properties": {
-        "category": {
-          "$ref": "category.schema.json"
-        },
-        "basic": {
-          "$ref": "basic.schema.json"
-        },
-        "extra": {
-          "$ref": "extras.schema.json"
-        },
-        "advanced": {
-          "$ref": "advanced.schema.json"
-        }
+      "basic": {
+        "$ref": "basic.schema.json"
       },
-      "required": [
-        "category"
-      ]
-    }
+      "extra": {
+        "$ref": "extras.schema.json"
+      },
+      "advanced": {
+        "$ref": "advanced.schema.json"
+      }
+    },
+    "required": [
+      "category"
+    ]
   }
 }

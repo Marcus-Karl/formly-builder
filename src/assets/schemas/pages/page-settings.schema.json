@@ -14,17 +14,6 @@
   },
   "properties": {
     "name": {
-      "$ref": "#/definitions/name"
-    },
-    "label": {
-      "$ref": "#/definitions/label"
-    }
-  },
-  "required": [
-    "label"
-  ],
-  "definitions": {
-    "name": {
       "type": "string",
       "title": "Page Name",
       "widget": {
@@ -50,5 +39,8 @@
         }
       }
     }
-  }
+  },
+  "required": [
+    "label"
+  ]
 }

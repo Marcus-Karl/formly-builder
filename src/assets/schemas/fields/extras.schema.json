@@ -14,20 +14,6 @@
   },
   "properties": {
     "defaultValue": {
-      "$ref": "#/definitions/defaultValue"
-    },
-    "placeholder": {
-      "$ref": "#/definitions/placeholder"
-    },
-    "hint": {
-      "$ref": "#/definitions/hint"
-    },
-    "help": {
-      "$ref": "#/definitions/help"
-    }
-  },
-  "definitions": {
-    "defaultValue": {
       "type": "string",
       "title": "Default Value",
       "widget": {

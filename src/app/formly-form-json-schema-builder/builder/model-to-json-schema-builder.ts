@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import { FormlyFieldConfig } from '@ngx-formly/core';
 import { BuilderFormState, SelectionOptionType } from '../models/builder-form-state';
 import { FunctionHelpers } from './index';
 
@@ -92,16 +92,12 @@ export class ConvertModel {
       model['_referenceId'] = FunctionHelpers.generateId();
     }
 
-    let displayForm: any = {
+    let displayForm = {
       type: 'object',
-      title: null,
       widget: {
-        _referenceId: null,
         formlyConfig: {
-          type: null,
-          defaultValue: {},
-          templateOptions: {}
-        }
+          defaultValue: {}
+        } as FormlyFieldConfig
       },
       properties: {},
       required: []
@@ -110,7 +106,7 @@ export class ConvertModel {
     let defaultSchema = this._getDefaultSchemaForKeyAndType(settings['type'], SelectionOptionType.Form);
 
     if (defaultSchema) {
-      _.merge(displayForm, JSON.parse(JSON.stringify(defaultSchema)));
+      mergeData(displayForm, deepCopy(defaultSchema) ?? {});
     }
 
     let modelSettings = {
@@ -126,7 +122,7 @@ export class ConvertModel {
       }
     }
 
-    _.merge(displayForm, modelSettings);
+    mergeData(displayForm, modelSettings);
 
     if (Object.keys(form)?.length) {
       if (displayForm?.widget?.formlyConfig?.templateOptions?.required && Array.isArray(form['required'])) {
@@ -158,15 +154,13 @@ export class ConvertModel {
 
     let page = {
       type: 'object',
-      title: null,
       widget: {
-        _referenceId: null,
         formlyConfig: {
           defaultValue: {},
           templateOptions: {
             required: false
           }
-        }
+        } as FormlyFieldConfig
       },
       properties: {},
       required: []
@@ -186,9 +180,9 @@ export class ConvertModel {
       }
     }
 
-    _.merge(page, modelSettings);
+    mergeData(page, modelSettings);
 
-    if (page.widget.formlyConfig.templateOptions.required && Array.isArray(form['required'])) {
+    if (page.widget.formlyConfig.templateOptions?.required && Array.isArray(form['required'])) {
       form['required'].push(settings['name'] || model['_referenceId']);
     }
 
@@ -215,23 +209,15 @@ export class ConvertModel {
     let settings = model['basic'];
     let extra = model['extra'] ?? {};
 
-    let field: any = {
+    let field = {
       type: 'string',
-      title: null,
-      widget: {
-        _referenceId: null,
-        formlyConfig: {
-          type: null,
-          defaultValue: '',
-          templateOptions: {}
-        }
-      }
+      widget: { formlyConfig: {} as FormlyFieldConfig }
     };
 
     let defaultSchema = this._getDefaultSchemaForKeyAndType(settings['type'], SelectionOptionType.FieldType, model['category']);
 
     if (defaultSchema) {
-      _.merge(field, JSON.parse(JSON.stringify(defaultSchema)));
+      mergeData(field, deepCopy(defaultSchema) ?? {});
     }
 
     if (!model['_referenceId']) {
@@ -258,9 +244,9 @@ export class ConvertModel {
       }
     };
 
-    _.merge(field, modelSettings);
+    mergeData(field, modelSettings);
 
-    if (field.widget.formlyConfig.templateOptions.multiple) {
+    if (field.widget.formlyConfig.templateOptions?.multiple) {
       if (extra['defaultValue']) {
         field.widget.formlyConfig.defaultValue = Array.isArray(extra['defaultValue']) ? extra['defaultValue'] : [extra['defaultValue']];
       } else {
@@ -325,8 +311,61 @@ export class ConvertModel {
   }
 }
 
+const deepCopy = (obj: any): { [key: string]: any } | Array<{ [key: string]: any }> | undefined | null => {
+  if (obj === undefined) {
+    return undefined;
+  } else if (obj === null) {
+    return null;
+  }
 
+  if (Array.isArray(obj)) {
+    return obj
+      .map(element => deepCopy(element))
+      .filter(copiedElement => copiedElement !== undefined);
+  } else if (typeof obj === 'object') {
+    let copiedProperties = {} as { [key: string]: any };
 
+    for (const key in obj) {
+      let copy = deepCopy(obj[key]);
+
+      if (copy !== undefined) {
+        copiedProperties[key] = copy;
+      }
+    }
+
+    return copiedProperties;
+  }
+
+  return obj;
+}
+
+const mergeData = (dest: { [key: string]: any }, source: { [key: string]: any }) => {
+  if (dest === undefined) {
+    return source;
+  }
+
+  for (const sourceKey in source) {
+    if (source[sourceKey] === undefined) {
+      continue;
+    }
+
+    if (dest[sourceKey] === undefined || dest[sourceKey] === null) {
+      dest[sourceKey] = source[sourceKey];
+    } else if (Array.isArray(dest[sourceKey])) {
+      if (Array.isArray(source[sourceKey])) {
+        (dest[sourceKey] as any[]).push(...source[sourceKey]);
+      } else {
+        dest[sourceKey] = source[sourceKey];
+      }
+    } else if (typeof dest[sourceKey] === 'object') {
+      dest[sourceKey] = mergeData(dest[sourceKey], source[sourceKey]);
+    } else {
+      dest[sourceKey] = source[sourceKey];
+    }
+  }
+
+  return dest;
+}
 
 
 

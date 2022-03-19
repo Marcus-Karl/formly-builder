@@ -12,34 +12,32 @@
     }
   },
   "items": {
-    "$ref": "#/definitions/formPage"
-  },
-  "definitions": {
-    "formPage": {
-      "type": "object",
-      "widget": {
-        "formlyConfig": {
-          "type": "page-form",
-          "defaultValue": {},
-          "templateOptions": {
-            "useSmallButtons": true,
-            "hideSubmit": true,
-            "linear": false
-          }
+    "type": "object",
+    "widget": {
+      "formlyConfig": {
+        "type": "page-form",
+        "defaultValue": {},
+        "templateOptions": {
+          "useSmallButtons": true,
+          "hideSubmit": true,
+          "linear": false
         }
+      }
+    },
+    "properties": {
+      "dependency": {
+        "$ref": "../dependency/dependency.schema.json"
       },
-      "properties": {
-        "fields": {
-          "$ref": "../pages/page-fields.schema.json"
-        },
-        "settings": {
-          "$ref": "../pages/page-settings.schema.json"
-        }
+      "fields": {
+        "$ref": "../pages/page-fields.schema.json"
       },
-      "required": [
-        "fields",
-        "settings"
-      ]
-    }
+      "settings": {
+        "$ref": "../pages/page-settings.schema.json"
+      }
+    },
+    "required": [
+      "fields",
+      "settings"
+    ]
   }
 }

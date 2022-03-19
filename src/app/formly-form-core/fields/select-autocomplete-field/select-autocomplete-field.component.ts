@@ -187,7 +187,7 @@ export class SelectAutoCompleteFieldComponent extends FieldType implements OnIni
     let options: SelectOption[] = [];
     let groups: { [key: string]: SelectOption[] } = {};
 
-    rawOptions?.map((option: SelectOption) => {
+    rawOptions?.forEach((option: SelectOption) => {
       if (!option[this.groupProp]) {
         options.push(option);
       } else if (groups[option[this.groupProp]]) {

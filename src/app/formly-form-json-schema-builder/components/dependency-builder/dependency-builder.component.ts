@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FieldArrayType, FormlyFieldConfig } from '@ngx-formly/core';
-import * as _ from 'lodash';
 import { BuilderFormState, FieldInformation, PageInformation, SelectionOption } from '../../models/builder-form-state';
 import { FormlyFormJsonSchemaInternalBuilderService } from '../../services/formly-form-json-schema-internal-builder.service';
 
@@ -56,7 +55,7 @@ export class DependencyBuilderComponent extends FieldArrayType implements OnDest
         this._selectionOptions.push({
           group: field.label,
           value: `${field.referenceId}_${option}`,
-          label: `${option} - (${_.truncate(field.label)})`
+          label: `${option} - (${field.label?.length > 30 ? field.label?.substring(0 , 27) + '...' : field.label})`
         })
       )
     );
