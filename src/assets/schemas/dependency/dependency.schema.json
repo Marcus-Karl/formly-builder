@@ -40,7 +40,8 @@
           "type": "array",
           "widget": {
             "formlyConfig": {
-              "defaultValue": []
+              "defaultValue": [],
+              "className": "margin-left-2"
             }
           },
           "items": {
@@ -65,7 +66,8 @@
       "title": "Match All",
       "widget": {
         "formlyConfig": {
-          "defaultValue": {}
+          "defaultValue": {},
+          "className": "margin-left-2"
         }
       },
       "properties": {
@@ -84,7 +86,8 @@
       "title": "Match Any",
       "widget": {
         "formlyConfig": {
-          "defaultValue": {}
+          "defaultValue": {},
+          "className": "margin-left-2"
         }
       },
       "properties": {
@@ -103,7 +106,8 @@
       "title": "Match One",
       "widget": {
         "formlyConfig": {
-          "defaultValue": {}
+          "defaultValue": {},
+          "className": "margin-left-2"
         }
       },
       "properties": {

@@ -5,21 +5,20 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TruncatePipe implements PipeTransform {
 
-  // from https://stackoverflow.com/questions/44669340/
   transform(value: string, limit = 25, completeWords = false, ellipsis = '...') {
 
-    if (!value || !value.substr) {
+    if (typeof value !== 'string') {
       return value;
     }
 
     if (value.length <= limit) {
-      return `${value.substr(0, limit)}`;
+      return value.substring(0, limit);
     }
 
     if (completeWords) {
-      limit = value.substr(0, limit).lastIndexOf(' ');
+      limit = value.substring(0, limit).lastIndexOf(' ');
     }
 
-    return `${value.substr(0, limit)}${ellipsis}`;
+    return value.substring(0, limit).concat(ellipsis);
   }
 }

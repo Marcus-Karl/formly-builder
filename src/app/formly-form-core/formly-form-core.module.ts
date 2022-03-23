@@ -64,6 +64,7 @@ import { MultischemaTypeComponent } from './schema-types/multischema-type/multis
 @NgModule({
   imports: [
     CommonModule,
+    FormlyMaterialModule,
     LayoutModule,
     MatAutocompleteModule,
     MatButtonModule,
@@ -80,7 +81,6 @@ import { MultischemaTypeComponent } from './schema-types/multischema-type/multis
     MatNativeDateModule,
     MatSelectModule,
     MatTableModule,
-    TextFieldModule,
     MatRadioModule,
     MatRippleModule,
     MatStepperModule,
@@ -88,7 +88,7 @@ import { MultischemaTypeComponent } from './schema-types/multischema-type/multis
     OverlayModule,
     PlatformModule,
     ReactiveFormsModule,
-    FormlyMaterialModule,
+    TextFieldModule,
     TranslateModule,
 
     FormlyModule.forRoot({
@@ -156,6 +156,10 @@ import { MultischemaTypeComponent } from './schema-types/multischema-type/multis
     TextBoxFieldComponent,
     TextInputComponentField,
 
+    // Custom Components
+    CustomDateInputComponent,
+    ErrorsAndHintsComponent,
+
     // Wrappers
     DefaultWrapperComponent,
 
@@ -168,33 +172,27 @@ import { MultischemaTypeComponent } from './schema-types/multischema-type/multis
     // Json Schema Field Types
     ObjectTypeComponent,
     ArrayTypeComponent,
+    MultischemaTypeComponent,
 
     // Modals
     ConfirmationModalComponent,
-    ShowFormModalComponent,
     InnerFormContainerComponent,
+    ShowFormModalComponent,
 
     // Misc
-    CustomDateInputComponent,
-    ErrorsAndHintsComponent,
-    ToggleButtonFieldComponent,
-    MultischemaTypeComponent
+    ToggleButtonFieldComponent
   ],
   exports: [
+    BypassSecurityTrustHtmlPipe,
     CommonModule,
     ErrorsAndHintsComponent,
-    FormlyModule,
     FormlyMaterialModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatIconModule,
-    ReactiveFormsModule,
-    TranslateModule,
-    TruncatePipe,
-    BypassSecurityTrustHtmlPipe,
+    FormlyModule,
     FormlyTokenPipe,
+    ReactiveFormsModule,
     SortOptionsPipe,
-    TruncatePipe,
+    TranslateModule,
+    TruncatePipe
   ],
   providers: [
     CustomMatIcons,
