@@ -13,7 +13,7 @@ $custom-typography: mat.define-typography-config($font-family: $font-stack);
 
 $app-primary: mat.define-palette(mat.$indigo-palette, 800, 400, 900);
 $app-accent: mat.define-palette(mat.$amber-palette, A200, A100, A400);
-$app-warn: mat.define-palette(mat.$red-palette, #b00020 !important);
+$app-warn: mat.define-palette(mat.$red-palette, 900);
 $app-theme: mat.define-light-theme($app-primary, $app-accent, $app-warn);
 
 // Include the default theme styles.
