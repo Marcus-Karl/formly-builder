@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { MatSelectChange } from '@angular/material/select';
+import { FormControl } from '@angular/forms';
+import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
@@ -15,6 +15,7 @@ import { SelectOption } from '../../models/multiple-choice.models';
 })
 export class SelectAutoCompleteFieldComponent extends FieldType implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatAutocompleteTrigger) autoCompleteTrigger: MatAutocompleteTrigger | undefined;
+  public formControl!: FormControl;
 
   public get groupProp(): string {
     return this.to.groupProp || 'group';
@@ -107,7 +108,7 @@ export class SelectAutoCompleteFieldComponent extends FieldType implements OnIni
     }
   }
 
-  selectionChange($event: MatSelectChange) {
+  selectionChange($event: MatAutocompleteSelectedEvent) {
     if (this.to.selectionChange) {
       this.to.selectionChange(this.field, $event);
     }

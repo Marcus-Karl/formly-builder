@@ -16,7 +16,7 @@
   </mat-label>
 
   <mat-select
-    [id]="field.id"
+    [id]="field.id!"
     [aria-label]="(to._translationKey + '.label') | translate | tokens: to"
     [compareWith]="to.compareWith"
     [disableOptionCentering]="to.disableOptionCentering"
@@ -25,7 +25,7 @@
     [formlyAttributes]="field"
     [multiple]="to.multiple"
     [placeholder]="(to._translationKey + '.placeholder') | translate | tokens: to"
-    [required]="to.required"
+    [required]="to.required ?? false"
     [tabindex]="to.tabindex || 0"
     [typeaheadDebounceInterval]="to.typeaheadDebounceInterval"
     (selectionChange)="selectionChange($event)">

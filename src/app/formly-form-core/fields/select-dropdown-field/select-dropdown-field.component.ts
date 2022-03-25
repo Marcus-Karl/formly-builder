@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
@@ -14,6 +15,8 @@ import { SelectOption } from '../../models/multiple-choice.models';
   styleUrls: ['./select-dropdown-field.component.scss']
 })
 export class SelectDropDownFieldComponent extends FieldType implements OnInit, OnDestroy {
+  public formControl!: FormControl;
+
   public get groupProp(): string {
     return this.to.groupProp || 'group';
   }

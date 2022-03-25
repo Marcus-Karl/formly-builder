@@ -63,7 +63,7 @@
         </div>
 
         <ng-template #editIcons>
-          <button type="button" mat-icon-button [aria-label]="'Edit' | translate" (click)="selection.toggle(row)" [disabled]="formControl.disabled">
+          <button type="button" mat-icon-button [attr.aria-label]="'Edit' | translate" (click)="selection.toggle(row)" [disabled]="formControl.disabled">
             <div class="center-content flex">
               <mat-icon *ngIf="!selection.isSelected(row)">edit</mat-icon>
               <mat-icon *ngIf="selection.isSelected(row)">done</mat-icon>

@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { FieldType } from '@ngx-formly/material';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { SelectOption } from '../../models/multiple-choice.models';
@@ -9,7 +10,7 @@ import { SelectOption } from '../../models/multiple-choice.models';
   styleUrls: ['./toggle-button-field.component.scss']
 })
 export class ToggleButtonFieldComponent extends FieldType implements OnDestroy, OnInit {
-
+  public formControl!: FormControl;
   public selectOptions$ = new BehaviorSubject<SelectOption[]>([]);
 
   private _subscriptions: Array<Subscription> = [];

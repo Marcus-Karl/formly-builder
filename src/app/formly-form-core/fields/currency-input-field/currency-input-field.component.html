@@ -24,7 +24,7 @@
     (change)="keyUp($event); formatCurrencyInput();"
     (click)="formatCurrencyInput()"
     (blur)="formatCurrencyInput()"
-    [id]="field.id"
+    [id]="field.id!"
     [spellcheck]="true"
     [placeholder]="(to._translationKey + '.placeholder') | translate | tokens: to"
     [formlyAttributes]="field"
@@ -33,15 +33,15 @@
     <div class="prefix" matPrefix>
       <mat-select
         *ngIf="currencySelection"
-        [id]="field.id"
-        [aria-label]="currencySelection.templateOptions.label | tokens: currencySelection.templateOptions"
-        [formControl]="currencySelection.formControl"
+        [id]="field.id!"
+        [aria-label]="currencySelection.templateOptions?.label | tokens: currencySelection.templateOptions"
+        [formControl]="getFormControl(currencySelection.formControl!)"
         [formlyAttributes]="currencySelection"
         [disableOptionCentering]="true"
-        [placeholder]="currencySelection.templateOptions.placeholder | tokens: currencySelection.templateOptions"
-        [required]="currencySelection.templateOptions.required"
-        [tabindex]="currencySelection.templateOptions.tabindex || 0"
-        [typeaheadDebounceInterval]="currencySelection.templateOptions.typeaheadDebounceInterval">
+        [placeholder]="currencySelection.templateOptions?.placeholder | tokens: currencySelection.templateOptions"
+        [required]="currencySelection.templateOptions?.required ?? false"
+        [tabindex]="currencySelection.templateOptions?.tabindex || 0"
+        [typeaheadDebounceInterval]="currencySelection.templateOptions?.typeaheadDebounceInterval">
 
         <ng-container *ngFor="let item of currencyOptions | sortOptions">
           <mat-option class="mat-option-wrap" [value]="item.value" [disabled]="item.disabled">

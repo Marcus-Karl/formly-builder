@@ -10,7 +10,7 @@
   [ngClass]="{ 'mat-form-field-invalid': formControl.invalid && (formControl.dirty || formControl.touched) }">
 
   <custom-date-input
-    [id]="field.id"
+    [id]="field.id!"
     [describedBy]="field.id + '_label'"
     [formControl]="formControl">
   </custom-date-input>

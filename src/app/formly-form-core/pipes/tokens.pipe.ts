@@ -4,8 +4,8 @@ import { FormlyTemplateOptions } from '@ngx-formly/core';
 @Pipe({ name: 'tokens', pure: false })
 export class FormlyTokenPipe implements PipeTransform {
 
-  transform(value: any, to: FormlyTemplateOptions): string {
-    if (!to._tokens || !value) {
+  transform(value: any, to?: FormlyTemplateOptions): string {
+    if (!to?._tokens || !value) {
       return value;
     }
 

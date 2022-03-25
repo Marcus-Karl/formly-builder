@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, FormControl } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
@@ -18,6 +19,7 @@ export class CurrencyInputFieldComponent extends FieldType implements AfterViewI
   public currencySelection: FormlyFieldConfig | undefined;
   public currencyOptions: SelectOption[] = [];
   public currencySymbolWidth: number = 0;
+  public formControl!: FormControl;
   public selectedCurrency: string = 'USD';
   public prefixSymbol: string = '';
   public suffixSymbol: string = '';
@@ -88,6 +90,10 @@ export class CurrencyInputFieldComponent extends FieldType implements AfterViewI
     super.ngOnDestroy();
   }
 
+  getFormControl(formControl: AbstractControl) {
+    return formControl as FormControl;
+  }
+
   formatCurrencyInput(isDelete: boolean = false) {
     let inputValue = this.currencyInput?.nativeElement.value as string;
     let currencyValueString = (inputValue).replace(this._localeGroupSeparatorRegex, '');
@@ -131,14 +137,14 @@ export class CurrencyInputFieldComponent extends FieldType implements AfterViewI
     return this.isInputValid(keyPressed);
   }
 
-  keyUp(event: KeyboardEvent) {
+  keyUp(event: Event | KeyboardEvent) {
     let value: string = (this.currencyInput?.nativeElement.value)?.replace(this._localeGroupSeparatorRegex, '') || '';
 
     this.amountField?.formControl?.patchValue(value.endsWith(this._decimalDelimeter) ? value.slice(0, -1) : value.replace(this._decimalDelimeter, '.'));
 
     let delimeterIndex = (this.currencyInput?.nativeElement.value || '').indexOf(this._decimalDelimeter);
     let selectionStart = this.currencyInput?.nativeElement.selectionStart || 0;
-    let keyPressed = event?.key?.toLowerCase() || '';
+    let keyPressed = (event as KeyboardEvent)?.key?.toLowerCase() || '';
 
     if (delimeterIndex === -1 || delimeterIndex >= selectionStart) {
       this.formatCurrencyInput(keyPressed === 'delete');

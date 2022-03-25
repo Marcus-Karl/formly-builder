@@ -33,7 +33,7 @@
           <div style="margin-left: auto; margin-right: 1em;">
             <div class="center-content error" *ngIf="page.formControl?.touched && page.formControl?.invalid" matTooltip="{{ 'Contains errors' | translate }}">
               <mat-icon>error</mat-icon>
-              {{ page.content }}
+              {{ page.formControl?.errors }}
             </div>
           </div>
         </div>

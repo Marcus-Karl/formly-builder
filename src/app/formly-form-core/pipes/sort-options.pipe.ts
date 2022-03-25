@@ -4,8 +4,8 @@ import { SelectOption } from '../models/multiple-choice.models';
 @Pipe({ name: 'sortOptions' })
 export class SortOptionsPipe implements PipeTransform {
 
-  transform(options: SelectOption[]): SelectOption[] {
-    return options?.sort(this._sortOptions);
+  transform(options: SelectOption[] | null | undefined): SelectOption[] {
+    return options?.sort(this._sortOptions) ?? [];
   }
 
   private _sortOptions(left: SelectOption, right: SelectOption) {

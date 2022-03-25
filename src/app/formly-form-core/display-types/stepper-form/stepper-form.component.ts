@@ -12,6 +12,11 @@ import { AbstractBaseFormControlsComponent } from '../base-form-controls';
   styleUrls: ['./stepper-form.component.scss']
 })
 export class StepperFormComponent extends AbstractBaseFormControlsComponent implements OnDestroy {
+
+  get pageStates(): { [key: string]: { icon: string, class: string }} {
+    return this.to.pageStates;
+  }
+
   public isMobile: boolean = false;
 
   private _subscriptions: Subscription[];

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -59,6 +59,7 @@ import { DependencyBuilderComponent } from './components/dependency-builder/depe
     MatDividerModule,
     MatExpansionModule,
     MatIconModule,
+    MatProgressSpinnerModule,
     MatTableModule,
     MatTooltipModule,
     NgxEditorModule,

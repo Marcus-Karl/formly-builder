@@ -7,18 +7,18 @@
   <mat-step *ngFor="let page of field.fieldGroup; let index = index"
     [hasError]="step.interacted && page.formControl?.invalid && page.formControl?.touched"
     [optional]="page.templateOptions?.isOptional || false"
-    [stepControl]="page.formControl"
+    [stepControl]="page.formControl!"
     [state]="getPageState(page)"
     #step>
 
     <ng-template matStepLabel>
-      {{ (page.templateOptions._translationKey + '.label') | translate | tokens: to }}
+      {{ (page.templateOptions?._translationKey + '.label') | translate | tokens: to }}
     </ng-template>
 
     <formly-field [field]="page" *ngIf="selectedIndex === index" [ngClass]="page.templateOptions?.classes"></formly-field>
   </mat-step>
 
-  <ng-template *ngFor="let state of to.pageStates | keyvalue" [matStepperIcon]="state.key">
+  <ng-template *ngFor="let state of pageStates | keyvalue" [matStepperIcon]="state.key">
     <mat-icon [ngClass]="state.value.class">{{ state.value.icon }}</mat-icon>
   </ng-template>
 
@@ -37,18 +37,18 @@
     <mat-step *ngFor="let page of field.fieldGroup; let index = index"
       [hasError]="step.interacted && page.formControl?.invalid && page.formControl?.touched"
       [optional]="page.templateOptions?.isOptional || false"
-      [stepControl]="page.formControl"
+      [stepControl]="page.formControl!"
       [state]="getPageState(page)"
       #step>
 
       <formly-field *ngIf="selectedIndex === index" [field]="page" [ngClass]="page.templateOptions?.classes"></formly-field>
 
       <ng-template matStepLabel>
-        {{ (page.templateOptions._translationKey + '.label') | translate | tokens: to }}
+        {{ (page.templateOptions?._translationKey + '.label') | translate | tokens: to }}
       </ng-template>
     </mat-step>
 
-    <ng-template *ngFor="let state of to.pageStates | keyvalue" [matStepperIcon]="state.key">
+    <ng-template *ngFor="let state of pageStates | keyvalue" [matStepperIcon]="state.key">
       <mat-icon [ngClass]="state.value.class">{{ state.value.icon }}</mat-icon>
     </ng-template>
 

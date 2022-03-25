@@ -18,7 +18,7 @@
     type="text"
     autocomplete="off"
     #autocompleteinput
-    [id]="field.id"
+    [id]="field.id!"
     [attr.aria-label]="(to._translationKey + '.label') | translate | tokens: to"
     [placeholder]="(to._translationKey + '.placeholder') | translate | tokens: to"
     [formControl]="formControl"
@@ -26,14 +26,14 @@
     [tabindex]="to.tabindex || 0"
     [matAutocomplete]="auto" />
 
-  <button *ngIf="formControl.value" matSuffix mat-icon-button [aria-label]="'Clear Selection' | translate" [style.max-height]="'34px'"
+  <button *ngIf="formControl.value" matSuffix mat-icon-button [attr.aria-label]="'Clear Selection' | translate" [style.max-height]="'34px'"
     (click)="$event.stopPropagation(); autoCompleteTrigger?.openPanel(); formControl.setValue(null); autocompleteinput.focus()">
     <mat-icon [inline]="true">close</mat-icon>
   </button>
 
   <mat-autocomplete
     #auto="matAutocomplete"
-    [aria-labelledby]="field.id"
+    [attr.aria-labelledby]="field.id"
     [autoActiveFirstOption]="to.autoActiveFirstOption"
     [classList]="to.autoCompleteClasses || ''"
     [disableRipple]="to.disableRipple"

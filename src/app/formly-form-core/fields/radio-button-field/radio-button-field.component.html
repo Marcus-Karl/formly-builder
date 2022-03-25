@@ -1,10 +1,10 @@
 <mat-radio-group
   class="radio-group"
   color="primary"
-  [id]="field.id"
+  [id]="field.id!"
   [formControl]="formControl"
   [formlyAttributes]="field"
-  [required]="to.required">
+  [required]="to.required ?? false">
 
   <fieldset class="fieldset" [ngClass]="to.classes">
     <legend class="flex body-text">

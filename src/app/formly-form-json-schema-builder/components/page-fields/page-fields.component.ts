@@ -2,6 +2,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
+import { FormArray } from '@angular/forms';
 import { FieldArrayType, FormlyFieldConfig } from '@ngx-formly/core';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -22,6 +23,7 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
   @ViewChild(MatTable) table: MatTable<any> | undefined;
 
   public columnsToDisplay = ['_order', 'category', 'basic.label', 'basic.type', 'edit'];
+  public formControl!: FormArray;
   public reorderEnabled = false;
 
   private _categories: any[] | undefined;

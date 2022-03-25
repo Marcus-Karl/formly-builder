@@ -19,7 +19,7 @@
 </div>
 
 <div
-  [id]="field.id"
+  [id]="field.id!"
   class="page-fields"
   cdkDropList
   *ngIf="field.fieldGroup?.length; else noFields"
@@ -107,7 +107,7 @@
 
 <ng-template #noFields>
   <div
-    [id]="field.id"
+    [id]="field.id!"
     class="flex page-fields center-content"
     cdkDropList
     [cdkDropListData]="this"

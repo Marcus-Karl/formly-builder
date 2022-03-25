@@ -20,7 +20,7 @@
     resizeToFitContent="false"
     [spellcheck]="true"
     [cdkTextareaAutosize]="true"
-    [id]="field.id"
+    [id]="field.id!"
     [cdkAutosizeMinRows]="to.minRows || 4"
     [required]="to.required || false"
     [placeholder]="(to._translationKey + '.placeholder') | translate | tokens: to"

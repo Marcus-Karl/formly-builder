@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { FormArray } from '@angular/forms';
 import { FieldArrayType, FormlyFieldConfig } from '@ngx-formly/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
 import { ConfirmationModalData } from 'src/app/formly-form-core/models/confirmation-modal-data';
 import { ConfirmationModalComponent } from 'src/app/formly-form-core/modal/confirmation-modal/confirmation-modal.component';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'expansion-panel-array-field',
@@ -14,6 +15,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
   styleUrls: ['./expansion-panel-array-field.component.scss']
 })
 export class ExpansionPanelArrayFieldComponent extends FieldArrayType {
+  public formControl!: FormArray;
   public isMobile: boolean = false;
 
   private _subscriptions: Subscription[] = [];
