@@ -25,14 +25,14 @@
       }
     },
     "properties": {
-      "dependency": {
-        "$ref": "../dependency/dependency.schema.json"
-      },
       "fields": {
         "$ref": "../pages/page-fields.schema.json"
       },
       "settings": {
         "$ref": "../pages/page-settings.schema.json"
+      },
+      "dependency": {
+        "$ref": "../dependency/dependency.schema.json"
       }
     },
     "required": [

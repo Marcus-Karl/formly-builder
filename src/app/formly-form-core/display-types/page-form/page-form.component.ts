@@ -18,33 +18,29 @@ export class PageFormComponent extends AbstractBaseFormControlsComponent {
   }
 
   getPrecedingPageNamesInError(index: number) {
-    let formsInError = '\n';
+    let formsInError = [];
 
     for (let i = 0; i < index; i++) {
       if (this.field.fieldGroup && this.field.fieldGroup[i].formControl?.invalid) {
-        formsInError += this.field.fieldGroup[i].templateOptions?.label + '\n';
+        formsInError.push(this.field.fieldGroup[i].templateOptions?.label);
       }
     }
 
-    formsInError = formsInError.replace(/\n$/g, '');
-
-    return formsInError;
+    return formsInError.filter(x => x?.trim().length).join('\n');
   }
 
   getSubsequentPageNamesInError(index: number) {
-    let formsInError = '\n';
+    let formsInError = [];
 
     if (this.field.fieldGroup?.length) {
       for (let i = index; i < this.field.fieldGroup?.length; i++) {
         if (this.field.fieldGroup[i].formControl?.invalid) {
-          formsInError += this.field.fieldGroup[i].templateOptions?.label + '\n';
+          formsInError.push(this.field.fieldGroup[i].templateOptions?.label);
         }
       }
     }
 
-    formsInError = formsInError.replace(/\n$/g, '');
-
-    return formsInError;
+    return formsInError.filter(x => x?.trim().length).join('\n');
   }
 
   getPreviousPageName(index: number) {

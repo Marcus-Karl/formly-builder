@@ -50,9 +50,8 @@
           </mat-panel-title>
 
           <div style="margin-left: auto; margin-right: 1em;">
-            <div class="center-content error" *ngIf="page.formControl?.touched && page.formControl?.invalid" matTooltip="{{ 'Contains errors' | translate }}">
+            <div class="center-content error" *ngIf="page.formControl?.touched && page.formControl?.invalid" matTooltip="{{ 'Page contains errors' | translate }}">
               <mat-icon>error</mat-icon>
-              {{ page.formControl?.errors }}
             </div>
           </div>
 

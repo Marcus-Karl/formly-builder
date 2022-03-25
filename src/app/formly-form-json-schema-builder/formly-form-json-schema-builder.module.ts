@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { FormlyModule } from '@ngx-formly/core';
 import { NgxEditorModule } from 'ngx-editor';
@@ -55,6 +56,7 @@ import { DependencyBuilderComponent } from './components/dependency-builder/depe
   imports: [
     FormlyFormCoreModule,
     DragDropModule,
+    MatButtonModule,
     MatDialogModule,
     MatDividerModule,
     MatExpansionModule,
