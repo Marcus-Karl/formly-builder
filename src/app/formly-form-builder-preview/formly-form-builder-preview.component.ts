@@ -15,34 +15,8 @@ export class FormlyFormBuilderPreviewComponent implements OnDestroy, OnInit {
   public isFormLoading = true;
 
   public form: FormGroup;
-
-  public model = {};
-
-  public options: FormlyFormOptions = {
-    formState: {
-      mainModel: this.model,
-      formTokens: {
-        bday: {
-          type: 'date',
-          value: '2021-03-25'
-        },
-        hearing: {
-          type: 'datetime',
-          value: '2021-04-25T08:54:15.000-05:00'
-        },
-        reasonText: {
-          type: 'string',
-          $ref: 'page1.reason'
-        },
-        myFunction: {
-          type: 'function',
-          value: '{ return `${token?.reasonText}` === \'Hello!\' ? \'Its hello!\' : `Its not hello, its instead: ${token.reasonText}`; }'
-        }
-      },
-      changeMap: {}
-    }
-  };
-
+  public model: { [key: string]: any };
+  public options: FormlyFormOptions;
   public fields: FormlyFieldConfig[];
 
   private _subscriptions: Array<Subscription>;
@@ -51,16 +25,21 @@ export class FormlyFormBuilderPreviewComponent implements OnDestroy, OnInit {
     this._subscriptions = [];
 
     this.form = new FormGroup({});
+    this.model = getModel;
+    this.options = getOptions();
 
-    let field = getFieldValues();
+    let jsonSchema = getFieldValues();
 
-    let jsonSchema = this.formlyJsonschema.toFieldConfig(field as any);
+    let formlyFieldConfig = this.formlyJsonschema.toFieldConfig(jsonSchema as any);
 
-    console.log(jsonSchema);
+    console.log('Formly Field Config Before Build Form', JSON.parse(JSON.stringify(formlyFieldConfig)));
 
-    this.fields = [jsonSchema];
+    this.fields = [formlyFieldConfig];
 
     this.formlyBuilder.buildForm(this.form, this.fields, this.model, this.options);
+
+    console.log('Formly Fields After Build Form', this.fields[0]);
+    console.log('FormGroup', this.form);
   }
 
   ngOnInit() {
@@ -98,7 +77,53 @@ export class FormlyFormBuilderPreviewComponent implements OnDestroy, OnInit {
   }
 }
 
+const getModel = {};
+
 /* eslint-disable @typescript-eslint/naming-convention, max-len */
+
+
+
+
+
+
+
+
+
+
+
+
+/* eslint-enable @typescript-eslint/naming-convention, max-len */
+
+
+
+
+/* eslint-disable @typescript-eslint/naming-convention, max-len */
+
+const getOptions = (): FormlyFormOptions => ({
+  formState: {
+    mainModel: getModel,
+    formTokens: {
+      bday: {
+        type: 'date',
+        value: '2021-03-25'
+      },
+      hearing: {
+        type: 'datetime',
+        value: '2021-04-25T08:54:15.000-05:00'
+      },
+      reasonText: {
+        type: 'string',
+        $ref: 'page1.reason'
+      },
+      myFunction: {
+        type: 'function',
+        value: '{ return `${token?.reasonText}` === \'Hello!\' ? \'Its hello!\' : `Its not hello, its instead: ${token.reasonText}`; }'
+      }
+    },
+    changeMap: {}
+  }
+});
+
 const getFieldValues = () => ({
   'type': 'object',
   'widget': {

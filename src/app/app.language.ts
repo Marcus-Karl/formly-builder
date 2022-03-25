@@ -5,7 +5,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export class AppMissingTranslationHandler implements MissingTranslationHandler {
   handle(params: MissingTranslationHandlerParams) {
-    console.warn('Translation Missing: ', params);
+    // console.warn('Translation Missing: ', params);
   }
 }
 
