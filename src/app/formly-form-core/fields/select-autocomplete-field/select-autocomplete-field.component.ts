@@ -1,10 +1,10 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { AbstractControl, FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { map, startWith, withLatestFrom } from 'rxjs/operators';
+import { debounceTime, map, startWith, withLatestFrom } from 'rxjs/operators';
 
 import { SelectOption } from '../../models/multiple-choice.models';
 
@@ -29,8 +29,10 @@ export class SelectAutoCompleteFieldComponent extends FieldType implements OnIni
     return this.to.valueProp || 'value';
   }
 
-  public selectOptions$ = new BehaviorSubject<SelectOption[]>([]);
+  public itemHeight = 48;
+  public viewportHeight = 0;
   public filteredSelectOptions$: Observable<any[]> | undefined;
+  public selectOptions$ = new BehaviorSubject<SelectOption[]>([]);
 
   private _options: any[] = [];
   private _subscriptions: Array<Subscription> = [];
@@ -70,9 +72,18 @@ export class SelectAutoCompleteFieldComponent extends FieldType implements OnIni
 
     this.filteredSelectOptions$ = this.formControl.valueChanges.pipe(
       startWith(this.formControl.value || ''),
+      debounceTime(100),
       withLatestFrom(this.selectOptions$),
-      map(([userInput, options]: [string, SelectOption[]]) => this._filter(options, userInput?.toLowerCase()))
+      map(([userInput, options]: [string, SelectOption[]]) => {
+        let filteredOptions = this._filter(options, userInput?.toLowerCase());
+
+        this.viewportHeight = Math.min(256, this.itemHeight * filteredOptions.length);
+
+        return filteredOptions;
+      })
     );
+
+    this.formControl.addValidators(this.selectionMatchesOption);
 
     this._processOptionsChange(this.to.options, true, true);
   }
@@ -80,11 +91,25 @@ export class SelectAutoCompleteFieldComponent extends FieldType implements OnIni
   ngOnDestroy() {
     this._subscriptions.forEach(x => x.unsubscribe());
 
+    this.field?.formControl?.removeValidators(this.selectionMatchesOption);
+
     super.ngOnDestroy();
   }
 
   ngAfterViewInit() {
     super.ngAfterViewInit();
+
+    this.autoCompleteTrigger?.setDisabledState(this.to.disabled || !this._options?.length);
+
+    if (this.options?.fieldChanges) {
+      this._subscriptions.push(
+        this.options.fieldChanges.subscribe(field => {
+          if (field['property'] === 'templateOptions.disabled') {
+            this.autoCompleteTrigger?.setDisabledState(field.value || !this._options?.length);
+          }
+        })
+      );
+    }
 
     if (this.to.autoActiveFirstOption && this.autoCompleteTrigger?.panelClosingActions) {
       this._subscriptions.push(
@@ -135,7 +160,7 @@ export class SelectAutoCompleteFieldComponent extends FieldType implements OnIni
     }
 
     return value;
-  }
+  };
 
   private _filter(options: SelectOption[], filterValue: string) {
     if (!filterValue) {
@@ -182,11 +207,13 @@ export class SelectAutoCompleteFieldComponent extends FieldType implements OnIni
       // Call to update filteredSelectOptions$ as needed
       this.formControl.patchValue(this.formControl.value, { onlySelf: onlySelf, emitEvent: emitEvent });
     }
+
+    this.autoCompleteTrigger?.setDisabledState(this.to.disabled || !this._options?.length);
   }
 
   private _mapOptions(rawOptions: any) {
     let options: SelectOption[] = [];
-    let groups: { [key: string]: SelectOption[] } = {};
+    let groups: { [key: string]: SelectOption[]; } = {};
 
     rawOptions?.forEach((option: SelectOption) => {
       if (!option[this.groupProp]) {
@@ -205,5 +232,20 @@ export class SelectAutoCompleteFieldComponent extends FieldType implements OnIni
     });
 
     return options;
+  }
+
+  private selectionMatchesOption = (control: AbstractControl) => {
+    if (!control.value?.length) {
+      return null;
+    }
+
+    let matchingOption = this.selectOptions$.value?.find(x => x.value === control.value);
+
+    if (!matchingOption) {
+      let message = 'No option selected';
+      return { [message]: { message: message } };
+    }
+
+    return null;
   }
 }

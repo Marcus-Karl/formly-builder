@@ -25,3 +25,7 @@ mat-form-field {
   width: 100%;
   max-width: 45em;
 }
+
+.select-autocomplete-virtual-scroll {
+  overflow-x: hidden;
+}

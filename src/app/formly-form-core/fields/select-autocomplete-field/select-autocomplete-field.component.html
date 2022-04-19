@@ -19,6 +19,7 @@
     autocomplete="off"
     #autocompleteinput
     [id]="field.id!"
+    [required]="to.required || false"
     [attr.aria-label]="(to._translationKey + '.label') | translate | tokens: to"
     [placeholder]="(to._translationKey + '.placeholder') | translate | tokens: to"
     [formControl]="formControl"
@@ -40,17 +41,24 @@
     [displayWith]="getDisplayLabel"
     (optionSelected)="selectionChange($event)">
 
-    <ng-container *ngFor="let item of filteredSelectOptions$ | async | sortOptions">
-      <mat-optgroup *ngIf="item.group" [label]="item.label" [disabled]="item.disabled">
-        <mat-option class="mat-option-wrap" *ngFor="let groupItem of item.group | sortOptions" [value]="groupItem[valueProp]" [disabled]="groupItem.disabled">
-          {{ groupItem[labelProp] | translate | tokens: to }}
-        </mat-option>
-      </mat-optgroup>
+    <cdk-virtual-scroll-viewport
+      [itemSize]="itemHeight"
+      [minBufferPx]="viewportHeight"
+      maxBufferPx="512"
+      [ngStyle]="{ 'height': viewportHeight + 'px' }" class="select-autocomplete-virtual-scroll">
 
-      <mat-option class="mat-option-wrap" *ngIf="!item.group" [value]="item[valueProp]" [disabled]="item.disabled">
-        {{ item[labelProp] | translate | tokens: to }}
-      </mat-option>
-    </ng-container>
+      <ng-container *cdkVirtualFor="let item of filteredSelectOptions$ | async | sortOptions">
+        <mat-optgroup *ngIf="item.group" [label]="item.label" [disabled]="item.disabled">
+          <mat-option class="mat-option-wrap" *ngFor="let groupItem of item.group | sortOptions" [value]="groupItem[valueProp]" [disabled]="groupItem.disabled">
+            {{ groupItem[labelProp] | translate | tokens: to }}
+          </mat-option>
+        </mat-optgroup>
+  
+        <mat-option class="mat-option-wrap" *ngIf="!item.group" [value]="item[valueProp]" [disabled]="item.disabled">
+          {{ item[labelProp] | translate | tokens: to }}
+        </mat-option>
+      </ng-container>
+    </cdk-virtual-scroll-viewport>
 
   </mat-autocomplete>
 </mat-form-field>

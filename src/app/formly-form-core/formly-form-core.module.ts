@@ -21,6 +21,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { FormlyModule, FORMLY_CONFIG } from '@ngx-formly/core';
@@ -88,6 +89,7 @@ import { MultischemaTypeComponent } from './schema-types/multischema-type/multis
     OverlayModule,
     PlatformModule,
     ReactiveFormsModule,
+    ScrollingModule,
     TextFieldModule,
     TranslateModule,
 
