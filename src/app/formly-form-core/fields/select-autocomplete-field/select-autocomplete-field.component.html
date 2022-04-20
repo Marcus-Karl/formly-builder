@@ -42,9 +42,9 @@
     (optionSelected)="selectionChange($event)">
 
     <cdk-virtual-scroll-viewport
+      maxBufferPx="512"
       [itemSize]="itemHeight"
       [minBufferPx]="viewportHeight"
-      maxBufferPx="512"
       [ngStyle]="{ 'height': viewportHeight + 'px' }" class="select-autocomplete-virtual-scroll">
 
       <ng-container *cdkVirtualFor="let item of filteredSelectOptions$ | async | sortOptions">
@@ -53,7 +53,7 @@
             {{ groupItem[labelProp] | translate | tokens: to }}
           </mat-option>
         </mat-optgroup>
-  
+
         <mat-option class="mat-option-wrap" *ngIf="!item.group" [value]="item[valueProp]" [disabled]="item.disabled">
           {{ item[labelProp] | translate | tokens: to }}
         </mat-option>

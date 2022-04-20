@@ -77,7 +77,7 @@ export class SelectAutoCompleteFieldComponent extends FieldType implements OnIni
       map(([userInput, options]: [string, SelectOption[]]) => {
         let filteredOptions = this._filter(options, userInput?.toLowerCase());
 
-        this.viewportHeight = Math.min(256, this.itemHeight * filteredOptions.length);
+        this.viewportHeight = Math.min(256, this.itemHeight * filteredOptions.flatMap(x => [x, ...x.group ?? []]).length);
 
         return filteredOptions;
       })
