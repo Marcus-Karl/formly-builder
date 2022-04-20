@@ -239,7 +239,7 @@ export class SelectAutoCompleteFieldComponent extends FieldType implements OnIni
       return null;
     }
 
-    let matchingOption = this.selectOptions$.value?.find(x => x.value === control.value);
+    let matchingOption = this._options?.find(x => x.value === control.value);
 
     if (!matchingOption) {
       let message = 'No option selected';
