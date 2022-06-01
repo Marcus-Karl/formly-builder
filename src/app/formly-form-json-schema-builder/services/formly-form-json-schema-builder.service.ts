@@ -5,6 +5,7 @@ import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { Resolver } from '@stoplight/json-ref-resolver';
 import { JSONSchema7 } from 'json-schema';
+import { firstValueFrom } from 'rxjs';
 import { ConvertModel } from '../builder';
 import { FunctionReferences } from '../builder/state-functions';
 import { BuilderFormState, FormBuilderSelectionOption, PagesInformation, SelectionOptionType } from '../models/builder-form-state';
@@ -50,7 +51,7 @@ export class FormlyFormJsonSchemaBuilderService {
   }
 
   constructor(private formlyJsonschema: FormlyJsonschema, private httpClient: HttpClient) {
-    this.init().finally(() => { });
+    this.init().finally();
   }
 
   public async init(selectionOptionsMap?: { [key in SelectionOptionType]: FormBuilderSelectionOption[] }) {
@@ -109,18 +110,18 @@ export class FormlyFormJsonSchemaBuilderService {
   }
 
   private async getDefaultSchema() {
-    let rootSchema = await this.loadSchema('json-schema-builder.schema.json').toPromise();
+    let rootSchema = await firstValueFrom(this.loadSchema('json-schema-builder.schema.json'));
 
     let resolver = new Resolver({
       resolvers: {
         http: {
-          resolve: async (ref: URI, ctx: any) => this.loadSchema(String(ref)).toPromise()
+          resolve: async (ref: URI, ctx: any) => firstValueFrom(this.loadSchema(String(ref)))
         },
         https: {
-          resolve: async (ref: URI, ctx: any) => this.loadSchema(String(ref)).toPromise()
+          resolve: async (ref: URI, ctx: any) => firstValueFrom(this.loadSchema(String(ref)))
         },
         file: {
-          resolve: async (ref: URI, ctx: any) => this.loadSchema(String(ref)).toPromise()
+          resolve: async (ref: URI, ctx: any) => firstValueFrom(this.loadSchema(String(ref)))
         }
       }
     });

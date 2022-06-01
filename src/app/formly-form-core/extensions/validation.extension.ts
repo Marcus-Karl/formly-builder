@@ -1,5 +1,3 @@
-
-
 import { AbstractControl } from '@angular/forms';
 import { FormlyFieldConfig, FormlyTemplateOptions } from '@ngx-formly/core';
 import { TranslateService } from '@ngx-translate/core';
