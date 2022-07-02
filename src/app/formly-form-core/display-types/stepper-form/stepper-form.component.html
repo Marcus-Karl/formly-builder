@@ -12,7 +12,7 @@
     #step>
 
     <ng-template matStepLabel>
-      {{ (page.templateOptions?._translationKey + '.label') | translate | tokens: to }}
+      {{ page.templateOptions?._translationKeyLabel | translate | tokens: to }}
     </ng-template>
 
     <formly-field [field]="page" *ngIf="selectedIndex === index" [ngClass]="page.templateOptions?.classes"></formly-field>
@@ -44,7 +44,7 @@
       <formly-field *ngIf="selectedIndex === index" [field]="page" [ngClass]="page.templateOptions?.classes"></formly-field>
 
       <ng-template matStepLabel>
-        {{ (page.templateOptions?._translationKey + '.label') | translate | tokens: to }}
+        {{ page.templateOptions?._translationKeyLabel | translate | tokens: to }}
       </ng-template>
     </mat-step>
 

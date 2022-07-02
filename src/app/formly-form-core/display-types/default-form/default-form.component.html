@@ -1,6 +1,6 @@
 <ng-container *ngFor="let page of field.fieldGroup; let index = index; let last = last;">
   <ng-contaier *ngIf="page.key === options?.formState.currentPage">
-    <div class="title">{{ (page.templateOptions?._translationKey + '.label') | translate | tokens: to }}</div>
+    <div class="title">{{ page.templateOptions?._translationKeyLabel | translate | tokens: to }}</div>
 
     <formly-field [field]="page" [ngClass]="page.templateOptions?.classes"></formly-field>
 

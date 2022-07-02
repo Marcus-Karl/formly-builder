@@ -19,7 +19,7 @@
           </ng-template>
 
           <span [ngStyle]="{ 'opacity': index === selectedIndex ? '1' : '0.6' }">
-            {{ (page.templateOptions?._translationKey + '.label') | translate | tokens: to }}
+            {{ page.templateOptions?._translationKeyLabel | translate | tokens: to }}
           </span>
         </div>
       </ng-template>

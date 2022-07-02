@@ -1,6 +1,6 @@
 
 <div class="body-text bold">
-  {{ to?.label }} {{ to?.required ? '*' : '' }}
+  {{ to._translationKeyLabel | translate | tokens: to }} {{ to?.required ? '*' : '' }}
 </div>
 
 <mat-button-toggle-group

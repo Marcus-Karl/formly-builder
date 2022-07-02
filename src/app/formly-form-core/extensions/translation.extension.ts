@@ -19,25 +19,30 @@ export class TranslateExtension implements FormlyExtension {
       return;
     }
 
-    let translationsRef: any = {
+    const translationsRef: any = {
       label: field.templateOptions?.label || '',
       help: field.templateOptions?.help || '',
       hint: field.templateOptions?.hint || '',
       placeholder: field.templateOptions?.placeholder || ''
     };
 
-    let translationKey = getTranslationKey(field);
+    const translationKey = getTranslationKey(field);
 
     if (field.templateOptions && !field.templateOptions?._translationKey) {
-      let copy = translationKey.slice();
+      const copy = translationKey.slice();
       translationKey.length = 0;
 
       copy.forEach(key => translationKey.push(key.replace(/\./, '_')));
 
       field.templateOptions._translationKey = translationKey.join('.');
+
+      field.templateOptions._translationKeyLabel = `${field.templateOptions?._translationKey}.label`;
+      field.templateOptions._translationKeyHelp = `${field.templateOptions?._translationKey}.help`;
+      field.templateOptions._translationKeyHint = `${field.templateOptions?._translationKey}.hint`;
+      field.templateOptions._translationKeyPlaceholder = `${field.templateOptions?._translationKey}.placeholder`;
     }
 
-    let translations = translationKey.reverse().reduce((obj, key) => ({ [key]: obj }), translationsRef);
+    const translations = translationKey.reverse().reduce((obj, key) => ({ [key]: obj }), translationsRef);
 
     TranslateExtension.TRANSLATE.setTranslation(TranslateExtension.TRANSLATE.defaultLang, translations, true);
   }
@@ -48,7 +53,7 @@ const getTranslationKey = (field: FormlyFieldConfig): string[] => {
     return field.templateOptions._translationKey.split('.');
   }
 
-  let keySegments = [];
+  const keySegments = [];
   keySegments.push(...getPathTranslationKeys(field));
 
   return keySegments;
