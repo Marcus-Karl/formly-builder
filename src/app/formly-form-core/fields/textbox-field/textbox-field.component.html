@@ -1,4 +1,4 @@
-<div *ngIf="!to.encapsulateLabel" class="flex body-text">
+<div *ngIf="!to.encapsulateLabel" class="flex">
   <label [for]="field.id" [innerHTML]="to.label + (to.required ? ' *' : '') | keepHtml"></label>
 
   <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="to.help" matTooltipClass="mat-tooltip-content">help</mat-icon>
@@ -9,13 +9,13 @@
   [floatLabel]="to.floatLabel || 'always'"
   [ngClass]="{ 'no-label': !to.encapsulateLabel }">
 
-  <mat-label *ngIf="to.encapsulateLabel" class="body-text">
+  <mat-label *ngIf="to.encapsulateLabel">
     {{ to.label }}
   </mat-label>
 
   <textarea
     matInput
-    class="body-text textarea"
+    class="textarea"
     autocomplete="off"
     resizeToFitContent="false"
     [spellcheck]="true"

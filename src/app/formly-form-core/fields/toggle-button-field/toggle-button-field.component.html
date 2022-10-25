@@ -1,6 +1,6 @@
 
-<div class="body-text bold">
-  {{ to.label }} {{ to.required ? '*' : '' }}
+<div class="bold">
+  {{ to.label + (to.required ? ' *' : '') }}
 </div>
 
 <mat-button-toggle-group

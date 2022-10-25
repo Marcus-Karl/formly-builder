@@ -1,7 +1,7 @@
 <div class="title margin-bottom" [innerHTML]="modalData.header | keepHtml" mat-dialog-title></div>
 
 <mat-dialog-content class="mat-typography">
-  <span class="body-text" [innerHTML]="modalData.body | keepHtml"></span>
+  <span [innerHTML]="modalData.body | keepHtml"></span>
 </mat-dialog-content>
 
 <mat-dialog-actions class="flex">

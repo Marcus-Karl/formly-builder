@@ -7,7 +7,7 @@
   [required]="to.required ?? false">
 
   <fieldset class="fieldset" [ngClass]="to.classes">
-    <legend class="flex body-text">
+    <legend class="flex">
       <div [innerHTML]="to.label + (to.required ? ' *' : '') | keepHtml"></div>
 
       <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="to.help" matTooltipClass="mat-tooltip-content">help</mat-icon>
