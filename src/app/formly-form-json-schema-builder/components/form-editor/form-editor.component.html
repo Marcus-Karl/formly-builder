@@ -4,7 +4,7 @@
       <div class="center-content flex">
         <mat-icon>add</mat-icon>
 
-        <div class="pad-left-half" translate>
+        <div class="pad-left-half">
           Add Page
         </div>
       </div>
@@ -12,7 +12,7 @@
 
     <div class="margin-left-2">
       <button type="button" mat-button [disabled]="!field.fieldGroup?.length" (click)="reorderEnabled = !reorderEnabled; reorderEnabled ? accordion && accordion.closeAll() : null;">
-        {{ reorderEnabled ? ('Edit Pages' | translate) : ('Edit Form' | translate) }}
+        {{ reorderEnabled ? 'Edit Pages' : 'Edit Form' }}
       </button>
     </div>
   </div>
@@ -41,16 +41,16 @@
         <div class="fill center-content header-contents">
           <mat-panel-title class="page-summary subtitle-filled">
             <div class="summary-row">
-              <div class="row-label" translate>Position</div>{{ page.model?._order }}
+              <div class="row-label">Position</div>{{ page.model?._order }}
             </div>
 
             <div class="summary-row" [matTooltip]="page.model?._referenceId">
-              <div class="row-label" translate>Label</div>{{ page.model?.settings?.label | truncate: 150 }}
+              <div class="row-label">Label</div>{{ page.model?.settings?.label | truncate: 150 }}
             </div>
           </mat-panel-title>
 
           <div style="margin-left: auto; margin-right: 1em;">
-            <div class="center-content error" *ngIf="page.formControl?.touched && page.formControl?.invalid" matTooltip="{{ 'Page contains errors' | translate }}">
+            <div class="center-content error" *ngIf="page.formControl?.touched && page.formControl?.invalid" matTooltip="Page contains errors">
               <mat-icon>error</mat-icon>
             </div>
           </div>

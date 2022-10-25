@@ -21,7 +21,7 @@
 
     <div class="margin-top-2">
       <button type="button" mat-raised-button color="primary" [disabled]="categoryField.formControl?.invalid" (click)="onSelectedCategory()">
-        <div translate>Continue</div>
+        <div>Continue</div>
       </button>
     </div>
   </div>
@@ -37,7 +37,7 @@
   <button type="button" mat-button (click)="resetAndClose()">
     <div class="center flex row">
       <mat-icon class="material-icons-outlined margin-right-half" [inline]="true">undo</mat-icon>
-      <div translate>Revert & Close</div>
+      <div>Revert & Close</div>
     </div>
   </button>
 
@@ -47,7 +47,7 @@
       color="primary"
       [disabled]="field.formControl?.invalid"
       (click)="updateAndClose()">
-      <div translate>Save & Close</div>
+      <div>Save & Close</div>
     </button>
   </div>
 </div>
@@ -56,7 +56,7 @@
   <div class="flex row buttons">
     <div class="align-end pad-left">
       <button mat-raised-button color="primary" (click)="dialogRef.close()" cdkFocusInitial>
-        <div translate>Close</div>
+        <div>Close</div>
       </button>
     </div>
   </div>

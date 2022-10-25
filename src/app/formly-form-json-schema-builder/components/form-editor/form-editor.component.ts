@@ -3,7 +3,6 @@ import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/
 import { MatDialog } from '@angular/material/dialog';
 import { MatAccordion } from '@angular/material/expansion';
 import { FieldArrayType, FormlyFieldConfig } from '@ngx-formly/core';
-import { TranslateService } from '@ngx-translate/core';
 
 import { ConfirmationModalComponent } from 'src/app/formly-form-core/modal/confirmation-modal/confirmation-modal.component';
 import { ConfirmationModalData } from 'src/app/formly-form-core/models/confirmation-modal-data';
@@ -23,7 +22,7 @@ export class FormEditorComponent extends FieldArrayType implements OnInit {
   public reorderEnabled = false;
   public addedIndex?: number;
 
-  constructor(private dialog: MatDialog, private formlyBuilderService: FormlyFormJsonSchemaInternalBuilderService, private translateService: TranslateService) {
+  constructor(private dialog: MatDialog, private formlyBuilderService: FormlyFormJsonSchemaInternalBuilderService) {
     super();
   }
 
@@ -42,7 +41,7 @@ export class FormEditorComponent extends FieldArrayType implements OnInit {
       return;
     }
 
-    let model = this.field.fieldGroup[event.previousIndex].model;
+    const model = this.field.fieldGroup[event.previousIndex].model;
 
     super.remove(event.previousIndex);
     super.add(event.currentIndex > event.previousIndex ? --event.currentIndex : event.currentIndex, model);
@@ -53,12 +52,12 @@ export class FormEditorComponent extends FieldArrayType implements OnInit {
   }
 
   add(i?: number, initialModel?: any, markAsDirty?: any) {
-    let index = (i === undefined || i === null) ? this.field.fieldGroup?.length || 0 : i;
+    const index = (i === undefined || i === null) ? this.field.fieldGroup?.length || 0 : i;
 
     super.add(index, initialModel, markAsDirty);
 
     if (this.field.fieldGroup && this.field.fieldGroup[index]) {
-      let newPage = this.field.fieldGroup[index];
+      const newPage = this.field.fieldGroup[index];
 
       if (!newPage.model['_order']) {
         newPage.model['_order'] = index + 1;
@@ -83,15 +82,15 @@ export class FormEditorComponent extends FieldArrayType implements OnInit {
       return;
     }
 
-    let index = this.field.fieldGroup.findIndex(x => x.id === page?.id);
+    const index = this.field.fieldGroup.findIndex(x => x.id === page?.id);
 
     if (index > -1) {
-      let header = this.translateService.instant('Confirmation');
-      let body = this.translateService.instant('Are you sure you want to remove this page?');
-      let secondaryButtonText = this.translateService.instant('No');
-      let removeText = this.translateService.instant('Yes');
+      const header = 'Confirmation';
+      const body = 'Are you sure you want to remove this page?';
+      const secondaryButtonText = 'No';
+      const removeText = 'Yes';
 
-      let data = new ConfirmationModalData(header, body, removeText, secondaryButtonText);
+      const data = new ConfirmationModalData(header, body, removeText, secondaryButtonText);
 
       this.dialog.open(ConfirmationModalComponent, {
         data: data,

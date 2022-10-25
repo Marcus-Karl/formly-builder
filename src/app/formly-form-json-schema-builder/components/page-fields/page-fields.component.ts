@@ -4,7 +4,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { FormArray } from '@angular/forms';
 import { FieldArrayType, FormlyFieldConfig } from '@ngx-formly/core';
-import { TranslateService } from '@ngx-translate/core';
 
 import { FormlyFormJsonSchemaInternalBuilderService } from 'src/app/formly-form-json-schema-builder/services/formly-form-json-schema-internal-builder.service';
 import { FunctionHelpers } from 'src/app/formly-form-json-schema-builder/builder';
@@ -28,7 +27,7 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
 
   private _categories: any[] | undefined;
 
-  constructor(private dialog: MatDialog, private formlyBuilderService: FormlyFormJsonSchemaInternalBuilderService, private translateService: TranslateService) {
+  constructor(private dialog: MatDialog, private formlyBuilderService: FormlyFormJsonSchemaInternalBuilderService) {
     super();
   }
 
@@ -42,7 +41,7 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
     }
 
     if (event.previousContainer === event.container) {
-      let model = this.field.fieldGroup[event.previousIndex].model;
+      const model = this.field.fieldGroup[event.previousIndex].model;
 
       super.remove(event.previousIndex);
       super.add(event.currentIndex, model);
@@ -50,9 +49,9 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
       this.field.fieldGroup.forEach((field: FormlyFieldConfig, index: number) => field.model['_order'] = index + 1);
     } else {
       try {
-        let previousFieldGroup = event.previousContainer.data.field.fieldGroup ?? [];
+        const previousFieldGroup = event.previousContainer.data.field.fieldGroup ?? [];
 
-        let modelToMove = previousFieldGroup[event.previousIndex].model;
+        const modelToMove = previousFieldGroup[event.previousIndex].model;
         super.add(event.currentIndex, modelToMove, { markAsDirty: true });
         event.previousContainer.data.remove(event.previousIndex, { markAsDirty: true });
 
@@ -84,12 +83,12 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
       this.options.updateInitialValue();
     }
 
-    let index = (i === undefined || i === null) ? this.field.fieldGroup?.length || 0 : i;
+    const index = (i === undefined || i === null) ? this.field.fieldGroup?.length || 0 : i;
 
     super.add(index, initialModel, markAsDirty);
 
     if (this.field.fieldGroup && this.field.fieldGroup[index]) {
-      let newField = this.field.fieldGroup[index];
+      const newField = this.field.fieldGroup[index];
 
       if (!newField.model['_order']) {
         newField.model['_order'] = index + 1;
@@ -110,15 +109,15 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
       return;
     }
 
-    let index = this.field.fieldGroup.findIndex(x => x.id === formField?.id);
+    const index = this.field.fieldGroup.findIndex(x => x.id === formField?.id);
 
     if (index > -1) {
-      let header = this.translateService.instant('Confirmation');
-      let body = this.translateService.instant('Are you sure you want to remove this field?');
-      let secondaryButtonText = this.translateService.instant('No');
-      let removeText = this.translateService.instant('Yes');
+      const header = 'Confirmation';
+      const body = 'Are you sure you want to remove this field?';
+      const secondaryButtonText = 'No';
+      const removeText = 'Yes';
 
-      let data = new ConfirmationModalData(header, body, removeText, secondaryButtonText);
+      const data = new ConfirmationModalData(header, body, removeText, secondaryButtonText);
 
       this.dialog.open(ConfirmationModalComponent, {
         data: data,

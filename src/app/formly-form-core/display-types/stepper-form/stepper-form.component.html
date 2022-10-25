@@ -12,7 +12,7 @@
     #step>
 
     <ng-template matStepLabel>
-      {{ page.templateOptions?._translationKeyLabel | translate | tokens: to }}
+      {{ page.templateOptions?.label }}
     </ng-template>
 
     <formly-field [field]="page" *ngIf="selectedIndex === index" [ngClass]="page.templateOptions?.classes"></formly-field>
@@ -44,7 +44,7 @@
       <formly-field *ngIf="selectedIndex === index" [field]="page" [ngClass]="page.templateOptions?.classes"></formly-field>
 
       <ng-template matStepLabel>
-        {{ page.templateOptions?._translationKeyLabel | translate | tokens: to }}
+        {{ page.templateOptions?.label }}
       </ng-template>
     </mat-step>
 
@@ -68,7 +68,7 @@
         color="primary"
         (click)="decrementPageFromIndex(selectedIndex - 1)">
 
-        <div translate>Back</div>
+        <div>Back</div>
       </button>
     </div>
 
@@ -79,7 +79,7 @@
       [disabled]="to.linear && isPrecedingPageInvalid(selectedIndex)"
       (click)="incrementPageFromIndex(selectedIndex + 1)">
 
-      <div translate>Continue</div>
+      <div>Continue</div>
     </button>
 
     <button *ngIf="!to.hideSubmit && !hasForwardPage(selectedIndex)"
@@ -88,7 +88,7 @@
       color="primary"
       [disabled]="form.invalid">
 
-      <div translate>Submit</div>
+      <div>Submit</div>
     </button>
   </div>
 </div>

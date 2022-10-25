@@ -1,6 +1,6 @@
 
 <div class="body-text bold">
-  {{ to._translationKeyLabel | translate | tokens: to }} {{ to?.required ? '*' : '' }}
+  {{ to.label }} {{ to.required ? '*' : '' }}
 </div>
 
 <mat-button-toggle-group
@@ -8,8 +8,8 @@
   [id]="field.id!"
   [formlyAttributes]="field"
   [formControl]="formControl"
-  [tabindex]="to?.tabindex || 0"
-  [aria-label]="to?.label"
+  [tabindex]="to.tabindex || 0"
+  [aria-label]="to.label"
   [vertical]="true"
   [ngClass]="to.classes">
 

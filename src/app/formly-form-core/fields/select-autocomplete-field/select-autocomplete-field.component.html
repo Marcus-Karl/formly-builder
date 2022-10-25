@@ -1,7 +1,7 @@
 <div *ngIf="!to.encapsulateLabel" class="flex body-text">
-  <label [for]="field.id" [innerHTML]="(to._translationKeyLabel | translate) + (to.required ? ' *' : '') | tokens: to | keepHtml"></label>
+  <label [for]="field.id" [innerHTML]="to.label + (to.required ? ' *' : '') | keepHtml"></label>
 
-  <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="to._translationKeyHelp | translate | tokens: to" matTooltipClass="mat-tooltip-content">help</mat-icon>
+  <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="to.help" matTooltipClass="mat-tooltip-content">help</mat-icon>
 </div>
 
 <mat-form-field
@@ -11,7 +11,7 @@
   [floatLabel]="to.floatLabel || 'always'">
 
   <mat-label *ngIf="to.encapsulateLabel" [for]="field.id" class="body-text">
-    {{ to._translationKeyLabel | translate | tokens: to }}
+    {{ to.label }}
   </mat-label>
 
   <input matInput
@@ -20,14 +20,14 @@
     #autocompleteinput
     [id]="field.id!"
     [required]="to.required || false"
-    [attr.aria-label]="to._translationKeyLabel | translate | tokens: to"
-    [placeholder]="to._translationKeyPlaceholder | translate | tokens: to"
+    [attr.aria-label]="to.label"
+    [placeholder]="to.placeholder ?? ''"
     [formControl]="formControl"
     [formlyAttributes]="field"
     [tabindex]="to.tabindex || 0"
     [matAutocomplete]="auto" />
 
-  <button *ngIf="formControl.value" matSuffix mat-icon-button [attr.aria-label]="'Clear Selection' | translate" [style.max-height]="'34px'"
+  <button *ngIf="formControl.value" matSuffix mat-icon-button [attr.aria-label]="'Clear Selection'" [style.max-height]="'34px'"
     (click)="$event.stopPropagation(); autoCompleteTrigger?.openPanel(); formControl.setValue(null); autocompleteinput.focus()">
     <mat-icon [inline]="true">close</mat-icon>
   </button>
@@ -50,12 +50,12 @@
       <ng-container *cdkVirtualFor="let item of filteredSelectOptions$ | async | sortOptions">
         <mat-optgroup *ngIf="item.group" [label]="item.label" [disabled]="item.disabled">
           <mat-option class="mat-option-wrap" *ngFor="let groupItem of item.group | sortOptions" [value]="groupItem[valueProp]" [disabled]="groupItem.disabled">
-            {{ groupItem[labelProp] | translate | tokens: to }}
+            {{ groupItem[labelProp] }}
           </mat-option>
         </mat-optgroup>
 
         <mat-option class="mat-option-wrap" *ngIf="!item.group" [value]="item[valueProp]" [disabled]="item.disabled">
-          {{ item[labelProp] | translate | tokens: to }}
+          {{ item[labelProp] }}
         </mat-option>
       </ng-container>
     </cdk-virtual-scroll-viewport>

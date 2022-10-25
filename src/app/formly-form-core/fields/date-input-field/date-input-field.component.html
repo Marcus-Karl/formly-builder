@@ -1,7 +1,7 @@
-<div class="flex body-text">
-  <label [id]="field.id + '_label'" [innerHTML]="(to._translationKeyLabel | translate) + (to.required ? ' *' : '') | tokens: to | keepHtml"></label>
+<div class="flex">
+  <label [id]="field.id + '_label'" [innerHTML]="to.label + (to.required ? ' *' : '') | keepHtml"></label>
 
-  <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="to._translationKeyHelp | translate | tokens: to" matTooltipClass="mat-tooltip-content">help</mat-icon>
+  <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="to.help" matTooltipClass="mat-tooltip-content">help</mat-icon>
 </div>
 
 <mat-form-field

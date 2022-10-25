@@ -1,7 +1,7 @@
 <div *ngIf="!to.encapsulateLabel" class="flex body-text">
-  <label [for]="field.id" [innerHTML]="(to._translationKeyLabel | translate) + (to.required ? ' *' : '') | tokens: to | keepHtml"></label>
+  <label [for]="field.id" [innerHTML]="to.label + (to.required ? ' *' : '') | keepHtml"></label>
 
-  <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="to._translationKeyHelp | translate | tokens: to" matTooltipClass="mat-tooltip-content">help</mat-icon>
+  <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="to.help" matTooltipClass="mat-tooltip-content">help</mat-icon>
 </div>
 
 <mat-form-field class="textarea-wrapper"
@@ -10,7 +10,7 @@
   [ngClass]="{ 'no-label': !to.encapsulateLabel }">
 
   <mat-label *ngIf="to.encapsulateLabel" class="body-text">
-    {{ to._translationKeyLabel | translate | tokens: to }}
+    {{ to.label }}
   </mat-label>
 
   <textarea
@@ -23,7 +23,7 @@
     [id]="field.id!"
     [cdkAutosizeMinRows]="to.minRows || 4"
     [required]="to.required || false"
-    [placeholder]="to._translationKeyPlaceholder | translate | tokens: to"
+    [placeholder]="to.placeholder ?? ''"
     [formControl]="formControl"
     [formlyAttributes]="field"
     [tabindex]="to.tabindex || 0">

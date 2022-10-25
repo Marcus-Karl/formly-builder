@@ -284,7 +284,6 @@ const getModel = () => ({
         }
       }
     ],
-    "tokens": [],
     "settings": {
       "type": "tab-form",
       "name": "",

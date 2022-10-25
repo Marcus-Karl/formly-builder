@@ -17,7 +17,7 @@ export class PageFormComponent extends AbstractBaseFormControlsComponent {
     }
   }
 
-  getPrecedingPageNamesInError(index: number) {
+  getPrecedingPageNamesInError(index: number): string {
     let formsInError = [];
 
     for (let i = 0; i < index; i++) {
@@ -29,7 +29,7 @@ export class PageFormComponent extends AbstractBaseFormControlsComponent {
     return formsInError.filter(x => x?.trim().length).join('\n');
   }
 
-  getSubsequentPageNamesInError(index: number) {
+  getSubsequentPageNamesInError(index: number): string {
     let formsInError = [];
 
     if (this.field.fieldGroup?.length) {
@@ -43,11 +43,11 @@ export class PageFormComponent extends AbstractBaseFormControlsComponent {
     return formsInError.filter(x => x?.trim().length).join('\n');
   }
 
-  getPreviousPageName(index: number) {
+  getPreviousPageName(index: number): string {
     if (this.field.fieldGroup) {
       for (let i = index - 1; i >= 0; i--) {
         if (!this.field.fieldGroup[i].hide) {
-          return this.field.fieldGroup[i].templateOptions?.label;
+          return this.field.fieldGroup[i].templateOptions?.label ?? '';
         }
       }
     }
@@ -55,11 +55,11 @@ export class PageFormComponent extends AbstractBaseFormControlsComponent {
     return '';
   }
 
-  getNextPageName(index: number) {
+  getNextPageName(index: number): string {
     if (this.field.fieldGroup) {
       for (let i = index + 1; i < this.field.fieldGroup.length; i++) {
         if (!this.field.fieldGroup[i].hide) {
-          return this.field.fieldGroup[i].templateOptions?.label;
+          return this.field.fieldGroup[i].templateOptions?.label ?? '';
         }
       } 
     }

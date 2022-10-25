@@ -8,10 +8,7 @@
     "clean": "",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "stats": "ng build --stats-json && webpack-bundle-analyzer dist/formly-builder/stats.json",
-    "i18n": "npm run i18n:default && npm run i18n:extract",
-    "i18n:default": "ngx-translate-extract --input ./src --output ./src/assets/i18n/system-en.json --key-as-default-value --clean --format json",
-    "i18n:extract": "ngx-translate-extract --input ./src --output ./src/assets/i18n/en.json ./src/assets/i18n/es.json --clean --format json"
+    "stats": "ng build --stats-json && webpack-bundle-analyzer dist/formly-builder/stats.json"
   },
   "private": true,
   "dependencies": {
@@ -25,11 +22,8 @@
     "@angular/platform-browser": "~13.3.3",
     "@angular/platform-browser-dynamic": "~13.3.3",
     "@angular/router": "~13.3.3",
-    "@biesbjerg/ngx-translate-extract-marker": "^1.0.0",
     "@ngx-formly/core": "^5.12.0",
     "@ngx-formly/material": "^5.12.0",
-    "@ngx-translate/core": "^14.0.0",
-    "@ngx-translate/http-loader": "^7.0.0",
     "@stoplight/json-ref-resolver": "^3.1.3",
     "json-rules-engine": "^6.1.2",
     "jsonpath-plus": "^6.0.1",
@@ -43,7 +37,6 @@
     "@angular-devkit/build-angular": "~13.3.3",
     "@angular/cli": "~13.3.3",
     "@angular/compiler-cli": "~13.3.3",
-    "@bartholomej/ngx-translate-extract": "^8.0.2",
     "@types/jasmine": "~4.0.0",
     "@types/node": "^17.0.23",
     "@types/uuid": "^8.3.4",

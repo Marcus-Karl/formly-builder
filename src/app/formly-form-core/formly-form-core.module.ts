@@ -26,7 +26,6 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { FormlyModule, FORMLY_CONFIG } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { DisplayHtmlComponent } from './fields/display-html/display-html.component';
 import { SelectDropDownFieldComponent } from './fields/select-dropdown-field/select-dropdown-field.component';
@@ -40,14 +39,12 @@ import { StepperFormComponent } from './display-types/stepper-form/stepper-form.
 import { TabFormComponent } from './display-types/tab-form/tab-form.component';
 import { ObjectTypeComponent } from './schema-types/object-type/object-type.component';
 import { ArrayTypeComponent } from './schema-types/array-type/array-type.component';
-import { FormlyTokenPipe } from './pipes/tokens.pipe';
 import { DefaultFormComponent } from './display-types/default-form/default-form.component';
 import { PageFormComponent } from './display-types/page-form/page-form.component';
-import { CustomDateAdapter, DateTimeService } from './services/date-time.service';
+import { CustomDateAdapter } from './services/date-time.service';
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { BypassSecurityTrustHtmlPipe } from './pipes/html-sanitizer.pipe';
 import { SortOptionsPipe } from './pipes/sort-options.pipe';
-import { validateBusinessRule } from './business-rules/business-rules.validator';
 import { CustomMatIcons } from './services/custom-mat-icons.service';
 import { SelectAutoCompleteFieldComponent } from './fields/select-autocomplete-field/select-autocomplete-field.component';
 import { DateInputFieldComponent } from './fields/date-input-field/date-input-field.component';
@@ -55,7 +52,6 @@ import { ConfirmationModalComponent } from './modal/confirmation-modal/confirmat
 import { ShowFormModalComponent } from './modal/show-form-modal/show-form-modal.component';
 import { OverlayService } from './services/overlay.service';
 import { InnerFormContainerComponent } from './display-types/inner-form-container/inner-form-container.component';
-import { ExpansionPanelArrayFieldComponent } from './fields/expansion-panel-array-field/expansion-panel-array-field.component';
 import { CustomDateInputComponent } from './components/custom-date-input/custom-date-input.component';
 import { RadioButtonFieldComponent } from './fields/radio-button-field/radio-button-field.component';
 import { ErrorsAndHintsComponent } from './components/errors-and-hints/errors-and-hints.component';
@@ -91,7 +87,6 @@ import { MultischemaTypeComponent } from './schema-types/multischema-type/multis
     ReactiveFormsModule,
     ScrollingModule,
     TextFieldModule,
-    TranslateModule,
 
     FormlyModule.forRoot({
       extras: {
@@ -102,7 +97,6 @@ import { MultischemaTypeComponent } from './schema-types/multischema-type/multis
         { name: 'currency-input-field', component: CurrencyInputFieldComponent },
         { name: 'date-input-field', component: DateInputFieldComponent },
         { name: 'display-html', component: DisplayHtmlComponent },
-        { name: 'expansion-panel-array-field', component: ExpansionPanelArrayFieldComponent },
         { name: 'number-input-field', component: NumberInputFieldComponent },
         { name: 'radio-button-field', component: RadioButtonFieldComponent },
         { name: 'select-autocomplete-field', component: SelectAutoCompleteFieldComponent },
@@ -133,16 +127,12 @@ import { MultischemaTypeComponent } from './schema-types/multischema-type/multis
       ],
       wrappers: [
         { name: 'default-wrapper', component: DefaultWrapperComponent },
-      ],
-      validators: [
-        { name: 'business-rules', validation: validateBusinessRule }
       ]
     })
   ],
   declarations: [
     // Pipes
     BypassSecurityTrustHtmlPipe,
-    FormlyTokenPipe,
     SortOptionsPipe,
     TruncatePipe,
 
@@ -150,7 +140,6 @@ import { MultischemaTypeComponent } from './schema-types/multischema-type/multis
     CurrencyInputFieldComponent,
     DateInputFieldComponent,
     DisplayHtmlComponent,
-    ExpansionPanelArrayFieldComponent,
     NumberInputFieldComponent,
     RadioButtonFieldComponent,
     SelectAutoCompleteFieldComponent,
@@ -190,17 +179,15 @@ import { MultischemaTypeComponent } from './schema-types/multischema-type/multis
     ErrorsAndHintsComponent,
     FormlyMaterialModule,
     FormlyModule,
-    FormlyTokenPipe,
     ReactiveFormsModule,
     SortOptionsPipe,
-    TranslateModule,
     TruncatePipe
   ],
   providers: [
     CustomMatIcons,
     OverlayService,
     { provide: DateAdapter, useClass: CustomDateAdapter },
-    { provide: FORMLY_CONFIG, multi: true, useFactory: registerExtensions, deps: [DateTimeService, TranslateService] },
+    { provide: FORMLY_CONFIG, multi: true, useFactory: registerExtensions, deps: [] },
     { provide: STEPPER_GLOBAL_OPTIONS, useValue: { displayDefaultIndicatorType: false } }
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

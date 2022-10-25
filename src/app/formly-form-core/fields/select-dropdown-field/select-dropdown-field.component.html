@@ -1,8 +1,8 @@
 <div *ngIf="!to.encapsulateLabel" class="flex body-text">
   <!-- This label should not have a for property as the mat-select builds an internal input for the select dropdown that we cannot map to --->
-  <label [innerHTML]="(to._translationKeyLabel | translate) + (to.required ? ' *' : '') | tokens: to | keepHtml"></label>
+  <label [innerHTML]="to.label + (to.required ? ' *' : '') | keepHtml"></label>
 
-  <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="to._translationKeyHelp | translate | tokens: to" matTooltipClass="mat-tooltip-content">help</mat-icon>
+  <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="to.help" matTooltipClass="mat-tooltip-content">help</mat-icon>
 </div>
 
 <mat-form-field
@@ -12,19 +12,19 @@
   [floatLabel]="to.floatLabel || 'always'">
 
   <mat-label *ngIf="to.encapsulateLabel" class="body-text">
-    {{ to._translationKeyLabel | translate | tokens: to }}
+    {{ to.label }}
   </mat-label>
 
   <mat-select
     [id]="field.id!"
-    [aria-label]="to._translationKeyLabel | translate | tokens: to"
+    [aria-label]="to.label ?? ''"
     [compareWith]="to.compareWith"
     [disableOptionCentering]="to.disableOptionCentering"
     [errorStateMatcher]="errorStateMatcher"
     [formControl]="formControl"
     [formlyAttributes]="field"
     [multiple]="to.multiple"
-    [placeholder]="to._translationKeyPlaceholder | translate | tokens: to"
+    [placeholder]="to.placeholder ?? ''"
     [required]="to.required ?? false"
     [tabindex]="to.tabindex || 0"
     [typeaheadDebounceInterval]="to.typeaheadDebounceInterval"
@@ -32,19 +32,19 @@
 
     <mat-select-trigger *ngIf="to.multiple && to.abbreviateSelection"
       matTooltipClass="use-new-line"
-      matTooltip="{{ getSelectedOptionsTooltip() | tokens: to }}">
-      {{ getAbbreviatedSelectionLabel() | tokens: to }}
+      matTooltip="{{ getSelectedOptionsTooltip() }}">
+      {{ getAbbreviatedSelectionLabel() }}
     </mat-select-trigger>
 
     <ng-container *ngFor="let option of selectOptions$ | async | sortOptions">
       <mat-optgroup *ngIf="option.group" [label]="option.label" [disabled]="option.disabled" [ngClass]="option.classes">
         <mat-option class="mat-option-wrap" *ngFor="let groupItem of option.group | sortOptions" [value]="groupItem[valueProp]" [disabled]="groupItem.disabled" [ngClass]="groupItem.classes">
-          {{ groupItem[labelProp] | translate | tokens: to }}
+          {{ groupItem[labelProp] }}
         </mat-option>
       </mat-optgroup>
 
       <mat-option class="mat-option-wrap" *ngIf="!option.group" [value]="option[valueProp]" [disabled]="option.disabled" [ngClass]="option.classes">
-        {{ option[labelProp] | translate | tokens: to }}
+        {{ option[labelProp] }}
       </mat-option>
     </ng-container>
 

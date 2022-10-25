@@ -26,9 +26,6 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
         'pages': {
           '$ref': '#/definitions/formPages'
         },
-        'tokens': {
-          '$ref': '#/definitions/formTokens'
-        },
         'settings': {
           '$ref': '#/definitions/formSettings'
         }
@@ -119,43 +116,6 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
         'formType',
         'label'
       ]
-    },
-    'formTokens': {
-      'type': 'array',
-      'title': 'Tokens',
-      'minItems': 0,
-      'widget': {
-        'formlyConfig': {
-          'type': 'token-page',
-          'defaultValue': []
-        }
-      },
-      'items': {
-        'type': 'object',
-        'widget': {
-          'formlyConfig': {
-            'type': 'tab-form',
-            'defaultValue': {},
-            'templateOptions': {
-              'hideButtons': true
-            }
-          }
-        },
-        'properties': {
-          'category': {
-            '$ref': '#/definitions/token/fields/category'
-          },
-          'basic': {
-            '$ref': '#/definitions/token/tabs/basic'
-          },
-          'advanced': {
-            '$ref': '#/definitions/token/tabs/advanced'
-          }
-        },
-        'required': [
-          'category'
-        ]
-      }
     },
     'pageSettings': {
       'type': 'object',
@@ -671,158 +631,6 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
         }
       }
     },
-    'token': {
-      'tabs': {
-        'basic': {
-          'type': 'object',
-          'title': 'Token',
-          'widget': {
-            'formlyConfig': {
-              'className': 'formly-field-tab',
-              'defaultValue': {}
-            }
-          },
-          'properties': {
-            'fieldReference': {
-              '$ref': '#/definitions/token/fields/fieldReference'
-            },
-            'tokenName': {
-              '$ref': '#/definitions/token/fields/tokenName'
-            },
-            'tokenType': {
-              '$ref': '#/definitions/token/fields/tokenType'
-            },
-            'tokenSubType': {
-              '$ref': '#/definitions/token/fields/tokenSubType'
-            }
-          },
-          'required': [
-            'tokenName'
-          ]
-        },
-        'advanced': {
-          'type': 'object',
-          'title': 'Advanced',
-          'widget': {
-            'formlyConfig': {
-              'className': 'formly-field-tab fill',
-              'defaultValue': {}
-            }
-          },
-          'properties': {
-            'format': {
-              '$ref': '#/definitions/token/fields/format'
-            },
-            'returnResult': {
-              '$ref': '#/definitions/token/fields/returnResult'
-            }
-          }
-        }
-      },
-      'fields': {
-        'returnResult': {
-          'type': 'array',
-          'title': 'Create condition to return result',
-          'maxItems': 1,
-          'widget': {
-            'formlyConfig': {
-              'defaultValue': [],
-              'className': 'formly-field fill',
-              'type': 'expression-builder'
-            }
-          },
-          'items': {
-            '$ref': '#/definitions/expression/baseCondition'
-          }
-        },
-        'category': {
-          'type': 'string',
-          'title': 'Select Token Type',
-          'widget': {
-            'formlyConfig': {
-              'type': 'select',
-              'defaultValue': '',
-              'templateOptions': {
-                'options': selectionOptionsMap[SelectionOptionType.TokenCategory]
-              },
-              'hideExpression': 'true'
-            }
-          }
-        },
-        'format': {
-          'type': 'string',
-          'title': 'Custom Format',
-          'widget': {
-            'formlyConfig': {
-              'className': 'formly-field',
-              'type': 'input',
-              'defaultValue': ''
-            }
-          }
-        },
-        'fieldReference': {
-          'type': 'string',
-          'title': 'Field Reference',
-          'widget': {
-            'formlyConfig': {
-              'type': 'select',
-              'defaultValue': '',
-              'templateOptions': {
-                'options': []
-              },
-              'expressionProperties': {
-                'templateOptions.required': 'field.parent.parent.model.category === \'answer-based\''
-              },
-              'hideExpression': 'field.parent.parent.model.category !== \'answer-based\'',
-            }
-          }
-        },
-        'tokenName': {
-          'type': 'string',
-          'title': 'Token Name/Identifier',
-          'widget': {
-            'formlyConfig': {
-              'type': 'input',
-              'defaultValue': '',
-              'className': 'formly-field',
-              'validators': {
-                'validation': [
-                  'valid-name'
-                ]
-              }
-            }
-          }
-        },
-        'tokenType': {
-          'type': 'string',
-          'title': 'Token Type',
-          'widget': {
-            'formlyConfig': {
-              'type': 'input',
-              'defaultValue': '',
-              'expressionProperties': {
-                'model.tokenType': 'field.options.formState.builder.functions.getFieldTypeForReference(field.options.formState, model.fieldReference) || \'\'',
-              },
-              'hideExpression': 'field.parent.parent.model.category === \'answer-based\''
-            }
-          }
-        },
-        'tokenSubType': {
-          'type': 'string',
-          'title': 'Token Sub Type',
-          'widget': {
-            'formlyConfig': {
-              'type': 'input',
-              'defaultValue': '',
-              'expressionProperties': {
-                'model.tokenSubType': 'field.options.formState.builder.functions.getFieldSubTypeForReference(field.options.formState, model.fieldReference) || \'\'',
-              },
-              'hideExpression': 'true'
-            }
-          }
-        }
-      }
-    },
     'expression': {
       'nestedCondition': {
         'type': 'array',
@@ -884,9 +692,6 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
           },
           'condition': {
             '$ref': '#/definitions/expression/nestedCondition'
-          },
-          'token': {
-            '$ref': '#/definitions/expression/token'
           }
         },
         'required': [
@@ -929,9 +734,6 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
           },
           'field': {
             '$ref': '#/definitions/expression/hideFieldSelection'
-          },
-          'token': {
-            '$ref': '#/definitions/expression/hideTokenSelection'
           }
         },
         'required': [
@@ -996,23 +798,6 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
             'defaultValue': '',
             'templateOptions': {
               'hideOptions': selectionOptionsMap[SelectionOptionType.HideComparisonSource].filter(x => Array.isArray(x.category) ? x.category.includes('field') : x.category === 'field')
-            },
-            'expressionProperties': {
-              'templateOptions.required': '!!field?.templateOptions?.hideOptions.find(x => x.value === model.selection)'
-            },
-            'hideExpression': '!field?.templateOptions?.hideOptions.find(x => x.value === model.selection)'
-          }
-        }
-      },
-      'hideTokenSelection': {
-        'type': 'string',
-        'title': 'Select Token',
-        'widget': {
-          'formlyConfig': {
-            'type': 'select',
-            'defaultValue': '',
-            'templateOptions': {
-              'hideOptions': selectionOptionsMap[SelectionOptionType.HideComparisonSource].filter(x => Array.isArray(x.category) ? x.category.includes('token') : x.category === 'token')
             },
             'expressionProperties': {
               'templateOptions.required': '!!field?.templateOptions?.hideOptions.find(x => x.value === model.selection)'
@@ -1093,20 +878,6 @@ export const defaultJsonSchema = (selectionOptionsMap: { [key in SelectionOption
             'templateOptions': {
               'options': selectionOptionsMap[SelectionOptionType.ComparisonType]
             }
-          }
-        }
-      },
-      'token': {
-        'type': 'string',
-        'title': 'Select Token',
-        'widget': {
-          'formlyConfig': {
-            'type': 'select',
-            'defaultValue': '',
-            'templateOptions': {
-              'options': []
-            },
-            'hideExpression': 'model.comparisonAgainst !== \'token\''
           }
         }
       },

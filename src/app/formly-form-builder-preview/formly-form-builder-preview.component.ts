@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormBuilder, FormlyFormOptions } from '@ngx-formly/core';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
-import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -21,7 +20,7 @@ export class FormlyFormBuilderPreviewComponent implements OnDestroy, OnInit {
 
   private _subscriptions: Array<Subscription>;
 
-  constructor(private formlyJsonschema: FormlyJsonschema, private formlyBuilder: FormlyFormBuilder, private translateService: TranslateService) {
+  constructor(private formlyJsonschema: FormlyJsonschema, private formlyBuilder: FormlyFormBuilder) {
     this._subscriptions = [];
 
     this.form = new FormGroup({});
@@ -57,14 +56,6 @@ export class FormlyFormBuilderPreviewComponent implements OnDestroy, OnInit {
       });
 
       this.options.formState.changeMap = {};
-
-      // Clear form specific translations on unload
-      if (this.fields?.length && this.fields[0].templateOptions?.translationFormKey && this.translateService.defaultLang) {
-        let emptyTranslationsObject: any = {};
-        emptyTranslationsObject[this.fields[0].templateOptions?.translationFormKey as string] = undefined;
-
-        this.translateService.langs?.forEach(lang => this.translateService.setTranslation(lang, emptyTranslationsObject, true));
-      }
     }
   }
 
@@ -102,24 +93,6 @@ const getModel = {};
 const getOptions = (): FormlyFormOptions => ({
   formState: {
     mainModel: getModel,
-    formTokens: {
-      bday: {
-        type: 'date',
-        value: '2021-03-25'
-      },
-      hearing: {
-        type: 'datetime',
-        value: '2021-04-25T08:54:15.000-05:00'
-      },
-      reasonText: {
-        type: 'string',
-        $ref: 'page1.reason'
-      },
-      myFunction: {
-        type: 'function',
-        value: '{ return `${token?.reasonText}` === \'Hello!\' ? \'Its hello!\' : `Its not hello, its instead: ${token.reasonText}`; }'
-      }
-    },
     changeMap: {}
   }
 });
@@ -188,23 +161,6 @@ const getFieldValues = () => ({
         // 'reason'
         'dateField'
       ]
-    },
-    'page2': {
-      'type': 'object',
-      'title': 'Step 1B',
-      'widget': {
-        'formlyConfig': {
-          'defaultValue': {},
-          'templateOptions': {
-            'pageState': 'alarm'
-          }
-        }
-      },
-      'properties': {
-        'tabularArray': {
-          '$ref': '#/definitions/tabularArray'
-        },
-      }
     },
     'page3': {
       'type': 'object',
@@ -295,169 +251,6 @@ const getFieldValues = () => ({
             'placeholder': 'my@email.com',
             'hint': 'Enter an email',
             'help': 'This would be some help content to show a party',
-          }
-        }
-      }
-    },
-    'tabularArray': {
-      'title': 'Children Information',
-      'type': 'array',
-      'widget': {
-        'formlyConfig': {
-          'type': 'expansion-panel-array-field',
-          'defaultValue': [],
-          'templateOptions': {
-            'showAddButton': true,
-            'addButtonConfig': {
-              'hideIcon': false,
-              'buttonText': 'Add Child',
-              'classes': ''
-            },
-            'columns': [
-              {
-                '_order': 2,
-                'label': 'Number',
-                'path': 'page1.someNumber',
-                'type': 'data',
-                'classes': ''
-              },
-              {
-                '_order': 3,
-                'label': 'Selected Option',
-                'path': 'page2.selectOption',
-                'type': 'data',
-                'classes': ''
-              },
-              {
-                '_order': 1,
-                'label': 'Email',
-                'path': 'page1.email',
-                'type': 'data',
-                'classes': ''
-              }
-            ]
-          }
-        }
-      },
-      'items': {
-        'title': 'Element Definition',
-        'type': 'object',
-        'widget': {
-          'formlyConfig': {
-            'defaultValue': {},
-            'templateOptions': {
-
-            }
-          }
-        },
-        'properties': {
-          'required': {
-            'title': 'Entry required?',
-            'type': 'boolean',
-            'widget': {
-              'formlyConfig': {
-                'defaultValue': false,
-                'hide': true
-              }
-            }
-          },
-          'complete': {
-            'title': 'Entry complete?',
-            'type': 'boolean',
-            'widget': {
-              'formlyConfig': {
-                'defaultValue': false,
-                'hide': true
-              }
-            }
-          },
-          'fields': {
-            'type': 'object',
-            'widget': {
-              'formlyConfig': {
-                'type': 'page-form',
-                'templateOptions': {
-                  'verticalStepper': false,
-                  'linear': false,
-                  'labelPosition': 'end',
-                  'hideSubmit': true,
-                  'useSmallButtons': true,
-                  'pageStates': {
-                    'party-info': {
-                      'icon': 'person',
-                      'class': 'material-icons-outlined'
-                    },
-                    'alarm': {
-                      'icon': 'alarm',
-                      'class': 'material-icons-outlined'
-                    }
-                  }
-                }
-              }
-            },
-            'properties': {
-              'page1': {
-                'type': 'object',
-                'title': 'Step 1A',
-                'widget': {
-                  'formlyConfig': {
-                    'defaultValue': {},
-                    'templateOptions': {
-                      'pageState': 'party-info',
-                      'isOptional': false,
-                      'hideLabel': true,
-                    }
-                  }
-                },
-                'properties': {
-                  'someCurrency': {
-                    '$ref': '#/definitions/someCurrency'
-                  },
-                  'dateField': {
-                    '$ref': '#/definitions/dateField'
-                  },
-                  'someNumber': {
-                    '$ref': '#/definitions/someNumber'
-                  },
-                  'email': {
-                    '$ref': '#/definitions/email'
-                  },
-                  'reason': {
-                    '$ref': '#/definitions/reason'
-                  },
-                  'textToShow': {
-                    '$ref': '#/definitions/textToShow'
-                  }
-                },
-                'required': [
-                  'someNumber',
-                  'email'
-                ]
-              },
-              'page2': {
-                'type': 'object',
-                'title': 'Step 1B',
-                'widget': {
-                  'formlyConfig': {
-                    'defaultValue': {},
-                    'templateOptions': {
-                      'pageState': 'alarm'
-                    }
-                  }
-                },
-                'properties': {
-                  'someNumber': {
-                    '$ref': '#/definitions/someNumber'
-                  },
-                  'selectOption': {
-                    '$ref': '#/definitions/selectOption'
-                  }
-                },
-                'required': [
-                  'selectOption'
-                ]
-              }
-            }
           }
         }
       }

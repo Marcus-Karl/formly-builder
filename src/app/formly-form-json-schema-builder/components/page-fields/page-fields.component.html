@@ -4,7 +4,7 @@
       <div class="center-content flex">
         <mat-icon>add</mat-icon>
 
-        <div class="pad-left-half" translate>
+        <div class="pad-left-half">
           Add Field
         </div>
       </div>
@@ -12,7 +12,7 @@
 
     <div class="margin-left-2">
       <button type="button" mat-button [disabled]="!field.fieldGroup?.length && !reorderEnabled" (click)="reorderEnabled = !reorderEnabled;">
-        {{ reorderEnabled ? ('Edit Fields' | translate)  : ('Reorder Fields' | translate) }}
+        {{ reorderEnabled ? 'Edit Fields'  : 'Reorder Fields' }}
       </button>
     </div>
   </div>
@@ -31,11 +31,11 @@
 
   <table mat-table [dataSource]="field.fieldGroup || []" class="fill-width">
     <ng-container matColumnDef="_order">
-      <td mat-header-cell *matHeaderCellDef class="mat-header-cell" translate>Position</td>
-      <td mat-cell *matCellDef="let row" [attr.data-label]="'Position' | translate">
+      <td mat-header-cell *matHeaderCellDef class="mat-header-cell">Position</td>
+      <td mat-cell *matCellDef="let row" [attr.data-label]="'Position'">
         {{ row.model?._order }}
 
-        <div class="center-content error" *ngIf="row.formControl?.touched && row.formControl?.invalid" matTooltip="{{ 'Contains errors' | translate }}">
+        <div class="center-content error" *ngIf="row.formControl?.touched && row.formControl?.invalid" matTooltip="Contains errors">
           <mat-icon>error</mat-icon>
           {{ row.content }}
         </div>
@@ -43,29 +43,29 @@
     </ng-container>
 
     <ng-container matColumnDef="category">
-      <td mat-header-cell *matHeaderCellDef class="mat-header-cell" translate>Category</td>
-      <td mat-cell *matCellDef="let row" [attr.data-label]="'Category' | translate">
+      <td mat-header-cell *matHeaderCellDef class="mat-header-cell">Category</td>
+      <td mat-cell *matCellDef="let row" [attr.data-label]="'Category'">
         {{ row.model?.category }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="basic.type">
-      <td mat-header-cell *matHeaderCellDef class="mat-header-cell" translate>Type</td>
-      <td mat-cell *matCellDef="let row" [attr.data-label]="'Type' | translate">
+      <td mat-header-cell *matHeaderCellDef class="mat-header-cell">Type</td>
+      <td mat-cell *matCellDef="let row" [attr.data-label]="'Type'">
         {{ row.model?.basic?.type }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="basic.label">
-      <td mat-header-cell *matHeaderCellDef class="mat-header-cell" translate>Label</td>
-      <td mat-cell *matCellDef="let row" [attr.data-label]="'Label' | translate">
+      <td mat-header-cell *matHeaderCellDef class="mat-header-cell">Label</td>
+      <td mat-cell *matCellDef="let row" [attr.data-label]="'Label'">
         {{ row.model?.basic?.label }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="edit">
-      <td mat-header-cell *matHeaderCellDef [attr.aria-label]="'Edit Field Buttons Column' | translate"></td>
-      <td mat-cell *matCellDef="let row" [attr.data-label]="'Delete, Preview, and Edit buttons' | translate">
+      <td mat-header-cell *matHeaderCellDef [attr.aria-label]="'Edit Field Buttons Column'"></td>
+      <td mat-cell *matCellDef="let row" [attr.data-label]="'Delete, Preview, and Edit buttons'">
 
         <div class="svg-icon" *ngIf="!reorderEnabled">
           <button type="button" mat-icon-button (click)="confirmRemoval(row)">
@@ -114,7 +114,7 @@
     [cdkDropListAutoScrollStep]="5"
     [cdkDropListConnectedTo]="getConnectedToDropIds()"
     (cdkDropListDropped)="drop($event)"
-    translate>
+    >
     No Fields Configured
   </div>
 </ng-template>

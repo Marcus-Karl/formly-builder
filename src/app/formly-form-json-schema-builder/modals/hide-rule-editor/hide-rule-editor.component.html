@@ -26,7 +26,7 @@
     <formly-field *ngIf="source" [field]="source" [ngClass]="source.templateOptions?.classes"></formly-field>
 
     <div class="subtitle-filled pad">
-      {{ label || ('Select Operator' | translate) }}
+      {{ label || 'Select Operator' }}
     </div>
 
     <formly-field *ngIf="against" [field]="against" [ngClass]="against.templateOptions?.classes"></formly-field>
@@ -37,7 +37,7 @@
   <button type="button" mat-button (click)="resetAndClose()">
     <div class="center flex row">
       <mat-icon class="material-icons-outlined margin-right-half" [inline]="true">undo</mat-icon>
-      <div translate>Revert & Close</div>
+      <div>Revert & Close</div>
     </div>
   </button>
 
@@ -48,7 +48,7 @@
       [disabled]="field.formControl?.invalid"
       (click)="updateAndClose()"
       cdkFocusInitial>
-      <div translate>Save & Close</div>
+      <div>Save & Close</div>
     </button>
   </div>
 </div>

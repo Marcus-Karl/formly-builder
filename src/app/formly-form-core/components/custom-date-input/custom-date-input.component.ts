@@ -2,7 +2,6 @@ import { Component, ElementRef, Inject, Input, OnDestroy, Optional, Self, ViewCh
 import { AbstractControl, ControlValueAccessor, FormBuilder, FormGroup, NgControl, Validators } from '@angular/forms';
 import { MatFormField, MatFormFieldControl, MAT_FORM_FIELD } from '@angular/material/form-field';
 import { coerceBooleanProperty, BooleanInput } from '@angular/cdk/coercion';
-import { TranslateService } from '@ngx-translate/core';
 import { Subject, Subscription } from 'rxjs';
 
 import { DateTimeService } from '../../services/date-time.service';
@@ -133,9 +132,8 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
     formBuilder: FormBuilder,
     private _elementRef: ElementRef<HTMLElement>,
     private dateService: DateTimeService,
-    private translateService: TranslateService,
-    @Optional() @Inject(MAT_FORM_FIELD) public _formField: MatFormField,
-    @Optional() @Self() public ngControl: NgControl) {
+    @Optional() @Self() public ngControl: NgControl,
+    @Optional() @Inject(MAT_FORM_FIELD) public _formField?: MatFormField) {
 
     this.formGroup = formBuilder.group({
       year: [null, [Validators.minLength(4), Validators.maxLength(4)]],
@@ -143,7 +141,7 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
       day: [null, [Validators.minLength(1), Validators.maxLength(2), Validators.max(31), Validators.min(1)]]
     });
 
-    if (this.ngControl != null) {
+    if (this.ngControl) {
       this.ngControl.valueAccessor = this;
     }
 
@@ -181,7 +179,7 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
       }
 
       if (!dateTime && this.ngControl?.control) {
-        this.formGroup.setErrors({ invalidDate: { message: this.translateService.stream('Invalid date') } });
+        this.formGroup.setErrors({ invalidDate: { message: 'Invalid date' } });
       } else if (this.ngControl?.control?.hasError('invalidDate')) {
         this.formGroup.setErrors({ invalidDate: null });
       }

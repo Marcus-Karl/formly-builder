@@ -19,7 +19,7 @@
           </ng-template>
 
           <span [ngStyle]="{ 'opacity': index === selectedIndex ? '1' : '0.6' }">
-            {{ page.templateOptions?._translationKeyLabel | translate | tokens: to }}
+            {{ page.templateOptions?.label }}
           </span>
         </div>
       </ng-template>
@@ -39,7 +39,7 @@
         type="button"
         color="primary"
         (click)="decrementPageFromIndex(selectedIndex - 1)">
-        <div translate>Back</div>
+        <div>Back</div>
       </button>
     </div>
 
@@ -49,7 +49,7 @@
       color="primary"
       [disabled]="to.linear && isPrecedingPageInvalid(selectedIndex)"
       (click)="incrementPageFromIndex(selectedIndex + 1)">
-      <div translate>Continue</div>
+      <div>Continue</div>
     </button>
 
     <button *ngIf="!to.hideSubmit && !hasForwardPage(selectedIndex)"
@@ -57,7 +57,7 @@
       type="submit"
       color="primary"
       [disabled]="form.invalid">
-      <div translate>Submit</div>
+      <div>Submit</div>
     </button>
   </div>
 </div>

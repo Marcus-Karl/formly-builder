@@ -25,8 +25,6 @@ import { FormlyFormJsonSchemaBuilderComponent } from './formly-form-json-schema-
 import { FormEditorComponent } from './components/form-editor/form-editor.component';
 import { OptionsEditorComponent } from './components/options-editor/options-editor.component';
 import { PageFieldsComponent } from './components/page-fields/page-fields.component';
-import { TokenEditorComponent } from './components/tokens/token-editor/token-editor.component';
-import { TokenPageComponent } from './components/tokens/token-page/token-page.component';
 import { ExpressionBuilderComponent } from './components/expression/expression-builder/expression-builder.component';
 import { OperatorConditionComponent } from './components/expression/operator-condition/operator-condition.component';
 import { RuleEditorComponent } from './modals/rule-editor/rule-editor.component';
@@ -46,9 +44,7 @@ import { DependencyBuilderComponent } from './components/dependency-builder/depe
     OperatorConditionComponent,
     OptionsEditorComponent,
     PageFieldsComponent,
-    RuleEditorComponent,
-    TokenEditorComponent,
-    TokenPageComponent,
+    RuleEditorComponent
   ],
   exports: [
     FormlyFormJsonSchemaBuilderComponent
@@ -75,9 +71,7 @@ import { DependencyBuilderComponent } from './components/dependency-builder/depe
         { name: 'form-editor', component: FormEditorComponent },
         { name: 'operator-condition', component: OperatorConditionComponent },
         { name: 'options-editor', component: OptionsEditorComponent },
-        { name: 'page-fields', component: PageFieldsComponent },
-        { name: 'token-editor', component: TokenEditorComponent },
-        { name: 'token-page', component: TokenPageComponent },
+        { name: 'page-fields', component: PageFieldsComponent }
       ],
       validators: [
         { name: 'valid-name', validation: validNameValidator }

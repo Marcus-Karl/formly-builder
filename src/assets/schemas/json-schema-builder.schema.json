@@ -18,9 +18,6 @@
         "pages": {
           "$ref": "forms/form-pages.schema.json"
         },
-        "tokens": {
-          "$ref": "tokens/token.schema.json"
-        },
         "settings": {
           "$ref": "forms/form-settings.schema.json"
         }

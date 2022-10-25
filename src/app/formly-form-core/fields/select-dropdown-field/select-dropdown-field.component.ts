@@ -3,9 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
-import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 import { SelectOption } from '../../models/multiple-choice.models';
 
@@ -33,7 +31,7 @@ export class SelectDropDownFieldComponent extends FieldType implements OnInit, O
 
   private _subscriptions: Array<Subscription>;
 
-  constructor(private translateService: TranslateService) {
+  constructor() {
     super();
 
     this._subscriptions = [];
@@ -63,8 +61,6 @@ export class SelectDropDownFieldComponent extends FieldType implements OnInit, O
 
   ngOnInit() {
     super.ngOnInit();
-
-    this._subscriptions.push(this.selectOptions$.pipe(tap(options => this._setDefaultOptionsTranslateText(options))).subscribe(() => {}));
 
     if (this.to.options instanceof Observable) {
       this._subscriptions.push(this.to.options.subscribe(this.selectOptions$));
@@ -116,8 +112,8 @@ export class SelectDropDownFieldComponent extends FieldType implements OnInit, O
     }
 
     let firstItem = this.getDisplayLabel(this.formControl.value[0]);
-    let singleOtherSelection = this.to.abbreviateSelection.singleOtherSelectionLabel || this.translateService.instant('other');
-    let multipleOtherSelections = this.to.abbreviateSelection.multipleOtherSelectionLabels || this.translateService.instant('others');
+    let singleOtherSelection = this.to.abbreviateSelection.singleOtherSelectionLabel || 'other';
+    let multipleOtherSelections = this.to.abbreviateSelection.multipleOtherSelectionLabels || 'others';
 
     return `${firstItem} (+ ${selectedOptions.length - 1} ${selectedOptions.length === 2 ? singleOtherSelection : multipleOtherSelections})`;
   }
@@ -138,14 +134,14 @@ export class SelectDropDownFieldComponent extends FieldType implements OnInit, O
     let selectedOption = this.selectOptions$.value.find(x => x.value === value);
 
     if (selectedOption) {
-      return this.translateService.instant(selectedOption.label)|| value;
+      return selectedOption.label|| value;
     }
 
     for (let groupOption of this.selectOptions$.value.filter(x => x.group && x.group.length > 0)) {
       selectedOption = groupOption.group?.find(x => x.value === value);
 
       if (selectedOption) {
-        return this.translateService.instant(selectedOption.label) || value;
+        return selectedOption.label || value;
       }
     }
 
@@ -174,43 +170,5 @@ export class SelectDropDownFieldComponent extends FieldType implements OnInit, O
     });
 
     return options;
-  }
-
-  private _setDefaultOptionsTranslateText(options: SelectOption[]) {
-    if (this.translateService.defaultLang && this.translateService.translations && this.translateService.translations[this.translateService.defaultLang] && this.to._translationFormKey) {
-      let defaultTranslations = this.translateService.translations[this.translateService.defaultLang];
-
-      let translationsRef = this._getNestedObject(this.to._translationFormKey.split('.'), defaultTranslations);
-
-      if (!translationsRef) {
-        console.error(`Could not locate translation object reference for ${this.to._translationFormKey}`);
-
-        return;
-      }
-
-      if (!translationsRef['options']) {
-        translationsRef['options'] = {};
-      }
-
-      options?.forEach(option => {
-        translationsRef['options'][option.value || option.label.replace(/^[0-9a-zA-Z]/g, '_')] = option.label;
-      });
-
-      this.translateService.setTranslation(this.translateService.defaultLang, defaultTranslations, true);
-    }
-  }
-
-  private _getNestedObject(path: string[], sourceObj: any): any {
-    if (!path?.length || !sourceObj) {
-      return;
-    }
-
-    if (path.length > 1) {
-      let key = path.shift() || '';
-
-      return this._getNestedObject(path, sourceObj[key]);
-    } else {
-      return sourceObj[path[0]];
-    }
   }
 }

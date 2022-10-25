@@ -114,10 +114,7 @@ export class ConvertModel {
       widget: {
         ...model['_referenceId'] && { _referenceId: model['_referenceId'] },
         formlyConfig: {
-          ...settings['type'] && { type: settings['type'] },
-          templateOptions: {
-            _translationFormKey: model['_referenceId'] || FunctionHelpers.generateId(),
-          }
+          ...settings['type'] && { type: settings['type'] }
         }
       }
     }
@@ -379,47 +376,3 @@ const safeParseJson = (string: string) => {
 
   return null;
 }
-
-const getBusinessRule = (model: any) => {
-  if (!model['leftHandSide'] || !model['operator'] || !model['rightHandSide']) {
-    return null;
-  }
-
-  let leftHandSide = model['leftHandSide'];
-  let operator = model['operator'];
-  let rightHandSide = model['rightHandSide'];
-
-
-
-
-  return null;
-}
-
-/*
-{
-  "conditions": {
-    "all": [
-      {
-        "fact": "defendant",
-        "path": "$.dmv.dmvNumber",
-        "operator": "patternDoesNotMatch",
-        "value": "^\\d{1,8}$"
-      },
-      {
-        "fact": "defendant",
-        "path": "$.dmv.dmvState",
-        "operator": "equal",
-        "value": "NC"
-      }
-    ]
-  },
-  "event": {
-    "type": "When submitting a process.",
-    "params": {
-      "reqNum": "CLOUD-4190",
-      "errorMessage": "DMV ID must be less than or equal to 8 numeric characters when DMV State is NC.",
-      "errorCode": "CLOUD-4190"
-    }
-  }
-}
-*/

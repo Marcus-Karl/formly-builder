@@ -191,12 +191,6 @@ export class HideRuleEditorComponent implements AfterViewInit, OnDestroy {
       options.push(...this._fieldInformation.filter(x => !displayFieldsToRemove.find(dftr => dftr.value === x.category)));
     }
 
-    if (isChoiceArray ? choice.includes('token') : choice === 'token') {
-      let tokens = (this.field.options.formState as BuilderFormState).builder.functions.getAllFieldInformation() || [];
-
-      options.push(...tokens);
-    }
-
     if (!isSource && (isChoiceArray ? choice.includes('options') : choice === 'options')) {
       let selectedField = this._fieldInformation.find(x => x.value === this.source?.model?.selection);
 
