@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
 
 @Component({
@@ -7,6 +7,6 @@ import { FieldType } from '@ngx-formly/material';
   templateUrl: './text-input-field.component.html',
   styleUrls: ['./text-input-field.component.scss']
 })
-export class TextInputComponentField extends FieldType {
-  public formControl!: UntypedFormControl;
+export class TextInputComponentField extends FieldType<FormlyFieldConfig> {
+
 }

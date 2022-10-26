@@ -48,12 +48,12 @@ export class FieldEditorComponent implements AfterViewInit {
     }
 
     if (this.categoryLabel && this.categoryField) {
-      if (!this.categoryField.templateOptions) {
-        this.categoryField.templateOptions = {}
+      if (!this.categoryField.props) {
+        this.categoryField.props = {}
       }
 
       this.categorySelectionComplete = true;
-      this.categoryField.templateOptions._selectionComplete = true;
+      this.categoryField.props._selectionComplete = true;
     }
   }
 

@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { Component, OnDestroy } from '@angular/core';
+import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
 import { Editor, Toolbar } from 'ngx-editor';
 
@@ -8,10 +8,9 @@ import { Editor, Toolbar } from 'ngx-editor';
   templateUrl: './display-html-editor.component.html',
   styleUrls: ['./display-html-editor.component.scss']
 })
-export class DisplayHtmlEditorComponent extends FieldType implements OnInit, OnDestroy {
+export class DisplayHtmlEditorComponent extends FieldType<FormlyFieldConfig> implements OnDestroy {
 
   public editor: Editor;
-  public formControl!: UntypedFormControl;
 
   public toolbar: Toolbar = [
     ['bold', 'italic'],
@@ -28,10 +27,6 @@ export class DisplayHtmlEditorComponent extends FieldType implements OnInit, OnD
     super();
 
     this.editor = new Editor();
-  }
-
-  ngOnInit() {
-    super.ngOnInit();
   }
 
   ngOnDestroy() {

@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
@@ -12,19 +11,17 @@ import { SelectOption } from '../../models/multiple-choice.models';
   templateUrl: './select-dropdown-field.component.html',
   styleUrls: ['./select-dropdown-field.component.scss']
 })
-export class SelectDropDownFieldComponent extends FieldType implements OnInit, OnDestroy {
-  public formControl!: UntypedFormControl;
-
+export class SelectDropDownFieldComponent extends FieldType<FormlyFieldConfig> implements OnInit, OnDestroy {
   public get groupProp(): string {
-    return this.to.groupProp || 'group';
+    return this.props.groupProp || 'group';
   }
 
   public get labelProp(): string {
-    return this.to.labelProp || 'label';
+    return this.props.labelProp || 'label';
   }
 
   public get valueProp(): string {
-    return this.to.valueProp || 'value';
+    return this.props.valueProp || 'value';
   }
 
   public selectOptions$ = new BehaviorSubject<SelectOption[]>([]);
@@ -38,40 +35,38 @@ export class SelectDropDownFieldComponent extends FieldType implements OnInit, O
   }
 
   postPopulate(field: FormlyFieldConfig) {
-    let to = field.templateOptions;
+    let props = field.props;
 
-    if (to) {
-      if (to.disableOptionCentering === undefined || to.disableOptionCentering === null) {
-        to['disableOptionCentering'] = true;
+    if (props) {
+      if (props.disableOptionCentering === undefined || props.disableOptionCentering === null) {
+        props['disableOptionCentering'] = true;
       }
 
-      if (!to.compareWith) {
-        to['compareWith'] = (left: any, right: any) => left === right;
+      if (!props.compareWith) {
+        props['compareWith'] = (left: any, right: any) => left === right;
       }
 
-      if (to.typeaheadDebounceInterval === undefined || to.typeaheadDebounceInterval === null) {
-        to['typeaheadDebounceInterval'] = 100;
+      if (props.typeaheadDebounceInterval === undefined || props.typeaheadDebounceInterval === null) {
+        props['typeaheadDebounceInterval'] = 100;
       }
 
-      if (to.abbreviateSelection?.templateString && !to.abbreviateSelection?.templateStringFunction) {
-        to.abbreviateSelection['templateStringFunction'] = Function('selectedOptions', 'totalOptions', `'use strict'; return \`${to.abbreviateSelection.templateString}\`;`);
+      if (props.abbreviateSelection?.templateString && !props.abbreviateSelection?.templateStringFunction) {
+        props.abbreviateSelection['templateStringFunction'] = Function('selectedOptions', 'totalOptions', `'use strict'; return \`${props.abbreviateSelection.templateString}\`;`);
       }
     }
   }
 
   ngOnInit() {
-    super.ngOnInit();
-
-    if (this.to.options instanceof Observable) {
-      this._subscriptions.push(this.to.options.subscribe(this.selectOptions$));
+    if (this.props.options instanceof Observable) {
+      this._subscriptions.push(this.props.options.subscribe(this.selectOptions$));
     } else {
-      let options = this._mapOptions(this.to.options);
+      let options = this._mapOptions(this.props.options);
       this.selectOptions$.next(options);
 
       if (this.options?.fieldChanges) {
         this._subscriptions.push(this.options.fieldChanges.subscribe(field => {
-          if (field['property'] === 'templateOptions.options' && Array.isArray(field.value)) {
-            let mappedOptions = this._mapOptions(this.to.options);
+          if (field['property'] === 'props.options' && Array.isArray(field.value)) {
+            let mappedOptions = this._mapOptions(this.props.options);
             this.selectOptions$.next(mappedOptions);
 
             if (this.formControl.value && !mappedOptions.find(x => x.value === this.formControl.value)) {
@@ -93,8 +88,8 @@ export class SelectDropDownFieldComponent extends FieldType implements OnInit, O
   }
 
   selectionChange($event: MatSelectChange) {
-    if (this.to.selectionChange) {
-      this.to.selectionChange(this.field, $event);
+    if (this.props.selectionChange) {
+      this.props.selectionChange(this.field, $event);
     }
   }
 
@@ -107,13 +102,13 @@ export class SelectDropDownFieldComponent extends FieldType implements OnInit, O
 
     let selectedOptions = this.getSelectedOptionsWithLabels();
 
-    if (this.to.abbreviateSelection.templateStringFunction) {
-      return this.to.abbreviateSelection.templateStringFunction(selectedOptions, this.selectOptions$.value.length);
+    if (this.props.abbreviateSelection.templateStringFunction) {
+      return this.props.abbreviateSelection.templateStringFunction(selectedOptions, this.selectOptions$.value.length);
     }
 
     let firstItem = this.getDisplayLabel(this.formControl.value[0]);
-    let singleOtherSelection = this.to.abbreviateSelection.singleOtherSelectionLabel || 'other';
-    let multipleOtherSelections = this.to.abbreviateSelection.multipleOtherSelectionLabels || 'others';
+    let singleOtherSelection = this.props.abbreviateSelection.singleOtherSelectionLabel || 'other';
+    let multipleOtherSelections = this.props.abbreviateSelection.multipleOtherSelectionLabels || 'others';
 
     return `${firstItem} (+ ${selectedOptions.length - 1} ${selectedOptions.length === 2 ? singleOtherSelection : multipleOtherSelections})`;
   }

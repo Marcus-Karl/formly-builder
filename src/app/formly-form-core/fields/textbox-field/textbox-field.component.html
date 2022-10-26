@@ -1,17 +1,17 @@
-<div *ngIf="to.showLabelAbove" class="flex">
-  <label [for]="field.id" [innerHTML]="to.label + (to.required ? ' *' : '') | keepHtml"></label>
+<div *ngIf="props.showLabelAbove" class="flex">
+  <label [for]="field.id" [innerHTML]="props.label + (props.required ? ' *' : '') | keepHtml"></label>
 
-  <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="to.help" matTooltipClass="mat-tooltip-content">help</mat-icon>
+  <mat-icon *ngIf="props.help" class="label-help" [matTooltip]="props.help" matTooltipClass="mat-tooltip-content">help</mat-icon>
 </div>
 
 <mat-form-field
   class="textarea-wrapper"
-  [appearance]="!to.showLabelAbove && to.appearance ? to.appearance : 'outline'"
-  [floatLabel]="to.floatLabel || 'always'"
-  [ngClass]="{ 'no-label': to.showLabelAbove }">
+  [appearance]="!props.showLabelAbove && props.appearance ? props.appearance : 'outline'"
+  [floatLabel]="props.floatLabel || 'always'"
+  [ngClass]="{ 'no-label': props.showLabelAbove }">
 
-  <mat-label *ngIf="!to.showLabelAbove">
-    {{ to.label }}
+  <mat-label *ngIf="!props.showLabelAbove">
+    {{ props.label }}
   </mat-label>
 
   <textarea
@@ -22,12 +22,12 @@
     [spellcheck]="true"
     [cdkTextareaAutosize]="true"
     [id]="field.id!"
-    [cdkAutosizeMinRows]="to.minRows || 4"
-    [required]="to.required ?? false"
-    [placeholder]="to.placeholder ?? ''"
-    [formControl]="formControl"
+    [cdkAutosizeMinRows]="props.minRows || 4"
+    [required]="props.required ?? false"
+    [placeholder]="props.placeholder ?? ''"
+    [formControl]="$any(formControl)"
     [formlyAttributes]="field"
-    [tabindex]="to.tabindex ?? 0">
+    [tabindex]="props.tabindex ?? 0">
   </textarea>
 </mat-form-field>
 

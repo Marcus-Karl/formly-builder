@@ -102,7 +102,7 @@ const getFieldValues = () => ({
   'widget': {
     'formlyConfig': {
       'type': 'vertical-stepper-form',
-      'templateOptions': {
+      'props': {
         'linear': false,
         'labelPosition': 'end',
         'translationFormKey': 'h1b0026ddab6c487db2025849c61c0f38',
@@ -126,7 +126,7 @@ const getFieldValues = () => ({
       'widget': {
         'formlyConfig': {
           'defaultValue': {},
-          'templateOptions': {
+          'props': {
             'pageState': 'party-info',
             'isOptional': false
           }
@@ -168,7 +168,7 @@ const getFieldValues = () => ({
       'widget': {
         'formlyConfig': {
           'defaultValue': {},
-          'templateOptions': {
+          'props': {
             'pageState': 'alarm'
           }
         }
@@ -192,7 +192,7 @@ const getFieldValues = () => ({
       'widget': {
         'formlyConfig': {
           'defaultValue': {},
-          'templateOptions': {
+          'props': {
             'pageState': 'alarm'
           }
         }
@@ -212,7 +212,7 @@ const getFieldValues = () => ({
       'widget': {
         'formlyConfig': {
           'defaultValue': {},
-          'templateOptions': {
+          'props': {
             'pageState': 'alarm'
           }
         }
@@ -234,7 +234,7 @@ const getFieldValues = () => ({
       'widget': {
         'formlyConfig': {
           'defaultValue': '',
-          'templateOptions': {
+          'props': {
             'placeholder': 'Enter reason...',
             'hint': 'Reason hint text'
           }
@@ -247,7 +247,7 @@ const getFieldValues = () => ({
       'widget': {
         'formlyConfig': {
           'type': 'text-input-field',
-          'templateOptions': {
+          'props': {
             'placeholder': 'my@email.com',
             'hint': 'Enter an email',
             'help': 'This would be some help content to show a party',
@@ -262,7 +262,7 @@ const getFieldValues = () => ({
         'formlyConfig': {
           'type': 'currency-input-field',
           'defaultValue': {},
-          'templateOptions': {
+          'props': {
             'hint': 'some value'
           }
         }
@@ -275,7 +275,7 @@ const getFieldValues = () => ({
             'formlyConfig': {
               'defaultValue': 234.58,
               'type': 'number',
-              'templateOptions': {
+              'props': {
                 'placeholder': '50 dollars?'
               }
             }
@@ -288,7 +288,7 @@ const getFieldValues = () => ({
             'formlyConfig': {
               'type': 'select',
               'defaultValue': 'USD',
-              'templateOptions': {
+              'props': {
                 'placeholder': 'Select Currency',
                 'options': [
                   { 'value': 'USD', 'label': 'USD' },
@@ -309,7 +309,7 @@ const getFieldValues = () => ({
         'formlyConfig': {
           'type': 'date-input-field',
           'defaultValue': '2022-07-24T00:00:00Z',
-          'templateOptions': {
+          'props': {
             'showLabelAbove': true,
           },
           'expressionProperties': {
@@ -324,7 +324,7 @@ const getFieldValues = () => ({
       'widget': {
         'formlyConfig': {
           'type': 'number-input-field',
-          'templateOptions': {
+          'props': {
             'placeholder': '27...',
             'numberNot': 30,
             'minimumNumber': 18,
@@ -335,8 +335,8 @@ const getFieldValues = () => ({
             ],
             'customValidations': {
               'numberNot': {
-                'expression': 'value == to.numberNot',
-                'message': '${value} is not allowed, because it is ${to.numberNot}',
+                'expression': 'value == props.numberNot',
+                'message': '${value} is not allowed, because it is ${props.numberNot}',
               }
             },
             'businessRules': [
@@ -390,7 +390,7 @@ const getFieldValues = () => ({
         'formlyConfig': {
           'type': 'radio-button-field',
           'defaultValue': 'group2_option1',
-          'templateOptions': {
+          'props': {
             'required': true,
             'classes': ['flex', 'column'],
             'help': 'some more test text',
@@ -408,8 +408,8 @@ const getFieldValues = () => ({
             ]
           },
           'expressionProperties': {
-            'templateOptions.options': 'field.templateOptions._options.filter(x => !(model?.someNumber == 25 && x.value == \'email\')) || []',
-            // 'model.radioOption': 'Array.isArray(model?.radioOption) ? field.templateOptions.options.filter(x => model.radioOption.includes(x.value)).map(x => x.value) : model?.radioOption && field.templateOptions.options.find(x => x.value == model.radioOption) ? model.radioOption : undefined'
+            'props.options': 'field.props._options.filter(x => !(model?.someNumber == 25 && x.value == \'email\')) || []',
+            // 'model.radioOption': 'Array.isArray(model?.radioOption) ? field.props.options.filter(x => model.radioOption.includes(x.value)).map(x => x.value) : model?.radioOption && field.props.options.find(x => x.value == model.radioOption) ? model.radioOption : undefined'
           }
         }
       }
@@ -421,7 +421,7 @@ const getFieldValues = () => ({
         'formlyConfig': {
           'type': 'select-dropdown-field',
           'defaultValue': ['group1_option1', 'tel'],
-          'templateOptions': {
+          'props': {
             'placeholder': 'Enter selection',
             'multiple': true,
             'options': [
@@ -438,8 +438,8 @@ const getFieldValues = () => ({
             ]
           },
           'expressionProperties': {
-            'templateOptions.options': 'field.templateOptions._options.filter(x => !(model?.someNumber == 25 && x.value == \'email\')) || []',
-            // 'model.selectOption': 'Array.isArray(model?.selectOption) ? field.templateOptions.options.filter(x => model.selectOption.includes(x.value)).map(x => x.value) : model?.selectOption && field.templateOptions.options.find(x => x.value == model.selectOption) ? model.selectOption : undefined'
+            'props.options': 'field.props._options.filter(x => !(model?.someNumber == 25 && x.value == \'email\')) || []',
+            // 'model.selectOption': 'Array.isArray(model?.selectOption) ? field.props.options.filter(x => model.selectOption.includes(x.value)).map(x => x.value) : model?.selectOption && field.props.options.find(x => x.value == model.selectOption) ? model.selectOption : undefined'
           }
         }
       }
@@ -451,7 +451,7 @@ const getFieldValues = () => ({
         'formlyConfig': {
           'type': 'select-autocomplete-field',
           'defaultValue': 'group2_option1',
-          'templateOptions': {
+          'props': {
             'placeholder': 'Enter selection',
             'options': [
               { 'value': 'email', 'label': 'Email' },
@@ -467,8 +467,8 @@ const getFieldValues = () => ({
             ]
           },
           'expressionProperties': {
-            'templateOptions.options': 'field.templateOptions._options.filter(x => !(model?.someNumber == 25 && x.value == \'email\')) || []',
-            // 'model.selectOption': 'Array.isArray(model?.selectOption) ? field.templateOptions.options.filter(x => model.selectOption.includes(x.value)).map(x => x.value) : model?.selectOption && field.templateOptions.options.find(x => x.value == model.selectOption) ? model.selectOption : undefined'
+            'props.options': 'field.props._options.filter(x => !(model?.someNumber == 25 && x.value == \'email\')) || []',
+            // 'model.selectOption': 'Array.isArray(model?.selectOption) ? field.props.options.filter(x => model.selectOption.includes(x.value)).map(x => x.value) : model?.selectOption && field.props.options.find(x => x.value == model.selectOption) ? model.selectOption : undefined'
           }
         }
       }
@@ -479,7 +479,7 @@ const getFieldValues = () => ({
       'widget': {
         'formlyConfig': {
           'type': 'display-html',
-          'templateOptions': {
+          'props': {
             'html': 'This is my text to show!<br>The date is ${token.bday}<br>The date time is ${token.hearing}<br>The reason entered is ${token.reasonText}<br>My Function output: ${token.myFunction}',
             'classes': 'fill-green',
           }

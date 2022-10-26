@@ -1,4 +1,4 @@
 <div class="editor-wrapper">
   <ngx-editor-menu [editor]="editor" [toolbar]="toolbar" [disabled]="disabled"></ngx-editor-menu>
-  <ngx-editor [editor]="editor" [formControl]="formControl"></ngx-editor>
+  <ngx-editor [editor]="editor" [formControl]="$any(formControl)"></ngx-editor>
 </div>

@@ -10,13 +10,13 @@ import { AbstractBaseFormControlsComponent } from '../base-form-controls';
 export class VerticalStepperFormComponent extends AbstractBaseFormControlsComponent {
 
   get pageStates(): { [key: string]: { icon: string, class: string }} {
-    return this.to.pageStates;
+    return this.props.pageStates;
   }
 
   postPopulate(field: FormlyFieldConfig) {
-    if (field.templateOptions) {
-      if (field.templateOptions.linear === undefined || field.templateOptions.linear === null) {
-        field.templateOptions['linear'] = true;
+    if (field.props) {
+      if (field.props.linear === undefined || field.props.linear === null) {
+        field.props['linear'] = true;
       }
     }
   }

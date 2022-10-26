@@ -1,36 +1,36 @@
-<div *ngIf="to.showLabelAbove" class="flex">
+<div *ngIf="props.showLabelAbove" class="flex">
   <!-- This label should not have a for property as the mat-select builds an internal input for the select dropdown that we cannot map to --->
-  <label [innerHTML]="to.label + (to.required ? ' *' : '') | keepHtml"></label>
+  <label [innerHTML]="props.label + (props.required ? ' *' : '') | keepHtml"></label>
 
-  <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="to.help" matTooltipClass="mat-tooltip-content">help</mat-icon>
+  <mat-icon *ngIf="props.help" class="label-help" [matTooltip]="props.help" matTooltipClass="mat-tooltip-content">help</mat-icon>
 </div>
 
 <mat-form-field
   class="select-dropdown-field"
-  [appearance]="!to.showLabelAbove && to.appearance ? to.appearance : 'outline'"
-  [floatLabel]="to.floatLabel || 'always'"
-  [ngClass]="{ 'no-label': to.showLabelAbove }">
+  [appearance]="!props.showLabelAbove && props.appearance ? props.appearance : 'outline'"
+  [floatLabel]="props.floatLabel || 'always'"
+  [ngClass]="{ 'no-label': props.showLabelAbove }">
 
-  <mat-label *ngIf="!to.showLabelAbove">
-    {{ to.label }}
+  <mat-label *ngIf="!props.showLabelAbove">
+    {{ props.label }}
   </mat-label>
 
   <mat-select
     [id]="field.id!"
-    [aria-label]="to.label ?? ''"
-    [compareWith]="to.compareWith"
-    [disableOptionCentering]="to.disableOptionCentering"
+    [aria-label]="props.label ?? ''"
+    [compareWith]="props.compareWith"
+    [disableOptionCentering]="props.disableOptionCentering"
     [errorStateMatcher]="errorStateMatcher"
-    [formControl]="formControl"
+    [formControl]="$any(formControl)"
     [formlyAttributes]="field"
-    [multiple]="to.multiple"
-    [placeholder]="to.placeholder ?? ''"
-    [required]="to.required ?? false"
-    [tabindex]="to.tabindex || 0"
-    [typeaheadDebounceInterval]="to.typeaheadDebounceInterval"
+    [multiple]="props.multiple"
+    [placeholder]="props.placeholder ?? ''"
+    [required]="props.required ?? false"
+    [tabindex]="props.tabindex || 0"
+    [typeaheadDebounceInterval]="props.typeaheadDebounceInterval"
     (selectionChange)="selectionChange($event)">
 
-    <mat-select-trigger *ngIf="to.multiple && to.abbreviateSelection"
+    <mat-select-trigger *ngIf="props.multiple && props.abbreviateSelection"
       matTooltipClass="use-new-line"
       matTooltip="{{ getSelectedOptionsTooltip() }}">
       {{ getAbbreviatedSelectionLabel() }}

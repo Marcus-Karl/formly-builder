@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, UntypedFormControl } from '@angular/forms';
+import { AbstractControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
@@ -13,20 +13,19 @@ import { SelectOption } from '../../models/multiple-choice.models';
   templateUrl: './select-autocomplete-field.component.html',
   styleUrls: ['./select-autocomplete-field.component.scss']
 })
-export class SelectAutoCompleteFieldComponent extends FieldType implements OnInit, OnDestroy, AfterViewInit {
+export class SelectAutoCompleteFieldComponent extends FieldType<FormlyFieldConfig> implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatAutocompleteTrigger) autoCompleteTrigger: MatAutocompleteTrigger | undefined;
-  public formControl!: UntypedFormControl;
 
   public get groupProp(): string {
-    return this.to.groupProp || 'group';
+    return this.props.groupProp || 'group';
   }
 
   public get labelProp(): string {
-    return this.to.labelProp || 'label';
+    return this.props.labelProp || 'label';
   }
 
   public get valueProp(): string {
-    return this.to.valueProp || 'value';
+    return this.props.valueProp || 'value';
   }
 
   public itemHeight = 48;
@@ -38,32 +37,30 @@ export class SelectAutoCompleteFieldComponent extends FieldType implements OnIni
   private _subscriptions: Array<Subscription> = [];
 
   postPopulate(field: FormlyFieldConfig) {
-    let to = field.templateOptions;
+    let props = field.props;
 
-    if (to) {
-      if (to.autoActiveFirstOption === undefined || to.autoActiveFirstOption === null) {
-        to['autoActiveFirstOption'] = true;
+    if (props) {
+      if (props.autoActiveFirstOption === undefined || props.autoActiveFirstOption === null) {
+        props['autoActiveFirstOption'] = true;
       }
 
-      if (to.disableRipple === undefined || to.disableRipple === null) {
-        to['disableRipple'] = false;
+      if (props.disableRipple === undefined || props.disableRipple === null) {
+        props['disableRipple'] = false;
       }
     }
   }
 
   ngOnInit() {
-    super.ngOnInit();
-
-    if (this.to.options instanceof Observable) {
+    if (this.props.options instanceof Observable) {
       this._subscriptions.push(
-        this.to.options.subscribe(options => {
+        this.props.options.subscribe(options => {
           this._processOptionsChange(options);
         })
       );
     } else if (this.options?.fieldChanges) {
       this._subscriptions.push(
         this.options.fieldChanges.subscribe(field => {
-          if (field['property'] === 'templateOptions.options' && Array.isArray(field.value)) {
+          if (field['property'] === 'props.options' && Array.isArray(field.value)) {
             this._processOptionsChange(field.value);
           }
         })
@@ -85,7 +82,7 @@ export class SelectAutoCompleteFieldComponent extends FieldType implements OnIni
 
     this.formControl.addValidators(this.selectionMatchesOption);
 
-    this._processOptionsChange(this.to.options, true, true);
+    this._processOptionsChange(this.props.options, true, true);
   }
 
   ngOnDestroy() {
@@ -97,21 +94,19 @@ export class SelectAutoCompleteFieldComponent extends FieldType implements OnIni
   }
 
   ngAfterViewInit() {
-    super.ngAfterViewInit();
-
-    this.autoCompleteTrigger?.setDisabledState(this.to.disabled || !this._options?.length);
+    this.autoCompleteTrigger?.setDisabledState(this.props.disabled || !this._options?.length);
 
     if (this.options?.fieldChanges) {
       this._subscriptions.push(
         this.options.fieldChanges.subscribe(field => {
-          if (field['property'] === 'templateOptions.disabled') {
+          if (field['property'] === 'props.disabled') {
             this.autoCompleteTrigger?.setDisabledState(field.value || !this._options?.length);
           }
         })
       );
     }
 
-    if (this.to.autoActiveFirstOption && this.autoCompleteTrigger?.panelClosingActions) {
+    if (this.props.autoActiveFirstOption && this.autoCompleteTrigger?.panelClosingActions) {
       this._subscriptions.push(
         this.autoCompleteTrigger.panelClosingActions.subscribe(() => {
           let possibleOptionValue = this.autoCompleteTrigger?.activeOption?.value;
@@ -134,8 +129,8 @@ export class SelectAutoCompleteFieldComponent extends FieldType implements OnIni
   }
 
   selectionChange($event: MatAutocompleteSelectedEvent) {
-    if (this.to.selectionChange) {
-      this.to.selectionChange(this.field, $event);
+    if (this.props.selectionChange) {
+      this.props.selectionChange(this.field, $event);
     }
   }
 
@@ -208,7 +203,7 @@ export class SelectAutoCompleteFieldComponent extends FieldType implements OnIni
       this.formControl.patchValue(this.formControl.value, { onlySelf: onlySelf, emitEvent: emitEvent });
     }
 
-    this.autoCompleteTrigger?.setDisabledState(this.to.disabled || !this._options?.length);
+    this.autoCompleteTrigger?.setDisabledState(this.props.disabled || !this._options?.length);
   }
 
   private _mapOptions(rawOptions: any) {

@@ -2,15 +2,15 @@
   class="radio-group"
   color="primary"
   [id]="field.id!"
-  [formControl]="formControl"
+  [formControl]="$any(formControl)"
   [formlyAttributes]="field"
-  [required]="to.required ?? false">
+  [required]="props.required ?? false">
 
-  <fieldset class="fieldset" [ngClass]="to.classes">
+  <fieldset class="fieldset" [ngClass]="props.classes">
     <legend class="flex">
-      <div [innerHTML]="to.label + (to.required ? ' *' : '') | keepHtml"></div>
+      <div [innerHTML]="props.label + (props.required ? ' *' : '') | keepHtml"></div>
 
-      <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="to.help" matTooltipClass="mat-tooltip-content">help</mat-icon>
+      <mat-icon *ngIf="props.help" class="label-help" [matTooltip]="props.help" matTooltipClass="mat-tooltip-content">help</mat-icon>
     </legend>
 
     <ng-container *ngFor="let option of selectOptions$ | async | sortOptions">

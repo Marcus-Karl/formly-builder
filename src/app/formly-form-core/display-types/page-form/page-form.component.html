@@ -4,7 +4,7 @@
     <button
       type="button"
       class="mat-button-base mat-primary"
-      [ngClass]="{ 'mat-mini-fab': to.useSmallButtons, 'mat-fab': !to.useSmallButtons }"
+      [ngClass]="{ 'mat-mini-fab': props.useSmallButtons, 'mat-fab': !props.useSmallButtons }"
       (click)="decrementPageFromIndex(selectedIndex - 1)">
 
       <div class="button-content" [matTooltip]="getPreviousPageName(selectedIndex)">
@@ -23,13 +23,13 @@
   </div>
 </div>
 
-<mat-tab-group [selectedIndex]="selectedIndex" (selectedIndexChange)="changePage($event)" [disablePagination]="to.disablePagination || false">
+<mat-tab-group [selectedIndex]="selectedIndex" (selectedIndexChange)="changePage($event)" [disablePagination]="props.disablePagination || false">
   <mat-tab *ngFor="let page of field.fieldGroup; let index = index">
-    <div class="title" [style.display]="page.templateOptions?.hideLabel ? 'none' : ''">
-      {{ page.templateOptions?.label }}
+    <div class="title" [style.display]="page.props?.hideLabel ? 'none' : ''">
+      {{ page.props?.label }}
     </div>
 
-    <formly-field [field]="page" *ngIf="selectedIndex === index" [ngClass]="page.templateOptions?.classes"></formly-field>
+    <formly-field [field]="page" *ngIf="selectedIndex === index" [ngClass]="page.props?.classes"></formly-field>
   </mat-tab>
 </mat-tab-group>
 
@@ -40,8 +40,8 @@
       *ngIf="hasForwardPage(selectedIndex)"
       type="button"
       class="mat-button-base mat-primary"
-      [ngClass]="{ 'mat-mini-fab': to.useSmallButtons, 'mat-fab': !to.useSmallButtons, 'mat-button-disabled': to.linear && isPrecedingPageInvalid(selectedIndex) }"
-      [disabled]="to.linear && isPrecedingPageInvalid(selectedIndex)"
+      [ngClass]="{ 'mat-mini-fab': props.useSmallButtons, 'mat-fab': !props.useSmallButtons, 'mat-button-disabled': props.linear && isPrecedingPageInvalid(selectedIndex) }"
+      [disabled]="props.linear && isPrecedingPageInvalid(selectedIndex)"
       (click)="incrementPageFromIndex(selectedIndex + 1)">
 
       <div class="button-content" [matTooltip]="getNextPageName(selectedIndex)">
@@ -60,11 +60,11 @@
   </div>
 
   <button
-    *ngIf="!to.hideSubmit && !hasForwardPage(selectedIndex)"
+    *ngIf="!props.hideSubmit && !hasForwardPage(selectedIndex)"
     type="submit"
     [disabled]="form.invalid"
     class="mat-button-base mat-primary"
-    [ngClass]="{ 'mat-mini-fab': to.useSmallButtons, 'mat-fab': !to.useSmallButtons, 'mat-button-disabled': form.invalid }">
+    [ngClass]="{ 'mat-mini-fab': props.useSmallButtons, 'mat-fab': !props.useSmallButtons, 'mat-button-disabled': form.invalid }">
 
     <div class="button-content" [matTooltip]="'Submit'">
       <mat-icon>done</mat-icon>
@@ -107,7 +107,7 @@
         mat-icon-button
         type="button"
         color="primary"
-        [disabled]="to.linear && isPrecedingPageInvalid(selectedIndex)"
+        [disabled]="props.linear && isPrecedingPageInvalid(selectedIndex)"
         (click)="incrementPageFromIndex(selectedIndex + 1)">
 
         <div class="button-content" [matTooltip]="getNextPageName(selectedIndex)">
@@ -117,7 +117,7 @@
     </div>
 
     <button
-      *ngIf="!to.hideSubmit && !hasForwardPage(selectedIndex)"
+      *ngIf="!props.hideSubmit && !hasForwardPage(selectedIndex)"
       mat-icon-button
       type="submit"
       color="primary"

@@ -11,7 +11,7 @@
           </ng-container>
 
           <ng-template #defaultlabel>
-            <ng-container *ngIf="to.pageStates && to.pageStates[page.templateOptions?.pageState] as state">
+            <ng-container *ngIf="props.pageStates && props.pageStates[page.props?.pageState] as state">
               <mat-icon class="margin-right-half" [ngClass]="state.class" [ngStyle]="{ 'opacity': index === selectedIndex ? '1' : '0.6' }">
                 {{ state.icon }}
               </mat-icon>
@@ -19,19 +19,19 @@
           </ng-template>
 
           <span [ngStyle]="{ 'opacity': index === selectedIndex ? '1' : '0.6' }">
-            {{ page.templateOptions?.label }}
+            {{ page.props?.label }}
           </span>
         </div>
       </ng-template>
 
-      <formly-field [field]="page" *ngIf="selectedIndex === index" [ngClass]="page.templateOptions?.classes"></formly-field>
+      <formly-field [field]="page" *ngIf="selectedIndex === index" [ngClass]="page.props?.classes"></formly-field>
 
     </mat-tab>
   </ng-container>
 
 </mat-tab-group>
 
-<div class="form-controls-wrapper" *ngIf="!to.hideButtons">
+<div class="form-controls-wrapper" *ngIf="!props.hideButtons">
   <div class="form-controls">
     <div class="margin-right-2">
       <button *ngIf="selectedIndex !== 0 && hasBackPage(selectedIndex)"
@@ -47,12 +47,12 @@
       mat-raised-button
       type="button"
       color="primary"
-      [disabled]="to.linear && isPrecedingPageInvalid(selectedIndex)"
+      [disabled]="props.linear && isPrecedingPageInvalid(selectedIndex)"
       (click)="incrementPageFromIndex(selectedIndex + 1)">
       <div>Continue</div>
     </button>
 
-    <button *ngIf="!to.hideSubmit && !hasForwardPage(selectedIndex)"
+    <button *ngIf="!props.hideSubmit && !hasForwardPage(selectedIndex)"
       mat-raised-button
       type="submit"
       color="primary"

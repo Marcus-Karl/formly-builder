@@ -1,20 +1,20 @@
 <mat-horizontal-stepper
-  [labelPosition]="!isMobile && to.labelPosition || 'bottom'"
-  [linear]="to.linear"
+  [labelPosition]="!isMobile && props.labelPosition || 'bottom'"
+  [linear]="props.linear"
   [selectedIndex]="selectedIndex"
   (selectionChange)="incrementPageFromIndex($event.selectedIndex)">
 
   <mat-step *ngFor="let page of field.fieldGroup; let index = index"
     [hasError]="step.interacted && page.formControl?.invalid && page.formControl?.touched"
-    [optional]="page.templateOptions?.isOptional || false"
+    [optional]="page.props?.isOptional || false"
     [stepControl]="page.formControl!"
     [state]="getPageState(page)"
     #step>
 
-    <formly-field *ngIf="selectedIndex === index" [field]="page" [ngClass]="page.templateOptions?.classes"></formly-field>
+    <formly-field *ngIf="selectedIndex === index" [field]="page" [ngClass]="page.props?.classes"></formly-field>
 
     <ng-template matStepLabel>
-      {{ page.templateOptions?.label }}
+      {{ page.props?.label }}
     </ng-template>
   </mat-step>
 
@@ -22,12 +22,12 @@
     <mat-icon [ngClass]="state.value.class">{{ state.value.icon }}</mat-icon>
   </ng-template>
 
-  <ng-template *ngIf="!to.pageStates?.['page-error']" matStepperIcon="page-error">
+  <ng-template *ngIf="!props.pageStates?.['page-error']" matStepperIcon="page-error">
     <mat-icon class="material-icons page-error">warning</mat-icon>
   </ng-template>
 </mat-horizontal-stepper>
 
-<div class="form-controls-wrapper" *ngIf="!to.hideButtons">
+<div class="form-controls-wrapper" *ngIf="!props.hideButtons">
   <div class="form-controls">
 
     <div class="margin-right-2">
@@ -45,13 +45,13 @@
       mat-raised-button
       type="button"
       color="primary"
-      [disabled]="to.linear && isPrecedingPageInvalid(selectedIndex)"
+      [disabled]="props.linear && isPrecedingPageInvalid(selectedIndex)"
       (click)="incrementPageFromIndex(selectedIndex + 1)">
 
       <div>Continue</div>
     </button>
 
-    <button *ngIf="!to.hideSubmit && !hasForwardPage(selectedIndex)"
+    <button *ngIf="!props.hideSubmit && !hasForwardPage(selectedIndex)"
       mat-raised-button
       type="submit"
       color="primary"

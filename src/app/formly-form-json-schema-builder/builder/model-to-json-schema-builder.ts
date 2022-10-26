@@ -122,7 +122,7 @@ export class ConvertModel {
     mergeData(displayForm, modelSettings);
 
     if (Object.keys(form)?.length) {
-      if (displayForm?.widget?.formlyConfig?.templateOptions?.required && Array.isArray(form['required'])) {
+      if (displayForm?.widget?.formlyConfig?.props?.required && Array.isArray(form['required'])) {
         form['required'].push(settings['name'] || model['_referenceId']);
       }
 
@@ -154,7 +154,7 @@ export class ConvertModel {
       widget: {
         formlyConfig: {
           defaultValue: {},
-          templateOptions: {
+          props: {
             required: false
           }
         } as FormlyFieldConfig
@@ -169,7 +169,7 @@ export class ConvertModel {
         ...model['_referenceId'] && { _referenceId: model['_referenceId'] },
         formlyConfig: {
           ...settings['type'] && { type: settings['type'] },
-          templateOptions: {
+          props: {
             ...this.getKvps(model['extra'], 'label'),
             ...model['_order'] !== undefined && { _order: model['_order'] }
           }
@@ -179,7 +179,7 @@ export class ConvertModel {
 
     mergeData(page, modelSettings);
 
-    if (page.widget.formlyConfig.templateOptions?.required && Array.isArray(form['required'])) {
+    if (page.widget.formlyConfig.props?.required && Array.isArray(form['required'])) {
       form['required'].push(settings['name'] || model['_referenceId']);
     }
 
@@ -231,7 +231,7 @@ export class ConvertModel {
         formlyConfig: {
           ...settings['type'] && { type: settings['type'] },
           ...extra['defaultValue'] && { defaultValue: extra['defaultValue'] },
-          templateOptions: {
+          props: {
             ...model['edit'] && { html: model['edit'] },
             ...this.getKvps(extra, 'defaultValue'),
             ...options && { options: options },
@@ -243,7 +243,7 @@ export class ConvertModel {
 
     mergeData(field, modelSettings);
 
-    if (field.widget.formlyConfig.templateOptions?.multiple) {
+    if (field.widget.formlyConfig.props?.multiple) {
       if (extra['defaultValue']) {
         field.widget.formlyConfig.defaultValue = Array.isArray(extra['defaultValue']) ? extra['defaultValue'] : [extra['defaultValue']];
       } else {
@@ -251,7 +251,7 @@ export class ConvertModel {
       }
     }
 
-    if (field?.widget?.formlyConfig?.templateOptions?.required && Array.isArray(page['required'])) {
+    if (field?.widget?.formlyConfig?.props?.required && Array.isArray(page['required'])) {
       page['required'].push(settings['name'] || model['_referenceId']);
     }
 

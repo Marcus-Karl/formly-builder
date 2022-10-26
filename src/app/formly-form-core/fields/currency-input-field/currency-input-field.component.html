@@ -1,17 +1,17 @@
-<div *ngIf="to.showLabelAbove" class="flex">
-  <label [for]="field.id" [innerHTML]="to.label + (to.required ? ' *' : '') | keepHtml"></label>
+<div *ngIf="props.showLabelAbove" class="flex">
+  <label [for]="field.id" [innerHTML]="props.label + (props.required ? ' *' : '') | keepHtml"></label>
 
-  <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="to.help" matTooltipClass="mat-tooltip-content">help</mat-icon>
+  <mat-icon *ngIf="props.help" class="label-help" [matTooltip]="props.help" matTooltipClass="mat-tooltip-content">help</mat-icon>
 </div>
 
 <mat-form-field
   class="input-field"
-  [appearance]="!to.showLabelAbove && to.appearance ? to.appearance : 'outline'"
-  [floatLabel]="to.floatLabel || 'always'"
-  [ngClass]="{ 'no-label': to.showLabelAbove }">
+  [appearance]="!props.showLabelAbove && props.appearance ? props.appearance : 'outline'"
+  [floatLabel]="props.floatLabel || 'always'"
+  [ngClass]="{ 'no-label': props.showLabelAbove }">
 
-  <mat-label *ngIf="!to.showLabelAbove">
-    {{ to.label }}
+  <mat-label *ngIf="!props.showLabelAbove">
+    {{ props.label }}
   </mat-label>
 
   <input matInput
@@ -25,24 +25,24 @@
     (click)="formatCurrencyInput()"
     (blur)="formatCurrencyInput()"
     [id]="field.id!"
-    [required]="to.required ?? false"
+    [required]="props.required ?? false"
     [spellcheck]="true"
-    [placeholder]="amountField?.templateOptions?.placeholder ?? ''"
+    [placeholder]="amountField?.props?.placeholder ?? ''"
     [formlyAttributes]="field"
-    [tabindex]="to.tabindex || 0" />
+    [tabindex]="props.tabindex || 0" />
 
     <div class="prefix" matPrefix>
       <mat-select
         *ngIf="currencySelection"
         [id]="field.id!"
-        [aria-label]="currencySelection.templateOptions?.label ?? ''"
+        [aria-label]="currencySelection.props?.label ?? ''"
         [formControl]="getFormControl(currencySelection.formControl!)"
         [formlyAttributes]="currencySelection"
         [disableOptionCentering]="true"
-        [placeholder]="currencySelection.templateOptions?.placeholder ?? ''"
-        [required]="currencySelection.templateOptions?.required ?? false"
-        [tabindex]="currencySelection.templateOptions?.tabindex || 0"
-        [typeaheadDebounceInterval]="currencySelection.templateOptions?.typeaheadDebounceInterval">
+        [placeholder]="currencySelection.props?.placeholder ?? ''"
+        [required]="currencySelection.props?.required ?? false"
+        [tabindex]="currencySelection.props?.tabindex || 0"
+        [typeaheadDebounceInterval]="currencySelection.props?.typeaheadDebounceInterval">
 
         <ng-container *ngFor="let item of currencyOptions | sortOptions">
           <mat-option class="mat-option-wrap" [value]="item.value" [disabled]="item.disabled">

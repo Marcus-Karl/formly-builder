@@ -1,17 +1,17 @@
-<div *ngIf="to.showLabelAbove" class="flex">
-  <label [for]="field.id" [innerHTML]="to.label + (to.required ? ' *' : '') | keepHtml"></label>
+<div *ngIf="props.showLabelAbove" class="flex">
+  <label [for]="field.id" [innerHTML]="props.label + (props.required ? ' *' : '') | keepHtml"></label>
 
-  <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="to.help" matTooltipClass="mat-tooltip-content">help</mat-icon>
+  <mat-icon *ngIf="props.help" class="label-help" [matTooltip]="props.help" matTooltipClass="mat-tooltip-content">help</mat-icon>
 </div>
 
 <mat-form-field
   class="select-dropdown-field"
-  [appearance]="!to.showLabelAbove && to.appearance ? to.appearance : 'outline'"
-  [floatLabel]="to.floatLabel || 'always'"
-  [ngClass]="{ 'no-label': to.showLabelAbove }">
+  [appearance]="!props.showLabelAbove && props.appearance ? props.appearance : 'outline'"
+  [floatLabel]="props.floatLabel || 'always'"
+  [ngClass]="{ 'no-label': props.showLabelAbove }">
 
-  <mat-label *ngIf="!to.showLabelAbove" [for]="field.id">
-    {{ to.label }}
+  <mat-label *ngIf="!props.showLabelAbove" [for]="field.id">
+    {{ props.label }}
   </mat-label>
 
   <input matInput
@@ -19,12 +19,12 @@
     autocomplete="off"
     #autocompleteinput
     [id]="field.id!"
-    [required]="to.required ?? false"
-    [attr.aria-label]="to.label"
-    [placeholder]="to.placeholder ?? ''"
-    [formControl]="formControl"
+    [required]="props.required ?? false"
+    [attr.aria-label]="props.label"
+    [placeholder]="props.placeholder ?? ''"
+    [formControl]="$any(formControl)"
     [formlyAttributes]="field"
-    [tabindex]="to.tabindex ?? 0"
+    [tabindex]="props.tabindex ?? 0"
     [matAutocomplete]="auto" />
 
   <button *ngIf="formControl.value" matSuffix mat-icon-button [attr.aria-label]="'Clear Selection'" [style.max-height]="'34px'"
@@ -35,9 +35,9 @@
   <mat-autocomplete
     #auto="matAutocomplete"
     [attr.aria-labelledby]="field.id"
-    [autoActiveFirstOption]="to.autoActiveFirstOption"
-    [classList]="to.autoCompleteClasses || ''"
-    [disableRipple]="to.disableRipple"
+    [autoActiveFirstOption]="props.autoActiveFirstOption"
+    [classList]="props.autoCompleteClasses || ''"
+    [disableRipple]="props.disableRipple"
     [displayWith]="getDisplayLabel"
     (optionSelected)="selectionChange($event)">
 

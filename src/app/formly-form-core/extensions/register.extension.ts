@@ -16,7 +16,7 @@ export const registerExtensions = (formlyConfig: FormlyConfig) => {
       { name: 'required', validation: Validators.required }
     ],
     validationMessages: [
-      { name: 'required', message: (err, field) => `${field.templateOptions?.label} is required` }
+      { name: 'required', message: (err, field) => `${field.props?.label} is required` }
     ]
   };
 

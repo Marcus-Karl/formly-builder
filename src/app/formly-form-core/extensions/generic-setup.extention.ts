@@ -5,22 +5,22 @@ export class GenericSetupExtension implements FormlyExtension {
   constructor() { }
 
   prePopulate(field: FormlyFieldConfig) {
-    if (field.templateOptions === undefined || field.templateOptions === null) {
-      field.templateOptions = {};
+    if (field.props === undefined || field.props === null) {
+      field.props = {};
     }
 
-    if (Array.isArray(field.templateOptions.options) && !Array.isArray(field.templateOptions['_options'])) {
-      field.templateOptions['_options'] = field.templateOptions.options;
+    if (Array.isArray(field.props.options) && !Array.isArray(field.props['_options'])) {
+      field.props['_options'] = field.props.options;
     }
   }
 
   onPopulate(field: FormlyFieldConfig) {
-    if (field.fieldGroup?.find(x => x.templateOptions && !!x.templateOptions['_order'])) {
+    if (field.fieldGroup?.find(x => x.props && !!x.props['_order'])) {
       field.fieldGroup.sort(this.sortFieldGroup);
     }
   }
 
   private sortFieldGroup(left: FormlyFieldConfig, right: FormlyFieldConfig) {
-    return Number(left.templateOptions && left.templateOptions['_order'] || 99999) - Number(right.templateOptions && right.templateOptions['_order'] || 99999);
+    return Number(left.props && left.props['_order'] || 99999) - Number(right.props && right.props['_order'] || 99999);
   }
 }

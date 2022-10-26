@@ -1,8 +1,8 @@
 <ng-container *ngFor="let page of field.fieldGroup; let index = index; let last = last;">
   <ng-contaier *ngIf="page.key === options?.formState.currentPage">
-    <div class="title">{{ page.templateOptions?.label }}</div>
+    <div class="title">{{ page.props?.label }}</div>
 
-    <formly-field [field]="page" [ngClass]="page.templateOptions?.classes"></formly-field>
+    <formly-field [field]="page" [ngClass]="page.props?.classes"></formly-field>
 
     <div class="form-actions center">
       <mat-form-field *ngIf="this.options?.formState.formHistory?.length > 1">

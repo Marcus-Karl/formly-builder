@@ -9,9 +9,9 @@ import { AbstractBaseFormControlsComponent } from '../base-form-controls';
 })
 export class TabFormComponent extends AbstractBaseFormControlsComponent {
   postPopulate(field: FormlyFieldConfig) {
-    if (field.templateOptions) {
-      if (field.templateOptions.linear === undefined || field.templateOptions.linear === null) {
-        field.templateOptions['linear'] = true;
+    if (field.props) {
+      if (field.props.linear === undefined || field.props.linear === null) {
+        field.props['linear'] = true;
       }
     }
   }

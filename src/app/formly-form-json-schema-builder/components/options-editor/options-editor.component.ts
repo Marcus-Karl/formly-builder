@@ -32,8 +32,8 @@ export class OptionsEditorComponent extends FieldArrayType implements OnInit, On
   }
 
   ngOnInit() {
-    if (!this.to.options) {
-      this.to.options = [];
+    if (!this.props.options) {
+      this.props.options = [];
     }
 
     this._setupOptionEdit();

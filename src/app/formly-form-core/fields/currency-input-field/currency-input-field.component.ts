@@ -12,14 +12,13 @@ import { SelectOption } from 'src/app/formly-form-core/models/multiple-choice.mo
   templateUrl: './currency-input-field.component.html',
   styleUrls: ['./currency-input-field.component.scss']
 })
-export class CurrencyInputFieldComponent extends FieldType implements AfterViewInit, OnDestroy, OnInit {
+export class CurrencyInputFieldComponent extends FieldType<FormlyFieldConfig> implements AfterViewInit, OnDestroy, OnInit {
   @ViewChild('currencyinput') public currencyInput: ElementRef<HTMLInputElement> | undefined;
 
   public amountField: FormlyFieldConfig | undefined;
   public currencySelection: FormlyFieldConfig | undefined;
   public currencyOptions: SelectOption[] = [];
   public currencySymbolWidth: number = 0;
-  public formControl!: UntypedFormControl;
   public selectedCurrency: string = 'USD';
   public prefixSymbol: string = '';
   public suffixSymbol: string = '';
@@ -36,13 +35,11 @@ export class CurrencyInputFieldComponent extends FieldType implements AfterViewI
   private _subscriptions: Subscription[] = [];
 
   ngOnInit() {
-    super.ngOnInit();
-
     this.amountField = this.field.fieldGroup?.find(x => x.key === 'amount');
     this.currencySelection = this.field.fieldGroup?.find(x => x.key === 'currency');
 
-    if (this.amountField?.templateOptions?.max) {
-      this._maxAmount = this.amountField.templateOptions.max;
+    if (this.amountField?.props?.max) {
+      this._maxAmount = this.amountField.props.max;
     }
 
     if (this.currencySelection) {
@@ -53,8 +50,8 @@ export class CurrencyInputFieldComponent extends FieldType implements AfterViewI
       if (this.currencySelection.options?.fieldChanges) {
         this._subscriptions.push(
           this.currencySelection.options.fieldChanges.subscribe(field => {
-            if (field['property'] === 'templateOptions.options' && Array.isArray(field.value)) {
-              this.currencyOptions = (this.currencySelection?.templateOptions?.options || []) as SelectOption[];
+            if (field['property'] === 'props.options' && Array.isArray(field.value)) {
+              this.currencyOptions = (this.currencySelection?.props?.options || []) as SelectOption[];
 
               if (this.currencySelection?.formControl?.value && !this.currencyOptions.find(x => x.value === this.currencySelection?.formControl?.value)) {
                 this.currencySelection.formControl.setValue(null);
@@ -64,8 +61,8 @@ export class CurrencyInputFieldComponent extends FieldType implements AfterViewI
         );
       }
 
-      if (this.currencySelection.templateOptions?.options) {
-        this.currencyOptions = (this.currencySelection?.templateOptions?.options || []) as SelectOption[];
+      if (this.currencySelection.props?.options) {
+        this.currencyOptions = (this.currencySelection?.props?.options || []) as SelectOption[];
       }
     }
 
@@ -73,8 +70,6 @@ export class CurrencyInputFieldComponent extends FieldType implements AfterViewI
   }
 
   ngAfterViewInit() {
-    super.ngAfterViewInit();
-
     if (this.currencyInput?.nativeElement && !!this.amountField?.formControl?.value) {
       let amount = Number(this.amountField.formControl.value);
 

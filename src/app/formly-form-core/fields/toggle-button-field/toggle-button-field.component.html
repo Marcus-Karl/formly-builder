@@ -1,18 +1,18 @@
 
 <div class="bold">
-  {{ to.label + (to.required ? ' *' : '') }}
+  {{ props.label + (props.required ? ' *' : '') }}
 </div>
 
 <mat-button-toggle-group
   class="input-field"
   [id]="field.id!"
   [formlyAttributes]="field"
-  [formControl]="formControl"
-  [required]="to.required ?? false"
-  [tabindex]="to.tabindex || 0"
-  [aria-label]="to.label"
+  [formControl]="$any(formControl)"
+  [required]="props.required ?? false"
+  [tabindex]="props.tabindex || 0"
+  [aria-label]="props.label"
   [vertical]="true"
-  [ngClass]="to.classes">
+  [ngClass]="props.classes">
 
   <mat-button-toggle *ngFor="let option of selectOptions$ | async" [value]="option.value" [disabled]="option.disabled">
     {{ option.label }}

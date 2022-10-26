@@ -65,7 +65,7 @@ export class FormInfo {
   isPageAtIndexInvalid(index: number, includeOptionalPageCheck = true, field: FormlyFieldConfig): boolean {
     let page = field.fieldGroup && field.fieldGroup[index];
 
-    let valid = (page?.formControl?.invalid || false) && !page.hide && (page.templateOptions?.isOptional ? includeOptionalPageCheck : true);
+    let valid = (page?.formControl?.invalid || false) && !page.hide && (page.props?.isOptional ? includeOptionalPageCheck : true);
 
     return valid;
   }

@@ -9,7 +9,7 @@ import { FieldType } from '@ngx-formly/material';
   templateUrl: './default-form.component.html',
   styleUrls: ['./default-form.component.scss']
 })
-export class DefaultFormComponent extends FieldType implements OnInit {
+export class DefaultFormComponent extends FieldType<FormlyFieldConfig> implements OnInit {
 
   public pageHistory: UntypedFormControl = new UntypedFormControl();
 
@@ -17,12 +17,10 @@ export class DefaultFormComponent extends FieldType implements OnInit {
     if (this.options?.formState.formHistory?.length === 0 || !this.options?.formState.formHistory?.find((x: any) => x.name === this.options?.formState.currentPage)) {
       this.changePage(0);
     }
-
-    super.ngOnInit();
   }
 
   postPopulate(field: FormlyFieldConfig) {
-    if (field?.type === 'default-form' && field.templateOptions) {
+    if (field?.type === 'default-form' && field.props) {
       if (field.options && !Array.isArray(field.options.formState.formHistory)) {
         field.options.formState.formHistory = [];
       }
@@ -50,7 +48,7 @@ export class DefaultFormComponent extends FieldType implements OnInit {
       let existingPage = this.options.formState.formHistory.find((x: any) => x.name === pageKey);
 
       if (!existingPage) {
-        this.options.formState.formHistory.push({ name: nextPage.key, label: nextPage.templateOptions?.label });
+        this.options.formState.formHistory.push({ name: nextPage.key, label: nextPage.props?.label });
       }
 
       this.options.formState.currentPage = pageKey;

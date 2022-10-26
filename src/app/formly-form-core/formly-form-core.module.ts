@@ -121,7 +121,7 @@ import { VerticalStepperFormComponent } from './display-types/vertical-stepper-f
         { name: 'enum', extends: 'select', defaultOptions: { wrappers: ['form-field'] } },
         { name: 'integer', extends: 'number' },
         { name: 'null', extends: 'object' },
-        { name: 'number', extends: 'input', defaultOptions: { templateOptions: { type: 'number' }, wrappers: ['form-field'] } },
+        { name: 'number', extends: 'input', defaultOptions: { props: { type: 'number' }, wrappers: ['form-field'] } },
         { name: 'object', component: ObjectTypeComponent },
         { name: 'string', extends: 'input', defaultOptions: { wrappers: ['form-field'] } },
 

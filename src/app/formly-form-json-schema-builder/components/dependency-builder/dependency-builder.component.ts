@@ -68,8 +68,8 @@ export class DependencyBuilderComponent extends FieldArrayType implements OnDest
     let selectionFields = this.builderInternalService.findAllDescendantsByKey(field, 'selection');
 
     selectionFields.forEach(sf => {
-      if (sf.templateOptions) {
-        sf.templateOptions.options = this._selectionOptions;
+      if (sf.props) {
+        sf.props.options = this._selectionOptions;
       }
     });
   }

@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
 import { Subscription } from 'rxjs';
 
@@ -15,14 +15,13 @@ import { CustomDateAdapter, DateTimeService } from '../../services/date-time.ser
     { provide: DateAdapter, useClass: CustomDateAdapter }
   ]
 })
-export class DateInputFieldComponent extends FieldType implements OnDestroy, OnInit {
+export class DateInputFieldComponent extends FieldType<FormlyFieldConfig> implements OnDestroy, OnInit {
   @ViewChild('dateInput') public dateInput: ElementRef<HTMLInputElement> | undefined;
 
   @ViewChild('dayInput') public dayInput: ElementRef<HTMLInputElement> | undefined;
   @ViewChild('monthInput') public monthInput: ElementRef<HTMLInputElement> | undefined;
   @ViewChild('yearInput') public yearInput: ElementRef<HTMLInputElement> | undefined;
 
-  public formControl!: UntypedFormControl;
   public dateViewModel: Date | null | undefined;
 
   private _subscriptions: Subscription[] = [];
@@ -32,8 +31,6 @@ export class DateInputFieldComponent extends FieldType implements OnDestroy, OnI
   }
 
   ngOnInit() {
-    super.ngOnInit();
-
     this._subscriptions.push(
       this.formControl.valueChanges.subscribe(value => {
         this.dateViewModel = this.dateTimeService.getDateFromISO(value);

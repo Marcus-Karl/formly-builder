@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { SelectOption } from '../../models/multiple-choice.models';
@@ -9,17 +9,16 @@ import { SelectOption } from '../../models/multiple-choice.models';
   templateUrl: './toggle-button-field.component.html',
   styleUrls: ['./toggle-button-field.component.scss']
 })
-export class ToggleButtonFieldComponent extends FieldType implements OnDestroy, OnInit {
-  public formControl!: UntypedFormControl;
+export class ToggleButtonFieldComponent extends FieldType<FormlyFieldConfig> implements OnDestroy, OnInit {
   public selectOptions$ = new BehaviorSubject<SelectOption[]>([]);
 
   private _subscriptions: Array<Subscription> = [];
 
   ngOnInit() {
-    if (this.to?.options instanceof Observable) {
-      this._subscriptions.push(this.to.options.subscribe(this.selectOptions$));
-    } else if (Array.isArray(this.to?.options)) {
-      let options = this._mapOptions(this.to.options);
+    if (this.props?.options instanceof Observable) {
+      this._subscriptions.push(this.props.options.subscribe(this.selectOptions$));
+    } else if (Array.isArray(this.props?.options)) {
+      let options = this._mapOptions(this.props.options);
       this.selectOptions$.next(options);
     }
   }
@@ -32,7 +31,7 @@ export class ToggleButtonFieldComponent extends FieldType implements OnDestroy, 
     let options: SelectOption[] = [];
     let groups: { [key: string]: SelectOption[] } = {};
 
-    let groupProp = this.to?.groupProp || 'group';
+    let groupProp = this.props?.groupProp || 'group';
 
     flatOptions?.forEach((option: SelectOption) => {
       if (!option[groupProp]) {

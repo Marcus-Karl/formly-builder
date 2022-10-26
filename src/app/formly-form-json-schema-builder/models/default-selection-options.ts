@@ -30,7 +30,7 @@ const FREE_RESPONSE_FIELDS: FormBuilderSelectionOption[] = [
                 formlyConfig: {
                   type: 'select',
                   defaultValue: 'USD',
-                  templateOptions: {
+                  props: {
                     placeholder: 'Select Currency',
                     options: [
                       { value: 'USD', label: 'USD' },
@@ -116,7 +116,7 @@ const MULTIPLE_CHOICE_FIELDS: FormBuilderSelectionOption[] = [
         schemaDefaults: {
           widget: {
             formlyConfig: {
-              templateOptions: {
+              props: {
                 multiple: false
               }
             }
@@ -155,7 +155,7 @@ const FORM_TYPES: FormBuilderSelectionOption[] = [
         schemaDefaults: {
           widget: {
             formlyConfig: {
-              templateOptions: {
+              props: {
                 verticalStepper: false,
                 linear: false,
                 labelPosition: 'end',
@@ -442,7 +442,7 @@ const COMPLEX_OBJECT: FormBuilderSelectionOption[] = [
           widget: {
             formlyConfig: {
               type: 'attachments',
-              templateOptions: {
+              props: {
                 label: 'Attachments'
               }
             }

@@ -1,10 +1,10 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, UntypedFormArray, UntypedFormGroup } from '@angular/forms';
 import { FormlyConfig, FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
 
 @Component({ template: '' })
-export abstract class AbstractBaseFormControlsComponent extends FieldType implements OnInit, AfterViewInit {
+export abstract class AbstractBaseFormControlsComponent extends FieldType<FormlyFieldConfig> implements OnInit {
   public selectedIndex = -1;
   public currentPage?: FormlyFieldConfig;
 
@@ -17,8 +17,6 @@ export abstract class AbstractBaseFormControlsComponent extends FieldType implem
     if (this.options && !this.options.formState.formHistory) {
       this.options.formState.formHistory = [];
     }
-
-    super.ngOnInit();
 
     this.incrementPageFromIndex(0);
   }
@@ -42,7 +40,7 @@ export abstract class AbstractBaseFormControlsComponent extends FieldType implem
   isPageAtIndexInvalid(index: number, includeOptionalPageCheck: boolean = true, onlyTouchedPages: boolean = false): boolean {
     const page = this.field.fieldGroup && this.field.fieldGroup[index];
 
-    let invalid = (page?.formControl?.invalid ?? false) && !page?.hide && (page?.templateOptions?.isOptional ? includeOptionalPageCheck : true);
+    let invalid = (page?.formControl?.invalid ?? false) && !page?.hide && (page?.props?.isOptional ? includeOptionalPageCheck : true);
 
     if (onlyTouchedPages && !page?.formControl?.touched) {
       invalid = false;
@@ -99,7 +97,7 @@ export abstract class AbstractBaseFormControlsComponent extends FieldType implem
 
       if (currentPage?.formControl && index > this.selectedIndex) {
         currentPage.fieldGroup?.forEach(x => {
-          if (!x.hide && x.templateOptions?.required) {
+          if (!x.hide && x.props?.required) {
             x.formControl?.markAsTouched();
           }
         });
@@ -125,7 +123,7 @@ export abstract class AbstractBaseFormControlsComponent extends FieldType implem
       return 'page-error';
     }
 
-    return page.templateOptions?.pageState;
+    return page.props?.pageState;
   }
 
   getPageErrors(formControl?: AbstractControl, truncateLength?: number) {
@@ -156,7 +154,7 @@ export abstract class AbstractBaseFormControlsComponent extends FieldType implem
             return value;
           }
 
-          return `${field?.templateOptions?.label} has error`;
+          return `${field?.props?.label} has error`;
         }).filter(x => x)
       );
     }

@@ -1,14 +1,14 @@
 <div class="stepper-form-container">
   <mat-vertical-stepper
-    [labelPosition]="to.labelPosition || 'bottom'"
-    [linear]="to.linear"
+    [labelPosition]="props.labelPosition || 'bottom'"
+    [linear]="props.linear"
     [selectedIndex]="selectedIndex"
-    [ngClass]="{ 'hide-internal-stepper-container': !to.internalPagination }"
+    [ngClass]="{ 'hide-internal-stepper-container': !props.internalPagination }"
     (selectionChange)="incrementPageFromIndex($event.selectedIndex)">
 
     <mat-step *ngFor="let page of field.fieldGroup; let index = index"
       [hasError]="step.interacted && page.formControl?.invalid && page.formControl?.touched"
-      [optional]="page.templateOptions?.isOptional ?? false"
+      [optional]="page.props?.isOptional ?? false"
       [stepControl]="page.formControl!"
       [state]="getPageState(page)"
       #step>
@@ -20,7 +20,7 @@
           [matTooltipDisabled]="!(step.interacted && page.formControl?.invalid && page.formControl?.touched)"
           >
           <div class="mat-step-text-label">
-            {{ page.templateOptions?.label }}
+            {{ page.props?.label }}
           </div>
 
           <div class="mat-step-sub-label-error" *ngIf="step.interacted && page.formControl?.invalid && page.formControl?.touched">
@@ -29,8 +29,8 @@
         </div>
       </ng-template>
 
-      <ng-container *ngIf="to.internalPagination">
-        <formly-field [field]="page" *ngIf="selectedIndex === index" [ngClass]="page.templateOptions?.classes"></formly-field>
+      <ng-container *ngIf="props.internalPagination">
+        <formly-field [field]="page" *ngIf="selectedIndex === index" [ngClass]="page.props?.classes"></formly-field>
       </ng-container>
     </mat-step>
 
@@ -38,22 +38,22 @@
       <mat-icon [ngClass]="state.value.class">{{ state.value.icon }}</mat-icon>
     </ng-template>
 
-    <ng-template *ngIf="!to.pageStates?.['page-error']" matStepperIcon="page-error">
+    <ng-template *ngIf="!props.pageStates?.['page-error']" matStepperIcon="page-error">
       <mat-icon class="material-icons page-error">warning</mat-icon>
     </ng-template>
   </mat-vertical-stepper>
 
   <formly-field
-    *ngIf="currentPage && !to.internalPagination"
+    *ngIf="currentPage && !props.internalPagination"
     class="stepper-form"
     [field]="currentPage"
-    [ngClass]="currentPage.templateOptions?.classes">
+    [ngClass]="currentPage.props?.classes">
   </formly-field>
 
   <formly-validation-message *ngIf="currentPage" [field]="currentPage"></formly-validation-message>
 </div>
 
-<div class="form-controls-wrapper" *ngIf="!to.hideButtons">
+<div class="form-controls-wrapper" *ngIf="!props.hideButtons">
   <div class="form-controls">
 
     <div class="margin-right-2">
@@ -71,13 +71,13 @@
       mat-raised-button
       type="button"
       color="primary"
-      [disabled]="to.linear && isPrecedingPageInvalid(selectedIndex)"
+      [disabled]="props.linear && isPrecedingPageInvalid(selectedIndex)"
       (click)="incrementPageFromIndex(selectedIndex + 1)">
 
       <div>Continue</div>
     </button>
 
-    <button *ngIf="!to.hideSubmit && !hasForwardPage(selectedIndex)"
+    <button *ngIf="!props.hideSubmit && !hasForwardPage(selectedIndex)"
       mat-raised-button
       type="submit"
       color="primary"

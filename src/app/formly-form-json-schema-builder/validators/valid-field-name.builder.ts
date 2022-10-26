@@ -1,6 +1,6 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { FieldValidatorFn } from '@ngx-formly/core/lib/services/formly.config';
+import { FieldValidatorFn } from '@ngx-formly/core/lib/models';
 
 export const validNameValidator: FieldValidatorFn = (control: AbstractControl, field: FormlyFieldConfig): ValidationErrors | null => {
   let name = control.value;
