@@ -3,11 +3,13 @@
   "$id": "/assets/schemas/fields/basic",
   "type": "object",
   "title": "Basic Information",
+  "default": {},
   "widget": {
     "formlyConfig": {
-      "defaultValue": {},
       "className": "flex pad",
-      "hideExpression": "field.parent.model.category === 'display-content-field'",
+      "expressions": {
+        "hide": "field.parent.model.category === 'display-content-field'"
+      },
       "props": {
         "isOptional": true
       }
@@ -17,11 +19,11 @@
     "type": {
       "type": "string",
       "title": "Field Type",
+      "default": "",
       "widget": {
         "formlyConfig": {
           "type": "select",
-          "defaultValue": "",
-          "expressionProperties": {
+          "expressions": {
             "props.options": "field.options?.formState?.builder?.options['FieldType'].filter(x => x.category === field.parent.parent.model.category) || []"
           }
         }
@@ -30,24 +32,24 @@
     "subType": {
       "type": "string",
       "title": "Sub Field Type",
+      "default": "",
       "widget": {
         "formlyConfig": {
           "type": "select",
-          "defaultValue": "",
-          "expressionProperties": {
-            "props.options": "field.options?.formState?.builder?.options['FieldSubType'].filter(x => x.category === model.type) || []"
-          },
-          "hideExpression": "!field.props.options?.length"
+          "expressions": {
+            "hide": "!field.props.options?.length",
+            "props.options": "field.options?.formState?.builder?.options['FieldSubType'].filter(x => x.category === field.model.type) || []"
+          }
         }
       }
     },
     "name": {
       "type": "string",
       "title": "Field Name",
+      "default": "",
       "widget": {
         "formlyConfig": {
           "type": "input",
-          "defaultValue": "",
           "validators": {
             "validation": [
               "valid-name"
@@ -59,10 +61,10 @@
     "label": {
       "type": "string",
       "title": "Field Label",
+      "default": "",
       "widget": {
         "formlyConfig": {
-          "type": "input",
-          "defaultValue": ""
+          "type": "input"
         }
       }
     }

@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { FormlyFieldConfig } from '@ngx-formly/core';
+import { FormlyFieldConfig, FieldTypeConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { debounceTime, map, startWith, withLatestFrom } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { SelectOption } from '../../models/multiple-choice.models';
   templateUrl: './select-autocomplete-field.component.html',
   styleUrls: ['./select-autocomplete-field.component.scss']
 })
-export class SelectAutoCompleteFieldComponent extends FieldType<FormlyFieldConfig> implements OnInit, OnDestroy, AfterViewInit {
+export class SelectAutoCompleteFieldComponent extends FieldType<FieldTypeConfig> implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatAutocompleteTrigger) autoCompleteTrigger: MatAutocompleteTrigger | undefined;
 
   public get groupProp(): string {

@@ -3,18 +3,19 @@
   "$id": "/assets/schemas/fields/category",
   "type": "string",
   "title": "Select Field Category",
+  "default": "",
   "widget": {
     "formlyConfig": {
       "type": "toggle-button-field",
-      "defaultValue": "",
+      "resetOnHide": false,
       "props": {
         "classes": "center-self",
         "required": true
       },
-      "expressionProperties": {
+      "expressions": {
+        "hide": "field.props._selectionComplete",
         "props.options": "field.options?.formState?.builder?.options['FieldCategory'] || []"
-      },
-      "hideExpression": "field.props._selectionComplete"
+      }
     }
   }
 }

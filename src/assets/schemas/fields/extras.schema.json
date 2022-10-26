@@ -3,9 +3,9 @@
   "$id": "/assets/schemas/fields/extras",
   "type": "object",
   "title": "Extras",
+  "default": {},
   "widget": {
     "formlyConfig": {
-      "defaultValue": {},
       "className": "flex pad",
       "props": {
         "isOptional": true
@@ -16,40 +16,40 @@
     "defaultValue": {
       "type": "string",
       "title": "Default Value",
+      "default": "",
       "widget": {
         "formlyConfig": {
-          "type": "input",
-          "defaultValue": ""
+          "type": "input"
         }
       }
     },
     "placeholder": {
       "type": "string",
       "title": "Placeholder Text",
+      "default": "",
       "widget": {
         "formlyConfig": {
-          "type": "input",
-          "defaultValue": ""
+          "type": "input"
         }
       }
     },
     "hint": {
       "type": "string",
       "title": "Hint Text",
+      "default": "",
       "widget": {
         "formlyConfig": {
-          "type": "input",
-          "defaultValue": ""
+          "type": "input"
         }
       }
     },
     "help": {
       "type": "string",
       "title": "Help Text",
+      "default": "",
       "widget": {
         "formlyConfig": {
-          "type": "input",
-          "defaultValue": ""
+          "type": "input"
         }
       }
     }

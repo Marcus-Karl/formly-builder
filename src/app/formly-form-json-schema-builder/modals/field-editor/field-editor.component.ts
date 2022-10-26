@@ -54,6 +54,8 @@ export class FieldEditorComponent implements AfterViewInit {
 
       this.categorySelectionComplete = true;
       this.categoryField.props._selectionComplete = true;
+
+      this.categoryField.options?.checkExpressions?.(this.categoryField);
     }
   }
 
@@ -84,18 +86,12 @@ export class FieldEditorComponent implements AfterViewInit {
   }
 
   resetAndClose() {
-    if (this.field.options?.resetModel) {
-      this.field.options.resetModel();
-    }
-
+    this.field.options?.resetModel?.();
     this.dialogRef.close();
   }
 
   updateAndClose() {
-    if (this.field.options?.updateInitialValue) {
-      this.field.options.updateInitialValue();
-    }
-
+    this.field.options?.updateInitialValue?.();
     this.dialogRef.close();
   }
 }

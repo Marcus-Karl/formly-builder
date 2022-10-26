@@ -3,9 +3,9 @@
   "$id": "/assets/schemas/pages/page-settings",
   "type": "object",
   "title": "Page Settings",
+  "default": {},
   "widget": {
     "formlyConfig": {
-      "defaultValue": {},
       "className": "formly-build-page-form-min-height flex column",
       "props": {
         "isOptional": true
@@ -16,10 +16,10 @@
     "name": {
       "type": "string",
       "title": "Page Name",
+      "default": "",
       "widget": {
         "formlyConfig": {
           "type": "input",
-          "defaultValue": "",
           "validators": {
             "validation": [
               "valid-name"
@@ -31,11 +31,11 @@
     "label": {
       "type": "string",
       "title": "Page Label",
+      "default": "",
       "className": "margin-top",
       "widget": {
         "formlyConfig": {
-          "type": "input",
-          "defaultValue": ""
+          "type": "input"
         }
       }
     }

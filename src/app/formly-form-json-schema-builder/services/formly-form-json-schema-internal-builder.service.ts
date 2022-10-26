@@ -23,7 +23,7 @@ export class FormlyFormJsonSchemaInternalBuilderService {
   public refreshPageStates() {
     this._formState?.builder.functions.refreshPagesInformation()
       .catch(error => console.error(`Error refreshing page state`, error))
-      .finally(() => { });
+      .finally();
   }
 
   public getPageField() {

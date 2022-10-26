@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
-import { FormlyFieldConfig } from '@ngx-formly/core';
+import { FormlyFieldConfig, FieldTypeConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
 
 @Component({
@@ -9,7 +9,7 @@ import { FieldType } from '@ngx-formly/material';
   templateUrl: './default-form.component.html',
   styleUrls: ['./default-form.component.scss']
 })
-export class DefaultFormComponent extends FieldType<FormlyFieldConfig> implements OnInit {
+export class DefaultFormComponent extends FieldType<FieldTypeConfig> implements OnInit {
 
   public pageHistory: UntypedFormControl = new UntypedFormControl();
 

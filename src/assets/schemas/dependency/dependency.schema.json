@@ -3,10 +3,10 @@
   "$id": "/assets/schemas/dependency/dependency",
   "type": "array",
   "title": "Dependencies",
+  "default": [],
   "widget": {
     "formlyConfig": {
-      "className": "formly-build-page-form-min-height flex column",
-      "defaultValue": []
+      "className": "formly-build-page-form-min-height flex column"
     }
   },
   "items": {
@@ -31,17 +31,13 @@
     "inner-dependency": {
       "type": "object",
       "title": "Inner Dependencies",
-      "widget": {
-        "formlyConfig": {
-          "defaultValue": []
-        }
-      },
+      "default": [],
       "properties": {
         "inner": {
           "type": "array",
+          "default": [],
           "widget": {
             "formlyConfig": {
-              "defaultValue": [],
               "className": "margin-left-2"
             }
           },

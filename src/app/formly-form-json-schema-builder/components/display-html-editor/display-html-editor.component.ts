@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { FormlyFieldConfig } from '@ngx-formly/core';
+import { FieldTypeConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
 import { Editor, Toolbar } from 'ngx-editor';
 
@@ -8,7 +8,7 @@ import { Editor, Toolbar } from 'ngx-editor';
   templateUrl: './display-html-editor.component.html',
   styleUrls: ['./display-html-editor.component.scss']
 })
-export class DisplayHtmlEditorComponent extends FieldType<FormlyFieldConfig> implements OnDestroy {
+export class DisplayHtmlEditorComponent extends FieldType<FieldTypeConfig> implements OnDestroy {
 
   public editor: Editor;
 

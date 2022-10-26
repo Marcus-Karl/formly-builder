@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { FormlyFieldConfig } from '@ngx-formly/core';
+import { FieldTypeConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
 import { Subscription } from 'rxjs';
 
@@ -15,7 +15,7 @@ import { CustomDateAdapter, DateTimeService } from '../../services/date-time.ser
     { provide: DateAdapter, useClass: CustomDateAdapter }
   ]
 })
-export class DateInputFieldComponent extends FieldType<FormlyFieldConfig> implements OnDestroy, OnInit {
+export class DateInputFieldComponent extends FieldType<FieldTypeConfig> implements OnDestroy, OnInit {
   @ViewChild('dateInput') public dateInput: ElementRef<HTMLInputElement> | undefined;
 
   @ViewChild('dayInput') public dayInput: ElementRef<HTMLInputElement> | undefined;

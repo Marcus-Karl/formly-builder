@@ -201,7 +201,9 @@ const COMPLEX_OBJECT: FormBuilderSelectionOption[] = [
               type: 'object',
               widget: {
                 formlyConfig: {
-                  hideExpression: 'true'
+                  expressions: {
+                    hide: true
+                  }
                 }
               },
               properties: {
@@ -225,7 +227,9 @@ const COMPLEX_OBJECT: FormBuilderSelectionOption[] = [
               fieldType: 'agency',
               widget: {
                 formlyConfig: {
-                  hideExpression: 'true'
+                  expressions: {
+                    hide: true
+                  }
                 }
               },
               properties: {
@@ -264,7 +268,9 @@ const COMPLEX_OBJECT: FormBuilderSelectionOption[] = [
               type: 'string',
               widget: {
                 formlyConfig: {
-                  hideExpression: 'true'
+                  expressions: {
+                    hide: true
+                  }
                 }
               }
             },
@@ -273,7 +279,9 @@ const COMPLEX_OBJECT: FormBuilderSelectionOption[] = [
               fieldType: 'court',
               widget: {
                 formlyConfig: {
-                  hideExpression: 'true'
+                  expressions: {
+                    hide: true
+                  }
                 }
               },
               properties: {
@@ -317,7 +325,9 @@ const COMPLEX_OBJECT: FormBuilderSelectionOption[] = [
               type: 'object',
               widget: {
                 formlyConfig: {
-                  hideExpression: 'true'
+                  expressions: {
+                    hide: true
+                  }
                 }
               },
               properties: {
@@ -341,7 +351,9 @@ const COMPLEX_OBJECT: FormBuilderSelectionOption[] = [
               fieldType: 'agency',
               widget: {
                 formlyConfig: {
-                  hideExpression: 'true'
+                  expressions: {
+                    hide: true
+                  }
                 }
               },
               properties: {
@@ -380,7 +392,9 @@ const COMPLEX_OBJECT: FormBuilderSelectionOption[] = [
               type: 'string',
               widget: {
                 formlyConfig: {
-                  hideExpression: 'true'
+                  expressions: {
+                    hide: true
+                  }
                 }
               }
             },
@@ -389,7 +403,9 @@ const COMPLEX_OBJECT: FormBuilderSelectionOption[] = [
               fieldType: 'court',
               widget: {
                 formlyConfig: {
-                  hideExpression: 'true'
+                  expressions: {
+                    hide: true
+                  }
                 }
               },
               properties: {

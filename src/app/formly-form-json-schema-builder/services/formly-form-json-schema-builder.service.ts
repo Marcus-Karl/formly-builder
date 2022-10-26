@@ -171,7 +171,6 @@ const getModel = () => ({
             },
             "edit": "<h1 style=\"text-align:center\"><strong>Welcome to the Form Creator</strong></h1><p>Please add as many pages and fields as you would like.</p>",
             "advanced": {
-              "hideExpression": [],
               "validationExpressions": []
             },
             "_order": 1,
@@ -181,8 +180,7 @@ const getModel = () => ({
         ],
         "settings": {
           "name": "",
-          "label": "Welcome Page",
-          "hideExpression": []
+          "label": "Welcome Page"
         }
       },
       {
@@ -225,7 +223,6 @@ const getModel = () => ({
             },
             "edit": "",
             "advanced": {
-              "hideExpression": [],
               "validationExpressions": []
             },
             "_order": 1,
@@ -248,7 +245,6 @@ const getModel = () => ({
             },
             "edit": "",
             "advanced": {
-              "hideExpression": [],
               "validationExpressions": []
             },
             "_order": 2,
@@ -271,7 +267,6 @@ const getModel = () => ({
             },
             "edit": "",
             "advanced": {
-              "hideExpression": [],
               "validationExpressions": []
             },
             "_order": 3,
@@ -280,8 +275,7 @@ const getModel = () => ({
         ],
         "settings": {
           "name": "",
-          "label": "About You",
-          "hideExpression": []
+          "label": "About You"
         }
       }
     ],

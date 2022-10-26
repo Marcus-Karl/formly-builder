@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormlyFieldConfig } from '@ngx-formly/core';
+import { FieldTypeConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 
@@ -10,7 +10,7 @@ import { SelectOption } from '../../models/multiple-choice.models';
   templateUrl: './radio-button-field.component.html',
   styleUrls: ['./radio-button-field.component.scss']
 })
-export class RadioButtonFieldComponent extends FieldType<FormlyFieldConfig> implements OnInit, OnDestroy {
+export class RadioButtonFieldComponent extends FieldType<FieldTypeConfig> implements OnInit, OnDestroy {
   public get groupProp(): string {
     return this.props.groupProp || 'group';
   }

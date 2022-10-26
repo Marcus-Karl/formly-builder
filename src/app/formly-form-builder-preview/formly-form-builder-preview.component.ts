@@ -312,8 +312,8 @@ const getFieldValues = () => ({
           'props': {
             'showLabelAbove': true,
           },
-          'expressionProperties': {
-            'model.dateField': 'model?.someNumber == 32 ? new Date(new Date(\'2021-03-31T00:00:00Z\').getYear() + 1900, new Date(\'2021-03-31T00:00:00Z\').getMonth() + 11, new Date(\'2021-03-31T00:00:00Z\').getDay()).toISOString() : model.dateField'
+          'expressions': {
+            'model.dateField': 'field.model?.someNumber == 32 ? new Date(new Date(\'2021-03-31T00:00:00Z\').getYear() + 1900, new Date(\'2021-03-31T00:00:00Z\').getMonth() + 11, new Date(\'2021-03-31T00:00:00Z\').getDay()).toISOString() : field.model.dateField'
           }
         }
       }
@@ -407,8 +407,8 @@ const getFieldValues = () => ({
               { 'value': 'text', 'label': 'Text' },
             ]
           },
-          'expressionProperties': {
-            'props.options': 'field.props._options.filter(x => !(model?.someNumber == 25 && x.value == \'email\')) || []',
+          'expressions': {
+            'props.options': 'field.props._options.filter(x => !(field.model?.someNumber == 25 && x.value == \'email\')) || []',
             // 'model.radioOption': 'Array.isArray(model?.radioOption) ? field.props.options.filter(x => model.radioOption.includes(x.value)).map(x => x.value) : model?.radioOption && field.props.options.find(x => x.value == model.radioOption) ? model.radioOption : undefined'
           }
         }
@@ -437,8 +437,8 @@ const getFieldValues = () => ({
               { 'value': 'text', 'label': 'Text' },
             ]
           },
-          'expressionProperties': {
-            'props.options': 'field.props._options.filter(x => !(model?.someNumber == 25 && x.value == \'email\')) || []',
+          'expressions': {
+            'props.options': 'field.props._options.filter(x => !(field.model?.someNumber == 25 && x.value == \'email\')) || []',
             // 'model.selectOption': 'Array.isArray(model?.selectOption) ? field.props.options.filter(x => model.selectOption.includes(x.value)).map(x => x.value) : model?.selectOption && field.props.options.find(x => x.value == model.selectOption) ? model.selectOption : undefined'
           }
         }
@@ -466,8 +466,8 @@ const getFieldValues = () => ({
               { 'value': 'text', 'label': 'Text' },
             ]
           },
-          'expressionProperties': {
-            'props.options': 'field.props._options.filter(x => !(model?.someNumber == 25 && x.value == \'email\')) || []',
+          'expressions': {
+            'props.options': 'field.props._options.filter(x => !(field.model?.someNumber == 25 && x.value == \'email\')) || []',
             // 'model.selectOption': 'Array.isArray(model?.selectOption) ? field.props.options.filter(x => model.selectOption.includes(x.value)).map(x => x.value) : model?.selectOption && field.props.options.find(x => x.value == model.selectOption) ? model.selectOption : undefined'
           }
         }

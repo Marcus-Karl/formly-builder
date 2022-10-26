@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, UntypedFormControl } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
-import { FormlyFieldConfig } from '@ngx-formly/core';
+import { FormlyFieldConfig, FieldTypeConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
 import { Subscription } from 'rxjs';
 
@@ -12,7 +12,7 @@ import { SelectOption } from 'src/app/formly-form-core/models/multiple-choice.mo
   templateUrl: './currency-input-field.component.html',
   styleUrls: ['./currency-input-field.component.scss']
 })
-export class CurrencyInputFieldComponent extends FieldType<FormlyFieldConfig> implements AfterViewInit, OnDestroy, OnInit {
+export class CurrencyInputFieldComponent extends FieldType<FieldTypeConfig> implements AfterViewInit, OnDestroy, OnInit {
   @ViewChild('currencyinput') public currencyInput: ElementRef<HTMLInputElement> | undefined;
 
   public amountField: FormlyFieldConfig | undefined;

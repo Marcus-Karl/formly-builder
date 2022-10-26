@@ -4,11 +4,11 @@
   "type": "array",
   "title": "Fields",
   "minItems": 0,
+  "default": [],
   "widget": {
     "formlyConfig": {
       "className": "formly-build-page-form-min-height flex column",
       "type": "page-fields",
-      "defaultValue": [],
       "props": {
         "hideLabel": false
       }

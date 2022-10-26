@@ -5,10 +5,10 @@
   "properties": {
     "form": {
       "type": "object",
+      "default": {},
       "widget": {
         "formlyConfig": {
           "type": "stepper-form",
-          "defaultValue": {},
           "props": {
             "linear": false
           }

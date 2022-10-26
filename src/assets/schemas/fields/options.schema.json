@@ -4,10 +4,10 @@
   "type": "array",
   "title": "Configure Options",
   "minItems": 1,
+  "default": [],
   "widget": {
     "formlyConfig": {
       "type": "options-editor",
-      "defaultValue": [],
       "props": {
         "isOptional": true
       }
@@ -18,10 +18,10 @@
     "properties": {
       "value": {
         "type": "string",
+        "default": "",
         "widget": {
           "formlyConfig": {
             "type": "input",
-            "defaultValue": "",
             "props": {
               "placeholder": "Enter a name..."
             }
@@ -30,10 +30,10 @@
       },
       "label": {
         "type": "string",
+        "default": "",
         "widget": {
           "formlyConfig": {
             "type": "input",
-            "defaultValue": "",
             "props": {
               "placeholder": "Enter a label..."
             }

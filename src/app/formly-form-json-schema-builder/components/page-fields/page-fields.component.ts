@@ -67,9 +67,7 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
       }
     }
 
-    if (this.options?.updateInitialValue) {
-      this.options.updateInitialValue();
-    }
+    this.options.updateInitialValue?.();
 
     this.formlyBuilderService.refreshPageStates();
 
@@ -77,10 +75,7 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
   }
 
   add(i?: number, initialModel?: any, markAsDirty?: any) {
-    if (this.options?.updateInitialValue) {
-      this.options.updateInitialValue();
-    }
-
+    this.options.updateInitialValue?.();
     const index = (i === undefined || i === null) ? this.field.fieldGroup?.length || 0 : i;
 
     super.add(index, initialModel, markAsDirty);
@@ -97,6 +92,8 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
       }
 
       this.edit(newField);
+
+      this.renderChanges();
     }
 
     this.formlyBuilderService.refreshPageStates();
@@ -148,15 +145,11 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
     }).afterClosed().subscribe(() => {
       this.formlyBuilderService.refreshPageStates();
 
-      this.table?.renderRows();
+      this.renderChanges();
     });
   }
 
   preview(formField: FormlyFieldConfig) {
-    if (formField.options?.updateInitialValue) {
-      formField.options.updateInitialValue();
-    }
-
     formField.formControl?.disable();
 
     this.dialog.open(FieldEditorComponent, {
@@ -166,9 +159,7 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
       maxHeight: '100vh',
       panelClass: 'resizable-overlay'
     }).afterClosed().subscribe(() => {
-      if (formField.options?.resetModel) {
-        formField.options.resetModel();
-      }
+      formField.formControl?.enable();
     });
   }
 

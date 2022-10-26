@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, UntypedFormArray, UntypedFormGroup } from '@angular/forms';
-import { FormlyConfig, FormlyFieldConfig } from '@ngx-formly/core';
+import { FormlyConfig, FormlyFieldConfig, FieldTypeConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
 
 @Component({ template: '' })
-export abstract class AbstractBaseFormControlsComponent extends FieldType<FormlyFieldConfig> implements OnInit {
+export abstract class AbstractBaseFormControlsComponent extends FieldType<FieldTypeConfig> implements OnInit {
   public selectedIndex = -1;
   public currentPage?: FormlyFieldConfig;
 
@@ -148,7 +148,7 @@ export abstract class AbstractBaseFormControlsComponent extends FieldType<Formly
           const validatorResponse = this.formlyConfig.getValidatorMessage(key);
           const field = (control as any)._fields?.[0];
 
-          const value = typeof validatorResponse === 'string' ? validatorResponse : field && validatorResponse(key, field);
+          const value = (!validatorResponse || typeof validatorResponse === 'string') ? validatorResponse : field && validatorResponse(key, field);
 
           if (!value || typeof value === 'string') {
             return value;

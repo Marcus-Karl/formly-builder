@@ -90,9 +90,6 @@ import { VerticalStepperFormComponent } from './display-types/vertical-stepper-f
     TextFieldModule,
 
     FormlyModule.forRoot({
-      extras: {
-        lazyRender: true
-      },
       types: [
         // Custom Form Fields
         { name: 'currency-input-field', component: CurrencyInputFieldComponent },

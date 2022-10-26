@@ -3,10 +3,10 @@
   "$id": "/assets/schemas/fields/edit-display-content",
   "type": "string",
   "title": "Edit Content",
+  "default": "",
   "widget": {
     "formlyConfig": {
       "type": "display-html-editor",
-      "defaultValue": "",
       "className": "pad-half formly-field fill-height"
     }
   }

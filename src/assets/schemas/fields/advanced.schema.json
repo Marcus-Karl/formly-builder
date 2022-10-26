@@ -3,9 +3,9 @@
   "$id": "/assets/schemas/fields/advanced",
   "type": "object",
   "title": "Advanced",
+  "default": {},
   "widget": {
     "formlyConfig": {
-      "defaultValue": {},
       "className": "flex pad",
       "props": {
         "isOptional": true

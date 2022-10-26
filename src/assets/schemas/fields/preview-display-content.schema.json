@@ -10,7 +10,7 @@
       "props": {
         "html": ""
       },
-      "expressionProperties": {
+      "expressions": {
         "props.html": "field.model.edit || ''"
       }
     }
