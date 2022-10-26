@@ -25,10 +25,6 @@ import { FormlyFormJsonSchemaBuilderComponent } from './formly-form-json-schema-
 import { FormEditorComponent } from './components/form-editor/form-editor.component';
 import { OptionsEditorComponent } from './components/options-editor/options-editor.component';
 import { PageFieldsComponent } from './components/page-fields/page-fields.component';
-import { ExpressionBuilderComponent } from './components/expression/expression-builder/expression-builder.component';
-import { OperatorConditionComponent } from './components/expression/operator-condition/operator-condition.component';
-import { RuleEditorComponent } from './modals/rule-editor/rule-editor.component';
-import { HideRuleEditorComponent } from './modals/hide-rule-editor/hide-rule-editor.component';
 import { FormlyFormJsonSchemaBuilderService } from './services/formly-form-json-schema-builder.service';
 import { DependencyBuilderComponent } from './components/dependency-builder/dependency-builder.component';
 
@@ -36,15 +32,11 @@ import { DependencyBuilderComponent } from './components/dependency-builder/depe
   declarations: [
     DependencyBuilderComponent,
     DisplayHtmlEditorComponent,
-    ExpressionBuilderComponent,
     FieldEditorComponent,
     FormEditorComponent,
     FormlyFormJsonSchemaBuilderComponent,
-    HideRuleEditorComponent,
-    OperatorConditionComponent,
     OptionsEditorComponent,
-    PageFieldsComponent,
-    RuleEditorComponent
+    PageFieldsComponent
   ],
   exports: [
     FormlyFormJsonSchemaBuilderComponent
@@ -67,9 +59,7 @@ import { DependencyBuilderComponent } from './components/dependency-builder/depe
       types: [
         { name: 'dependency-builder', component: DependencyBuilderComponent },
         { name: 'display-html-editor', component: DisplayHtmlEditorComponent },
-        { name: 'expression-builder', component: ExpressionBuilderComponent },
         { name: 'form-editor', component: FormEditorComponent },
-        { name: 'operator-condition', component: OperatorConditionComponent },
         { name: 'options-editor', component: OptionsEditorComponent },
         { name: 'page-fields', component: PageFieldsComponent }
       ],

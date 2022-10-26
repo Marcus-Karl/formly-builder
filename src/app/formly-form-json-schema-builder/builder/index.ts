@@ -6,9 +6,8 @@ export * from './model-to-json-schema-builder';
 
 
 const buildObject = (parent: FormBuilderSelectionOption | null, item: FormBuilderSelectionOption, type: SelectionOptionType): FormBuilderSelectionOption[] => {
-  let result = item.options?.map(x => buildObject(item, x, type)) ?? [] as FormBuilderSelectionOption[][];
-
-  let itemsToReturn: FormBuilderSelectionOption[] = ([] as FormBuilderSelectionOption[]).concat(...result);
+  const result = item.options?.map(x => buildObject(item, x, type)) ?? [] as FormBuilderSelectionOption[][];
+  const itemsToReturn: FormBuilderSelectionOption[] = ([] as FormBuilderSelectionOption[]).concat(...result);
 
   if (item.type === type) {
     itemsToReturn.push({
@@ -21,7 +20,7 @@ const buildObject = (parent: FormBuilderSelectionOption | null, item: FormBuilde
 }
 
 export const buildSelectionOptions = (item: FormBuilderSelectionOption, type: SelectionOptionType): FormBuilderSelectionOption[] => {
-  let options = buildObject(null, item, type);
+  const options = buildObject(null, item, type);
 
   return options.filter(x => x.value);
 }

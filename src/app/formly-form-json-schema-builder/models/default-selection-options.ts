@@ -68,7 +68,7 @@ const FREE_RESPONSE_FIELDS: FormBuilderSelectionOption[] = [
         type: SelectionOptionType.FieldType,
         schemaDefaults: {
           format: 'email',
-          pattern: "[A-Za-z0-9._]+@[A-Za-z0-9.-]+\.[A-Za-z0-9]{2,6}$"
+          pattern: '[A-Za-z0-9._]+@[A-Za-z0-9.-]+\.[A-Za-z0-9]{2,6}$'
         }
       },
       {
@@ -96,7 +96,7 @@ const FREE_RESPONSE_FIELDS: FormBuilderSelectionOption[] = [
       }
     ]
   }
-]
+];
 
 const MULTIPLE_CHOICE_FIELDS: FormBuilderSelectionOption[] = [
   {
@@ -130,7 +130,7 @@ const MULTIPLE_CHOICE_FIELDS: FormBuilderSelectionOption[] = [
       }
     ]
   }
-]
+];
 
 const FORM_TYPES: FormBuilderSelectionOption[] = [
   {
@@ -171,7 +171,7 @@ const FORM_TYPES: FormBuilderSelectionOption[] = [
       }
     ]
   }
-]
+];
 
 const COMPLEX_OBJECT: FormBuilderSelectionOption[] = [
   {
@@ -184,10 +184,330 @@ const COMPLEX_OBJECT: FormBuilderSelectionOption[] = [
         type: SelectionOptionType.FieldType,
         value: 'complex-object',
         label: 'Complex Object'
+      },
+      {
+        value: 'request-information',
+        label: 'Request Information',
+        type: SelectionOptionType.FieldType,
+        builderSchemaDefaults: {
+          category: 'complex-object-field',
+          basic: {
+            type: 'object',
+            name: 'requestInformation',
+            label: 'Request Information'
+          },
+          properties: {
+            type: {
+              type: 'object',
+              widget: {
+                formlyConfig: {
+                  hideExpression: 'true'
+                }
+              },
+              properties: {
+                id: {
+                  type: 'string'
+                },
+                description: {
+                  type: 'string'
+                },
+                'baseType': {
+                  type: 'string'
+                }
+              },
+              required: [
+                'id',
+                'description'
+              ]
+            },
+            agency: {
+              type: 'object',
+              fieldType: 'agency',
+              widget: {
+                formlyConfig: {
+                  hideExpression: 'true'
+                }
+              },
+              properties: {
+                id: {
+                  type: 'string'
+                },
+                name: {
+                  type: 'string'
+                },
+                timezone: {
+                  type: 'string'
+                },
+                county: {
+                  type: 'object',
+                  properties: {
+                    id: {
+                      type: 'string'
+                    },
+                    description: {
+                      type: 'string'
+                    }
+                  },
+                  required: [
+                    'id',
+                    'description'
+                  ]
+                }
+              },
+              required: [
+                'id',
+                'name',
+                'county'
+              ]
+            },
+            documentId: {
+              type: 'string',
+              widget: {
+                formlyConfig: {
+                  hideExpression: 'true'
+                }
+              }
+            },
+            court: {
+              type: 'object',
+              fieldType: 'court',
+              widget: {
+                formlyConfig: {
+                  hideExpression: 'true'
+                }
+              },
+              properties: {
+                id: {
+                  type: 'string'
+                },
+                name: {
+                  type: 'string'
+                },
+                timezone: {
+                  type: 'string'
+                },
+                county: {
+                  type: 'object',
+                  properties: {
+                    id: {
+                      type: 'string'
+                    },
+                    description: {
+                      type: 'string'
+                    }
+                  },
+                  required: [
+                    'id',
+                    'description'
+                  ]
+                }
+              },
+              required: [
+                'id',
+                'name',
+                'county'
+              ]
+            }
+          }
+        },
+        schemaDefaults: {
+          type: 'object',
+          properties: {
+            type: {
+              type: 'object',
+              widget: {
+                formlyConfig: {
+                  hideExpression: 'true'
+                }
+              },
+              properties: {
+                id: {
+                  type: 'string'
+                },
+                description: {
+                  type: 'string'
+                },
+                'baseType': {
+                  type: 'string'
+                }
+              },
+              required: [
+                'id',
+                'description'
+              ]
+            },
+            agency: {
+              type: 'object',
+              fieldType: 'agency',
+              widget: {
+                formlyConfig: {
+                  hideExpression: 'true'
+                }
+              },
+              properties: {
+                id: {
+                  type: 'string'
+                },
+                name: {
+                  type: 'string'
+                },
+                timezone: {
+                  type: 'string'
+                },
+                county: {
+                  type: 'object',
+                  properties: {
+                    id: {
+                      type: 'string'
+                    },
+                    description: {
+                      type: 'string'
+                    }
+                  },
+                  required: [
+                    'id',
+                    'description'
+                  ]
+                }
+              },
+              required: [
+                'id',
+                'name',
+                'county'
+              ]
+            },
+            documentId: {
+              type: 'string',
+              widget: {
+                formlyConfig: {
+                  hideExpression: 'true'
+                }
+              }
+            },
+            court: {
+              type: 'object',
+              fieldType: 'court',
+              widget: {
+                formlyConfig: {
+                  hideExpression: 'true'
+                }
+              },
+              properties: {
+                id: {
+                  type: 'string'
+                },
+                name: {
+                  type: 'string'
+                },
+                timezone: {
+                  type: 'string'
+                },
+                county: {
+                  type: 'object',
+                  properties: {
+                    id: {
+                      type: 'string'
+                    },
+                    description: {
+                      type: 'string'
+                    }
+                  },
+                  required: [
+                    'id',
+                    'description'
+                  ]
+                }
+              },
+              required: [
+                'id',
+                'name',
+                'county'
+              ]
+            },
+          required: [
+            'type',
+            'court',
+            'agency'
+          ]
+        }
+        }
+      },
+      {
+        value: 'attachments',
+        label: 'Attachments',
+        type: SelectionOptionType.FieldType,
+        schemaDefaults: {
+          type: 'array',
+          maxItems: 100,
+          widget: {
+            formlyConfig: {
+              type: 'attachments',
+              templateOptions: {
+                label: 'Attachments'
+              }
+            }
+          },
+          items: {
+            type: 'object',
+            properties: {
+              documentName: {
+                type: 'string'
+              },
+              documentId: {
+                type: 'string'
+              },
+              size: {
+                type: 'number'
+              },
+              contentType: {
+                type: 'string'
+              },
+              createdByUserId: {
+                type: 'string'
+              },
+              createdBy: {
+                type: 'string'
+              },
+              createdDate: {
+                type: 'string'
+              }
+            }
+          }
+        }
+      },
+      {
+        value: 'supportingDocuments',
+        label: 'Supporting Documents',
+        type: SelectionOptionType.FieldType,
+        schemaDefaults: {
+          type: 'array',
+          widget: {
+            formlyConfig: {
+              type: 'supplementalForms'
+            }
+          },
+          items: {
+            type: 'object',
+            properties: {
+              documentName: {
+                type: 'string'
+              },
+              id: {
+                type: 'string'
+              },
+              isRequired: {
+                type: 'boolean'
+              },
+              documentId: {
+                type: 'string'
+              }
+            }
+          }
+        }
       }
     ]
   }
-]
+];
 
 const DISPLAY_CONTENT: FormBuilderSelectionOption[] = [
   {
@@ -213,259 +533,7 @@ const DISPLAY_CONTENT: FormBuilderSelectionOption[] = [
       }
     ]
   }
-]
-
-const TOKEN_CATEGORIES: FormBuilderSelectionOption[] = [
-  {
-    value: 'answer-based',
-    label: 'Answer Based',
-    type: SelectionOptionType.TokenCategory
-  },
-  {
-    value: 'dispute',
-    label: 'Dispute',
-    type: SelectionOptionType.TokenCategory
-  },
-  {
-    value: 'site',
-    label: 'Site Information',
-    type: SelectionOptionType.TokenCategory
-  },
-  {
-    value: 'static',
-    label: 'Static',
-    type: SelectionOptionType.TokenCategory
-  }
-]
-
-const TOKEN_TYPES: FormBuilderSelectionOption[] = [
-  {
-    value: 'date',
-    label: 'Date',
-    type: SelectionOptionType.TokenType
-  },
-  {
-    value: 'datetime',
-    label: 'Date & Time',
-    type: SelectionOptionType.TokenType
-  },
-  {
-    value: 'externalLink',
-    label: 'External URL',
-    type: SelectionOptionType.TokenType
-  },
-  {
-    value: 'function',
-    label: 'Function',
-    type: SelectionOptionType.TokenType
-  },
-  {
-    value: 'siteLink',
-    label: 'Page Link',
-    type: SelectionOptionType.TokenType
-  }
-]
-
-const COMPARISON_OPERATORS: FormBuilderSelectionOption[] = [
-  {
-    value: '',
-    label: 'Operators',
-    type: SelectionOptionType.ComparisonOperator,
-    options: [
-      {
-        value: '>',
-        label: '> (Greater Than)',
-        group: 'Comparison Operators',
-        type: SelectionOptionType.ComparisonOperator,
-        categories: [
-          'field',
-          'predefined',
-          'currency-input-field',
-          'number-input-field'
-        ]
-      },
-      {
-        value: '>=',
-        label: '>= (Greater Than or Equal)',
-        group: 'Comparison Operators',
-        type: SelectionOptionType.ComparisonOperator,
-        categories: [
-          'field',
-          'predefined',
-          'currency-input-field',
-          'number-input-field'
-        ]
-      },
-      {
-        value: '<',
-        label: '< (Less Than)',
-        group: 'Comparison Operators',
-        type: SelectionOptionType.ComparisonOperator,
-        categories: [
-          'field',
-          'predefined',
-          'currency-input-field',
-          'number-input-field'
-        ]
-      },
-      {
-        value: '<=',
-        label: '<= (Less Than or Equal)',
-        group: 'Comparison Operators',
-        type: SelectionOptionType.ComparisonOperator,
-        categories: [
-          'field',
-          'predefined',
-          'currency-input-field',
-          'number-input-field'
-        ]
-      },
-      {
-        value: '==',
-        label: '== (Equal)',
-        group: 'Comparison Operators',
-        type: SelectionOptionType.ComparisonOperator,
-        categories: [
-          'field',
-          'predefined',
-          'currency-input-field',
-          'number-input-field'
-        ]
-      },
-      {
-        value: '!=',
-        label: '!= (Not Equal)',
-        group: 'Comparison Operators',
-        type: SelectionOptionType.ComparisonOperator,
-        categories: [
-          'field',
-          'predefined',
-          'currency-input-field',
-          'number-input-field'
-        ]
-      },
-      {
-        value: '&&',
-        label: '&& (And)',
-        group: 'Logical Operators',
-        type: SelectionOptionType.ComparisonOperator
-      },
-      {
-        value: '||',
-        label: '|| (Or)',
-        group: 'Logical Operators',
-        type: SelectionOptionType.ComparisonOperator
-      },
-      {
-        value: '!',
-        label: '! (Not)',
-        group: 'Logical Operators',
-        type: SelectionOptionType.ComparisonOperator
-      },
-      {
-        value: 'in',
-        label: 'In (Value Is In)',
-        group: 'Relational Operator',
-        type: SelectionOptionType.ComparisonOperator,
-        categories: [
-          'field',
-          'multiple-choice-field',
-          'currency-input-field'
-        ]
-      },
-      {
-        value: 'notin',
-        label: 'Not In (Value Is Not In)',
-        group: 'Relational Operator',
-        type: SelectionOptionType.ComparisonOperator,
-        categories: [
-          'field',
-          'multiple-choice-field',
-          'currency-input-field'
-        ]
-      },
-      {
-        value: 'between_exclusive',
-        label: 'Between Exclusive (Between But Not Equal To)',
-        group: 'Relational Operator',
-        type: SelectionOptionType.ComparisonOperator,
-        categories: [
-          'field',
-          'currency-input-field',
-          'number-input-field'
-        ]
-      },
-      {
-        value: 'between_inclusive',
-        label: 'Between Inclusive (Between Or Equal To)',
-        group: 'Relational Operator',
-        type: SelectionOptionType.ComparisonOperator,
-        categories: [
-          'field',
-          'currency-input-field',
-          'number-input-field'
-        ]
-      },
-      {
-        value: 'match',
-        label: 'Matches (Regex Pattern)',
-        group: 'Relational Operator',
-        type: SelectionOptionType.ComparisonOperator,
-        categories: [
-          'field',
-          'predefined',
-          'free-response-field',
-          'text-input-field'
-        ]
-      },
-      {
-        value: 'not_match',
-        label: 'Not Match (Regex Pattern)',
-        group: 'Relational Operator',
-        type: SelectionOptionType.ComparisonOperator,
-        categories: [
-          'field',
-          'predefined',
-          'free-response-field',
-          'text-input-field'
-        ]
-      }
-    ]
-  }
-]
-
-const COMPARISON_TYPES: FormBuilderSelectionOption[] = [
-  {
-    type: SelectionOptionType.ComparisonType,
-    value: 'thisItemValue',
-    label: 'This Items Value'
-  },
-  {
-    type: SelectionOptionType.ComparisonType,
-    value: 'differentFieldAnswer',
-    label: 'Different Field Answer'
-  },
-  {
-    type: SelectionOptionType.ComparisonType,
-    value: 'listOfItems',
-    label: 'List of Items'
-  },
-  {
-    type: SelectionOptionType.ComparisonType,
-    value: 'condition',
-    label: 'Another Condition'
-  },
-  {
-    type: SelectionOptionType.ComparisonType,
-    value: 'predefined',
-    label: 'Predefined Value'
-  },
-  {
-    type: SelectionOptionType.ComparisonType,
-    value: 'token',
-    label: 'Token Value'
-  }
-]
+];
 
 const DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION: FormBuilderSelectionOption = {
   value: '',
@@ -476,37 +544,9 @@ const DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION: FormBuilderSelectionOption =
     ...DISPLAY_CONTENT,
     ...FREE_RESPONSE_FIELDS,
     ...MULTIPLE_CHOICE_FIELDS,
-    ...FORM_TYPES,
-    ...TOKEN_CATEGORIES,
-    ...TOKEN_TYPES,
-    ...COMPARISON_OPERATORS,
-    ...COMPARISON_TYPES,
-    {
-      type: SelectionOptionType.HideComparisonSource,
-      value: 'field',
-      label: 'Different Field Answer',
-      category: 'field'
-    },
-    {
-      type: SelectionOptionType.HideComparisonSource,
-      value: 'token',
-      label: 'Token Value',
-      category: 'token'
-    },
-    {
-      type: SelectionOptionType.HideComparisonAgainst,
-      value: 'options',
-      label: 'List of Options',
-      category: 'options'
-    },
-    {
-      type: SelectionOptionType.HideComparisonAgainst,
-      value: 'predefined',
-      label: 'Value',
-      category: 'predefined'
-    }
+    ...FORM_TYPES
   ]
-}
+};
 
 export const getDefaultSelectionOptionsMap = (): { [key in SelectionOptionType]: FormBuilderSelectionOption[] } => ({
   [SelectionOptionType.Base]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.Base),
@@ -514,11 +554,10 @@ export const getDefaultSelectionOptionsMap = (): { [key in SelectionOptionType]:
   [SelectionOptionType.FieldType]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.FieldType),
   [SelectionOptionType.FieldSubType]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.FieldSubType),
   [SelectionOptionType.Form]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.Form),
-  [SelectionOptionType.FormCategory]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.FormCategory),
-  [SelectionOptionType.ComparisonOperator]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.ComparisonOperator),
-  [SelectionOptionType.ComparisonType]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.ComparisonType),
-  [SelectionOptionType.HideComparisonSource]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.HideComparisonSource),
-  [SelectionOptionType.HideComparisonAgainst]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.HideComparisonAgainst),
-  [SelectionOptionType.TokenCategory]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.TokenCategory),
-  [SelectionOptionType.TokenType]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.TokenType),
-})
+  [SelectionOptionType.FormCategory]: buildSelectionOptions(DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION, SelectionOptionType.FormCategory)
+});
+
+export const sortSelectionOptions = (options?: FormBuilderSelectionOption[]) => {
+  options?.sort((left, right) => left.label?.localeCompare(right.label));
+  options?.forEach(option => sortSelectionOptions(option.options));
+};

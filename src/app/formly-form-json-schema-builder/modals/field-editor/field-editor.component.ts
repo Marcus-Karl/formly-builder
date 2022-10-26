@@ -40,9 +40,8 @@ export class FieldEditorComponent implements AfterViewInit {
   }
 
   onSelectedCategory() {
-    let category = this.categoryField?.formControl?.value;
-
-    let builderFormState: BuilderFormState = this.field.options?.formState;
+    const category = this.categoryField?.formControl?.value;
+    const builderFormState: BuilderFormState = this.field.options?.formState;
 
     if (builderFormState?.builder.options[SelectionOptionType.FieldCategory]) {
       this.categoryLabel = builderFormState?.builder.options[SelectionOptionType.FieldCategory].find((x: any) => x.value === category)?.label ?? '';
@@ -78,8 +77,7 @@ export class FieldEditorComponent implements AfterViewInit {
       this.cdkContainer.style.height = '100vh';
     }
 
-    let style = this.cdkContainer.parentElement.style as any;
-
+    const style = this.cdkContainer.parentElement.style as any;
     style.transform = null;
 
     this.isFullScreen = !this.isFullScreen;

@@ -9,7 +9,7 @@ import { firstValueFrom } from 'rxjs';
 import { ConvertModel } from '../builder';
 import { FunctionReferences } from '../builder/state-functions';
 import { BuilderFormState, FormBuilderSelectionOption, PagesInformation, SelectionOptionType } from '../models/builder-form-state';
-import { getDefaultSelectionOptionsMap } from '../models/default-selection-options';
+import { getDefaultSelectionOptionsMap, sortSelectionOptions } from '../models/default-selection-options';
 
 @Injectable({ providedIn: 'root' })
 export class FormlyFormJsonSchemaBuilderService {
@@ -98,15 +98,16 @@ export class FormlyFormJsonSchemaBuilderService {
   }
 
   private _buildSelectionOptionsMap(options: { [key: string]: FormBuilderSelectionOption[] }, selectionOptionsMap?: { [key in SelectionOptionType]: FormBuilderSelectionOption[] }) {
-    let optionsMap = Object.assign({}, getDefaultSelectionOptionsMap());
+    const optionsMap = Object.assign({}, getDefaultSelectionOptionsMap());
 
     if (selectionOptionsMap) {
       Object.assign(optionsMap, selectionOptionsMap);
     }
 
     Object.assign(options, optionsMap);
+    Object.values(options).forEach(option => sortSelectionOptions(option));
 
-    return optionsMap;
+    return options;
   }
 
   private async getDefaultSchema() {

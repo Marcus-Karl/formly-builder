@@ -183,7 +183,7 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
   }
 
   private _setCategories() {
-    let builderFormState: BuilderFormState = this.options?.formState;
+    const builderFormState: BuilderFormState = this.options?.formState;
 
     if (builderFormState?.builder.options[SelectionOptionType.FieldCategory]?.length) {
       this._categories = builderFormState?.builder.options[SelectionOptionType.FieldCategory];

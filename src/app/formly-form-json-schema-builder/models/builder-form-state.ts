@@ -6,13 +6,7 @@ export enum SelectionOptionType {
   FieldType = 'FieldType',
   FieldSubType = 'FieldSubType',
   Form = 'Form',
-  FormCategory = 'FormCategory',
-  ComparisonOperator = 'ComparisonOperator',
-  ComparisonType = 'ComparisonType',
-  HideComparisonSource = 'HideComparisonSource',
-  HideComparisonAgainst = 'HideComparisonAgainst',
-  TokenCategory = 'TokenCategory',
-  TokenType = 'TokenType'
+  FormCategory = 'FormCategory'
 }
 
 export type SelectionOption = {
