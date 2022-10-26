@@ -1,11 +1,17 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { FormlyFieldConfig } from '@ngx-formly/core';
+import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
+import { FormlyConfig, FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
 
 @Component({ template: '' })
 export abstract class AbstractBaseFormControlsComponent extends FieldType implements OnInit, AfterViewInit {
   public selectedIndex = -1;
+  public currentPage?: FormlyFieldConfig;
+
+
+  constructor(private formlyConfig: FormlyConfig) {
+    super();
+  }
 
   ngOnInit() {
     if (this.options && !this.options.formState.formHistory) {
@@ -19,7 +25,7 @@ export abstract class AbstractBaseFormControlsComponent extends FieldType implem
 
   isPrecedingPageInvalid(index: number, includeOptionalPageCheck = false): boolean {
     if (index < 1) {
-      return this.isPageAtIndexInvalid(0, includeOptionalPageCheck) ;
+      return this.isPageAtIndexInvalid(0, includeOptionalPageCheck);
     }
 
     return this.isPageAtIndexInvalid(index, includeOptionalPageCheck) || this.isPrecedingPageInvalid(index - 1, includeOptionalPageCheck);
@@ -27,14 +33,14 @@ export abstract class AbstractBaseFormControlsComponent extends FieldType implem
 
   isSubsequentPageInvalid(index: number, includeOptionalPageCheck = false): boolean {
     if (!this.field.fieldGroup || index >= this.field.fieldGroup?.length) {
-      return this.isPageAtIndexInvalid(index, includeOptionalPageCheck, true) ;
+      return this.isPageAtIndexInvalid(index, includeOptionalPageCheck, true);
     }
 
     return this.isPageAtIndexInvalid(index, includeOptionalPageCheck, true) || this.isSubsequentPageInvalid(index + 1, includeOptionalPageCheck);
   }
 
   isPageAtIndexInvalid(index: number, includeOptionalPageCheck: boolean = true, onlyTouchedPages: boolean = false): boolean {
-    let page = this.field.fieldGroup && this.field.fieldGroup[index];
+    const page = this.field.fieldGroup && this.field.fieldGroup[index];
 
     let invalid = (page?.formControl?.invalid ?? false) && !page?.hide && (page?.templateOptions?.isOptional ? includeOptionalPageCheck : true);
 
@@ -46,13 +52,13 @@ export abstract class AbstractBaseFormControlsComponent extends FieldType implem
   }
 
   hasBackPage(index: number) {
-    let page = this.field?.fieldGroup?.slice(0, index)?.find(x => !x.hide);
+    const page = this.field?.fieldGroup?.slice(0, index)?.find(x => !x.hide);
 
     return page !== undefined;
   }
 
   hasForwardPage(index: number) {
-    let page = this.field?.fieldGroup?.slice(index + 1)?.find(x => !x.hide);
+    const page = this.field?.fieldGroup?.slice(index + 1)?.find(x => !x.hide);
 
     return page !== undefined;
   }
@@ -86,32 +92,34 @@ export abstract class AbstractBaseFormControlsComponent extends FieldType implem
       return;
     }
 
-    let nextPage = this.field.fieldGroup[index];
+    const nextPage = this.field.fieldGroup[index];
 
     if (nextPage) {
-      let currentPage = this.field.fieldGroup[this.selectedIndex];
+      const currentPage = this.field.fieldGroup[this.selectedIndex];
 
       if (currentPage?.formControl && index > this.selectedIndex) {
         currentPage.fieldGroup?.forEach(x => {
           if (!x.hide && x.templateOptions?.required) {
             x.formControl?.markAsTouched();
           }
-        })
+        });
       }
 
       this.selectedIndex = index;
     }
+
+    this.currentPage = nextPage;
   }
 
   visitedPageHasError(page: FormlyFieldConfig) {
-    let pageControls = (page.formControl as FormGroup)?.controls ?? {};
+    const pageControls = (page.formControl as FormGroup)?.controls ?? {};
 
     return this.options?.formState.formHistory?.find((x: any) => x.name === page.key)
       && Object.values(pageControls).filter(x => x.touched && x.invalid).length;
   }
 
   getPageState(page: FormlyFieldConfig) {
-    let pageControls = (page.formControl as FormGroup)?.controls ?? {};
+    const pageControls = (page.formControl as FormGroup)?.controls ?? {};
 
     if (Object.values(pageControls).filter(x => x.touched && x.invalid).length) {
       return 'page-error';
@@ -119,4 +127,54 @@ export abstract class AbstractBaseFormControlsComponent extends FieldType implem
 
     return page.templateOptions?.pageState;
   }
+
+  getPageErrors(formControl?: AbstractControl, truncateLength?: number) {
+    formControl?.updateValueAndValidity();
+
+    const errors = this.getAllErrors(formControl);
+    const errorString = errors.join('\n');
+
+    return errorString && truncateLength ? errorString.substring(0, truncateLength).concat('...') : errorString;
+  }
+
+  getAllErrors(control?: AbstractControl) {
+    if (!control || control?.valid) {
+      return [];
+    }
+
+    const errors: string[] = [];
+
+    if (control.errors) {
+      errors.push(
+        ...Object.keys(control.errors).map(key => {
+          const validatorResponse = this.formlyConfig.getValidatorMessage(key);
+          const field = (control as any)._fields?.[0];
+
+          const value = typeof validatorResponse === 'string' ? validatorResponse : field && validatorResponse(key, field);
+
+          if (!value || typeof value === 'string') {
+            return value;
+          }
+
+          return `${field?.templateOptions?.label} has error`;
+        }).filter(x => x)
+      );
+    }
+
+    if (Array.isArray((control as FormArray).controls)) {
+      const childErrors = (control as FormArray).controls
+        .filter(childControl => childControl?.invalid)
+        .map(childControl => this.getAllErrors(childControl));
+
+      errors.push(...childErrors.flat());
+    } else if ((control as FormGroup).controls) {
+      const childErrors = Object.values((control as FormGroup).controls)
+        .filter(childControl => childControl?.invalid)
+        .map(childControl => this.getAllErrors(childControl));
+
+      errors.push(...childErrors.flat());
+    }
+
+    return errors;
+  };
 }

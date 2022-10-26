@@ -1,4 +1,4 @@
-<div *ngIf="!to.encapsulateLabel" class="flex">
+<div *ngIf="to.showLabelAbove" class="flex">
   <label [for]="field.id" [innerHTML]="to.label + (to.required ? ' *' : '') | keepHtml"></label>
 
   <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="to.help" matTooltipClass="mat-tooltip-content">help</mat-icon>
@@ -6,11 +6,11 @@
 
 <mat-form-field
   class="select-dropdown-field"
-  [ngClass]="{ 'no-label': !to.encapsulateLabel }"
-  [appearance]="to.encapsulateLabel && to.appearance ? to.appearance : 'outline'"
-  [floatLabel]="to.floatLabel || 'always'">
+  [appearance]="!to.showLabelAbove && to.appearance ? to.appearance : 'outline'"
+  [floatLabel]="to.floatLabel || 'always'"
+  [ngClass]="{ 'no-label': to.showLabelAbove }">
 
-  <mat-label *ngIf="to.encapsulateLabel" [for]="field.id">
+  <mat-label *ngIf="!to.showLabelAbove" [for]="field.id">
     {{ to.label }}
   </mat-label>
 
@@ -19,12 +19,12 @@
     autocomplete="off"
     #autocompleteinput
     [id]="field.id!"
-    [required]="to.required || false"
+    [required]="to.required ?? false"
     [attr.aria-label]="to.label"
     [placeholder]="to.placeholder ?? ''"
     [formControl]="formControl"
     [formlyAttributes]="field"
-    [tabindex]="to.tabindex || 0"
+    [tabindex]="to.tabindex ?? 0"
     [matAutocomplete]="auto" />
 
   <button *ngIf="formControl.value" matSuffix mat-icon-button [attr.aria-label]="'Clear Selection'" [style.max-height]="'34px'"

@@ -1,5 +1,5 @@
-<mat-vertical-stepper *ngIf="to.verticalStepper; else horizontalstepper"
-  [labelPosition]="to.labelPosition || 'bottom'"
+<mat-horizontal-stepper
+  [labelPosition]="!isMobile && to.labelPosition || 'bottom'"
   [linear]="to.linear"
   [selectedIndex]="selectedIndex"
   (selectionChange)="incrementPageFromIndex($event.selectedIndex)">
@@ -11,52 +11,21 @@
     [state]="getPageState(page)"
     #step>
 
+    <formly-field *ngIf="selectedIndex === index" [field]="page" [ngClass]="page.templateOptions?.classes"></formly-field>
+
     <ng-template matStepLabel>
       {{ page.templateOptions?.label }}
     </ng-template>
-
-    <formly-field [field]="page" *ngIf="selectedIndex === index" [ngClass]="page.templateOptions?.classes"></formly-field>
   </mat-step>
 
   <ng-template *ngFor="let state of pageStates | keyvalue" [matStepperIcon]="state.key">
     <mat-icon [ngClass]="state.value.class">{{ state.value.icon }}</mat-icon>
   </ng-template>
 
-  <ng-template *ngIf="!to.pageStates || !to.pageStates['page-error']" matStepperIcon="page-error">
+  <ng-template *ngIf="!to.pageStates?.['page-error']" matStepperIcon="page-error">
     <mat-icon class="material-icons page-error">warning</mat-icon>
   </ng-template>
-</mat-vertical-stepper>
-
-<ng-template #horizontalstepper>
-  <mat-horizontal-stepper
-    [labelPosition]="!isMobile && to.labelPosition || 'bottom'"
-    [linear]="to.linear"
-    [selectedIndex]="selectedIndex"
-    (selectionChange)="incrementPageFromIndex($event.selectedIndex)">
-
-    <mat-step *ngFor="let page of field.fieldGroup; let index = index"
-      [hasError]="step.interacted && page.formControl?.invalid && page.formControl?.touched"
-      [optional]="page.templateOptions?.isOptional || false"
-      [stepControl]="page.formControl!"
-      [state]="getPageState(page)"
-      #step>
-
-      <formly-field *ngIf="selectedIndex === index" [field]="page" [ngClass]="page.templateOptions?.classes"></formly-field>
-
-      <ng-template matStepLabel>
-        {{ page.templateOptions?.label }}
-      </ng-template>
-    </mat-step>
-
-    <ng-template *ngFor="let state of pageStates | keyvalue" [matStepperIcon]="state.key">
-      <mat-icon [ngClass]="state.value.class">{{ state.value.icon }}</mat-icon>
-    </ng-template>
-
-    <ng-template *ngIf="!to.pageStates || !to.pageStates['page-error']" matStepperIcon="page-error">
-      <mat-icon class="material-icons page-error">warning</mat-icon>
-    </ng-template>
-  </mat-horizontal-stepper>
-</ng-template>
+</mat-horizontal-stepper>
 
 <div class="form-controls-wrapper" *ngIf="!to.hideButtons">
   <div class="form-controls">

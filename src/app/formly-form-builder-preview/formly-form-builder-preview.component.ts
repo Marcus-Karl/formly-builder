@@ -101,9 +101,8 @@ const getFieldValues = () => ({
   'type': 'object',
   'widget': {
     'formlyConfig': {
-      'type': 'stepper-form',
+      'type': 'vertical-stepper-form',
       'templateOptions': {
-        'verticalStepper': false,
         'linear': false,
         'labelPosition': 'end',
         'translationFormKey': 'h1b0026ddab6c487db2025849c61c0f38',
@@ -157,14 +156,15 @@ const getFieldValues = () => ({
         }
       },
       'required': [
-        // 'someNumber',
-        // 'reason'
+        'someNumber',
+        'reason',
+        'email',
         'dateField'
       ]
     },
-    'page3': {
+    'page2': {
       'type': 'object',
-      'title': 'Step 1C',
+      'title': 'Step 1B',
       'widget': {
         'formlyConfig': {
           'defaultValue': {},
@@ -186,9 +186,9 @@ const getFieldValues = () => ({
         'selectAutoCompleteOption'
       ]
     },
-    'page4': {
+    'page3': {
       'type': 'object',
-      'title': 'Step 1D',
+      'title': 'Step 1C',
       'widget': {
         'formlyConfig': {
           'defaultValue': {},
@@ -206,9 +206,9 @@ const getFieldValues = () => ({
         }
       }
     },
-    'page5': {
+    'page4': {
       'type': 'object',
-      'title': 'Step 1E',
+      'title': 'Step 1D',
       'widget': {
         'formlyConfig': {
           'defaultValue': {},
@@ -230,7 +230,7 @@ const getFieldValues = () => ({
   'definitions': {
     'reason': {
       'type': 'textbox-field',
-      'title': 'Reason text that is longer longer longer longer longer longer ${token.reasonText}',
+      'title': 'Reason text',
       'widget': {
         'formlyConfig': {
           'defaultValue': '',
@@ -261,7 +261,10 @@ const getFieldValues = () => ({
       'widget': {
         'formlyConfig': {
           'type': 'currency-input-field',
-          'defaultValue': {}
+          'defaultValue': {},
+          'templateOptions': {
+            'hint': 'some value'
+          }
         }
       },
       'properties': {
@@ -273,6 +276,7 @@ const getFieldValues = () => ({
               'defaultValue': 234.58,
               'type': 'number',
               'templateOptions': {
+                'placeholder': '50 dollars?'
               }
             }
           }
@@ -306,7 +310,7 @@ const getFieldValues = () => ({
           'type': 'date-input-field',
           'defaultValue': '2022-07-24T00:00:00Z',
           'templateOptions': {
-            'encapsulateLabel': true,
+            'showLabelAbove': true,
           },
           'expressionProperties': {
             'model.dateField': 'model?.someNumber == 32 ? new Date(new Date(\'2021-03-31T00:00:00Z\').getYear() + 1900, new Date(\'2021-03-31T00:00:00Z\').getMonth() + 11, new Date(\'2021-03-31T00:00:00Z\').getDay()).toISOString() : model.dateField'

@@ -1,15 +1,16 @@
-<div *ngIf="!to.encapsulateLabel" class="flex">
+<div *ngIf="to.showLabelAbove" class="flex">
   <label [for]="field.id" [innerHTML]="to.label + (to.required ? ' *' : '') | keepHtml"></label>
 
   <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="to.help" matTooltipClass="mat-tooltip-content">help</mat-icon>
 </div>
 
-<mat-form-field class="textarea-wrapper"
-  [appearance]="to.appearance || 'outline'"
+<mat-form-field
+  class="textarea-wrapper"
+  [appearance]="!to.showLabelAbove && to.appearance ? to.appearance : 'outline'"
   [floatLabel]="to.floatLabel || 'always'"
-  [ngClass]="{ 'no-label': !to.encapsulateLabel }">
+  [ngClass]="{ 'no-label': to.showLabelAbove }">
 
-  <mat-label *ngIf="to.encapsulateLabel">
+  <mat-label *ngIf="!to.showLabelAbove">
     {{ to.label }}
   </mat-label>
 
@@ -22,11 +23,11 @@
     [cdkTextareaAutosize]="true"
     [id]="field.id!"
     [cdkAutosizeMinRows]="to.minRows || 4"
-    [required]="to.required || false"
+    [required]="to.required ?? false"
     [placeholder]="to.placeholder ?? ''"
     [formControl]="formControl"
     [formlyAttributes]="field"
-    [tabindex]="to.tabindex || 0">
+    [tabindex]="to.tabindex ?? 0">
   </textarea>
 </mat-form-field>
 

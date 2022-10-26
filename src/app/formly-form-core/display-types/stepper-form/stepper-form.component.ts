@@ -1,7 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnDestroy } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
-import { FormlyFieldConfig } from '@ngx-formly/core';
+import { FormlyConfig, FormlyFieldConfig } from '@ngx-formly/core';
 import { Subscription } from 'rxjs';
 
 import { AbstractBaseFormControlsComponent } from '../base-form-controls';
@@ -21,8 +20,8 @@ export class StepperFormComponent extends AbstractBaseFormControlsComponent impl
 
   private _subscriptions: Subscription[];
 
-  constructor(private breakpointObserver: BreakpointObserver) {
-    super();
+  constructor(private breakpointObserver: BreakpointObserver, formlyConfig: FormlyConfig) {
+    super(formlyConfig);
 
     this._subscriptions = [];
 
@@ -43,9 +42,5 @@ export class StepperFormComponent extends AbstractBaseFormControlsComponent impl
     this._subscriptions.forEach(x => x.unsubscribe());
 
     super.ngOnDestroy();
-  }
-
-  getPageFormControl(page: FormlyFieldConfig) {
-    return page.formControl as AbstractControl;
   }
 }

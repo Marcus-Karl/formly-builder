@@ -1,4 +1,4 @@
-<div *ngIf="!to.encapsulateLabel" class="flex">
+<div *ngIf="to.showLabelAbove" class="flex">
   <label [for]="field.id" [innerHTML]="to.label + (to.required ? ' *' : '') | keepHtml"></label>
 
   <mat-icon *ngIf="to.help" class="label-help" [matTooltip]="to.help" matTooltipClass="mat-tooltip-content">help</mat-icon>
@@ -6,11 +6,11 @@
 
 <mat-form-field
   class="input-field"
-  [appearance]="to.encapsulateLabel && to.appearance ? to.appearance : 'outline'"
+  [appearance]="!to.showLabelAbove && to.appearance ? to.appearance : 'outline'"
   [floatLabel]="to.floatLabel || 'always'"
-  [ngClass]="{ 'no-label': !to.encapsulateLabel }">
+  [ngClass]="{ 'no-label': to.showLabelAbove }">
 
-  <mat-label *ngIf="to.encapsulateLabel">
+  <mat-label *ngIf="!to.showLabelAbove">
     {{ to.label }}
   </mat-label>
 
@@ -20,6 +20,7 @@
     [type]="to.type || 'text'"
     [spellcheck]="true"
     [maxlength]="to.maxlength || 256"
+    [required]="to.required ?? false"
     [placeholder]="to.placeholder ?? ''"
     [formControl]="formControl"
     [formlyAttributes]="field"

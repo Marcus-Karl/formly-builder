@@ -1,0 +1,56 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+:host ::ng-deep mat-step-header .mat-step-icon-state-error {
+  background-color: transparent !important;
+  color: #b00020 !important;
+}
+
+:host ::ng-deep .hide-internal-stepper-container > .mat-step > .mat-vertical-content-container {
+  display: none !important;
+}
+
+:host ::ng-deep mat-step-header.mat-step-header .mat-step-label .mat-step-sub-label-error {
+  white-space: pre-line;
+  word-break: normal;
+}
+
+:host ::ng-deep mat-step-header.mat-step-header {
+  height: unset !important;
+  padding: 1em !important;
+  max-width: 30ch;
+}
+
+.stepper-form-container {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+}
+
+.stepper-form {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-left: 1em;
+  border-left: 1px solid lightgrey;
+}
+
+.page-error {
+  font-size: 24px !important;
+  height: 24px !important;
+  width: 24px !important;
+}
+
+.form-controls-wrapper {
+  margin-top: auto;
+  display: flex;
+
+  .form-controls {
+    display: flex;
+    flex-direction: row;
+    margin: 1em 0 0 auto;
+  }
+}

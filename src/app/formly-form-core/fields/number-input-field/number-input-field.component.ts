@@ -9,4 +9,12 @@ import { FieldType } from '@ngx-formly/material';
 })
 export class NumberInputFieldComponent extends FieldType {
   public formControl!: FormControl;
+
+  public checkInput(event: KeyboardEvent) {
+    const key = event?.key;
+
+    if (['ArrowDown', 'ArrowUp'].includes(key)) {
+      event.preventDefault();
+    }
+  }
 }

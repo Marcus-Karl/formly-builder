@@ -1,4 +1,4 @@
-<div *ngIf="!to.encapsulateLabel" class="flex">
+<div *ngIf="to.showLabelAbove" class="flex">
   <!-- This label should not have a for property as the mat-select builds an internal input for the select dropdown that we cannot map to --->
   <label [innerHTML]="to.label + (to.required ? ' *' : '') | keepHtml"></label>
 
@@ -7,11 +7,11 @@
 
 <mat-form-field
   class="select-dropdown-field"
-  [ngClass]="{ 'no-label': !to.encapsulateLabel }"
-  [appearance]="to.encapsulateLabel && to.appearance ? to.appearance : 'outline'"
-  [floatLabel]="to.floatLabel || 'always'">
+  [appearance]="!to.showLabelAbove && to.appearance ? to.appearance : 'outline'"
+  [floatLabel]="to.floatLabel || 'always'"
+  [ngClass]="{ 'no-label': to.showLabelAbove }">
 
-  <mat-label *ngIf="to.encapsulateLabel">
+  <mat-label *ngIf="!to.showLabelAbove">
     {{ to.label }}
   </mat-label>
 

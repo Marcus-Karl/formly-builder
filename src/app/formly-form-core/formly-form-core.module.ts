@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { LayoutModule } from '@angular/cdk/layout';
 import { OverlayModule } from '@angular/cdk/overlay';
@@ -24,7 +24,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { FormlyModule, FORMLY_CONFIG } from '@ngx-formly/core';
+import { FormlyConfig, FormlyModule, FORMLY_CONFIG } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 
 import { DisplayHtmlComponent } from './fields/display-html/display-html.component';
@@ -57,6 +57,7 @@ import { RadioButtonFieldComponent } from './fields/radio-button-field/radio-but
 import { ErrorsAndHintsComponent } from './components/errors-and-hints/errors-and-hints.component';
 import { ToggleButtonFieldComponent } from './fields/toggle-button-field/toggle-button-field.component';
 import { MultischemaTypeComponent } from './schema-types/multischema-type/multischema-type.component';
+import { VerticalStepperFormComponent } from './display-types/vertical-stepper-form/vertical-stepper-form.component';
 
 @NgModule({
   imports: [
@@ -110,6 +111,7 @@ import { MultischemaTypeComponent } from './schema-types/multischema-type/multis
         { name: 'page-form', component: PageFormComponent },
         { name: 'stepper-form', component: StepperFormComponent },
         { name: 'tab-form', component: TabFormComponent },
+        { name: 'vertical-stepper-form', component: VerticalStepperFormComponent },
 
         // Base Schema support types
         // See: https://json-schema.org/understanding-json-schema/reference/type.html
@@ -159,6 +161,7 @@ import { MultischemaTypeComponent } from './schema-types/multischema-type/multis
     PageFormComponent,
     StepperFormComponent,
     TabFormComponent,
+    VerticalStepperFormComponent,
 
     // Json Schema Field Types
     ObjectTypeComponent,
@@ -186,8 +189,9 @@ import { MultischemaTypeComponent } from './schema-types/multischema-type/multis
   providers: [
     CustomMatIcons,
     OverlayService,
+    FormlyConfig,
     { provide: DateAdapter, useClass: CustomDateAdapter },
-    { provide: FORMLY_CONFIG, multi: true, useFactory: registerExtensions, deps: [] },
+    { provide: FORMLY_CONFIG, multi: true, useFactory: registerExtensions, deps: [FormlyConfig] },
     { provide: STEPPER_GLOBAL_OPTIONS, useValue: { displayDefaultIndicatorType: false } }
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
