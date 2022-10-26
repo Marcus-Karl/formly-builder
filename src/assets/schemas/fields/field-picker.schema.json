@@ -23,7 +23,7 @@
             "formlyConfig": {
               "type": "tab-form",
               "defaultValue": {},
-              "templateOptions": {
+              "props": {
                 "hideButtons": true,
                 "linear": false
               }
@@ -46,7 +46,7 @@
             "formlyConfig": {
               "type": "tab-form",
               "defaultValue": {},
-              "templateOptions": {
+              "props": {
                 "hideButtons": true,
                 "linear": false
               }
@@ -72,7 +72,7 @@
             "formlyConfig": {
               "type": "tab-form",
               "defaultValue": {},
-              "templateOptions": {
+              "props": {
                 "hideButtons": true,
                 "linear": false
               }
@@ -98,7 +98,7 @@
             "formlyConfig": {
               "type": "tab-form",
               "defaultValue": {},
-              "templateOptions": {
+              "props": {
                 "hideButtons": true,
                 "linear": false
               }

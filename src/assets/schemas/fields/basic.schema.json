@@ -8,7 +8,7 @@
       "defaultValue": {},
       "className": "flex pad",
       "hideExpression": "field.parent.model.category === 'display-content-field'",
-      "templateOptions": {
+      "props": {
         "isOptional": true
       }
     }
@@ -22,7 +22,7 @@
           "type": "select",
           "defaultValue": "",
           "expressionProperties": {
-            "templateOptions.options": "field.options?.formState?.builder?.options['FieldType'].filter(x => x.category === field.parent.parent.model.category) || []"
+            "props.options": "field.options?.formState?.builder?.options['FieldType'].filter(x => x.category === field.parent.parent.model.category) || []"
           }
         }
       }
@@ -35,9 +35,9 @@
           "type": "select",
           "defaultValue": "",
           "expressionProperties": {
-            "templateOptions.options": "field.options?.formState?.builder?.options['FieldSubType'].filter(x => x.category === model.type) || []"
+            "props.options": "field.options?.formState?.builder?.options['FieldSubType'].filter(x => x.category === model.type) || []"
           },
-          "hideExpression": "!field.templateOptions.options?.length"
+          "hideExpression": "!field.props.options?.length"
         }
       }
     },

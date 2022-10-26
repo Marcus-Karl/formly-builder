@@ -7,7 +7,7 @@
     "formlyConfig": {
       "defaultValue": {},
       "className": "flex pad",
-      "templateOptions": {
+      "props": {
         "isOptional": true
       }
     }

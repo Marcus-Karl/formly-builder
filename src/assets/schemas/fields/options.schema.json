@@ -8,7 +8,7 @@
     "formlyConfig": {
       "type": "options-editor",
       "defaultValue": [],
-      "templateOptions": {
+      "props": {
         "isOptional": true
       }
     }
@@ -22,7 +22,7 @@
           "formlyConfig": {
             "type": "input",
             "defaultValue": "",
-            "templateOptions": {
+            "props": {
               "placeholder": "Enter a name..."
             }
           }
@@ -34,7 +34,7 @@
           "formlyConfig": {
             "type": "input",
             "defaultValue": "",
-            "templateOptions": {
+            "props": {
               "placeholder": "Enter a label..."
             }
           }

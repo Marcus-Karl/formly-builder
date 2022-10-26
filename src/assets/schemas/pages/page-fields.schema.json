@@ -9,7 +9,7 @@
       "className": "formly-build-page-form-min-height flex column",
       "type": "page-fields",
       "defaultValue": [],
-      "templateOptions": {
+      "props": {
         "hideLabel": false
       }
     }

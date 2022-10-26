@@ -7,7 +7,7 @@
     "formlyConfig": {
       "defaultValue": {},
       "className": "formly-build-page-form-min-height flex column",
-      "templateOptions": {
+      "props": {
         "isOptional": true
       }
     }

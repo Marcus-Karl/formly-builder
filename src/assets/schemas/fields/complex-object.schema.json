@@ -9,7 +9,7 @@
       "className": "formly-build-page-form-min-height flex column pad",
       "type": "page-fields",
       "defaultValue": [],
-      "templateOptions": {
+      "props": {
         "hideLabel": false
       }
     }
@@ -20,7 +20,7 @@
       "formlyConfig": {
         "type": "tab-form",
         "defaultValue": {},
-        "templateOptions": {
+        "props": {
           "hideButtons": true,
           "linear": false
         }

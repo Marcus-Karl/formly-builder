@@ -7,14 +7,14 @@
     "formlyConfig": {
       "type": "toggle-button-field",
       "defaultValue": "",
-      "templateOptions": {
+      "props": {
         "classes": "center-self",
         "required": true
       },
       "expressionProperties": {
-        "templateOptions.options": "field.options?.formState?.builder?.options['FieldCategory'] || []"
+        "props.options": "field.options?.formState?.builder?.options['FieldCategory'] || []"
       },
-      "hideExpression": "field.templateOptions._selectionComplete"
+      "hideExpression": "field.props._selectionComplete"
     }
   }
 }

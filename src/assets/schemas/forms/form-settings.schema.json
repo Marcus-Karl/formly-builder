@@ -12,7 +12,7 @@
           "type": "select",
           "defaultValue": "",
           "expressionProperties": {
-            "templateOptions.options": "field.options?.formState?.builder?.options['Form'] || []"
+            "props.options": "field.options?.formState?.builder?.options['Form'] || []"
           }
         }
       }

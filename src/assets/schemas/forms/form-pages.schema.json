@@ -17,7 +17,7 @@
       "formlyConfig": {
         "type": "page-form",
         "defaultValue": {},
-        "templateOptions": {
+        "props": {
           "useSmallButtons": true,
           "hideSubmit": true,
           "linear": false

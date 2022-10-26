@@ -9,7 +9,7 @@
         "formlyConfig": {
           "type": "stepper-form",
           "defaultValue": {},
-          "templateOptions": {
+          "props": {
             "linear": false
           }
         }

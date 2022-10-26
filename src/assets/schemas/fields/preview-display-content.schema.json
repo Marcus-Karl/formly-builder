@@ -7,11 +7,11 @@
     "formlyConfig": {
       "type": "display-html",
       "className": "pad-half formly-field",
-      "templateOptions": {
+      "props": {
         "html": ""
       },
       "expressionProperties": {
-        "templateOptions.html": "field.model.edit || ''"
+        "props.html": "field.model.edit || ''"
       }
     }
   }
