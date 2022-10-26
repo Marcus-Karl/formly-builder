@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { FieldType } from '@ngx-formly/material';
 import { Editor, Toolbar } from 'ngx-editor';
 
@@ -11,7 +11,7 @@ import { Editor, Toolbar } from 'ngx-editor';
 export class DisplayHtmlEditorComponent extends FieldType implements OnInit, OnDestroy {
 
   public editor: Editor;
-  public formControl!: FormControl;
+  public formControl!: UntypedFormControl;
 
   public toolbar: Toolbar = [
     ['bold', 'italic'],

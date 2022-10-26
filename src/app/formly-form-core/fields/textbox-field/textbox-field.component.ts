@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { FieldType } from '@ngx-formly/material';
 
 @Component({
@@ -8,5 +8,5 @@ import { FieldType } from '@ngx-formly/material';
   styleUrls: ['./textbox-field.component.scss']
 })
 export class TextBoxFieldComponent extends FieldType {
-  public formControl!: FormControl;
+  public formControl!: UntypedFormControl;
 }

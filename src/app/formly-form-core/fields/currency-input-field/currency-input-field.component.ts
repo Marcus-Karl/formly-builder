@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormControl } from '@angular/forms';
+import { AbstractControl, UntypedFormControl } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
@@ -19,7 +19,7 @@ export class CurrencyInputFieldComponent extends FieldType implements AfterViewI
   public currencySelection: FormlyFieldConfig | undefined;
   public currencyOptions: SelectOption[] = [];
   public currencySymbolWidth: number = 0;
-  public formControl!: FormControl;
+  public formControl!: UntypedFormControl;
   public selectedCurrency: string = 'USD';
   public prefixSymbol: string = '';
   public suffixSymbol: string = '';
@@ -91,7 +91,7 @@ export class CurrencyInputFieldComponent extends FieldType implements AfterViewI
   }
 
   getFormControl(formControl: AbstractControl) {
-    return formControl as FormControl;
+    return formControl as UntypedFormControl;
   }
 
   formatCurrencyInput(isDelete: boolean = false) {

@@ -1,5 +1,5 @@
 import { Component, ElementRef, Inject, Input, OnDestroy, Optional, Self, ViewChild } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, FormBuilder, FormGroup, NgControl, Validators } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, UntypedFormBuilder, UntypedFormGroup, NgControl, Validators } from '@angular/forms';
 import { MatFormField, MatFormFieldControl, MAT_FORM_FIELD } from '@angular/material/form-field';
 import { coerceBooleanProperty, BooleanInput } from '@angular/cdk/coercion';
 import { Subject, Subscription } from 'rxjs';
@@ -113,7 +113,7 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
     return this.focused || !this.empty;
   }
 
-  public formGroup: FormGroup;
+  public formGroup: UntypedFormGroup;
   public stateChanges = new Subject<void>();
   public focused = false;
   public touched = false;
@@ -129,7 +129,7 @@ export class CustomDateInputComponent implements ControlValueAccessor, MatFormFi
   private _subscriptions: Subscription[] = [];
 
   constructor(
-    formBuilder: FormBuilder,
+    formBuilder: UntypedFormBuilder,
     private _elementRef: ElementRef<HTMLElement>,
     private dateService: DateTimeService,
     @Optional() @Self() public ngControl: NgControl,

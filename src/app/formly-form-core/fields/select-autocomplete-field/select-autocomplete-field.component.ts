@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormControl } from '@angular/forms';
+import { AbstractControl, UntypedFormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
@@ -15,7 +15,7 @@ import { SelectOption } from '../../models/multiple-choice.models';
 })
 export class SelectAutoCompleteFieldComponent extends FieldType implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatAutocompleteTrigger) autoCompleteTrigger: MatAutocompleteTrigger | undefined;
-  public formControl!: FormControl;
+  public formControl!: UntypedFormControl;
 
   public get groupProp(): string {
     return this.to.groupProp || 'group';

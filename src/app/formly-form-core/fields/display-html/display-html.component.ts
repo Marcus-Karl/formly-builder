@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { FieldType } from '@ngx-formly/material';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 @Component({
   selector: 'display-html',
@@ -10,7 +10,7 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./display-html.component.scss']
 })
 export class DisplayHtmlComponent extends FieldType implements AfterViewInit {
-  public formControl!: FormControl;
+  public formControl!: UntypedFormControl;
 
   constructor(
     private element: ElementRef,

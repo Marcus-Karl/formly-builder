@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormBuilder, FormlyFormOptions } from '@ngx-formly/core';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { Subscription } from 'rxjs';
@@ -13,7 +13,7 @@ export class FormlyFormBuilderPreviewComponent implements OnDestroy, OnInit {
 
   public isFormLoading = true;
 
-  public form: FormGroup;
+  public form: UntypedFormGroup;
   public model: { [key: string]: any };
   public options: FormlyFormOptions;
   public fields: FormlyFieldConfig[];
@@ -23,7 +23,7 @@ export class FormlyFormBuilderPreviewComponent implements OnDestroy, OnInit {
   constructor(private formlyJsonschema: FormlyJsonschema, private formlyBuilder: FormlyFormBuilder) {
     this._subscriptions = [];
 
-    this.form = new FormGroup({});
+    this.form = new UntypedFormGroup({});
     this.model = getModel;
     this.options = getOptions();
 

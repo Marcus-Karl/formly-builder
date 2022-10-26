@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
@@ -11,7 +11,7 @@ import { FieldType } from '@ngx-formly/material';
 })
 export class DefaultFormComponent extends FieldType implements OnInit {
 
-  public pageHistory: FormControl = new FormControl();
+  public pageHistory: UntypedFormControl = new UntypedFormControl();
 
   ngOnInit() {
     if (this.options?.formState.formHistory?.length === 0 || !this.options?.formState.formHistory?.find((x: any) => x.name === this.options?.formState.currentPage)) {

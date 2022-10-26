@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
+import { AbstractControl, UntypedFormArray, UntypedFormGroup } from '@angular/forms';
 import { FormlyConfig, FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
 
@@ -112,14 +112,14 @@ export abstract class AbstractBaseFormControlsComponent extends FieldType implem
   }
 
   visitedPageHasError(page: FormlyFieldConfig) {
-    const pageControls = (page.formControl as FormGroup)?.controls ?? {};
+    const pageControls = (page.formControl as UntypedFormGroup)?.controls ?? {};
 
     return this.options?.formState.formHistory?.find((x: any) => x.name === page.key)
       && Object.values(pageControls).filter(x => x.touched && x.invalid).length;
   }
 
   getPageState(page: FormlyFieldConfig) {
-    const pageControls = (page.formControl as FormGroup)?.controls ?? {};
+    const pageControls = (page.formControl as UntypedFormGroup)?.controls ?? {};
 
     if (Object.values(pageControls).filter(x => x.touched && x.invalid).length) {
       return 'page-error';
@@ -161,14 +161,14 @@ export abstract class AbstractBaseFormControlsComponent extends FieldType implem
       );
     }
 
-    if (Array.isArray((control as FormArray).controls)) {
-      const childErrors = (control as FormArray).controls
+    if (Array.isArray((control as UntypedFormArray).controls)) {
+      const childErrors = (control as UntypedFormArray).controls
         .filter(childControl => childControl?.invalid)
         .map(childControl => this.getAllErrors(childControl));
 
       errors.push(...childErrors.flat());
-    } else if ((control as FormGroup).controls) {
-      const childErrors = Object.values((control as FormGroup).controls)
+    } else if ((control as UntypedFormGroup).controls) {
+      const childErrors = Object.values((control as UntypedFormGroup).controls)
         .filter(childControl => childControl?.invalid)
         .map(childControl => this.getAllErrors(childControl));
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { FieldType } from '@ngx-formly/material';
 
 @Component({
@@ -8,7 +8,7 @@ import { FieldType } from '@ngx-formly/material';
   styleUrls: ['./number-input-field.component.scss']
 })
 export class NumberInputFieldComponent extends FieldType {
-  public formControl!: FormControl;
+  public formControl!: UntypedFormControl;
 
   public checkInput(event: KeyboardEvent) {
     const key = event?.key;

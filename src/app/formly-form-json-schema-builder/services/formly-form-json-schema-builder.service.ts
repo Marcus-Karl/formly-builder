@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { Resolver } from '@stoplight/json-ref-resolver';
@@ -15,7 +15,7 @@ import { getDefaultSelectionOptionsMap, sortSelectionOptions } from '../models/d
 export class FormlyFormJsonSchemaBuilderService {
 
   private _fields?: FormlyFieldConfig[] = [];
-  private _form: FormGroup = new FormGroup({});
+  private _form: UntypedFormGroup = new UntypedFormGroup({});
   private _generatedSchemaConfig: { [key: string]: any } = {};
   private _model?: { [key: string]: any };
   private _options?: FormlyFormOptions;
@@ -56,7 +56,7 @@ export class FormlyFormJsonSchemaBuilderService {
 
   public async init(selectionOptionsMap?: { [key in SelectionOptionType]: FormBuilderSelectionOption[] }) {
     this._model = getModel();
-    this._form = new FormGroup({});
+    this._form = new UntypedFormGroup({});
 
     try {
       this._options = {

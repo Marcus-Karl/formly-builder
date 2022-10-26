@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { FieldType } from '@ngx-formly/material';
@@ -22,7 +22,7 @@ export class DateInputFieldComponent extends FieldType implements OnDestroy, OnI
   @ViewChild('monthInput') public monthInput: ElementRef<HTMLInputElement> | undefined;
   @ViewChild('yearInput') public yearInput: ElementRef<HTMLInputElement> | undefined;
 
-  public formControl!: FormControl;
+  public formControl!: UntypedFormControl;
   public dateViewModel: Date | null | undefined;
 
   private _subscriptions: Subscription[] = [];
