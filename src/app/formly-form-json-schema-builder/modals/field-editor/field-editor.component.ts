@@ -12,20 +12,25 @@ export class FieldEditorComponent implements AfterViewInit {
   @ViewChild('emptyAnchor') emptyAnchor: ElementRef<HTMLDivElement> | undefined;
   public cdkContainer: HTMLElement | undefined;
 
+  public field: FormlyFieldConfig
   public categoryField: FormlyFieldConfig | undefined;
   public fieldToEdit: FormlyFieldConfig | undefined;
-  public categoryLabel = '';
+  public categoryLabel: string;
   public categorySelectionComplete: boolean;
   public savedDialogHeight: string;
   public savedDialogWidth: string;
   public isFullScreen: boolean;
+  public isNewlyAdded: boolean;
 
-  constructor(public dialogRef: MatDialogRef<FieldEditorComponent>, @Inject(MAT_DIALOG_DATA) public field: FormlyFieldConfig) {
+  constructor(public dialogRef: MatDialogRef<FieldEditorComponent>, @Inject(MAT_DIALOG_DATA) private data: any) {
     this.categorySelectionComplete = false;
+    this.categoryLabel = '';
     this.isFullScreen = false;
     this.savedDialogHeight = '';
     this.savedDialogWidth = '';
 
+    this.field = this.data.field;
+    this.isNewlyAdded = this.data.isNewlyAdded ?? false;
     this.categoryField = this.getFieldByKey('category');
 
     if (this.categoryField?.formControl?.valid) {
@@ -86,7 +91,7 @@ export class FieldEditorComponent implements AfterViewInit {
   }
 
   resetAndClose() {
-    this.field.options?.resetModel?.();
+    this.data.resetModel?.();
     this.dialogRef.close();
   }
 

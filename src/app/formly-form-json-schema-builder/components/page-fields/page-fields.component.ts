@@ -91,7 +91,7 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
         newField.model['_referenceId'] = FunctionHelpers.generateId();
       }
 
-      this.edit(newField);
+      this.edit(newField, true, index);
 
       this.renderChanges();
     }
@@ -135,9 +135,15 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
     }
   }
 
-  edit(formField: FormlyFieldConfig) {
+  edit(formField: FormlyFieldConfig, isNewlyAdded: boolean = false, index: number = -1) {
+    this.options.updateInitialValue?.();
+
     this.dialog.open(FieldEditorComponent, {
-      data: formField,
+      data: {
+        field: formField,
+        isNewlyAdded: isNewlyAdded,
+        resetModel: () => isNewlyAdded && index !== -1 ? super.remove(index) : this.options?.resetModel?.()
+      },
       disableClose: true,
       maxWidth: '100vw',
       maxHeight: '100vh',
@@ -145,15 +151,21 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
     }).afterClosed().subscribe(() => {
       this.formlyBuilderService.refreshPageStates();
 
+      this.options.updateInitialValue?.();
+
       this.renderChanges();
     });
   }
 
   preview(formField: FormlyFieldConfig) {
     formField.formControl?.disable();
+    this.options.updateInitialValue?.();
 
     this.dialog.open(FieldEditorComponent, {
-      data: formField,
+      data: {
+        field: formField,
+        resetModel: () => this.options?.resetModel?.()
+      },
       disableClose: true,
       maxWidth: '100vw',
       maxHeight: '100vh',

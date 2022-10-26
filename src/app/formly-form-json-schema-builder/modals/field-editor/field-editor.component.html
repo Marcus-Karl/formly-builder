@@ -33,11 +33,11 @@
   </div>
 </ng-template>
 
-<div class="flex row buttons" *ngIf="!field.formControl?.disabled; else showCloseOnly">
+<div class="flex row buttons" *ngIf="!field.formControl?.disabled && isNewlyAdded; else showCloseOnly">
   <button type="button" mat-button (click)="resetAndClose()">
     <div class="center flex row">
       <mat-icon class="material-icons-outlined margin-right-half" [inline]="true">undo</mat-icon>
-      <div>Revert & Close</div>
+      <div>Remove & Close</div>
     </div>
   </button>
 
