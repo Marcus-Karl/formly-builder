@@ -298,6 +298,16 @@
       "$id": "fields/field-picker",
       "type": "object",
       "default": {},
+      "widget": {
+        "formlyConfig": {
+          "type": "page-form",
+          "props": {
+            "linear": true,
+            "hideLabel": true,
+            "hideButtons": true
+          }
+        }
+      },
       "properties": {
         "category": {
           "$schema": "https://json-schema.org/draft-07/schema#",
@@ -308,9 +318,10 @@
           "widget": {
             "formlyConfig": {
               "type": "toggle-button-field",
+              "className": "center",
               "resetOnHide": false,
               "props": {
-                "classes": "center-self",
+                "classes": "center margin",
                 "required": true
               },
               "expressions": {
@@ -332,7 +343,7 @@
                 "formlyConfig": {
                   "type": "tab-form",
                   "props": {
-                    "hideButtons": true,
+                    "hideButtons": false,
                     "linear": false
                   }
                 }
@@ -688,13 +699,13 @@
               },
               "properties": {
                 "category": {
-                  "const": "custom-object-schema"
+                  "const": "preconfigured-schema"
                 },
                 "objectSchema": {
                   "$schema": "https://json-schema.org/draft-07/schema#",
-                  "$id": "fields/custom-object-schema",
+                  "$id": "fields/preconfigured-schema",
                   "type": "array",
-                  "title": "Custom Object Schema",
+                  "title": "Preconfigured Schema",
                   "minItems": 0,
                   "default": [],
                   "widget": {

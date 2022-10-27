@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { FieldTypeConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
@@ -10,6 +10,8 @@ import { SelectOption } from '../../models/multiple-choice.models';
   styleUrls: ['./toggle-button-field.component.scss']
 })
 export class ToggleButtonFieldComponent extends FieldType<FieldTypeConfig> implements OnDestroy, OnInit {
+  @HostBinding('class') public hostCssClass: string = '';
+
   public selectOptions$ = new BehaviorSubject<SelectOption[]>([]);
 
   private _subscriptions: Array<Subscription> = [];
@@ -21,6 +23,8 @@ export class ToggleButtonFieldComponent extends FieldType<FieldTypeConfig> imple
       const options = this._mapOptions(this.props.options);
       this.selectOptions$.next(options);
     }
+
+    this.hostCssClass = this.props.classes ?? '';
   }
 
   ngOnDestroy() {

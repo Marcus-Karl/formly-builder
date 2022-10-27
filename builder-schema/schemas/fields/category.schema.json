@@ -7,9 +7,10 @@
   "widget": {
     "formlyConfig": {
       "type": "toggle-button-field",
+      "className": "center",
       "resetOnHide": false,
       "props": {
-        "classes": "center-self",
+        "classes": "center margin",
         "required": true
       },
       "expressions": {

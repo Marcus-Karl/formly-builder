@@ -18,11 +18,13 @@ export class PageFormComponent extends AbstractBaseFormControlsComponent {
   }
 
   getPrecedingPageNamesInError(index: number): string {
-    let formsInError = [];
+    const formsInError = [];
 
-    for (let i = 0; i < index; i++) {
-      if (this.field.fieldGroup && this.field.fieldGroup[i].formControl?.invalid) {
-        formsInError.push(this.field.fieldGroup[i].props?.label);
+    if (this.field.fieldGroup?.length) {
+      for (let i = 0; i < index; i++) {
+        if (this.isPageAtIndexInvalid(index, true, true)) {
+          formsInError.push(this.field.fieldGroup[i].props?.label);
+        }
       }
     }
 
@@ -30,11 +32,11 @@ export class PageFormComponent extends AbstractBaseFormControlsComponent {
   }
 
   getSubsequentPageNamesInError(index: number): string {
-    let formsInError = [];
+    const formsInError = [];
 
     if (this.field.fieldGroup?.length) {
       for (let i = index; i < this.field.fieldGroup?.length; i++) {
-        if (this.field.fieldGroup[i].formControl?.invalid) {
+        if (this.isPageAtIndexInvalid(index, true, true)) {
           formsInError.push(this.field.fieldGroup[i].props?.label);
         }
       }

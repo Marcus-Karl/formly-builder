@@ -101,7 +101,7 @@ const getFieldValues = () => ({
   'type': 'object',
   'widget': {
     'formlyConfig': {
-      'type': 'vertical-stepper-form',
+      'type': 'tab-form',
       'props': {
         'linear': false,
         'labelPosition': 'end',

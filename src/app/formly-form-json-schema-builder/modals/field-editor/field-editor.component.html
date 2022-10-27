@@ -15,23 +15,9 @@
   </div>
 </div>
 
-<ng-container *ngIf="!categorySelectionComplete && categoryField; else editField">
-  <div class="center-content column">
-    <formly-field [field]="categoryField" class="center-content" [ngClass]="categoryField.props?.className"></formly-field>
-
-    <div class="margin-top-2">
-      <button type="button" mat-raised-button color="primary" [disabled]="categoryField.formControl?.invalid" (click)="onSelectedCategory()">
-        <div>Continue</div>
-      </button>
-    </div>
-  </div>
-</ng-container>
-
-<ng-template #editField>
-  <div class="field-content">
-    <formly-field [field]="field" [ngClass]="field.props?.classes"></formly-field>
-  </div>
-</ng-template>
+<div class="center-content field-content">
+  <formly-field [field]="field" [ngClass]="field.props?.classes"></formly-field>
+</div>
 
 <div class="flex row buttons" *ngIf="!field.formControl?.disabled && isNewlyAdded; else showCloseOnly">
   <button type="button" mat-button (click)="resetAndClose()">
@@ -50,6 +36,14 @@
       <div>Save & Close</div>
     </button>
   </div>
+
+  <ng-container *ngIf="!categorySelectionComplete && categoryField;">
+    <div class="align-end pad-left">
+      <button type="button" mat-raised-button color="primary" [disabled]="categoryField.formControl?.invalid" (click)="onSelectedCategory()">
+        <div>Continue</div>
+      </button>
+    </div>
+  </ng-container>
 </div>
 
 <ng-template #showCloseOnly>

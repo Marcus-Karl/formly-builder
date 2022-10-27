@@ -1,4 +1,3 @@
-
 <div class="bold">
   {{ props.label + (props.required ? ' *' : '') }}
 </div>
@@ -11,8 +10,7 @@
   [required]="props.required ?? false"
   [tabindex]="props.tabindex || 0"
   [aria-label]="props.label"
-  [vertical]="true"
-  [ngClass]="props.classes">
+  [vertical]="true">
 
   <mat-button-toggle *ngFor="let option of selectOptions$ | async" [value]="option.value" [disabled]="option.disabled">
     {{ option.label }}

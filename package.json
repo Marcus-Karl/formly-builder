@@ -9,7 +9,7 @@
     "watch": "npm run build-schema && ng build --watch --configuration development",
     "test": "ng test",
     "stats": "ng build --stats-json && webpack-bundle-analyzer dist/formly-builder/stats.json",
-    "build-schema": "node ./build-schema/build.js"
+    "build-schema": "node ./builder-schema/build.js"
   },
   "private": true,
   "dependencies": {

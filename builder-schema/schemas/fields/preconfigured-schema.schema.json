@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
-  "$id": "fields/custom-object-schema",
+  "$id": "fields/preconfigured-schema",
   "type": "array",
-  "title": "Custom Object Schema",
+  "title": "Preconfigured Schema",
   "minItems": 0,
   "default": [],
   "widget": {

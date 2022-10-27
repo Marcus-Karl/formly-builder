@@ -1,7 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormlyConfig, FormlyFieldConfig } from '@ngx-formly/core';
-import { Subscription } from 'rxjs';
 
 import { AbstractBaseFormControlsComponent } from '../base-form-controls';
 
@@ -10,7 +9,7 @@ import { AbstractBaseFormControlsComponent } from '../base-form-controls';
   templateUrl: './stepper-form.component.html',
   styleUrls: ['./stepper-form.component.scss']
 })
-export class StepperFormComponent extends AbstractBaseFormControlsComponent implements OnDestroy {
+export class StepperFormComponent extends AbstractBaseFormControlsComponent {
 
   get pageStates(): { [key: string]: { icon: string, class: string }} {
     return this.props.pageStates;
@@ -18,14 +17,10 @@ export class StepperFormComponent extends AbstractBaseFormControlsComponent impl
 
   public isMobile: boolean = false;
 
-  private _subscriptions: Subscription[];
-
   constructor(private breakpointObserver: BreakpointObserver, formlyConfig: FormlyConfig) {
     super(formlyConfig);
 
-    this._subscriptions = [];
-
-    this._subscriptions.push(
+    this.subscriptions.push(
       this.breakpointObserver.observe(Breakpoints.XSmall).subscribe(state => this.isMobile = state.matches)
     );
   }
@@ -36,11 +31,5 @@ export class StepperFormComponent extends AbstractBaseFormControlsComponent impl
         field.props['linear'] = true;
       }
     }
-  }
-
-  ngOnDestroy() {
-    this._subscriptions.forEach(x => x.unsubscribe());
-
-    super.ngOnDestroy();
   }
 }

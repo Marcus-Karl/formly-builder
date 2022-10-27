@@ -1,5 +1,5 @@
 <!-- Desktop back button -->
-<div class="page-button-wrapper desktop">
+<div class="page-button-wrapper desktop" *ngIf="!props.hideButtons">
   <div class="page-button" [ngStyle]="{ 'visibility': selectedIndex === 0 ? 'hidden' : 'unset'}">
     <button
       type="button"
@@ -16,16 +16,16 @@
       *ngIf="selectedIndex !== 0 && isPrecedingPageInvalid(selectedIndex - 1, true)"
       class="page-form-error-icon"
       matTooltipClass="use-new-line"
-      matTooltip="{{ 'Errors on page(s): {{pages}}' }}">
+      [matTooltip]="'Errors on page(s): ' + getPrecedingPageNamesInError(selectedIndex)">
 
       <mat-icon class="error-state material-icons">warning</mat-icon>
     </div>
   </div>
 </div>
 
-<mat-tab-group [selectedIndex]="selectedIndex" (selectedIndexChange)="changePage($event)" [disablePagination]="props.disablePagination || false">
+<mat-tab-group class="page-form-mat-tab-group" [selectedIndex]="selectedIndex" (selectedIndexChange)="changePage($event)" [disablePagination]="props.disablePagination || false">
   <mat-tab *ngFor="let page of field.fieldGroup; let index = index">
-    <div class="title" [style.display]="page.props?.hideLabel ? 'none' : ''">
+    <div class="title" [style.display]="(props.hideLabel || page.props?.hideLabel) ? 'none' : ''">
       {{ page.props?.label }}
     </div>
 
@@ -34,7 +34,7 @@
 </mat-tab-group>
 
 <!-- Desktop forward button -->
-<div class="forward-button-wrapper desktop">
+<div class="forward-button-wrapper desktop" *ngIf="!props.hideButtons">
   <div class="page-button">
     <button
       *ngIf="hasForwardPage(selectedIndex)"
@@ -53,7 +53,7 @@
       *ngIf="isSubsequentPageInvalid(selectedIndex + 1, true)"
       class="page-form-error-icon"
       matTooltipClass="use-new-line"
-      matTooltip="{{ 'Errors on page(s): {{pages}}' }}">
+      [matTooltip]="'Errors on page(s): ' + getSubsequentPageNamesInError(selectedIndex)">
 
       <mat-icon class="error-state material-icons">warning</mat-icon>
     </div>
@@ -73,7 +73,7 @@
 </div>
 
 <!-- Mobile buttons -->
-<div class="mobile">
+<div class="mobile" *ngIf="!props.hideButtons">
   <div class="page-button-wrapper">
     <div class="page-button" [ngStyle]="{ 'visibility': selectedIndex === 0 ? 'hidden' : 'unset'}">
       <button type="button" mat-icon-button color="primary" (click)="decrementPageFromIndex(selectedIndex - 1)">
@@ -85,7 +85,7 @@
       <div
         *ngIf="selectedIndex !== 0 && isPrecedingPageInvalid(selectedIndex - 1, true)"
         matTooltipClass="use-new-line" class="page-form-error-icon"
-        matTooltip="{{ 'Errors on page(s): {{pages}}' }}">
+        [matTooltip]="'Errors on page(s): ' + getPrecedingPageNamesInError(selectedIndex)">
 
         <mat-icon class="error-state material-icons">warning</mat-icon>
       </div>
@@ -97,7 +97,7 @@
       <div *ngIf="isSubsequentPageInvalid(selectedIndex + 1, true)"
         matTooltipClass="use-new-line"
         class="page-form-error-icon"
-        matTooltip="{{ 'Errors on page(s): {{pages}}' }}">
+        [matTooltip]="'Errors on page(s): ' + getSubsequentPageNamesInError(selectedIndex)">
 
         <mat-icon class="error-state material-icons">warning</mat-icon>
       </div>

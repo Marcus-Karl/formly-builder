@@ -191,8 +191,8 @@ const COMPLEX_OBJECT: FormBuilderSelectionOption[] = [
 
 const CUSTOM_OBJECT_SCHEMA: FormBuilderSelectionOption[] = [
   {
-    value: 'custom-object-schema',
-    label: 'Custom Schema',
+    value: 'preconfigured-schema',
+    label: 'Preconfigured Schema',
     type: SelectionOptionType.FieldCategory,
     category: 'field',
     options: [
@@ -201,7 +201,7 @@ const CUSTOM_OBJECT_SCHEMA: FormBuilderSelectionOption[] = [
         label: 'Request Information',
         type: SelectionOptionType.FieldType,
         builderSchemaDefaults: {
-          category: 'custom-object-schema',
+          category: 'preconfigured-schema',
           basic: {
             type: 'object',
             name: 'requestInformation',

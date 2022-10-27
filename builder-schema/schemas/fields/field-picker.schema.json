@@ -3,6 +3,16 @@
   "$id": "fields/field-picker",
   "type": "object",
   "default": {},
+  "widget": {
+    "formlyConfig": {
+      "type": "page-form",
+      "props": {
+        "linear": true,
+        "hideLabel": true,
+        "hideButtons": true
+      }
+    }
+  },
   "properties": {
     "category": {
       "$ref": "./category.schema.json"
@@ -19,7 +29,7 @@
             "formlyConfig": {
               "type": "tab-form",
               "props": {
-                "hideButtons": true,
+                "hideButtons": false,
                 "linear": false
               }
             }
@@ -120,10 +130,10 @@
           },
           "properties": {
             "category": {
-              "const": "custom-object-schema"
+              "const": "preconfigured-schema"
             },
             "objectSchema": {
-              "$ref": "./custom-object-schema.schema.json"
+              "$ref": "./preconfigured-schema.schema.json"
             }
           }
         }

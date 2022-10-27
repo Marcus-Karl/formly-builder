@@ -33,7 +33,7 @@ export class FieldEditorComponent implements AfterViewInit {
     this.isNewlyAdded = this.data.isNewlyAdded ?? false;
     this.categoryField = this.getFieldByKey('category');
 
-    if (this.categoryField?.formControl?.valid) {
+    if (this.categoryField?.formControl?.value && this.categoryField?.formControl?.valid) {
       this.onSelectedCategory();
     }
   }
@@ -45,22 +45,19 @@ export class FieldEditorComponent implements AfterViewInit {
   }
 
   onSelectedCategory() {
-    const category = this.categoryField?.formControl?.value;
     const builderFormState: BuilderFormState = this.field.options?.formState;
 
     if (builderFormState?.builder.options[SelectionOptionType.FieldCategory]) {
-      this.categoryLabel = builderFormState?.builder.options[SelectionOptionType.FieldCategory].find((x: any) => x.value === category)?.label ?? '';
+      this.categoryField?.formControl?.valueChanges.subscribe(category => {
+        this.categoryLabel = builderFormState?.builder.options[SelectionOptionType.FieldCategory].find((x: any) => x.value === category)?.label ?? '';
+      });
     }
 
-    if (this.categoryLabel && this.categoryField) {
-      if (!this.categoryField.props) {
-        this.categoryField.props = {}
-      }
+    this.categorySelectionComplete = true;
 
-      this.categorySelectionComplete = true;
-      this.categoryField.props._selectionComplete = true;
-
-      this.categoryField.options?.checkExpressions?.(this.categoryField);
+    if (this.categoryField) {
+      this.categoryField.hide = true;
+      this.field.options?.detectChanges?.(this.categoryField);
     }
   }
 

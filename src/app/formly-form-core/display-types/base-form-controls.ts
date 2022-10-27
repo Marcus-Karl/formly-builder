@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, UntypedFormArray, UntypedFormGroup } from '@angular/forms';
 import { FormlyConfig, FormlyFieldConfig, FieldTypeConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
+import { Subscription } from 'rxjs';
 
 @Component({ template: '' })
-export abstract class AbstractBaseFormControlsComponent extends FieldType<FieldTypeConfig> implements OnInit {
+export abstract class AbstractBaseFormControlsComponent extends FieldType<FieldTypeConfig> implements OnInit, OnDestroy {
   public selectedIndex = -1;
   public currentPage?: FormlyFieldConfig;
 
+  public subscriptions: Subscription[] = [];
 
   constructor(private formlyConfig: FormlyConfig) {
     super();
@@ -19,22 +21,44 @@ export abstract class AbstractBaseFormControlsComponent extends FieldType<FieldT
     }
 
     this.incrementPageFromIndex(0);
+
+    if (this.field.options?.fieldChanges) {
+      this.subscriptions.push(
+        this.field.options?.fieldChanges?.subscribe(change => {
+          if (change.type === 'hidden' && change.value && change.field.parent === this.field) {
+            const fieldIndex = this.field.fieldGroup?.findIndex(fg => fg === change.field);
+
+            if (fieldIndex === this.selectedIndex) {
+              if (this.hasBackPage(this.selectedIndex)) {
+                this.decrementPageFromIndex(this.selectedIndex);
+              } else {
+                this.incrementPageFromIndex(this.selectedIndex);
+              }
+            }
+          }
+        })
+      );
+    }
   }
 
-  isPrecedingPageInvalid(index: number, includeOptionalPageCheck = false): boolean {
+  ngOnDestory() {
+    this.subscriptions.forEach(x => x.unsubscribe());
+  }
+
+  isPrecedingPageInvalid(index: number, includeOptionalPageCheck = false, onlyTouchedPages: boolean = false): boolean {
     if (index < 1) {
       return this.isPageAtIndexInvalid(0, includeOptionalPageCheck);
     }
 
-    return this.isPageAtIndexInvalid(index, includeOptionalPageCheck) || this.isPrecedingPageInvalid(index - 1, includeOptionalPageCheck);
+    return this.isPageAtIndexInvalid(index, includeOptionalPageCheck, onlyTouchedPages) || this.isPrecedingPageInvalid(index - 1, includeOptionalPageCheck, onlyTouchedPages);
   }
 
-  isSubsequentPageInvalid(index: number, includeOptionalPageCheck = false): boolean {
+  isSubsequentPageInvalid(index: number, includeOptionalPageCheck = false, onlyTouchedPages: boolean = true): boolean {
     if (!this.field.fieldGroup || index >= this.field.fieldGroup?.length) {
       return this.isPageAtIndexInvalid(index, includeOptionalPageCheck, true);
     }
 
-    return this.isPageAtIndexInvalid(index, includeOptionalPageCheck, true) || this.isSubsequentPageInvalid(index + 1, includeOptionalPageCheck);
+    return this.isPageAtIndexInvalid(index, includeOptionalPageCheck, onlyTouchedPages) || this.isSubsequentPageInvalid(index + 1, includeOptionalPageCheck, onlyTouchedPages);
   }
 
   isPageAtIndexInvalid(index: number, includeOptionalPageCheck: boolean = true, onlyTouchedPages: boolean = false): boolean {
