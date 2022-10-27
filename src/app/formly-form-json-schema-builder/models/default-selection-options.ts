@@ -201,13 +201,10 @@ const CUSTOM_OBJECT_SCHEMA: FormBuilderSelectionOption[] = [
         label: 'Request Information',
         type: SelectionOptionType.FieldType,
         builderSchemaDefaults: {
-          category: 'preconfigured-schema',
           basic: {
-            type: 'object',
-            name: 'requestInformation',
-            label: 'Request Information'
+            name: 'requestInformation'
           },
-          properties: {
+          objectSchema: {
             type: {
               type: 'object',
               widget: {

@@ -27,6 +27,7 @@ import { OptionsEditorComponent } from './components/options-editor/options-edit
 import { PageFieldsComponent } from './components/page-fields/page-fields.component';
 import { FormlyFormJsonSchemaBuilderService } from './services/formly-form-json-schema-builder.service';
 import { DependencyBuilderComponent } from './components/dependency-builder/dependency-builder.component';
+import { PreconfiguredSchemaComponent } from './wrappers/preconfigured-schema/preconfigured-schema.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { DependencyBuilderComponent } from './components/dependency-builder/depe
     FormEditorComponent,
     FormlyFormJsonSchemaBuilderComponent,
     OptionsEditorComponent,
-    PageFieldsComponent
+    PageFieldsComponent,
+    PreconfiguredSchemaComponent
   ],
   exports: [
     FormlyFormJsonSchemaBuilderComponent
@@ -62,6 +64,9 @@ import { DependencyBuilderComponent } from './components/dependency-builder/depe
         { name: 'form-editor', component: FormEditorComponent },
         { name: 'options-editor', component: OptionsEditorComponent },
         { name: 'page-fields', component: PageFieldsComponent }
+      ],
+      wrappers: [
+        { name: 'preconfigured-schema-wrapper', component: PreconfiguredSchemaComponent },
       ],
       validators: [
         { name: 'valid-name', validation: validNameValidator }

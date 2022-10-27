@@ -125,12 +125,18 @@
               "props": {
                 "hideButtons": true,
                 "linear": false
-              }
+              },
+              "wrappers": [
+                "preconfigured-schema-wrapper"
+              ]
             }
           },
           "properties": {
             "category": {
               "const": "preconfigured-schema"
+            },
+            "basic": {
+              "$ref": "./basic.schema.json"
             },
             "objectSchema": {
               "$ref": "./preconfigured-schema.schema.json"

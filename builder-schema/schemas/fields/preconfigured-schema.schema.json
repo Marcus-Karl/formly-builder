@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft-07/schema#",
   "$id": "fields/preconfigured-schema",
   "type": "array",
-  "title": "Preconfigured Schema",
+  "title": "Fields",
   "minItems": 0,
   "default": [],
   "widget": {

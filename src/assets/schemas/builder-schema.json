@@ -77,30 +77,10 @@
                 },
                 "properties": {
                   "name": {
-                    "type": "string",
-                    "title": "Page Name",
-                    "default": "",
-                    "widget": {
-                      "formlyConfig": {
-                        "type": "input",
-                        "validators": {
-                          "validation": [
-                            "valid-name"
-                          ]
-                        }
-                      }
-                    }
+                    "$ref": "#/definitions/field-picker/dependencies/category/oneOf/0/properties/basic/properties/name"
                   },
                   "label": {
-                    "type": "string",
-                    "title": "Page Label",
-                    "default": "",
-                    "className": "margin-top",
-                    "widget": {
-                      "formlyConfig": {
-                        "type": "input"
-                      }
-                    }
+                    "$ref": "#/definitions/field-picker/dependencies/category/oneOf/0/properties/basic/properties/label"
                   }
                 },
                 "required": [
@@ -372,7 +352,7 @@
                   "properties": {
                     "type": {
                       "type": "string",
-                      "title": "Field Type",
+                      "title": "Type",
                       "default": "",
                       "widget": {
                         "formlyConfig": {
@@ -385,7 +365,7 @@
                     },
                     "subType": {
                       "type": "string",
-                      "title": "Sub Field Type",
+                      "title": "Sub Type",
                       "default": "",
                       "widget": {
                         "formlyConfig": {
@@ -399,7 +379,7 @@
                     },
                     "name": {
                       "type": "string",
-                      "title": "Field Name",
+                      "title": "Name",
                       "default": "",
                       "widget": {
                         "formlyConfig": {
@@ -414,7 +394,7 @@
                     },
                     "label": {
                       "type": "string",
-                      "title": "Field Label",
+                      "title": "Label",
                       "default": "",
                       "widget": {
                         "formlyConfig": {
@@ -509,7 +489,7 @@
                   "$id": "fields/options",
                   "type": "array",
                   "title": "Configure Options",
-                  "minItems": 1,
+                  "minItems": 0,
                   "default": [],
                   "widget": {
                     "formlyConfig": {
@@ -694,18 +674,24 @@
                   "props": {
                     "hideButtons": true,
                     "linear": false
-                  }
+                  },
+                  "wrappers": [
+                    "preconfigured-schema-wrapper"
+                  ]
                 }
               },
               "properties": {
                 "category": {
                   "const": "preconfigured-schema"
                 },
+                "basic": {
+                  "$ref": "#/definitions/field-picker/dependencies/category/oneOf/0/properties/basic"
+                },
                 "objectSchema": {
                   "$schema": "https://json-schema.org/draft-07/schema#",
                   "$id": "fields/preconfigured-schema",
                   "type": "array",
-                  "title": "Preconfigured Schema",
+                  "title": "Fields",
                   "minItems": 0,
                   "default": [],
                   "widget": {

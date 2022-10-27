@@ -1,4 +1,4 @@
-const $RefParser = require("@apidevtools/json-schema-ref-parser");
+const $RefParser = require('@apidevtools/json-schema-ref-parser');
 const axios = require('axios').default;
 const { existsSync, readFileSync, writeFileSync } = require('fs');
 

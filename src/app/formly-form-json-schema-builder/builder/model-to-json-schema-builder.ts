@@ -23,7 +23,7 @@ export class ConvertModel {
       return null;
     }
 
-    let form = {};
+    const form = {};
 
     new ConvertModel(formState, config).getNextStep(form, model);
 
@@ -86,30 +86,29 @@ export class ConvertModel {
    * BUILDERS
    */
   private buildForm = (form: any, model: { [key: string]: any }) => {
-    let settings = model['settings'];
+    const settings = model['settings'];
 
     if (!model['_referenceId']) {
       model['_referenceId'] = FunctionHelpers.generateId();
     }
 
-    let displayForm = {
+    const displayForm = {
       type: 'object',
+      default: {},
       widget: {
-        formlyConfig: {
-          defaultValue: {}
-        } as FormlyFieldConfig
+        formlyConfig: {} as FormlyFieldConfig
       },
       properties: {},
       required: []
     };
 
-    let defaultSchema = this._getDefaultSchemaForKeyAndType(settings['type'], SelectionOptionType.Form);
+    const defaultSchema = this._getDefaultSchemaForKeyAndType(settings['type'], SelectionOptionType.Form);
 
     if (defaultSchema) {
       mergeData(displayForm, deepCopy(defaultSchema) ?? {});
     }
 
-    let modelSettings = {
+    const modelSettings = {
       ...settings['label'] && { title: settings['label'] },
       widget: {
         ...model['_referenceId'] && { _referenceId: model['_referenceId'] },
@@ -143,17 +142,17 @@ export class ConvertModel {
       return;
     }
 
-    let settings = model['settings'];
+    const settings = model['settings'];
 
     if (!model['_referenceId']) {
       model['_referenceId'] = FunctionHelpers.generateId();
     }
 
-    let page = {
+    const page = {
       type: 'object',
+      default: {},
       widget: {
         formlyConfig: {
-          defaultValue: {},
           props: {
             required: false
           }
@@ -163,7 +162,7 @@ export class ConvertModel {
       required: []
     };
 
-    let modelSettings = {
+    const modelSettings = {
       ...settings['label'] && { title: settings['label'] },
       widget: {
         ...model['_referenceId'] && { _referenceId: model['_referenceId'] },
@@ -183,7 +182,7 @@ export class ConvertModel {
       form['required'].push(settings['name'] || model['_referenceId']);
     }
 
-    let formProperties = form['properties'];
+    const formProperties = form['properties'];
 
     formProperties[settings['name'] || model['_referenceId']] = page;
 
@@ -203,15 +202,15 @@ export class ConvertModel {
       return;
     }
 
-    let settings = model['basic'];
-    let extra = model['extra'] ?? {};
+    const settings = model['basic'];
+    const extra = model['extra'] ?? {};
 
-    let field = {
+    const field: { [key: string]: any } = {
       type: 'string',
       widget: { formlyConfig: {} as FormlyFieldConfig }
     };
 
-    let defaultSchema = this._getDefaultSchemaForKeyAndType(settings['type'], SelectionOptionType.FieldType, model['category']);
+    const defaultSchema = this._getDefaultSchemaForKeyAndType(settings['type'], SelectionOptionType.FieldType, model['category']);
 
     if (defaultSchema) {
       mergeData(field, deepCopy(defaultSchema) ?? {});
@@ -221,16 +220,16 @@ export class ConvertModel {
       model['_referenceId'] = FunctionHelpers.generateId();
     }
 
-    let options = this.getOptions(model['options']);
+    const options = this.getOptions(model['options']);
 
-    let modelSettings = {
+    const modelSettings = {
       ...settings['label'] && { title: settings['label'] },
       ...options && { enum: options.map(x => x.value) },
+      ...extra['defaultValue'] && { default: extra['defaultValue'] },
       widget: {
         ...model['_referenceId'] && { _referenceId: model['_referenceId'] },
         formlyConfig: {
           ...settings['type'] && { type: settings['type'] },
-          ...extra['defaultValue'] && { defaultValue: extra['defaultValue'] },
           props: {
             ...model['edit'] && { html: model['edit'] },
             ...this.getKvps(extra, 'defaultValue'),
@@ -245,9 +244,9 @@ export class ConvertModel {
 
     if (field.widget.formlyConfig.props?.multiple) {
       if (extra['defaultValue']) {
-        field.widget.formlyConfig.defaultValue = Array.isArray(extra['defaultValue']) ? extra['defaultValue'] : [extra['defaultValue']];
+        field.default = Array.isArray(extra['defaultValue']) ? extra['defaultValue'] : [extra['defaultValue']];
       } else {
-        field.widget.formlyConfig.defaultValue = [];
+        field.default = [];
       }
     }
 
@@ -255,7 +254,7 @@ export class ConvertModel {
       page['required'].push(settings['name'] || model['_referenceId']);
     }
 
-    let pageProperties = page['properties'];
+    const pageProperties = page['properties'];
     pageProperties[settings['name'] || model['_referenceId']] = field;
   }
 
@@ -280,7 +279,7 @@ export class ConvertModel {
   }
 
   private getKvps = (model: any, ...ignoreKeys: string[]): { [key: string]: any } => {
-    let items: { [key: string]: any } = {};
+    const items: { [key: string]: any } = {};
 
     Object.keys(model ?? {}).forEach(key => {
       if (model[key] && !ignoreKeys.includes(key)) {
@@ -292,9 +291,9 @@ export class ConvertModel {
   }
 
   private _getDefaultSchemaForKeyAndType(key: string, type: SelectionOptionType, category?: string) {
-    let options = this._formState.builder.options[type];
+    const options = this._formState.builder.options[type];
 
-    if (!options === undefined) {
+    if (options === undefined) {
       console.log(`Unable to find SelectionOptionType ${type} in BuilderFormStateProperties options map.`);
 
       return;
@@ -320,10 +319,10 @@ const deepCopy = (obj: any): { [key: string]: any } | Array<{ [key: string]: any
       .map(element => deepCopy(element))
       .filter(copiedElement => copiedElement !== undefined);
   } else if (typeof obj === 'object') {
-    let copiedProperties = {} as { [key: string]: any };
+    const copiedProperties = {} as { [key: string]: any };
 
     for (const key in obj) {
-      let copy = deepCopy(obj[key]);
+      const copy = deepCopy(obj[key]);
 
       if (copy !== undefined) {
         copiedProperties[key] = copy;

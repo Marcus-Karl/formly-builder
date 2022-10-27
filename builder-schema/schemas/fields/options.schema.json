@@ -3,7 +3,7 @@
   "$id": "fields/options",
   "type": "array",
   "title": "Configure Options",
-  "minItems": 1,
+  "minItems": 0,
   "default": [],
   "widget": {
     "formlyConfig": {

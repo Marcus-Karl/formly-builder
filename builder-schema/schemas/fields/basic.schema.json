@@ -18,7 +18,7 @@
   "properties": {
     "type": {
       "type": "string",
-      "title": "Field Type",
+      "title": "Type",
       "default": "",
       "widget": {
         "formlyConfig": {
@@ -31,7 +31,7 @@
     },
     "subType": {
       "type": "string",
-      "title": "Sub Field Type",
+      "title": "Sub Type",
       "default": "",
       "widget": {
         "formlyConfig": {
@@ -45,7 +45,7 @@
     },
     "name": {
       "type": "string",
-      "title": "Field Name",
+      "title": "Name",
       "default": "",
       "widget": {
         "formlyConfig": {
@@ -60,7 +60,7 @@
     },
     "label": {
       "type": "string",
-      "title": "Field Label",
+      "title": "Label",
       "default": "",
       "widget": {
         "formlyConfig": {

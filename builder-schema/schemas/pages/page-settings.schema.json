@@ -14,30 +14,10 @@
   },
   "properties": {
     "name": {
-      "type": "string",
-      "title": "Page Name",
-      "default": "",
-      "widget": {
-        "formlyConfig": {
-          "type": "input",
-          "validators": {
-            "validation": [
-              "valid-name"
-            ]
-          }
-        }
-      }
+      "$ref": "../fields/basic.schema.json#/properties/name"
     },
     "label": {
-      "type": "string",
-      "title": "Page Label",
-      "default": "",
-      "className": "margin-top",
-      "widget": {
-        "formlyConfig": {
-          "type": "input"
-        }
-      }
+      "$ref": "../fields/basic.schema.json#/properties/label"
     }
   },
   "required": [
