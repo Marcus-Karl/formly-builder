@@ -1,16 +1,16 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
-  "$id": "/assets/schemas/forms/form-settings",
+  "$id": "forms/form-settings",
   "type": "object",
   "title": "Settings",
   "properties": {
     "type": {
       "type": "string",
       "title": "Form Type",
+      "default": "",
       "widget": {
         "formlyConfig": {
           "type": "select",
-          "defaultValue": "",
           "expressions": {
             "props.options": "field.options?.formState?.builder?.options['Form'] || []"
           }
@@ -20,10 +20,10 @@
     "name": {
       "type": "string",
       "title": "Form Name",
+      "default": "",
       "widget": {
         "formlyConfig": {
           "type": "input",
-          "defaultValue": "",
           "hide": true
         }
       }
@@ -31,10 +31,10 @@
     "label": {
       "type": "string",
       "title": "Form Label",
+      "default": "",
       "widget": {
         "formlyConfig": {
-          "type": "input",
-          "defaultValue": ""
+          "type": "input"
         }
       }
     }

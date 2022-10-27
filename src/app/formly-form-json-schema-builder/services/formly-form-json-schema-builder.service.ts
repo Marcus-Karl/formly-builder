@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
-import { Resolver } from '@stoplight/json-ref-resolver';
 import { JSONSchema7 } from 'json-schema';
 import { firstValueFrom } from 'rxjs';
 import { ConvertModel } from '../builder';
@@ -55,7 +54,7 @@ export class FormlyFormJsonSchemaBuilderService {
   }
 
   public async init(selectionOptionsMap?: { [key in SelectionOptionType]: FormBuilderSelectionOption[] }) {
-    this._model = getModel();
+    this._model = {}; // getModel();
     this._form = new UntypedFormGroup({});
 
     try {
@@ -111,34 +110,9 @@ export class FormlyFormJsonSchemaBuilderService {
   }
 
   private async getDefaultSchema() {
-    let rootSchema = await firstValueFrom(this.loadSchema('json-schema-builder.schema.json'));
+    const schema = await firstValueFrom(this.loadSchema('builder-schema.json'))
 
-    let resolver = new Resolver({
-      resolvers: {
-        http: {
-          resolve: async (ref: URI, ctx: any) => firstValueFrom(this.loadSchema(String(ref)))
-        },
-        https: {
-          resolve: async (ref: URI, ctx: any) => firstValueFrom(this.loadSchema(String(ref)))
-        },
-        file: {
-          resolve: async (ref: URI, ctx: any) => firstValueFrom(this.loadSchema(String(ref)))
-        }
-      }
-    });
-
-    let response = await resolver.resolve(rootSchema);
-
-    if (response.errors?.length) {
-      console.error(response.errors);
-
-      return {} as JSONSchema7;
-    }
-
-    // Reparse the result to prevent the internal resolver from setting an array 'items' property as read only
-    let schema = JSON.parse(JSON.stringify(response.result));
-
-    return schema as JSONSchema7;
+    return schema;
   }
 
   private loadSchema(url: string) {

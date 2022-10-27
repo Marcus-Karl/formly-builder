@@ -1,11 +1,11 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
-  "$id": "/assets/schemas/fields/field-picker",
+  "$id": "fields/field-picker",
   "type": "object",
   "default": {},
   "properties": {
     "category": {
-      "$ref": "category.schema.json"
+      "$ref": "./category.schema.json"
     }
   },
   "required": [
@@ -29,10 +29,10 @@
               "const": "free-response-field"
             },
             "basic": {
-              "$ref": "basic.schema.json"
+              "$ref": "./basic.schema.json"
             },
             "extra": {
-              "$ref": "extras.schema.json"
+              "$ref": "./extras.schema.json"
             }
           }
         },
@@ -51,13 +51,13 @@
               "const": "multiple-choice-field"
             },
             "basic": {
-              "$ref": "basic.schema.json"
+              "$ref": "./basic.schema.json"
             },
             "options": {
-              "$ref": "options.schema.json"
+              "$ref": "./options.schema.json"
             },
             "extra": {
-              "$ref": "extras.schema.json"
+              "$ref": "./extras.schema.json"
             }
           }
         },
@@ -76,13 +76,13 @@
               "const": "display-content-field"
             },
             "basic": {
-              "$ref": "basic.schema.json"
+              "$ref": "./basic.schema.json"
             },
             "edit": {
-              "$ref": "edit-display-content.schema.json"
+              "$ref": "./edit-display-content.schema.json"
             },
             "preview": {
-              "$ref": "preview-display-content.schema.json"
+              "$ref": "./preview-display-content.schema.json"
             }
           }
         },
@@ -101,10 +101,29 @@
               "const": "complex-object-field"
             },
             "basic": {
-              "$ref": "basic.schema.json"
+              "$ref": "./basic.schema.json"
             },
-            "complexObject": {
-              "$ref": "complex-object.schema.json"
+            "objectSchema": {
+              "$ref": "./complex-object.schema.json"
+            }
+          }
+        },
+        {
+          "widget": {
+            "formlyConfig": {
+              "type": "tab-form",
+              "props": {
+                "hideButtons": true,
+                "linear": false
+              }
+            }
+          },
+          "properties": {
+            "category": {
+              "const": "custom-object-schema"
+            },
+            "objectSchema": {
+              "$ref": "./custom-object-schema.schema.json"
             }
           }
         }

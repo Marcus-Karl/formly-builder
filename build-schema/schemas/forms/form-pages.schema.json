@@ -1,25 +1,24 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
-  "$id": "/assets/schemas/forms/form-settings",
+  "$id": "forms/form-settings",
   "type": "array",
   "title": "Pages",
   "minItems": 1,
+  "default": [],
   "widget": {
     "formlyConfig": {
       "type": "form-editor",
-      "defaultValue": [],
       "className": "pad-bottom flex column"
     }
   },
   "items": {
     "type": "object",
+    "default": {},
     "widget": {
       "formlyConfig": {
-        "type": "page-form",
-        "defaultValue": {},
+        "type": "tab-form",
         "props": {
-          "useSmallButtons": true,
-          "hideSubmit": true,
+          "hideButtons": true,
           "linear": false
         }
       }

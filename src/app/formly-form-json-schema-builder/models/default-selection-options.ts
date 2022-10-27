@@ -68,7 +68,7 @@ const FREE_RESPONSE_FIELDS: FormBuilderSelectionOption[] = [
         type: SelectionOptionType.FieldType,
         schemaDefaults: {
           format: 'email',
-          pattern: '[A-Za-z0-9._]+@[A-Za-z0-9.-]+\.[A-Za-z0-9]{2,6}$'
+          pattern: '^[A-Za-z0-9._-]+@[A-Za-z0-9.-]+\.[A-Za-z0-9]{2,6}$'
         }
       },
       {
@@ -184,13 +184,24 @@ const COMPLEX_OBJECT: FormBuilderSelectionOption[] = [
         type: SelectionOptionType.FieldType,
         value: 'complex-object',
         label: 'Complex Object'
-      },
+      }
+    ]
+  }
+];
+
+const CUSTOM_OBJECT_SCHEMA: FormBuilderSelectionOption[] = [
+  {
+    value: 'custom-object-schema',
+    label: 'Custom Schema',
+    type: SelectionOptionType.FieldCategory,
+    category: 'field',
+    options: [
       {
         value: 'request-information',
         label: 'Request Information',
         type: SelectionOptionType.FieldType,
         builderSchemaDefaults: {
-          category: 'complex-object-field',
+          category: 'custom-object-schema',
           basic: {
             type: 'object',
             name: 'requestInformation',
@@ -557,6 +568,7 @@ const DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION: FormBuilderSelectionOption =
   type: SelectionOptionType.Base,
   options: [
     ...COMPLEX_OBJECT,
+    ...CUSTOM_OBJECT_SCHEMA,
     ...DISPLAY_CONTENT,
     ...FREE_RESPONSE_FIELDS,
     ...MULTIPLE_CHOICE_FIELDS,

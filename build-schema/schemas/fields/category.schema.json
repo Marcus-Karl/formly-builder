@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
-  "$id": "/assets/schemas/fields/category",
+  "$id": "fields/category",
   "type": "string",
   "title": "Select Field Category",
   "default": "",

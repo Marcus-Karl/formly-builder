@@ -93,14 +93,20 @@ export abstract class AbstractBaseFormControlsComponent extends FieldType<FieldT
     const nextPage = this.field.fieldGroup[index];
 
     if (nextPage) {
-      const currentPage = this.field.fieldGroup[this.selectedIndex];
+      const page = this.field.fieldGroup[this.selectedIndex];
 
-      if (currentPage?.formControl && index > this.selectedIndex) {
-        currentPage.fieldGroup?.forEach(x => {
-          if (!x.hide && x.props?.required) {
-            x.formControl?.markAsTouched();
-          }
-        });
+      if (page && index > this.selectedIndex) {
+        if (page.props?.required) {
+          page.formControl?.markAsTouched();
+          page.formControl?.updateValueAndValidity();
+        } else {
+          page.fieldGroup?.forEach(x => {
+            if (!x.hide && x.props?.required) {
+              x.formControl?.markAsTouched();
+              x.formControl?.updateValueAndValidity();
+            }
+          });
+        }
       }
 
       this.selectedIndex = index;

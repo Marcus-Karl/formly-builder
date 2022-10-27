@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
-  "$id": "/assets/schemas/json-schema-builder",
+  "$id": "json-schema-builder",
   "type": "object",
   "properties": {
     "form": {
@@ -16,10 +16,10 @@
       },
       "properties": {
         "pages": {
-          "$ref": "forms/form-pages.schema.json"
+          "$ref": "./forms/form-pages.schema.json"
         },
         "settings": {
-          "$ref": "forms/form-settings.schema.json"
+          "$ref": "./forms/form-settings.schema.json"
         }
       },
       "required": [
@@ -30,7 +30,10 @@
   },
   "definitions": {
     "dependency": {
-      "$ref": "dependency/dependency.schema.json"
+      "$ref": "./dependency/dependency.schema.json"
+    },
+    "field-picker": {
+      "$ref": "./fields/field-picker.schema.json"
     }
   }
 }

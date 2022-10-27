@@ -1,0 +1,720 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "json-schema-builder",
+  "type": "object",
+  "properties": {
+    "form": {
+      "type": "object",
+      "default": {},
+      "widget": {
+        "formlyConfig": {
+          "type": "stepper-form",
+          "props": {
+            "linear": false
+          }
+        }
+      },
+      "properties": {
+        "pages": {
+          "$schema": "https://json-schema.org/draft-07/schema#",
+          "$id": "forms/form-settings",
+          "type": "array",
+          "title": "Pages",
+          "minItems": 1,
+          "default": [],
+          "widget": {
+            "formlyConfig": {
+              "type": "form-editor",
+              "className": "pad-bottom flex column"
+            }
+          },
+          "items": {
+            "type": "object",
+            "default": {},
+            "widget": {
+              "formlyConfig": {
+                "type": "tab-form",
+                "props": {
+                  "hideButtons": true,
+                  "linear": false
+                }
+              }
+            },
+            "properties": {
+              "fields": {
+                "$schema": "https://json-schema.org/draft-07/schema#",
+                "$id": "pages/page-fields",
+                "type": "array",
+                "title": "Fields",
+                "minItems": 0,
+                "default": [],
+                "widget": {
+                  "formlyConfig": {
+                    "className": "formly-build-page-form-min-height flex column",
+                    "type": "page-fields",
+                    "props": {
+                      "hideLabel": false
+                    }
+                  }
+                },
+                "items": {
+                  "$ref": "#/definitions/field-picker"
+                }
+              },
+              "settings": {
+                "$schema": "https://json-schema.org/draft-07/schema#",
+                "$id": "pages/page-settings",
+                "type": "object",
+                "title": "Page Settings",
+                "default": {},
+                "widget": {
+                  "formlyConfig": {
+                    "className": "formly-build-page-form-min-height flex column pad-top",
+                    "props": {
+                      "isOptional": true
+                    }
+                  }
+                },
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "title": "Page Name",
+                    "default": "",
+                    "widget": {
+                      "formlyConfig": {
+                        "type": "input",
+                        "validators": {
+                          "validation": [
+                            "valid-name"
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "label": {
+                    "type": "string",
+                    "title": "Page Label",
+                    "default": "",
+                    "className": "margin-top",
+                    "widget": {
+                      "formlyConfig": {
+                        "type": "input"
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "label"
+                ]
+              },
+              "dependency": {
+                "$ref": "#/definitions/dependency"
+              }
+            },
+            "required": [
+              "fields",
+              "settings"
+            ]
+          }
+        },
+        "settings": {
+          "$schema": "https://json-schema.org/draft-07/schema#",
+          "$id": "forms/form-settings",
+          "type": "object",
+          "title": "Settings",
+          "properties": {
+            "type": {
+              "type": "string",
+              "title": "Form Type",
+              "default": "",
+              "widget": {
+                "formlyConfig": {
+                  "type": "select",
+                  "expressions": {
+                    "props.options": "field.options?.formState?.builder?.options['Form'] || []"
+                  }
+                }
+              }
+            },
+            "name": {
+              "type": "string",
+              "title": "Form Name",
+              "default": "",
+              "widget": {
+                "formlyConfig": {
+                  "type": "input",
+                  "hide": true
+                }
+              }
+            },
+            "label": {
+              "type": "string",
+              "title": "Form Label",
+              "default": "",
+              "widget": {
+                "formlyConfig": {
+                  "type": "input"
+                }
+              }
+            }
+          },
+          "required": [
+            "formType",
+            "label"
+          ]
+        }
+      },
+      "required": [
+        "pages",
+        "settings"
+      ]
+    }
+  },
+  "definitions": {
+    "dependency": {
+      "$schema": "https://json-schema.org/draft-07/schema#",
+      "$id": "dependency/dependency",
+      "type": "array",
+      "title": "Dependencies",
+      "default": [],
+      "widget": {
+        "formlyConfig": {
+          "className": "formly-build-page-form-min-height flex column"
+        }
+      },
+      "items": {
+        "title": "Select One",
+        "type": "object",
+        "oneOf": [
+          {
+            "$ref": "#/definitions/dependency/definitions/all-of"
+          },
+          {
+            "$ref": "#/definitions/dependency/definitions/any-of"
+          },
+          {
+            "$ref": "#/definitions/dependency/definitions/one-of"
+          },
+          {
+            "$ref": "#/definitions/dependency/definitions/inner-dependency"
+          }
+        ]
+      },
+      "definitions": {
+        "inner-dependency": {
+          "type": "object",
+          "title": "Inner Dependencies",
+          "default": [],
+          "properties": {
+            "inner": {
+              "type": "array",
+              "default": [],
+              "widget": {
+                "formlyConfig": {
+                  "className": "margin-left-2"
+                }
+              },
+              "items": {
+                "type": "object",
+                "oneOf": [
+                  {
+                    "$ref": "#/definitions/dependency/definitions/all-of"
+                  },
+                  {
+                    "$ref": "#/definitions/dependency/definitions/any-of"
+                  },
+                  {
+                    "$ref": "#/definitions/dependency/definitions/one-of"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "all-of": {
+          "type": "object",
+          "title": "Match All",
+          "default": {},
+          "widget": {
+            "formlyConfig": {
+              "className": "margin-left-2"
+            }
+          },
+          "properties": {
+            "type": {
+              "default": "allOf",
+              "const": "allOf"
+            },
+            "entry": {
+              "title": "Enter Value",
+              "type": "string"
+            }
+          }
+        },
+        "any-of": {
+          "type": "object",
+          "title": "Match Any",
+          "default": {},
+          "widget": {
+            "formlyConfig": {
+              "className": "margin-left-2"
+            }
+          },
+          "properties": {
+            "type": {
+              "default": "anyOf",
+              "const": "anyOf"
+            },
+            "entry": {
+              "title": "Enter Value",
+              "type": "string"
+            }
+          }
+        },
+        "one-of": {
+          "type": "object",
+          "title": "Match One",
+          "default": {},
+          "widget": {
+            "formlyConfig": {
+              "className": "margin-left-2"
+            }
+          },
+          "properties": {
+            "type": {
+              "default": "oneOf",
+              "const": "oneOf"
+            },
+            "entry": {
+              "title": "Enter Value",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "field-picker": {
+      "$schema": "https://json-schema.org/draft-07/schema#",
+      "$id": "fields/field-picker",
+      "type": "object",
+      "default": {},
+      "properties": {
+        "category": {
+          "$schema": "https://json-schema.org/draft-07/schema#",
+          "$id": "fields/category",
+          "type": "string",
+          "title": "Select Field Category",
+          "default": "",
+          "widget": {
+            "formlyConfig": {
+              "type": "toggle-button-field",
+              "resetOnHide": false,
+              "props": {
+                "classes": "center-self",
+                "required": true
+              },
+              "expressions": {
+                "hide": "field.props._selectionComplete",
+                "props.options": "field.options?.formState?.builder?.options['FieldCategory'] || []"
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "category"
+      ],
+      "dependencies": {
+        "category": {
+          "oneOf": [
+            {
+              "widget": {
+                "formlyConfig": {
+                  "type": "tab-form",
+                  "props": {
+                    "hideButtons": true,
+                    "linear": false
+                  }
+                }
+              },
+              "properties": {
+                "category": {
+                  "const": "free-response-field"
+                },
+                "basic": {
+                  "$schema": "https://json-schema.org/draft-07/schema#",
+                  "$id": "fields/basic",
+                  "type": "object",
+                  "title": "Basic Information",
+                  "default": {},
+                  "widget": {
+                    "formlyConfig": {
+                      "className": "flex pad",
+                      "expressions": {
+                        "hide": "field.parent.model.category === 'display-content-field'"
+                      },
+                      "props": {
+                        "isOptional": true
+                      }
+                    }
+                  },
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "title": "Field Type",
+                      "default": "",
+                      "widget": {
+                        "formlyConfig": {
+                          "type": "select",
+                          "expressions": {
+                            "props.options": "field.options?.formState?.builder?.options['FieldType'].filter(x => x.category === field.parent.parent.model.category) || []"
+                          }
+                        }
+                      }
+                    },
+                    "subType": {
+                      "type": "string",
+                      "title": "Sub Field Type",
+                      "default": "",
+                      "widget": {
+                        "formlyConfig": {
+                          "type": "select",
+                          "expressions": {
+                            "hide": "!field.props.options?.length",
+                            "props.options": "field.options?.formState?.builder?.options['FieldSubType'].filter(x => x.category === field.model.type) || []"
+                          }
+                        }
+                      }
+                    },
+                    "name": {
+                      "type": "string",
+                      "title": "Field Name",
+                      "default": "",
+                      "widget": {
+                        "formlyConfig": {
+                          "type": "input",
+                          "validators": {
+                            "validation": [
+                              "valid-name"
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "label": {
+                      "type": "string",
+                      "title": "Field Label",
+                      "default": "",
+                      "widget": {
+                        "formlyConfig": {
+                          "type": "input"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "type"
+                  ]
+                },
+                "extra": {
+                  "$schema": "https://json-schema.org/draft-07/schema#",
+                  "$id": "fields/extras",
+                  "type": "object",
+                  "title": "Extras",
+                  "default": {},
+                  "widget": {
+                    "formlyConfig": {
+                      "className": "flex pad",
+                      "props": {
+                        "isOptional": true
+                      }
+                    }
+                  },
+                  "properties": {
+                    "defaultValue": {
+                      "type": "string",
+                      "title": "Default Value",
+                      "default": "",
+                      "widget": {
+                        "formlyConfig": {
+                          "type": "input"
+                        }
+                      }
+                    },
+                    "placeholder": {
+                      "type": "string",
+                      "title": "Placeholder Text",
+                      "default": "",
+                      "widget": {
+                        "formlyConfig": {
+                          "type": "input"
+                        }
+                      }
+                    },
+                    "hint": {
+                      "type": "string",
+                      "title": "Hint Text",
+                      "default": "",
+                      "widget": {
+                        "formlyConfig": {
+                          "type": "input"
+                        }
+                      }
+                    },
+                    "help": {
+                      "type": "string",
+                      "title": "Help Text",
+                      "default": "",
+                      "widget": {
+                        "formlyConfig": {
+                          "type": "input"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "widget": {
+                "formlyConfig": {
+                  "type": "tab-form",
+                  "props": {
+                    "hideButtons": true,
+                    "linear": false
+                  }
+                }
+              },
+              "properties": {
+                "category": {
+                  "const": "multiple-choice-field"
+                },
+                "basic": {
+                  "$ref": "#/definitions/field-picker/dependencies/category/oneOf/0/properties/basic"
+                },
+                "options": {
+                  "$schema": "https://json-schema.org/draft-07/schema#",
+                  "$id": "fields/options",
+                  "type": "array",
+                  "title": "Configure Options",
+                  "minItems": 1,
+                  "default": [],
+                  "widget": {
+                    "formlyConfig": {
+                      "type": "options-editor",
+                      "props": {
+                        "isOptional": true
+                      }
+                    }
+                  },
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "string",
+                        "default": "",
+                        "widget": {
+                          "formlyConfig": {
+                            "type": "input",
+                            "props": {
+                              "placeholder": "Enter a name..."
+                            }
+                          }
+                        }
+                      },
+                      "label": {
+                        "type": "string",
+                        "default": "",
+                        "widget": {
+                          "formlyConfig": {
+                            "type": "input",
+                            "props": {
+                              "placeholder": "Enter a label..."
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": [
+                      "value",
+                      "label"
+                    ]
+                  }
+                },
+                "extra": {
+                  "$ref": "#/definitions/field-picker/dependencies/category/oneOf/0/properties/extra"
+                }
+              }
+            },
+            {
+              "widget": {
+                "formlyConfig": {
+                  "type": "tab-form",
+                  "props": {
+                    "hideButtons": true,
+                    "linear": false
+                  }
+                }
+              },
+              "properties": {
+                "category": {
+                  "const": "display-content-field"
+                },
+                "basic": {
+                  "$ref": "#/definitions/field-picker/dependencies/category/oneOf/0/properties/basic"
+                },
+                "edit": {
+                  "$schema": "https://json-schema.org/draft-07/schema#",
+                  "$id": "fields/edit-display-content",
+                  "type": "string",
+                  "title": "Edit Content",
+                  "default": "",
+                  "widget": {
+                    "formlyConfig": {
+                      "type": "display-html-editor",
+                      "className": "pad-half formly-field fill-height"
+                    }
+                  }
+                },
+                "preview": {
+                  "$schema": "https://json-schema.org/draft-07/schema#",
+                  "$id": "fields/preview-display-content",
+                  "type": "null",
+                  "title": "Content Preview",
+                  "widget": {
+                    "formlyConfig": {
+                      "type": "display-html",
+                      "className": "pad-half formly-field",
+                      "props": {
+                        "html": ""
+                      },
+                      "expressions": {
+                        "props.html": "field.model.edit || ''"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "widget": {
+                "formlyConfig": {
+                  "type": "tab-form",
+                  "props": {
+                    "hideButtons": true,
+                    "linear": false
+                  }
+                }
+              },
+              "properties": {
+                "category": {
+                  "const": "complex-object-field"
+                },
+                "basic": {
+                  "$ref": "#/definitions/field-picker/dependencies/category/oneOf/0/properties/basic"
+                },
+                "objectSchema": {
+                  "$schema": "https://json-schema.org/draft-07/schema#",
+                  "$id": "fields/complex-object",
+                  "type": "array",
+                  "title": "Configure Fields",
+                  "minItems": 0,
+                  "default": [],
+                  "widget": {
+                    "formlyConfig": {
+                      "className": "formly-build-page-form-min-height flex column pad",
+                      "type": "page-fields",
+                      "props": {
+                        "hideLabel": false
+                      }
+                    }
+                  },
+                  "items": {
+                    "type": "object",
+                    "default": {},
+                    "widget": {
+                      "formlyConfig": {
+                        "type": "tab-form",
+                        "props": {
+                          "hideButtons": true,
+                          "linear": false
+                        }
+                      }
+                    },
+                    "properties": {
+                      "category": {
+                        "$ref": "#/definitions/field-picker/properties/category"
+                      },
+                      "basic": {
+                        "$ref": "#/definitions/field-picker/dependencies/category/oneOf/0/properties/basic"
+                      },
+                      "extra": {
+                        "$ref": "#/definitions/field-picker/dependencies/category/oneOf/0/properties/extra"
+                      },
+                      "advanced": {
+                        "$schema": "https://json-schema.org/draft-07/schema#",
+                        "$id": "fields/advanced",
+                        "type": "object",
+                        "title": "Advanced",
+                        "default": {},
+                        "widget": {
+                          "formlyConfig": {
+                            "className": "flex pad",
+                            "props": {
+                              "isOptional": true
+                            }
+                          }
+                        },
+                        "properties": {}
+                      }
+                    },
+                    "required": [
+                      "category"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "widget": {
+                "formlyConfig": {
+                  "type": "tab-form",
+                  "props": {
+                    "hideButtons": true,
+                    "linear": false
+                  }
+                }
+              },
+              "properties": {
+                "category": {
+                  "const": "custom-object-schema"
+                },
+                "objectSchema": {
+                  "$schema": "https://json-schema.org/draft-07/schema#",
+                  "$id": "fields/custom-object-schema",
+                  "type": "array",
+                  "title": "Custom Object Schema",
+                  "minItems": 0,
+                  "default": [],
+                  "widget": {
+                    "formlyConfig": {
+                      "className": "formly-build-page-form-min-height flex column pad",
+                      "type": "page-fields",
+                      "props": {
+                        "hideLabel": false
+                      }
+                    }
+                  },
+                  "items": {
+                    "$ref": "#/definitions/field-picker"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

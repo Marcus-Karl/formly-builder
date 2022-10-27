@@ -18,6 +18,14 @@
  * BROWSER POLYFILLS
  */
 
+if (!(window as any).process) {
+  (window as any).process = {
+    env: {
+      DEBUG: undefined
+    }
+  };
+}
+
 /**
  * By default, zone.js will patch all possible macroTask and DomEvents
  * user can disable parts of macroTask/DomEvents patch by setting following flags

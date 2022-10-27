@@ -3,12 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "serve": "ng serve",
-    "build": "ng build",
+    "serve": "npm run build-schema && ng serve",
+    "build": "npm run build-schema && ng build",
     "clean": "",
-    "watch": "ng build --watch --configuration development",
+    "watch": "npm run build-schema && ng build --watch --configuration development",
     "test": "ng test",
-    "stats": "ng build --stats-json && webpack-bundle-analyzer dist/formly-builder/stats.json"
+    "stats": "ng build --stats-json && webpack-bundle-analyzer dist/formly-builder/stats.json",
+    "build-schema": "node ./build-schema/build.js"
   },
   "private": true,
   "dependencies": {
@@ -24,7 +25,6 @@
     "@angular/router": "^14.2.7",
     "@ngx-formly/core": "^6.0.1",
     "@ngx-formly/material": "^6.0.1",
-    "@stoplight/json-ref-resolver": "^3.1.4",
     "ngx-editor": "^15.0.1",
     "rxjs": "~7.5.7",
     "tslib": "^2.3.1",
@@ -35,9 +35,11 @@
     "@angular-devkit/build-angular": "^14.2.6",
     "@angular/cli": "^14.2.6",
     "@angular/compiler-cli": "^14.2.7",
+    "@apidevtools/json-schema-ref-parser": "^9.0.9",
     "@types/jasmine": "~4.0.0",
     "@types/node": "^17.0.23",
     "@types/uuid": "^8.3.4",
+    "axios": "^1.1.3",
     "jasmine-core": "~4.0.1",
     "karma": "~6.3.17",
     "karma-chrome-launcher": "~3.1.1",

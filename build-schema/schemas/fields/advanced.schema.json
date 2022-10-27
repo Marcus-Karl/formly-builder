@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
-  "$id": "/assets/schemas/fields/advanced",
+  "$id": "fields/advanced",
   "type": "object",
   "title": "Advanced",
   "default": {},

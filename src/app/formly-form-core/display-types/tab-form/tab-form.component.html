@@ -2,10 +2,15 @@
   <!-- Pagination will not be updated on resize. See: https://github.com/angular/components/issues/22384 -->
 
   <ng-container *ngFor="let page of field.fieldGroup; let first = first; let index = index;">
-    <mat-tab [disabled]="!first && isPrecedingPageInvalid(index - 1)"  [aria-labelledby]="page.hide ? 'hidden' : ''">
+    <mat-tab [disabled]="!first && props.linear && isPrecedingPageInvalid(index - 1)" [aria-labelledby]="page.hide ? 'hidden' : ''">
 
       <ng-template mat-tab-label>
-        <div class="mat-tab-label-content" #labelcontent>
+        <div
+          class="mat-tab-label-content"
+          [matTooltip]="getPageErrors(page?.formControl)"
+          [matTooltipClass]="'use-new-line'"
+          [matTooltipDisabled]="!isPageAtIndexInvalid(index)">
+
           <ng-container *ngIf="page.formControl?.touched && page.formControl?.invalid; else defaultlabel">
             <mat-icon class="margin-right-half error-state material-icons">warning</mat-icon>
           </ng-container>
