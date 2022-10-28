@@ -64,13 +64,15 @@
       "default": "",
       "widget": {
         "formlyConfig": {
-          "type": "input"
+          "type": "input",
+          "expressions": {
+            "props.required": "!field.parent.parent.model.category?.startsWith('unknown-')"
+          }
         }
       }
     }
   },
   "required": [
-    "label",
     "type"
   ]
 }

@@ -23,13 +23,14 @@ export class ConvertModel {
       return null;
     }
 
+    console.log(`Model`, JSON.stringify(model, null, 2));
+
     const form = {};
 
     new ConvertModel(formState, config).getNextStep(form, model);
 
     return form;
   }
-
 
 
   /**

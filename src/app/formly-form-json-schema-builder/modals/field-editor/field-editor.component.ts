@@ -45,13 +45,9 @@ export class FieldEditorComponent implements AfterViewInit {
   }
 
   onSelectedCategory() {
+    const category = this.categoryField?.formControl?.value;
     const builderFormState: BuilderFormState = this.field.options?.formState;
-
-    if (builderFormState?.builder.options[SelectionOptionType.FieldCategory]) {
-      this.categoryField?.formControl?.valueChanges.subscribe(category => {
-        this.categoryLabel = builderFormState?.builder.options[SelectionOptionType.FieldCategory].find((x: any) => x.value === category)?.label ?? '';
-      });
-    }
+    this.categoryLabel = builderFormState?.builder.options[SelectionOptionType.FieldCategory]?.find((x: any) => x.value === category)?.label ?? '';
 
     this.categorySelectionComplete = true;
 

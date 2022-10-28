@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { FieldArrayType, FormlyFieldConfig } from '@ngx-formly/core';
+import { JSONSchema7 } from 'json-schema';
 
 import { FormlyFormJsonSchemaInternalBuilderService } from 'src/app/formly-form-json-schema-builder/services/formly-form-json-schema-internal-builder.service';
 import { FunctionHelpers } from 'src/app/formly-form-json-schema-builder/builder';
@@ -11,6 +12,7 @@ import { FieldEditorComponent } from 'src/app/formly-form-json-schema-builder/mo
 import { ConfirmationModalComponent } from 'src/app/formly-form-core/modal/confirmation-modal/confirmation-modal.component';
 import { ConfirmationModalData } from 'src/app/formly-form-core/models/confirmation-modal-data';
 import { BuilderFormState, SelectionOptionType } from '../../models/builder-form-state';
+import { ConvertJsonSchema } from '../../builder/json-schema-to-model-builder';
 
 @Component({
   selector: 'page-fields',
@@ -31,6 +33,8 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
 
   ngOnInit() {
     this._setCategories();
+
+    this._addObjectSchema();
   }
 
   drop(event: CdkDragDrop<PageFieldsComponent>) {
@@ -74,7 +78,7 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
     this.renderChanges();
   }
 
-  add(i?: number, initialModel?: any, markAsDirty?: any) {
+  add(i?: number, initialModel?: any, markAsDirty?: any, skipEdit?: boolean) {
     this.options.updateInitialValue?.();
     const index = (i === undefined || i === null) ? this.field.fieldGroup?.length || 0 : i;
 
@@ -91,7 +95,9 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
         newField.model['_referenceId'] = FunctionHelpers.generateId();
       }
 
-      this.edit(newField, true, index);
+      if (!skipEdit) {
+        this.edit(newField, true, index);
+      }
 
       this.renderChanges();
     }
@@ -181,6 +187,28 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
 
   getConnectedToDropIds(): string[] {
     return this.formlyBuilderService.getRegisteredDropIds(this.field.id as string);
+  }
+
+  private _addObjectSchema() {
+    if (this.model?.length) {
+      return;
+    }
+
+    if (this.props.objectSchema) {
+      try {
+        const schema = ConvertJsonSchema.toModel(this.props.objectSchema as JSONSchema7, this.options.formState);
+
+        console.log(`objectSchema`, JSON.stringify(schema, null, 2));
+
+        schema?.form.pages.forEach(obj => {
+          this.add(undefined, obj, undefined, true);
+        });
+
+        console.log(`Final model`, this.model);
+      } catch(e) {
+        console.error(`Error parsing and adding objectSchema.`, e, this.props.objectSchema);
+      }
+    }
   }
 
   private _setCategories() {

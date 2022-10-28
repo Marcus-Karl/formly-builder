@@ -10,7 +10,7 @@ import { FunctionReferences } from '../builder/state-functions';
 import { BuilderFormState, FormBuilderSelectionOption, PagesInformation, SelectionOptionType } from '../models/builder-form-state';
 import { getDefaultSelectionOptionsMap, sortSelectionOptions } from '../models/default-selection-options';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class FormlyFormJsonSchemaBuilderService {
 
   private _fields?: FormlyFieldConfig[] = [];

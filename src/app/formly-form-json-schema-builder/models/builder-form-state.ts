@@ -49,6 +49,7 @@ export type BuilderFormState = {
 export type FormBuilderSelectionOption = SelectionOption & {
   categories?: string[];
   options?: FormBuilderSelectionOption[];
+  builderSchemaDefaults?: { [key: string]: any };
   schemaDefaults?: { [key: string]: any };
   type: SelectionOptionType;
   [key: string]: any;

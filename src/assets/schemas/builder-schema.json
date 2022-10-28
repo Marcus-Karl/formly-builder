@@ -398,13 +398,15 @@
                       "default": "",
                       "widget": {
                         "formlyConfig": {
-                          "type": "input"
+                          "type": "input",
+                          "expressions": {
+                            "props.required": "!field.parent.parent.model.category?.startsWith('unknown-')"
+                          }
                         }
                       }
                     }
                   },
                   "required": [
-                    "label",
                     "type"
                   ]
                 },
@@ -465,7 +467,10 @@
                     }
                   }
                 }
-              }
+              },
+              "required": [
+                "basic"
+              ]
             },
             {
               "widget": {
@@ -536,7 +541,11 @@
                 "extra": {
                   "$ref": "#/definitions/field-picker/dependencies/category/oneOf/0/properties/extra"
                 }
-              }
+              },
+              "required": [
+                "basic",
+                "options"
+              ]
             },
             {
               "widget": {
@@ -586,7 +595,10 @@
                     }
                   }
                 }
-              }
+              },
+              "required": [
+                "basic"
+              ]
             },
             {
               "widget": {
@@ -609,7 +621,7 @@
                   "$schema": "https://json-schema.org/draft-07/schema#",
                   "$id": "fields/complex-object",
                   "type": "array",
-                  "title": "Configure Fields",
+                  "title": "Fields",
                   "minItems": 0,
                   "default": [],
                   "widget": {
@@ -622,50 +634,14 @@
                     }
                   },
                   "items": {
-                    "type": "object",
-                    "default": {},
-                    "widget": {
-                      "formlyConfig": {
-                        "type": "tab-form",
-                        "props": {
-                          "hideButtons": true,
-                          "linear": false
-                        }
-                      }
-                    },
-                    "properties": {
-                      "category": {
-                        "$ref": "#/definitions/field-picker/properties/category"
-                      },
-                      "basic": {
-                        "$ref": "#/definitions/field-picker/dependencies/category/oneOf/0/properties/basic"
-                      },
-                      "extra": {
-                        "$ref": "#/definitions/field-picker/dependencies/category/oneOf/0/properties/extra"
-                      },
-                      "advanced": {
-                        "$schema": "https://json-schema.org/draft-07/schema#",
-                        "$id": "fields/advanced",
-                        "type": "object",
-                        "title": "Advanced",
-                        "default": {},
-                        "widget": {
-                          "formlyConfig": {
-                            "className": "flex pad",
-                            "props": {
-                              "isOptional": true
-                            }
-                          }
-                        },
-                        "properties": {}
-                      }
-                    },
-                    "required": [
-                      "category"
-                    ]
+                    "$ref": "#/definitions/field-picker"
                   }
                 }
-              }
+              },
+              "required": [
+                "basic",
+                "objectSchema"
+              ]
             },
             {
               "widget": {
@@ -673,7 +649,7 @@
                   "type": "tab-form",
                   "props": {
                     "hideButtons": true,
-                    "linear": false
+                    "linear": true
                   },
                   "wrappers": [
                     "preconfigured-schema-wrapper"
@@ -700,14 +676,99 @@
                       "type": "page-fields",
                       "props": {
                         "hideLabel": false
-                      }
+                      },
+                      "wrappers": [
+                        "preconfigured-schema-wrapper-fields"
+                      ]
                     }
                   },
                   "items": {
                     "$ref": "#/definitions/field-picker"
                   }
                 }
-              }
+              },
+              "required": [
+                "basic",
+                "objectSchema"
+              ]
+            },
+            {
+              "widget": {
+                "formlyConfig": {
+                  "type": "tab-form",
+                  "props": {
+                    "hideButtons": true,
+                    "linear": true
+                  }
+                }
+              },
+              "properties": {
+                "category": {
+                  "const": "unknown-free-response-field"
+                },
+                "basic": {
+                  "$ref": "#/definitions/field-picker/dependencies/category/oneOf/0/properties/basic"
+                },
+                "extra": {
+                  "$ref": "#/definitions/field-picker/dependencies/category/oneOf/0/properties/extra"
+                }
+              },
+              "required": [
+                "basic"
+              ]
+            },
+            {
+              "widget": {
+                "formlyConfig": {
+                  "type": "tab-form",
+                  "props": {
+                    "hideButtons": true,
+                    "linear": true
+                  }
+                }
+              },
+              "properties": {
+                "category": {
+                  "const": "unknown-multiple-choice-field"
+                },
+                "basic": {
+                  "$ref": "#/definitions/field-picker/dependencies/category/oneOf/0/properties/basic"
+                },
+                "options": {
+                  "$ref": "#/definitions/field-picker/dependencies/category/oneOf/1/properties/options"
+                },
+                "extra": {
+                  "$ref": "#/definitions/field-picker/dependencies/category/oneOf/0/properties/extra"
+                }
+              },
+              "required": [
+                "basic"
+              ]
+            },
+            {
+              "widget": {
+                "formlyConfig": {
+                  "type": "tab-form",
+                  "props": {
+                    "hideButtons": true,
+                    "linear": true
+                  }
+                }
+              },
+              "properties": {
+                "category": {
+                  "const": "unknown-complex-object-field"
+                },
+                "basic": {
+                  "$ref": "#/definitions/field-picker/dependencies/category/oneOf/0/properties/basic"
+                },
+                "objectSchema": {
+                  "$ref": "#/definitions/field-picker/dependencies/category/oneOf/4/properties/objectSchema"
+                }
+              },
+              "required": [
+                "basic"
+              ]
             }
           ]
         }

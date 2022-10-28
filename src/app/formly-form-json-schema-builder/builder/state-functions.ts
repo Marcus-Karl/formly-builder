@@ -83,7 +83,9 @@ export const generateId = () => {
   let id = uuidv4().replace(/-/g, '');
 
   if (/[\d]/.test(id[0])) {
-    id = 'ghijklmnopqrstuvwxyz'[Math.floor(Math.random() * 19)] + id;
+    const letters = 'ghijklmnopqrstuvwxyz';
+    const char = letters[Math.floor(Math.random() * (letters.length + 1))];
+    id = `${char}${id}`;
   }
 
   return id;

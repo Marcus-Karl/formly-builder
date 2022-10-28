@@ -64,7 +64,7 @@ export abstract class AbstractBaseFormControlsComponent extends FieldType<FieldT
   isPageAtIndexInvalid(index: number, includeOptionalPageCheck: boolean = true, onlyTouchedPages: boolean = false): boolean {
     const page = this.field.fieldGroup && this.field.fieldGroup[index];
 
-    let invalid = (page?.formControl?.invalid ?? false) && !page?.hide && (page?.props?.isOptional ? includeOptionalPageCheck : true);
+    let invalid = (page?.formControl?.invalid ?? false) && !page?.hide && (page?.props?.required ? true : includeOptionalPageCheck);
 
     if (onlyTouchedPages && !page?.formControl?.touched) {
       invalid = false;

@@ -28,6 +28,7 @@ import { PageFieldsComponent } from './components/page-fields/page-fields.compon
 import { FormlyFormJsonSchemaBuilderService } from './services/formly-form-json-schema-builder.service';
 import { DependencyBuilderComponent } from './components/dependency-builder/dependency-builder.component';
 import { PreconfiguredSchemaComponent } from './wrappers/preconfigured-schema/preconfigured-schema.component';
+import { PreconfiguredSchemaFieldsComponent } from './wrappers/preconfigured-schema-fields/preconfigured-schema-fields.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { PreconfiguredSchemaComponent } from './wrappers/preconfigured-schema/pr
     FormlyFormJsonSchemaBuilderComponent,
     OptionsEditorComponent,
     PageFieldsComponent,
-    PreconfiguredSchemaComponent
+    PreconfiguredSchemaComponent,
+    PreconfiguredSchemaFieldsComponent
   ],
   exports: [
     FormlyFormJsonSchemaBuilderComponent
@@ -67,6 +69,7 @@ import { PreconfiguredSchemaComponent } from './wrappers/preconfigured-schema/pr
       ],
       wrappers: [
         { name: 'preconfigured-schema-wrapper', component: PreconfiguredSchemaComponent },
+        { name: 'preconfigured-schema-wrapper-fields', component: PreconfiguredSchemaFieldsComponent }
       ],
       validators: [
         { name: 'valid-name', validation: validNameValidator }
@@ -74,7 +77,6 @@ import { PreconfiguredSchemaComponent } from './wrappers/preconfigured-schema/pr
     })
   ],
   providers: [
-    FormlyFormJsonSchemaBuilderService,
     FormlyFormJsonSchemaInternalBuilderService
   ]
 })

@@ -13,5 +13,5 @@ export const validNameValidator: FieldValidatorFn = (control: AbstractControl, f
     return { 'valid-name': { 'message': `Must start with a letter or underscore` } };
   }
 
-  return { 'valid-name': { 'message': `Must contain only letters, numbers, or underscores` } };
+  return { 'valid-name': { 'message': `May only contain letters, numbers, or underscores` } };
 }

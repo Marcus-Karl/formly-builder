@@ -189,7 +189,7 @@ const COMPLEX_OBJECT: FormBuilderSelectionOption[] = [
   }
 ];
 
-const CUSTOM_OBJECT_SCHEMA: FormBuilderSelectionOption[] = [
+const PRECONFIGURED_SCHEMA: FormBuilderSelectionOption[] = [
   {
     value: 'preconfigured-schema',
     label: 'Preconfigured Schema',
@@ -202,264 +202,148 @@ const CUSTOM_OBJECT_SCHEMA: FormBuilderSelectionOption[] = [
         type: SelectionOptionType.FieldType,
         builderSchemaDefaults: {
           basic: {
-            name: 'requestInformation'
+            name: 'requestInformation',
+            label: ''
           },
           objectSchema: {
-            type: {
-              type: 'object',
-              widget: {
-                formlyConfig: {
-                  expressions: {
-                    hide: true
-                  }
-                }
-              },
-              properties: {
-                id: {
-                  type: 'string'
-                },
-                description: {
-                  type: 'string'
-                },
-                'baseType': {
-                  type: 'string'
-                }
-              },
-              required: [
-                'id',
-                'description'
-              ]
-            },
-            agency: {
-              type: 'object',
-              fieldType: 'agency',
-              widget: {
-                formlyConfig: {
-                  expressions: {
-                    hide: true
-                  }
-                }
-              },
-              properties: {
-                id: {
-                  type: 'string'
-                },
-                name: {
-                  type: 'string'
-                },
-                timezone: {
-                  type: 'string'
-                },
-                county: {
-                  type: 'object',
-                  properties: {
-                    id: {
-                      type: 'string'
-                    },
-                    description: {
-                      type: 'string'
-                    }
+            type: 'object',
+            properties: {
+              type: {
+                type: 'object',
+                properties: {
+                  id: {
+                    type: 'string'
                   },
-                  required: [
-                    'id',
-                    'description'
-                  ]
-                }
+                  description: {
+                    type: 'string'
+                  },
+                  baseType: {
+                    type: 'string'
+                  }
+                },
+                required: [
+                  'id',
+                  'description'
+                ]
               },
-              required: [
-                'id',
-                'name',
-                'county'
-              ]
-            },
-            documentId: {
-              type: 'string',
-              widget: {
-                formlyConfig: {
-                  expressions: {
-                    hide: true
+              agency: {
+                type: 'object',
+                fieldType: 'agency',
+                widget: {
+                  formlyConfig: {
+                    expressions: {
+                      hide: true
+                    }
+                  }
+                },
+                properties: {
+                  id: {
+                    type: 'string'
+                  },
+                  name: {
+                    type: 'string'
+                  },
+                  timezone: {
+                    type: 'string'
+                  },
+                  county: {
+                    type: 'object',
+                    properties: {
+                      id: {
+                        type: 'string'
+                      },
+                      description: {
+                        type: 'string'
+                      }
+                    },
+                    required: [
+                      'id',
+                      'description'
+                    ]
+                  }
+                },
+                required: [
+                  'id',
+                  'name',
+                  'county'
+                ]
+              },
+              documentId: {
+                type: 'string',
+                widget: {
+                  formlyConfig: {
+                    expressions: {
+                      hide: true
+                    }
                   }
                 }
+              },
+              court: {
+                type: 'object',
+                fieldType: 'court',
+                widget: {
+                  formlyConfig: {
+                    expressions: {
+                      hide: true
+                    }
+                  }
+                },
+                properties: {
+                  id: {
+                    type: 'string'
+                  },
+                  name: {
+                    type: 'string'
+                  },
+                  timezone: {
+                    type: 'string'
+                  },
+                  county: {
+                    type: 'object',
+                    properties: {
+                      id: {
+                        type: 'string'
+                      },
+                      description: {
+                        type: 'string'
+                      }
+                    },
+                    required: [
+                      'id',
+                      'description'
+                    ]
+                  }
+                },
+                required: [
+                  'id',
+                  'name',
+                  'county'
+                ]
               }
-            },
-            court: {
-              type: 'object',
-              fieldType: 'court',
-              widget: {
-                formlyConfig: {
-                  expressions: {
-                    hide: true
-                  }
-                }
-              },
-              properties: {
-                id: {
-                  type: 'string'
-                },
-                name: {
-                  type: 'string'
-                },
-                timezone: {
-                  type: 'string'
-                },
-                county: {
-                  type: 'object',
-                  properties: {
-                    id: {
-                      type: 'string'
-                    },
-                    description: {
-                      type: 'string'
-                    }
-                  },
-                  required: [
-                    'id',
-                    'description'
-                  ]
-                }
-              },
-              required: [
-                'id',
-                'name',
-                'county'
-              ]
             }
           }
         },
         schemaDefaults: {
           type: 'object',
-          properties: {
-            type: {
-              type: 'object',
-              widget: {
-                formlyConfig: {
-                  expressions: {
-                    hide: true
-                  }
-                }
-              },
-              properties: {
-                id: {
-                  type: 'string'
-                },
-                description: {
-                  type: 'string'
-                },
-                'baseType': {
-                  type: 'string'
-                }
-              },
-              required: [
-                'id',
-                'description'
-              ]
-            },
-            agency: {
-              type: 'object',
-              fieldType: 'agency',
-              widget: {
-                formlyConfig: {
-                  expressions: {
-                    hide: true
-                  }
-                }
-              },
-              properties: {
-                id: {
-                  type: 'string'
-                },
-                name: {
-                  type: 'string'
-                },
-                timezone: {
-                  type: 'string'
-                },
-                county: {
-                  type: 'object',
-                  properties: {
-                    id: {
-                      type: 'string'
-                    },
-                    description: {
-                      type: 'string'
-                    }
-                  },
-                  required: [
-                    'id',
-                    'description'
-                  ]
-                }
-              },
-              required: [
-                'id',
-                'name',
-                'county'
-              ]
-            },
-            documentId: {
-              type: 'string',
-              widget: {
-                formlyConfig: {
-                  expressions: {
-                    hide: true
-                  }
-                }
+          widget: {
+            formlyConfig: {
+              expressions: {
+                hide: true
               }
-            },
-            court: {
-              type: 'object',
-              fieldType: 'court',
-              widget: {
-                formlyConfig: {
-                  expressions: {
-                    hide: true
-                  }
-                }
-              },
-              properties: {
-                id: {
-                  type: 'string'
-                },
-                name: {
-                  type: 'string'
-                },
-                timezone: {
-                  type: 'string'
-                },
-                county: {
-                  type: 'object',
-                  properties: {
-                    id: {
-                      type: 'string'
-                    },
-                    description: {
-                      type: 'string'
-                    }
-                  },
-                  required: [
-                    'id',
-                    'description'
-                  ]
-                }
-              },
-              required: [
-                'id',
-                'name',
-                'county'
-              ]
-            },
-          required: [
-            'type',
-            'court',
-            'agency'
-          ]
-        }
+            }
+          }
         }
       },
       {
         value: 'attachments',
         label: 'Attachments',
         type: SelectionOptionType.FieldType,
+        builderSchemaDefaults: {
+          basic: {
+            name: 'attachments',
+            label: ''
+          }
+        },
         schemaDefaults: {
           type: 'array',
           maxItems: 100,
@@ -503,6 +387,12 @@ const CUSTOM_OBJECT_SCHEMA: FormBuilderSelectionOption[] = [
         value: 'supportingDocuments',
         label: 'Supporting Documents',
         type: SelectionOptionType.FieldType,
+        builderSchemaDefaults: {
+          basic: {
+            name: 'supportingDocuments',
+            label: ''
+          }
+        },
         schemaDefaults: {
           type: 'array',
           widget: {
@@ -528,6 +418,66 @@ const CUSTOM_OBJECT_SCHEMA: FormBuilderSelectionOption[] = [
             }
           }
         }
+      }
+    ]
+  }
+];
+
+const UNKNOWN_FIELD_TYPES: FormBuilderSelectionOption[] = [
+  {
+    value: 'unknown-free-response-field',
+    label: 'Unknown Free Response Field',
+    type: SelectionOptionType.FieldCategory,
+    category: 'field',
+    options: [
+      {
+        value: 'string',
+        label: 'String',
+        type: SelectionOptionType.FieldType
+      },
+      {
+        value: 'number',
+        label: 'Number',
+        type: SelectionOptionType.FieldType,
+        schemaDefaults: {
+          type: 'number'
+        }
+      },
+      {
+        value: 'boolean',
+        label: 'Boolean',
+        type: SelectionOptionType.FieldType,
+        schemaDefaults: {
+          type: 'checkbox'
+        }
+      },
+      {
+        value: 'integer',
+        label: 'Integer',
+        type: SelectionOptionType.FieldType,
+        schemaDefaults: {
+          type: 'number'
+        }
+      }
+    ]
+  },
+  {
+    value: 'unknown-multiple-choice-field',
+    label: 'Unknown Multiple Choice Field',
+    type: SelectionOptionType.FieldCategory,
+    category: 'field',
+    options: []
+  },
+  {
+    value: 'unknown-complex-object-field',
+    label: 'Unknown Complex Object',
+    type: SelectionOptionType.FieldCategory,
+    category: 'field',
+    options: [
+      {
+        type: SelectionOptionType.FieldType,
+        value: 'object',
+        label: 'Object'
       }
     ]
   }
@@ -565,7 +515,8 @@ const DEFAULT_FORM_BUILDER_SELECTION_CONFIGURATION: FormBuilderSelectionOption =
   type: SelectionOptionType.Base,
   options: [
     ...COMPLEX_OBJECT,
-    ...CUSTOM_OBJECT_SCHEMA,
+    ...PRECONFIGURED_SCHEMA,
+    ...UNKNOWN_FIELD_TYPES,
     ...DISPLAY_CONTENT,
     ...FREE_RESPONSE_FIELDS,
     ...MULTIPLE_CHOICE_FIELDS,

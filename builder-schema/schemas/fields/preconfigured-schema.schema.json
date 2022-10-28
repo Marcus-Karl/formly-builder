@@ -11,7 +11,10 @@
       "type": "page-fields",
       "props": {
         "hideLabel": false
-      }
+      },
+      "wrappers": [
+        "preconfigured-schema-wrapper-fields"
+      ]
     }
   },
   "items": {

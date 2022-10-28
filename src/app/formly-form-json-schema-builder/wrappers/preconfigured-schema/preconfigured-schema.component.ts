@@ -1,62 +1,84 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
-import { FieldWrapper } from '@ngx-formly/core';
-import { BuilderFormState, SelectionOptionType } from '../../models/builder-form-state';
+import { FieldWrapper, FormlyFieldConfig } from '@ngx-formly/core';
+import { Subscription } from 'rxjs';
+import { BuilderFormState, FormBuilderSelectionOption, SelectionOptionType } from '../../models/builder-form-state';
 
 @Component({
   selector: 'app-preconfigured-schema',
-  template: '<ng-container #fieldComponent></ng-container>',
+  template: `<ng-container #fieldComponent></ng-container>`,
   styles: [``]
 })
-export class PreconfiguredSchemaComponent extends FieldWrapper implements OnInit {
+export class PreconfiguredSchemaComponent extends FieldWrapper implements OnDestroy, OnInit {
+
+  private _subscription?: Subscription;
 
   ngOnInit() {
     const basicFields = this.field.fieldGroup?.find(x => x.key === 'basic');
     const objectSchema = this.field.fieldGroup?.find(x => x.key === 'objectSchema');
-
     const typeField = basicFields?.fieldGroup?.find(x => x.key === 'type');
     const subTypeField = basicFields?.fieldGroup?.find(x => x.key === 'subType');
 
-    if (typeField && subTypeField && objectSchema) {
-      typeField.formControl?.valueChanges.subscribe(type => {
-        this.options.checkExpressions?.(subTypeField);
+    this._subscription = this.field.options?.fieldChanges?.subscribe(change => {
+      if (change.type !== 'valueChanges') {
+        return;
+      }
 
-        Object.values((basicFields?.formControl as UntypedFormGroup).controls ?? {}).forEach(control => {
-          if (control.disabled) {
-            control.enable();
-          }
-        });
+      if (change.field === objectSchema) {
+        if (change.value?.length && (typeField?.formControl?.enabled || subTypeField?.formControl?.enabled)) {
+          typeField?.formControl?.disable();
+          subTypeField?.formControl?.disable();
+        } else if (!change.value?.length) {
+          this._enableApplicableFields(basicFields);
+        }
+      }
 
-        const builderFormState: BuilderFormState = this.field.options?.formState;
+      if (change.field === typeField) {
+        subTypeField && this.options.checkExpressions?.(subTypeField);
 
-        if (subTypeField.hide) {
+        this._enableApplicableFields(basicFields);
+
+        if (!subTypeField || subTypeField?.hide) {
+          const builderFormState: BuilderFormState = this.field.options?.formState;
           const options = builderFormState?.builder.options[SelectionOptionType.FieldType];
 
-          if (options) {
-            const builderSchemaDefaults = options.find((x: any) => x.value === type)?.builderSchemaDefaults ?? {};
-
-            Object.entries(builderSchemaDefaults.basic ?? {}).forEach(([key, value]) => {
-              const field = basicFields?.fieldGroup?.find(x => x.key === key);
-              field?.formControl?.patchValue(value);
-              field?.formControl?.disable();
-            });
-          }
-        } else {
-          const options = builderFormState?.builder.options[SelectionOptionType.FieldSubType];
-
-          if (options) {
-            subTypeField?.formControl?.valueChanges.subscribe(subType => {
-              const builderSchemaDefaults = options.find((x: any) => x.value === subType)?.builderSchemaDefaults ?? {};
-
-              Object.entries(builderSchemaDefaults.basic ?? {}).forEach(([key, value]) => {
-                const field = basicFields?.fieldGroup?.find(x => x.key === key);
-                field?.formControl?.patchValue(value);
-                field?.formControl?.disable();
-              });
-            });
-          }
+          this._disableApplicableFields(options, change.value, basicFields?.fieldGroup);
         }
-      })
-    }
+      }
+
+      if (change.field === subTypeField) {
+        this._enableApplicableFields(basicFields);
+
+        const builderFormState: BuilderFormState = this.field.options?.formState;
+        const options = builderFormState?.builder.options[SelectionOptionType.FieldSubType];
+
+        this._disableApplicableFields(options, change.value, basicFields?.fieldGroup);
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this._subscription?.unsubscribe?.();
+  }
+
+  private _enableApplicableFields(basicFields?: FormlyFieldConfig) {
+    Object.values((basicFields?.formControl as UntypedFormGroup).controls ?? {}).forEach(control => {
+      if (control.disabled) {
+        control.enable();
+      }
+    });
+  }
+
+  private _disableApplicableFields(options: FormBuilderSelectionOption[], type: string, fieldGroup?: FormlyFieldConfig[]) {
+    const builderSchemaDefaults = options?.find((x: any) => x.value === type)?.builderSchemaDefaults;
+
+    Object.entries(builderSchemaDefaults?.basic ?? {}).forEach(([key, value]) => {
+      const field = fieldGroup?.find(x => x.key === key);
+      field?.formControl?.patchValue(value);
+
+      if (value) {
+        field?.formControl?.disable();
+      }
+    });
   }
 }

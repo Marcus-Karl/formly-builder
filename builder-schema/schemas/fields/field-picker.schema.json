@@ -44,7 +44,10 @@
             "extra": {
               "$ref": "./extras.schema.json"
             }
-          }
+          },
+          "required": [
+            "basic"
+          ]
         },
         {
           "widget": {
@@ -69,7 +72,11 @@
             "extra": {
               "$ref": "./extras.schema.json"
             }
-          }
+          },
+          "required": [
+            "basic",
+            "options"
+          ]
         },
         {
           "widget": {
@@ -94,7 +101,10 @@
             "preview": {
               "$ref": "./preview-display-content.schema.json"
             }
-          }
+          },
+          "required": [
+            "basic"
+          ]
         },
         {
           "widget": {
@@ -116,7 +126,11 @@
             "objectSchema": {
               "$ref": "./complex-object.schema.json"
             }
-          }
+          },
+          "required": [
+            "basic",
+            "objectSchema"
+          ]
         },
         {
           "widget": {
@@ -124,7 +138,7 @@
               "type": "tab-form",
               "props": {
                 "hideButtons": true,
-                "linear": false
+                "linear": true
               },
               "wrappers": [
                 "preconfigured-schema-wrapper"
@@ -141,7 +155,89 @@
             "objectSchema": {
               "$ref": "./preconfigured-schema.schema.json"
             }
-          }
+          },
+          "required": [
+            "basic",
+            "objectSchema"
+          ]
+        },
+        {
+          "widget": {
+            "formlyConfig": {
+              "type": "tab-form",
+              "props": {
+                "hideButtons": true,
+                "linear": true
+              }
+            }
+          },
+          "properties": {
+            "category": {
+              "const": "unknown-free-response-field"
+            },
+            "basic": {
+              "$ref": "./basic.schema.json"
+            },
+            "extra": {
+              "$ref": "./extras.schema.json"
+            }
+          },
+          "required": [
+            "basic"
+          ]
+        },
+        {
+          "widget": {
+            "formlyConfig": {
+              "type": "tab-form",
+              "props": {
+                "hideButtons": true,
+                "linear": true
+              }
+            }
+          },
+          "properties": {
+            "category": {
+              "const": "unknown-multiple-choice-field"
+            },
+            "basic": {
+              "$ref": "./basic.schema.json"
+            },
+            "options": {
+              "$ref": "./options.schema.json"
+            },
+            "extra": {
+              "$ref": "./extras.schema.json"
+            }
+          },
+          "required": [
+            "basic"
+          ]
+        },
+        {
+          "widget": {
+            "formlyConfig": {
+              "type": "tab-form",
+              "props": {
+                "hideButtons": true,
+                "linear": true
+              }
+            }
+          },
+          "properties": {
+            "category": {
+              "const": "unknown-complex-object-field"
+            },
+            "basic": {
+              "$ref": "./basic.schema.json"
+            },
+            "objectSchema": {
+              "$ref": "./preconfigured-schema.schema.json"
+            }
+          },
+          "required": [
+            "basic"
+          ]
         }
       ]
     }
