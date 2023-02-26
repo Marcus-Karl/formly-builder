@@ -2,12 +2,13 @@
 
 <div
   cdkDrag
-  class="drag-container"
+  class="drag-container flex-column"
   cdkDragBoundary=".cdk-overlay-container"
   cdkDragRootElement=".cdk-overlay-pane">
 
   <div
     cdkDragHandle
+    class="flex-column"
     [cdkDragHandleDisabled]="mouseIsHovered">
 
     <div class="dialog-header">
@@ -20,12 +21,23 @@
     </div>
 
     <div mat-dialog-content>
-      <formly-field [field]="field" [ngClass]="field.props?.classes"></formly-field>
+      <formly-field
+        [field]="field"
+        [ngClass]="field.props?.classes"
+        (mouseenter)="mouseIsHovered = true"
+        (mouseleave)="mouseIsHovered = false"
+        cdkFocusInitial>
+      </formly-field>
     </div>
 
-    <mat-dialog-actions #footer [align]="'end'">
+    <mat-dialog-actions class="buttons" [align]="'end'">
       <ng-container *ngIf="!field.formControl?.disabled && isNewlyAdded">
-        <button mat-flat-button (click)="resetAndClose()" extended>
+        <button
+          mat-flat-button
+          (click)="resetAndClose()"
+          (mouseenter)="mouseIsHovered = true"
+          (mouseleave)="mouseIsHovered = false"
+          extended>
           <mat-icon>undo</mat-icon>
           Remove & Close
         </button>
@@ -35,6 +47,8 @@
           color="primary"
           [disabled]="field.formControl?.invalid"
           [hidden]="!categorySelectionComplete"
+          (mouseenter)="mouseIsHovered = true"
+          (mouseleave)="mouseIsHovered = false"
           (click)="updateAndClose()">
           Save & Close
         </button>
@@ -43,12 +57,20 @@
           *ngIf="!categorySelectionComplete && categoryField;"
           mat-raised-button color="primary"
           [disabled]="categoryField.formControl?.invalid"
+          (mouseenter)="mouseIsHovered = true"
+          (mouseleave)="mouseIsHovered = false"
           (click)="onSelectedCategory()">
           Continue
         </button>
       </ng-container>
 
-      <button *ngIf="!(!field.formControl?.disabled && isNewlyAdded)" mat-raised-button color="primary" (click)="dialogRef.close()" cdkFocusInitial>
+      <button
+        *ngIf="!(!field.formControl?.disabled && isNewlyAdded)"
+        mat-raised-button color="primary"
+        (mouseenter)="mouseIsHovered = true"
+        (mouseleave)="mouseIsHovered = false"
+        (click)="dialogRef.close()"
+        cdkFocusInitial>
         Close
       </button>
     </mat-dialog-actions>

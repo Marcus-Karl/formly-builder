@@ -1,13 +1,12 @@
 <div class="top-buttons center-content" [style.margin-left]="'auto'">
-  <button mat-flat-button color="primary" (click)="add()" [disabled]="!disableReordering || formControl.disabled">
+  <button mat-flat-button (click)="add()" [disabled]="!disableReordering || formControl.disabled">
     <mat-icon>add</mat-icon>
     Add Option
   </button>
 
-
-    <button type="button" mat-button [disabled]="!field.fieldGroup?.length || formControl.disabled" (click)="disableReordering = !disableReordering;">
-      {{ disableReordering ? 'Reorder Options' : 'Edit Options' }}
-    </button>
+  <button mat-flat-button [disabled]="!field.fieldGroup?.length || formControl.disabled" (click)="disableReordering = !disableReordering;">
+    {{ disableReordering ? 'Reorder Options' : 'Edit Options' }}
+  </button>
 </div>
 
 <div *ngIf="field.fieldGroup?.length; else noOptions">

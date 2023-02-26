@@ -4,7 +4,7 @@ import { BuilderFormState, FieldInformation, PageInformation, SelectionOption } 
 import { FormlyFormJsonSchemaInternalBuilderService } from '../../services/formly-form-json-schema-internal-builder.service';
 
 @Component({
-  selector: 'app-dependency-builder',
+  selector: 'dependency-builder',
   templateUrl: './dependency-builder.component.html',
   styleUrls: ['./dependency-builder.component.scss']
 })

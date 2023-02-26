@@ -25,15 +25,11 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
   public columnsToDisplay = ['_order', 'category', 'basic.label', 'basic.type', 'edit'];
   public reorderEnabled = false;
 
-  private _categories: any[] | undefined;
-
   constructor(private dialog: MatDialog, private formlyBuilderService: FormlyFormJsonSchemaInternalBuilderService) {
     super();
   }
 
   ngOnInit() {
-    this._setCategories();
-
     this._addObjectSchema();
   }
 
@@ -190,32 +186,16 @@ export class PageFieldsComponent extends FieldArrayType implements OnInit {
   }
 
   private _addObjectSchema() {
-    if (this.model?.length) {
-      return;
-    }
-
     if (this.props.objectSchema) {
       try {
         const schema = ConvertJsonSchema.toModel(this.props.objectSchema as JSONSchema7, this.options.formState);
 
-        console.log(`objectSchema`, JSON.stringify(schema, null, 2));
-
         schema?.form.pages.forEach(obj => {
           this.add(undefined, obj, undefined, true);
         });
-
-        console.log(`Final model`, this.model);
       } catch(e) {
         console.error(`Error parsing and adding objectSchema.`, e, this.props.objectSchema);
       }
-    }
-  }
-
-  private _setCategories() {
-    const builderFormState: BuilderFormState = this.options?.formState;
-
-    if (builderFormState?.builder.options[SelectionOptionType.FieldCategory]?.length) {
-      this._categories = builderFormState?.builder.options[SelectionOptionType.FieldCategory];
     }
   }
 }

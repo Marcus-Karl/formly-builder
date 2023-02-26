@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { BuilderFormState, FormBuilderSelectionOption, SelectionOptionType } from '../../models/builder-form-state';
 
 @Component({
-  selector: 'app-preconfigured-schema',
+  selector: 'preconfigured-schema',
   template: `<ng-container #fieldComponent></ng-container>`,
   styles: [``]
 })

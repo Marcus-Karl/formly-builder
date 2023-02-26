@@ -13,19 +13,16 @@ import { FormlyModule } from '@ngx-formly/core';
 import { NgxEditorModule } from 'ngx-editor';
 
 import { FormlyFormCoreModule } from 'src/app/formly-form-core/formly-form-core.module';
-
 import { FormlyFormJsonSchemaInternalBuilderService } from './services/formly-form-json-schema-internal-builder.service';
-import { FormlyBuilderRoutes } from './formly-form-json-schema-builder.routes';
+import { FormlyFormJsonSchemaBuilderRoutingModule } from './formly-form-json-schema-builder.routes';
 
 import { validNameValidator } from './validators/valid-field-name.builder';
-
 import { DisplayHtmlEditorComponent } from './components/display-html-editor/display-html-editor.component';
 import { FieldEditorComponent } from './modals/field-editor/field-editor.component';
 import { FormlyFormJsonSchemaBuilderComponent } from './formly-form-json-schema-builder.component';
 import { FormEditorComponent } from './components/form-editor/form-editor.component';
 import { OptionsEditorComponent } from './components/options-editor/options-editor.component';
 import { PageFieldsComponent } from './components/page-fields/page-fields.component';
-import { FormlyFormJsonSchemaBuilderService } from './services/formly-form-json-schema-builder.service';
 import { DependencyBuilderComponent } from './components/dependency-builder/dependency-builder.component';
 import { PreconfiguredSchemaComponent } from './wrappers/preconfigured-schema/preconfigured-schema.component';
 import { PreconfiguredSchemaFieldsComponent } from './wrappers/preconfigured-schema-fields/preconfigured-schema-fields.component';
@@ -46,7 +43,6 @@ import { PreconfiguredSchemaFieldsComponent } from './wrappers/preconfigured-sch
     FormlyFormJsonSchemaBuilderComponent
   ],
   imports: [
-    FormlyFormCoreModule,
     DragDropModule,
     MatButtonModule,
     MatDialogModule,
@@ -58,7 +54,8 @@ import { PreconfiguredSchemaFieldsComponent } from './wrappers/preconfigured-sch
     MatTooltipModule,
     NgxEditorModule,
     ScrollingModule,
-    FormlyBuilderRoutes,
+    FormlyFormCoreModule,
+    FormlyFormJsonSchemaBuilderRoutingModule,
     FormlyModule.forChild({
       types: [
         { name: 'dependency-builder', component: DependencyBuilderComponent },

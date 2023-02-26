@@ -15,7 +15,7 @@
   flex: 1;
 }
 
-:host ::ng-deep .page-form-mat-tab-group > .mat-tab-header {
+:host ::ng-deep .page-form-mat-tab-group > .mat-mdc-tab-header {
   display: none;
 }
 
@@ -24,8 +24,12 @@
   color: #b00020 !important;
 }
 
-mat-tab-group.mat-tab-group {
-  flex: 1;
+mat-tab-group.mat-mdc-tab-group {
+  flex-grow: 1;
+}
+
+:host ::ng-deep .page-form-mat-tab-group > .mat-mdc-tab-body-wrapper > .mat-mdc-tab-body > .mat-mdc-tab-body-content {
+  overflow: hidden !important;
 }
 
 .button-content {

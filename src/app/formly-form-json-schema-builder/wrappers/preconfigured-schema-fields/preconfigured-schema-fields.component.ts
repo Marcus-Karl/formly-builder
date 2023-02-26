@@ -3,7 +3,7 @@ import { FieldWrapper } from '@ngx-formly/core';
 import { BuilderFormState, SelectionOptionType } from '../../models/builder-form-state';
 
 @Component({
-  selector: 'app-preconfigured-schema-fields',
+  selector: 'preconfigured-schema-fields',
   template: `<ng-container #fieldComponent></ng-container>`,
   styles: [``]
 })

@@ -5,7 +5,7 @@ import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-formly-form-builder-preview',
+  selector: 'formly-form-builder-preview',
   templateUrl: './formly-form-builder-preview.component.html',
   styleUrls: ['./formly-form-builder-preview.component.scss']
 })

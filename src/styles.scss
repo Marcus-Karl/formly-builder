@@ -34,10 +34,12 @@ html, body {
 }
 
 .flex-row {
+  display: flex;
   flex-direction: row;
 }
 
 .flex-column {
+  display: flex;
   flex-direction: column;
 }
 
@@ -87,6 +89,10 @@ html, body {
 // Makes asterisk color for required field same as text (for WCAG complicance - contrast)
 .mat-form-field.mat-form-field-should-float.mat-focused .mat-form-field-required-marker {
   color: #283593;
+}
+
+.error {
+  color: #b00020 !important;
 }
 
 .mat-form-field.mat-form-field-invalid .mat-form-field-ripple {
@@ -160,5 +166,8 @@ html, body {
 
 mat-form-field.mat-form-field-appearance-outline {
   padding-top: 0.5em;
-  margin-bottom: 1em;
+
+  .mat-mdc-form-field-subscript-wrapper {
+    min-height: var(--mdc-typography-caption-line-height, 22px);
+  }
 }

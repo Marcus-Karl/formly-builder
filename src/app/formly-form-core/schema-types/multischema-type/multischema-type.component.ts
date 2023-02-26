@@ -3,7 +3,7 @@ import { FieldTypeConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
 
 @Component({
-  selector: 'app-multischema-type',
+  selector: 'multischema-type',
   template: `<formly-field *ngFor="let f of field.fieldGroup" [field]="f" [class]="field.fieldGroupClassName"></formly-field>`,
   styles: [
     `:host {

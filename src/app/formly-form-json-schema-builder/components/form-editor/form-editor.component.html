@@ -1,10 +1,10 @@
 <div class="top-buttons">
-  <button mat-flat-button color="primary" (click)="add()" [disabled]="reorderEnabled" extended>
+  <button mat-flat-button (click)="add()" [disabled]="reorderEnabled" extended>
     <mat-icon>add</mat-icon>
     Add Page
   </button>
 
-  <button mat-button [disabled]="!field.fieldGroup?.length" (click)="reorderEnabled = !reorderEnabled; reorderEnabled ? accordion && accordion.closeAll() : null;">
+  <button mat-flat-button [disabled]="!field.fieldGroup?.length" (click)="reorderEnabled = !reorderEnabled; reorderEnabled ? accordion && accordion.closeAll() : null;">
     {{ reorderEnabled ? 'Edit Pages' : 'Edit Form' }}
   </button>
 </div>

@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { SelectOption } from '../../models/multiple-choice.models';
 
 @Component({
-  selector: 'app-toggle-button-field',
+  selector: 'toggle-button-field',
   templateUrl: './toggle-button-field.component.html',
   styleUrls: ['./toggle-button-field.component.scss']
 })
