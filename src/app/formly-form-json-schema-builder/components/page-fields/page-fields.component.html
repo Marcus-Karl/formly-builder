@@ -1,21 +1,12 @@
-<div class="flex fill-width">
-  <div class="top-buttons center-content" [style.margin-left]="'auto'">
-    <button type="button" mat-button (click)="add()" [disabled]="reorderEnabled">
-      <div class="center-content flex">
-        <mat-icon>add</mat-icon>
+<div class="top-buttons center-content" [style.margin-left]="'auto'">
+  <button mat-flat-button color="primary" (click)="add()" [disabled]="reorderEnabled" extended>
+    <mat-icon>add</mat-icon>
+    Add Field
+  </button>
 
-        <div class="pad-left-half">
-          Add Field
-        </div>
-      </div>
-    </button>
-
-    <div class="margin-left-2">
-      <button type="button" mat-button [disabled]="!field.fieldGroup?.length && !reorderEnabled" (click)="reorderEnabled = !reorderEnabled;">
-        {{ reorderEnabled ? 'Edit Fields'  : 'Reorder Fields' }}
-      </button>
-    </div>
-  </div>
+  <button mat-button [disabled]="!field.fieldGroup?.length && !reorderEnabled" (click)="reorderEnabled = !reorderEnabled;">
+    {{ reorderEnabled ? 'Edit Fields'  : 'Reorder Fields' }}
+  </button>
 </div>
 
 <div
@@ -100,7 +91,6 @@
       [ngStyle]="reorderEnabled && { 'cursor': 'move' } || {}">
     </tr>
   </table>
-
 </div>
 
 <errors-and-hints [field]="field"></errors-and-hints>

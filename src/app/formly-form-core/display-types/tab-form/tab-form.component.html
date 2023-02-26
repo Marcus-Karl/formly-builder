@@ -12,12 +12,12 @@
           [matTooltipDisabled]="!isPageAtIndexInvalid(index)">
 
           <ng-container *ngIf="page.formControl?.touched && page.formControl?.invalid; else defaultlabel">
-            <mat-icon class="margin-right-half error-state material-icons">warning</mat-icon>
+            <mat-icon class="error-state">warning</mat-icon>
           </ng-container>
 
           <ng-template #defaultlabel>
             <ng-container *ngIf="props.pageStates && props.pageStates[page.props?.pageState] as state">
-              <mat-icon class="margin-right-half" [ngClass]="state.class" [ngStyle]="{ 'opacity': index === selectedIndex ? '1' : '0.6' }">
+              <mat-icon [ngClass]="state.class" [ngStyle]="{ 'opacity': index === selectedIndex ? '1' : '0.6' }">
                 {{ state.icon }}
               </mat-icon>
             </ng-container>
@@ -38,23 +38,19 @@
 
 <div class="form-controls-wrapper" *ngIf="!props.hideButtons">
   <div class="form-controls">
-    <div class="margin-right-2">
-      <button *ngIf="selectedIndex !== 0 && hasBackPage(selectedIndex)"
-        mat-raised-button
-        type="button"
-        color="primary"
-        (click)="decrementPageFromIndex(selectedIndex - 1)">
-        <div>Back</div>
-      </button>
-    </div>
+    <button *ngIf="selectedIndex !== 0 && hasBackPage(selectedIndex)"
+      mat-raised-button
+      color="primary"
+      (click)="decrementPageFromIndex(selectedIndex - 1)">
+      Back
+    </button>
 
     <button *ngIf="hasForwardPage(selectedIndex)"
       mat-raised-button
-      type="button"
       color="primary"
       [disabled]="props.linear && isPrecedingPageInvalid(selectedIndex)"
       (click)="incrementPageFromIndex(selectedIndex + 1)">
-      <div>Continue</div>
+      Continue
     </button>
 
     <button *ngIf="!props.hideSubmit && !hasForwardPage(selectedIndex)"
@@ -62,7 +58,7 @@
       type="submit"
       color="primary"
       [disabled]="form.invalid">
-      <div>Submit</div>
+      Submit
     </button>
   </div>
 </div>

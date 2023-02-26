@@ -1,21 +1,21 @@
 
 :host {
-  height: calc(100% + 48px);
-  width: calc(100% + 48px);
   min-width: 375px;
-  margin: -24px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  height: 100%;
 }
 
-.header-content {
+.dialog-header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 
-  color: white;
-  padding: 12px 24px;
+  > button {
+    margin-right: 8px;
+  }
 }
 
 :host ::ng-deep {
@@ -36,6 +36,14 @@
         box-sizing: border-box;
       }
     }
+  }
+}
+
+.drag-container {
+  height: 100%;
+
+  > div {
+    height: 100%;
   }
 }
 

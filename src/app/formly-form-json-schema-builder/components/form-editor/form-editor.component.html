@@ -1,21 +1,12 @@
-<div class="flex fill-width">
-  <div class="top-buttons center-content" [style.margin-left]="'auto'">
-    <button type="button" mat-button (click)="add()" [disabled]="reorderEnabled">
-      <div class="center-content flex">
-        <mat-icon>add</mat-icon>
+<div class="top-buttons">
+  <button mat-flat-button color="primary" (click)="add()" [disabled]="reorderEnabled" extended>
+    <mat-icon>add</mat-icon>
+    Add Page
+  </button>
 
-        <div class="pad-left-half">
-          Add Page
-        </div>
-      </div>
-    </button>
-
-    <div class="margin-left-2">
-      <button type="button" mat-button [disabled]="!field.fieldGroup?.length" (click)="reorderEnabled = !reorderEnabled; reorderEnabled ? accordion && accordion.closeAll() : null;">
-        {{ reorderEnabled ? 'Edit Pages' : 'Edit Form' }}
-      </button>
-    </div>
-  </div>
+  <button mat-button [disabled]="!field.fieldGroup?.length" (click)="reorderEnabled = !reorderEnabled; reorderEnabled ? accordion && accordion.closeAll() : null;">
+    {{ reorderEnabled ? 'Edit Pages' : 'Edit Form' }}
+  </button>
 </div>
 
 <div
@@ -39,7 +30,7 @@
 
       <mat-expansion-panel-header [ngClass]="{ 'remove-disable-shading': reorderEnabled }">
         <div class="fill center-content header-contents">
-          <mat-panel-title class="page-summary subtitle-filled">
+          <mat-panel-title class="page-summary">
             <div class="summary-row">
               <div class="row-label">Position</div>{{ page.model?._order }}
             </div>
@@ -57,18 +48,14 @@
 
           <div *ngIf="reorderEnabled" class="center-content">
             <button type="button" mat-icon-button (click)="confirmRemoval(page)">
-              <div class="center-content flex">
-                <mat-icon>delete</mat-icon>
-              </div>
+              <mat-icon>delete</mat-icon>
             </button>
           </div>
         </div>
       </mat-expansion-panel-header>
 
       <ng-template matExpansionPanelContent>
-        <div class="pad-half">
-          <formly-field [field]="page" [ngClass]="page.props?.classes"></formly-field>
-        </div>
+        <formly-field [field]="page" [ngClass]="page.props?.classes"></formly-field>
       </ng-template>
 
     </mat-expansion-panel>

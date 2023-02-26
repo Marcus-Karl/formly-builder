@@ -1,20 +1,13 @@
-<div class="flex fill-width">
-  <div class="top-buttons center-content" [style.margin-left]="'auto'">
-    <button type="button" mat-button (click)="add()" [disabled]="!disableReordering || formControl.disabled">
-      <div class="center-content flex">
-        <mat-icon>add</mat-icon>
-        <div class="pad-left-half">
-          Add Option
-        </div>
-      </div>
-    </button>
+<div class="top-buttons center-content" [style.margin-left]="'auto'">
+  <button mat-flat-button color="primary" (click)="add()" [disabled]="!disableReordering || formControl.disabled">
+    <mat-icon>add</mat-icon>
+    Add Option
+  </button>
 
-    <div class="margin-left toggle-mode">
-      <button type="button" mat-button [disabled]="!field.fieldGroup?.length || formControl.disabled" (click)="disableReordering = !disableReordering;">
-        {{ disableReordering ? 'Reorder Options' : 'Edit Options' }}
-      </button>
-    </div>
-  </div>
+
+    <button type="button" mat-button [disabled]="!field.fieldGroup?.length || formControl.disabled" (click)="disableReordering = !disableReordering;">
+      {{ disableReordering ? 'Reorder Options' : 'Edit Options' }}
+    </button>
 </div>
 
 <div *ngIf="field.fieldGroup?.length; else noOptions">
@@ -63,11 +56,9 @@
         </div>
 
         <ng-template #editIcons>
-          <button type="button" mat-icon-button [attr.aria-label]="'Edit'" (click)="selection.toggle(row)" [disabled]="formControl.disabled">
-            <div class="center-content flex">
-              <mat-icon *ngIf="!selection.isSelected(row)">edit</mat-icon>
+          <button mat-icon-button [attr.aria-label]="'Edit'" (click)="selection.toggle(row)" [disabled]="formControl.disabled">
+            <mat-icon *ngIf="!selection.isSelected(row)">edit</mat-icon>
               <mat-icon *ngIf="selection.isSelected(row)">done</mat-icon>
-            </div>
           </button>
         </ng-template>
       </td>
@@ -79,7 +70,7 @@
 </div>
 
 <ng-template #noOptions>
-  <div class="center-content flex fill">
+  <div class="center-content flex fill-width">
     <div class="title">
       No Options Configured
     </div>

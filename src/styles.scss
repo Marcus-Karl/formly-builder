@@ -1,62 +1,43 @@
 @use '@angular/material' as mat;
 @import '@angular/material/_theming';
-
 @include mat.core();
 
-// Define font variable to reuse (i.e., to configure angular material and body definition)
-$font-stack: 'Source Sans Pro', 'Roboto', 'Helvetica Neue', 'sans-serif';
-
-// Tell angular material to use these fonts
-$custom-typography: mat.define-typography-config($font-family: $font-stack);
-
-@include mat.core($custom-typography);
-
+$fonts: Roboto, sans-serif;
 $app-primary: mat.define-palette(mat.$indigo-palette, 800, 400, 900);
 $app-accent: mat.define-palette(mat.$amber-palette, A200, A100, A400);
 $app-warn: mat.define-palette(mat.$red-palette, 900);
-$app-theme: mat.define-light-theme($app-primary, $app-accent, $app-warn);
+$app-typography: mat.define-typography-config(
+  $font-family: $fonts
+);
 
-// Include the default theme styles.
+$app-theme: mat.define-light-theme((
+  color: (
+    primary: $app-primary,
+    accent: $app-accent,
+    warn: $app-warn
+  ),
+  typography: $app-typography,
+  density: 0
+));
+
 @include mat.all-component-themes($app-theme);
 
 html, body {
   background: #EEE;
 
-  font-family: $font-stack;
-  font-size: 16px;
+  font-family: $fonts;
   text-rendering: optimizeLegibility !important;
-}
-
-.dialog-header {
-  margin: -24px -24px 0 -24px;
-  padding: 24px 24px 18px 24px;
-  background-color: mat.get-color-from-palette($app-primary, default);
-  color: white;
-}
-
-// Makes asterisk color for required field same as text (for WCAG complicance - contrast)
-.mat-form-field.mat-form-field-should-float.mat-focused .mat-form-field-required-marker {
-  color: #283593;
-}
-
-.mat-form-field.mat-form-field-invalid .mat-form-field-ripple {
-  background-color: #b00020 !important;
-}
-
-// Makes asterisk color for required field same as text for invalid fields (for WCAG complicance - contrast)
-.mat-form-field.mat-form-field-invalid .mat-form-field-required-marker { 
-  color: #b00020 !important;
 }
 
 .flex {
   display: flex;
 }
 
-.row {
+.flex-row {
   flex-direction: row;
 }
 
-.column {
+.flex-column {
   flex-direction: column;
 }
 
@@ -64,196 +45,12 @@ html, body {
   box-sizing : border-box;
 }
 
-.fill, .fill-width {
+.fill-width {
   width: 100%;
-}
-
-.fill, .fill-height {
-  height: 100%;
-}
-
-.text-align-left {
-  text-align: left;
-}
-
-.text-align-center {
-  text-align: center;
-}
-
-.text-align-right {
-  text-align: right;
 }
 
 .bold {
   font-weight: bold;
-}
-
-.bold-important {
-  font-weight: bold !important;
-}
-
-.header {
-  font-size: 42px;
-  letter-spacing: 0.25pt;
-  font-weight: normal;
-  margin: 0 0 2rem 0;
-}
-
-.header-subtitle {
-  @extend .header;
-  margin: 0 0 0.25rem 0;
-}
-
-.title  {
-  font-size: 24px;
-  letter-spacing: 0.25pt;
-  font-weight: normal;
-  margin: 0 0 0.5rem 0;
-}
-
-.title-subtitle {
-  @extend .title;
-  margin: 0 0 0.15rem 0;
-}
-
-.subheader {
-  font-size: 16px;
-  letter-spacing: 0.25pt;
-  font-weight: bold;
-  margin: 0 0 0.5rem 0;
-}
-
-.subtitle {
-  font-size: 16px;
-  letter-spacing: 0.15pt;
-  color: rgba($color: #000000, $alpha: 0.54);
-  margin: 0;
-}
-
-.subtitle-filled {
-  @extend .subtitle;
-  color: unset;
-  margin: 0;
-}
-
-.no-pad {
-  padding: 0;
-}
-
-.pad-half {
-  padding: 0.5rem;
-}
-
-.pad {
-  padding: 1rem;
-}
-
-.pad-2 {
-  padding: 2rem;
-}
-
-.pad-right-half {
-  padding-right: 0.5rem;
-}
-
-.pad-right {
-  padding-right: 1rem;
-}
-
-.pad-right-2 {
-  padding-right: 2rem;
-}
-
-.pad-left-half {
-  padding-left: 0.5rem;
-}
-
-.pad-left {
-  padding-left: 1rem;
-}
-
-.pad-left-2 {
-  padding-left: 2rem;
-}
-
-.pad-bottom-half {
-  padding-bottom: 0.5rem;
-}
-
-.pad-bottom {
-  padding-bottom: 1rem;
-}
-
-.pad-bottom-2 {
-  padding-bottom: 2rem;
-}
-
-.pad-top-half {
-  padding-top: 0.5rem;
-}
-
-.pad-top {
-  padding-top: 1rem;
-}
-
-.pad-top-2 {
-  padding-top: 2rem;
-}
-
-.margin-half {
-  margin: 0.5rem;
-}
-
-.margin {
-  margin: 1rem;
-}
-
-.margin-right-half {
-  margin-right: 0.5rem;
-}
-
-.margin-right {
-  margin-right: 1rem;
-}
-
-.margin-right-2 {
-  margin-right: 2rem;
-}
-
-.margin-left-half {
-  margin-left: 0.5rem;
-}
-
-.margin-left {
-  margin-left: 1rem;
-}
-
-.margin-left-2 {
-  margin-left: 2rem;
-}
-
-.margin-top-half {
-  margin-top: 0.5rem;
-}
-
-.margin-top {
-  margin-top: 1rem;
-}
-
-.margin-top-2 {
-  margin-top: 2rem;
-}
-
-.margin-bottom-half {
-  margin-bottom: 0.5rem;
-}
-
-.margin-bottom {
-  margin-bottom: 1rem;
-}
-
-.margin-bottom-2 {
-  margin-bottom: 2rem;
 }
 
 .center {
@@ -271,36 +68,38 @@ html, body {
   justify-content: center;
 }
 
-.space-between {
-  justify-content: space-between;
-}
-
-.scrollableX {
-  overflow-x: auto;
-}
-
-.scrollableY {
-  overflow-y: auto;
-}
-
 .noscrollX {
-  overflow-x: visible;
+  overflow-x: hidden;
 }
 
 .noscrollY {
   overflow-y: hidden;
 }
 
+.align-end {
+	margin-left: auto;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+// Makes asterisk color for required field same as text (for WCAG complicance - contrast)
+.mat-form-field.mat-form-field-should-float.mat-focused .mat-form-field-required-marker {
+  color: #283593;
+}
+
+.mat-form-field.mat-form-field-invalid .mat-form-field-ripple {
+  background-color: #b00020 !important;
+}
+
+// Makes asterisk color for required field same as text for invalid fields (for WCAG complicance - contrast)
+.mat-form-field.mat-form-field-invalid .mat-form-field-required-marker { 
+  color: #b00020 !important;
+}
+
 .warning {
   background: #FFD600;
-}
-
-.fill-green {
-  color: #689F38
-}
-
-.fill-red {
-  color: #B00020
 }
 
 .nowrap {
@@ -313,79 +112,10 @@ html, body {
   word-break: break-word;
 }
 
-.margin-left-auto {
-  margin-left: auto;
-}
-
-.mat-tooltip {
-  font-size: 14px !important;
-}
-
-.mat-tab-label {
-  font-size: 16px;
-  color: black;
-  font-weight: bold;
-}
-
-.mat-tab-label.mat-tab-label-active {
-  color: #283593
-}
-
-.mat-tab-body-content {
-  overflow: hidden !important;
-}
-
-.app-primary-color-important {
-  color: mat.get-color-from-palette($app-primary) !important;
-}
-
-.app-primary-color-lighter-important {
-  color: mat.get-color-from-palette($app-primary, lighter) !important;
-}
-
-.app-background-color-default {
-  background-color: mat.get-color-from-palette($app-primary, default);
-}
-
 .mat-tooltip-content {
   max-width: unset;
   word-break: break-word;
   white-space: pre-line;
-}
-
-.href-link {
-  cursor: pointer;
-  color: #283593;
-  font-weight: normal;
-  text-decoration: underline;
-  word-break: break-word;
-}
-
-.href-link:focus,
-.href-link:hover {
-  color: #014c8c;
-}
-
-.href-link:focus {
-  outline: none;
-  box-shadow: 0 0 2px 1px #67ace7;
-}
-
-mat-hint:focus {
-  box-shadow: none !important;
-  border: 1px solid #67ace7;
-}
-
-.add-edit-modal-mobile-dialog-class .mat-dialog-container  {
-  padding: 24px 10px 24px 10px !important;
-}
-
-.error-dialog-class .mat-dialog-container {
-  padding: 0;
-}
-
-.hide-overflow {
-  overflow: hidden;
 }
 
 .use-new-line {
@@ -407,21 +137,7 @@ mat-hint:focus {
 
 .resizable-overlay .mat-dialog-container {
   height: unset;
-  min-width: 375px;
-  min-height: 375px;
   resize: both;
-}
-
-.align-end {
-	margin-left: auto;
-}
-
-.pointer {
-  cursor: pointer;
-}
-
-.formly-build-page-form-min-height {
-  min-height: 250px;
 }
 
 .formly-field {
@@ -431,23 +147,18 @@ mat-hint:focus {
   box-sizing: border-box;
 }
 
-.formly-field-tab {
-  @extend .formly-field;
-  padding: 1em;
-  box-sizing: border-box;
-}
-
 .hide-element {
   transform: translate(-150vw, 0);
   display: inline-block;
   position: absolute;
 }
 
-.error {
-  color: #b00020;
-}
-
 .label-help {
   cursor: pointer;
   margin-left: 0.25em;
+}
+
+mat-form-field.mat-form-field-appearance-outline {
+  padding-top: 0.5em;
+  margin-bottom: 1em;
 }

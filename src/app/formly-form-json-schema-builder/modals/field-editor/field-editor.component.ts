@@ -22,6 +22,8 @@ export class FieldEditorComponent implements AfterViewInit {
   public isFullScreen: boolean;
   public isNewlyAdded: boolean;
 
+  public mouseIsHovered: boolean = false;
+
   constructor(public dialogRef: MatDialogRef<FieldEditorComponent>, @Inject(MAT_DIALOG_DATA) private data: any) {
     this.categorySelectionComplete = false;
     this.categoryLabel = '';
