@@ -1,4 +1,3 @@
-import { Platform } from '@angular/cdk/platform';
 import { Injectable } from '@angular/core';
 import { NativeDateAdapter } from '@angular/material/core';
 import { BehaviorSubject } from 'rxjs';
@@ -103,7 +102,11 @@ export class DateTimeService {
     return this.formatDateAndTime(dateObj, options);
   }
 
-  public formatDate(dateObj: Date | null | undefined, options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' }) {
+  public formatDate(dateObj: Date | null | undefined, options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }) {
     if (dateObj) {
       return Intl.DateTimeFormat(this.getLocale(), options).format(dateObj);
     }
@@ -111,7 +114,14 @@ export class DateTimeService {
     return '';
   }
 
-  public formatDateAndTime(dateObj: Date | null | undefined, options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }) {
+  public formatDateAndTime(dateObj: Date | null | undefined, options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  }) {
     if (dateObj) {
       return Intl.DateTimeFormat(this.getLocale(), options).format(dateObj).replace(/, /g, ' ');
     }
@@ -177,8 +187,8 @@ export class DateTimeService {
 
 @Injectable()
 export class CustomDateAdapter extends NativeDateAdapter {
-  constructor(private dateTimeService: DateTimeService, public platform: Platform) {
-    super(dateTimeService.getLocale(), platform);
+  constructor(private dateTimeService: DateTimeService) {
+    super(dateTimeService.getLocale());
 
     this.dateTimeService.locale$.subscribe(locale => this.setLocale(locale));
   }
